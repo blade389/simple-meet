@@ -14,16 +14,245 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          appointment_date: string
+          created_at: string | null
+          female_user_id: string
+          id: string
+          location: string | null
+          male_user_id: string
+          match_request_id: string | null
+          status: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          appointment_date: string
+          created_at?: string | null
+          female_user_id: string
+          id?: string
+          location?: string | null
+          male_user_id: string
+          match_request_id?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          appointment_date?: string
+          created_at?: string | null
+          female_user_id?: string
+          id?: string
+          location?: string | null
+          male_user_id?: string
+          match_request_id?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_match_request_id_fkey"
+            columns: ["match_request_id"]
+            isOneToOne: false
+            referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      match_requests: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string | null
+          receiver_id: string
+          sender_id: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          receiver_id: string
+          sender_id: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          receiver_id?: string
+          sender_id?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          birth_date: string
+          created_at: string | null
+          full_name: string
+          gender: Database["public"]["Enums"]["gender"]
+          id: string
+          is_blocked: boolean | null
+          is_verified: Database["public"]["Enums"]["verification_status"] | null
+          location_city: string
+          location_lat: number | null
+          location_lon: number | null
+          max_age_preference: number | null
+          min_age_preference: number | null
+          profile_photo_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          bio?: string | null
+          birth_date: string
+          created_at?: string | null
+          full_name: string
+          gender: Database["public"]["Enums"]["gender"]
+          id: string
+          is_blocked?: boolean | null
+          is_verified?:
+            | Database["public"]["Enums"]["verification_status"]
+            | null
+          location_city: string
+          location_lat?: number | null
+          location_lon?: number | null
+          max_age_preference?: number | null
+          min_age_preference?: number | null
+          profile_photo_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          bio?: string | null
+          birth_date?: string
+          created_at?: string | null
+          full_name?: string
+          gender?: Database["public"]["Enums"]["gender"]
+          id?: string
+          is_blocked?: boolean | null
+          is_verified?:
+            | Database["public"]["Enums"]["verification_status"]
+            | null
+          location_city?: string
+          location_lat?: number | null
+          location_lon?: number | null
+          max_age_preference?: number | null
+          min_age_preference?: number | null
+          profile_photo_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          appointment_id: string
+          comment: string | null
+          created_at: string | null
+          id: string
+          rating: number | null
+          report_reason: string | null
+          reported: boolean | null
+          reviewed_id: string
+          reviewer_id: string
+        }
+        Insert: {
+          appointment_id: string
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          rating?: number | null
+          report_reason?: string | null
+          reported?: boolean | null
+          reviewed_id: string
+          reviewer_id: string
+        }
+        Update: {
+          appointment_id?: string
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          rating?: number | null
+          report_reason?: string | null
+          reported?: boolean | null
+          reviewed_id?: string
+          reviewer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tokens: {
+        Row: {
+          amount: number
+          id: string
+          last_updated: string | null
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          id?: string
+          last_updated?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          id?: string
+          last_updated?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      appointment_status:
+        | "scheduled"
+        | "completed"
+        | "cancelled"
+        | "no_show_female"
+        | "no_show_male"
+        | "reported"
+      gender: "male" | "female"
+      verification_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +379,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      appointment_status: [
+        "scheduled",
+        "completed",
+        "cancelled",
+        "no_show_female",
+        "no_show_male",
+        "reported",
+      ],
+      gender: ["male", "female"],
+      verification_status: ["pending", "verified", "rejected"],
+    },
   },
 } as const
