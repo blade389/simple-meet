@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Users, Calendar, Star, LogOut } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -109,13 +109,20 @@ const Dashboard = () => {
 
         {profile?.is_verified !== 'verified' && (
           <Card className="p-6 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
-            <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-              Verifica Identità Richiesta
-            </h3>
-            <p className="text-yellow-800 dark:text-yellow-200 text-sm mb-4">
-              Per utilizzare tutte le funzionalità dell'app, completa la verifica della tua identità.
-            </p>
-            <Button variant="default">Completa Verifica</Button>
+            <div className="flex items-start gap-4">
+              <Shield className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
+                  Verifica Identità Richiesta
+                </h3>
+                <p className="text-yellow-800 dark:text-yellow-200 text-sm mb-4">
+                  Per utilizzare tutte le funzionalità dell'app, completa la verifica della tua identità.
+                </p>
+                <Button variant="default" asChild>
+                  <Link to="/verify">Completa Verifica</Link>
+                </Button>
+              </div>
+            </div>
           </Card>
         )}
 
