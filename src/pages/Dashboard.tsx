@@ -22,13 +22,31 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [tokens, setTokens] = useState<TokenBalance | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (user) {
       loadProfile();
       loadTokens();
+      checkAdminRole();
     }
   }, [user]);
+
+  const checkAdminRole = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user?.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      if (error) throw error;
+      setIsAdmin(!!data);
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+    }
+  };
 
   const loadProfile = async () => {
     try {
@@ -185,6 +203,22 @@ const Dashboard = () => {
             </div>
           </Card>
         </div>
+
+        {isAdmin && (
+          <Card className="p-6 mb-8 bg-gradient-primary text-white">
+            <Link to="/admin" className="block">
+              <div className="flex items-center gap-4">
+                <Shield className="w-12 h-12" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">Pannello Admin</h3>
+                  <p className="text-sm opacity-90">
+                    Gestisci le richieste di verifica
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </Card>
+        )}
       </main>
     </div>
   );
