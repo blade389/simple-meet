@@ -88,6 +88,39 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_photo_verifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          photo_url: string
+          rejection_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["verification_status"] | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          photo_url: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          photo_url?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           bio: string | null
@@ -103,6 +136,9 @@ export type Database = {
           location_lon: number | null
           max_age_preference: number | null
           min_age_preference: number | null
+          photo_verification_status:
+            | Database["public"]["Enums"]["verification_status"]
+            | null
           profile_photo_url: string | null
           updated_at: string | null
         }
@@ -122,6 +158,9 @@ export type Database = {
           location_lon?: number | null
           max_age_preference?: number | null
           min_age_preference?: number | null
+          photo_verification_status?:
+            | Database["public"]["Enums"]["verification_status"]
+            | null
           profile_photo_url?: string | null
           updated_at?: string | null
         }
@@ -141,6 +180,9 @@ export type Database = {
           location_lon?: number | null
           max_age_preference?: number | null
           min_age_preference?: number | null
+          photo_verification_status?:
+            | Database["public"]["Enums"]["verification_status"]
+            | null
           profile_photo_url?: string | null
           updated_at?: string | null
         }

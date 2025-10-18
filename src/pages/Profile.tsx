@@ -97,10 +97,20 @@ const Profile = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Check if account is verified
+    if (profile?.is_verified !== 'verified') {
+      toast({
+        title: "Account non verificato",
+        description: "Devi prima verificare il tuo account per caricare una foto profilo",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const filePath = `${user?.id}/profile.${fileExt}`;
+      const filePath = `${user?.id}/profile-${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('profile-photos')
@@ -112,16 +122,20 @@ const Profile = () => {
         .from('profile-photos')
         .getPublicUrl(filePath);
 
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({ profile_photo_url: publicUrl })
-        .eq('id', user?.id);
+      // Create photo verification request
+      const { error: verificationError } = await supabase
+        .from('profile_photo_verifications')
+        .insert({
+          user_id: user?.id,
+          photo_url: publicUrl,
+          status: 'pending'
+        });
 
-      if (updateError) throw updateError;
+      if (verificationError) throw verificationError;
 
       toast({
         title: "Foto caricata",
-        description: "La tua foto profilo è stata aggiornata"
+        description: "La tua foto è stata inviata per la verifica"
       });
       loadProfile();
     } catch (error: any) {
@@ -142,8 +156,17 @@ const Profile = () => {
     return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
   };
 
+  const getPhotoVerificationStatus = () => {
+    if (!profile?.photo_verification_status) return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
+    if (profile.photo_verification_status === 'verified') return { icon: CheckCircle, text: 'Verificata', color: 'text-green-600' };
+    if (profile.photo_verification_status === 'rejected') return { icon: XCircle, text: 'Rifiutata', color: 'text-red-600' };
+    return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
+  };
+
   const status = getVerificationStatus();
+  const photoStatus = getPhotoVerificationStatus();
   const StatusIcon = status.icon;
+  const PhotoStatusIcon = photoStatus.icon;
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -186,22 +209,36 @@ const Profile = () => {
                   className="hidden"
                   accept="image/*"
                   onChange={handlePhotoUpload}
-                  disabled={uploading}
+                  disabled={uploading || profile?.is_verified !== 'verified'}
                 />
                 <Button
                   variant="outline"
                   onClick={() => document.getElementById('photo-upload')?.click()}
-                  disabled={uploading}
+                  disabled={uploading || profile?.is_verified !== 'verified'}
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   {uploading ? 'Caricamento...' : 'Cambia Foto'}
                 </Button>
+                {profile?.is_verified !== 'verified' && (
+                  <p className="text-xs text-muted-foreground mt-2 text-center">
+                    Completa prima la verifica dell'account
+                  </p>
+                )}
               </div>
-              <div className="text-center mt-4">
-                <p className="text-sm font-medium mb-1">Stato Verifica</p>
-                <div className={`flex items-center gap-2 ${status.color}`}>
-                  <StatusIcon className="w-5 h-5" />
-                  <span className="text-sm font-medium">{status.text}</span>
+              <div className="text-center mt-4 space-y-2">
+                <div>
+                  <p className="text-sm font-medium mb-1">Verifica Account</p>
+                  <div className={`flex items-center gap-2 justify-center ${status.color}`}>
+                    <StatusIcon className="w-5 h-5" />
+                    <span className="text-sm font-medium">{status.text}</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm font-medium mb-1">Verifica Foto</p>
+                  <div className={`flex items-center gap-2 justify-center ${photoStatus.color}`}>
+                    <PhotoStatusIcon className="w-5 h-5" />
+                    <span className="text-sm font-medium">{photoStatus.text}</span>
+                  </div>
                 </div>
               </div>
             </CardContent>

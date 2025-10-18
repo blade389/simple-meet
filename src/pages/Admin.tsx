@@ -2,7 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,6 +18,7 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [requests, setRequests] = useState<any[]>([]);
+  const [photoRequests, setPhotoRequests] = useState<any[]>([]);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
 
@@ -47,6 +49,7 @@ const Admin = () => {
 
       setIsAdmin(true);
       loadVerificationRequests();
+      loadPhotoVerificationRequests();
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -75,6 +78,27 @@ const Admin = () => {
       toast({
         title: "Errore",
         description: "Impossibile caricare le richieste",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const loadPhotoVerificationRequests = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profile_photo_verifications')
+        .select(`
+          *,
+          profiles:user_id (full_name, gender, location_city)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPhotoRequests(data || []);
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: "Impossibile caricare le richieste foto",
         variant: "destructive"
       });
     }
@@ -151,6 +175,77 @@ const Admin = () => {
     }
   };
 
+  const handlePhotoApprove = async (requestId: string) => {
+    setProcessingId(requestId);
+    try {
+      const { error } = await supabase
+        .from('profile_photo_verifications')
+        .update({
+          status: 'verified',
+          reviewed_at: new Date().toISOString(),
+          reviewed_by: user?.id
+        })
+        .eq('id', requestId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Foto approvata",
+        description: "La foto profilo è stata verificata"
+      });
+      loadPhotoVerificationRequests();
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handlePhotoReject = async (requestId: string) => {
+    if (!rejectionReason.trim()) {
+      toast({
+        title: "Errore",
+        description: "Inserisci un motivo per il rifiuto",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setProcessingId(requestId);
+    try {
+      const { error } = await supabase
+        .from('profile_photo_verifications')
+        .update({
+          status: 'rejected',
+          rejection_reason: rejectionReason,
+          reviewed_at: new Date().toISOString(),
+          reviewed_by: user?.id
+        })
+        .eq('id', requestId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Foto rifiutata",
+        description: "L'utente è stato notificato"
+      });
+      setRejectionReason('');
+      loadPhotoVerificationRequests();
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'verified':
@@ -195,90 +290,193 @@ const Admin = () => {
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-6">Pannello Admin - Verifiche</h2>
         
-        <div className="space-y-4">
-          {requests.length === 0 ? (
-            <Card>
-              <CardContent className="py-12 text-center">
-                <p className="text-muted-foreground">Nessuna richiesta di verifica</p>
-              </CardContent>
-            </Card>
-          ) : (
-            requests.map((request) => (
-              <Card key={request.id}>
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle>{request.profiles?.full_name}</CardTitle>
-                      <CardDescription>
-                        {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
-                      </CardDescription>
-                    </div>
-                    {getStatusBadge(request.status)}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">
-                      Richiesta inviata: {new Date(request.created_at).toLocaleDateString('it-IT')}
-                    </p>
-                    <Button
-                      variant="outline"
-                      onClick={() => window.open(request.document_url, '_blank')}
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Visualizza Documento
-                    </Button>
-                  </div>
+        <Tabs defaultValue="identity" className="w-full">
+          <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsTrigger value="identity">Identità ({requests.length})</TabsTrigger>
+            <TabsTrigger value="photos">Foto ({photoRequests.length})</TabsTrigger>
+          </TabsList>
 
-                  {request.status === 'pending' && (
-                    <div className="space-y-4 pt-4 border-t">
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={() => handleApprove(request.id)}
-                          disabled={processingId === request.id}
-                          className="flex-1"
-                        >
-                          <CheckCircle className="w-4 h-4 mr-2" />
-                          Approva
-                        </Button>
-                      </div>
-                      <div className="space-y-2">
-                        <Textarea
-                          placeholder="Motivo del rifiuto (obbligatorio)"
-                          value={processingId === request.id ? rejectionReason : ''}
-                          onChange={(e) => setRejectionReason(e.target.value)}
-                          disabled={processingId !== null && processingId !== request.id}
-                        />
-                        <Button
-                          variant="destructive"
-                          onClick={() => handleReject(request.id)}
-                          disabled={processingId !== null}
-                          className="w-full"
-                        >
-                          <XCircle className="w-4 h-4 mr-2" />
-                          Rifiuta
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-
-                  {request.status === 'rejected' && request.rejection_reason && (
-                    <div className="pt-4 border-t">
-                      <p className="text-sm font-medium mb-1">Motivo rifiuto:</p>
-                      <p className="text-sm text-muted-foreground">{request.rejection_reason}</p>
-                    </div>
-                  )}
-
-                  {request.reviewed_at && (
-                    <p className="text-xs text-muted-foreground pt-2 border-t">
-                      Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
-                    </p>
-                  )}
+          <TabsContent value="identity" className="space-y-4 mt-6">
+            {requests.length === 0 ? (
+              <Card>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">Nessuna richiesta di verifica identità</p>
                 </CardContent>
               </Card>
-            ))
-          )}
-        </div>
+            ) : (
+              requests.map((request) => (
+                <Card key={request.id}>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle>{request.profiles?.full_name}</CardTitle>
+                        <CardDescription>
+                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
+                        </CardDescription>
+                      </div>
+                      {getStatusBadge(request.status)}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Richiesta inviata: {new Date(request.created_at).toLocaleDateString('it-IT')}
+                      </p>
+                      <Button
+                        variant="outline"
+                        onClick={() => window.open(request.document_url, '_blank')}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Visualizza Documento
+                      </Button>
+                    </div>
+
+                    {request.status === 'pending' && (
+                      <div className="space-y-4 pt-4 border-t">
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleApprove(request.id)}
+                            disabled={processingId === request.id}
+                            className="flex-1"
+                          >
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            Approva
+                          </Button>
+                        </div>
+                        <div className="space-y-2">
+                          <Textarea
+                            placeholder="Motivo del rifiuto (obbligatorio)"
+                            value={processingId === request.id ? rejectionReason : ''}
+                            onChange={(e) => setRejectionReason(e.target.value)}
+                            disabled={processingId !== null && processingId !== request.id}
+                          />
+                          <Button
+                            variant="destructive"
+                            onClick={() => handleReject(request.id)}
+                            disabled={processingId !== null}
+                            className="w-full"
+                          >
+                            <XCircle className="w-4 h-4 mr-2" />
+                            Rifiuta
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {request.status === 'rejected' && request.rejection_reason && (
+                      <div className="pt-4 border-t">
+                        <p className="text-sm font-medium mb-1">Motivo rifiuto:</p>
+                        <p className="text-sm text-muted-foreground">{request.rejection_reason}</p>
+                      </div>
+                    )}
+
+                    {request.reviewed_at && (
+                      <p className="text-xs text-muted-foreground pt-2 border-t">
+                        Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </TabsContent>
+
+          <TabsContent value="photos" className="space-y-4 mt-6">
+            {photoRequests.length === 0 ? (
+              <Card>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">Nessuna richiesta di verifica foto</p>
+                </CardContent>
+              </Card>
+            ) : (
+              photoRequests.map((request) => (
+                <Card key={request.id}>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle>{request.profiles?.full_name}</CardTitle>
+                        <CardDescription>
+                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
+                        </CardDescription>
+                      </div>
+                      {getStatusBadge(request.status)}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Richiesta inviata: {new Date(request.created_at).toLocaleDateString('it-IT')}
+                      </p>
+                      <div className="flex gap-4">
+                        <Button
+                          variant="outline"
+                          onClick={() => window.open(request.photo_url, '_blank')}
+                        >
+                          <Camera className="w-4 h-4 mr-2" />
+                          Visualizza Foto Profilo
+                        </Button>
+                      </div>
+                      {request.photo_url && (
+                        <div className="mt-4">
+                          <img 
+                            src={request.photo_url} 
+                            alt="Foto profilo" 
+                            className="w-48 h-48 object-cover rounded-lg border"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {request.status === 'pending' && (
+                      <div className="space-y-4 pt-4 border-t">
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handlePhotoApprove(request.id)}
+                            disabled={processingId === request.id}
+                            className="flex-1"
+                          >
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            Approva Foto
+                          </Button>
+                        </div>
+                        <div className="space-y-2">
+                          <Textarea
+                            placeholder="Motivo del rifiuto (obbligatorio)"
+                            value={processingId === request.id ? rejectionReason : ''}
+                            onChange={(e) => setRejectionReason(e.target.value)}
+                            disabled={processingId !== null && processingId !== request.id}
+                          />
+                          <Button
+                            variant="destructive"
+                            onClick={() => handlePhotoReject(request.id)}
+                            disabled={processingId !== null}
+                            className="w-full"
+                          >
+                            <XCircle className="w-4 h-4 mr-2" />
+                            Rifiuta Foto
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
+                    {request.status === 'rejected' && request.rejection_reason && (
+                      <div className="pt-4 border-t">
+                        <p className="text-sm font-medium mb-1">Motivo rifiuto:</p>
+                        <p className="text-sm text-muted-foreground">{request.rejection_reason}</p>
+                      </div>
+                    )}
+
+                    {request.reviewed_at && (
+                      <p className="text-xs text-muted-foreground pt-2 border-t">
+                        Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
