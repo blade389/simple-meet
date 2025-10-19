@@ -104,11 +104,12 @@ const Admin = () => {
     }
   };
 
-  const handleApprove = async (requestId: string) => {
+  const handleApprove = async (requestId: string, type: 'identity' | 'photo' = 'identity') => {
     setProcessingId(requestId);
     try {
+      const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
       const { error } = await supabase
-        .from('verification_requests')
+        .from(table)
         .update({
           status: 'verified',
           reviewed_at: new Date().toISOString(),
@@ -120,9 +121,14 @@ const Admin = () => {
 
       toast({
         title: "Richiesta approvata",
-        description: "L'utente è stato verificato con successo"
+        description: type === 'identity' ? "L'utente è stato verificato con successo" : "La foto è stata verificata con successo"
       });
-      loadVerificationRequests();
+      
+      if (type === 'identity') {
+        loadVerificationRequests();
+      } else {
+        loadPhotoVerificationRequests();
+      }
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -134,7 +140,7 @@ const Admin = () => {
     }
   };
 
-  const handleReject = async (requestId: string) => {
+  const handleReject = async (requestId: string, type: 'identity' | 'photo' = 'identity') => {
     if (!rejectionReason.trim()) {
       toast({
         title: "Errore",
@@ -146,8 +152,9 @@ const Admin = () => {
 
     setProcessingId(requestId);
     try {
+      const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
       const { error } = await supabase
-        .from('verification_requests')
+        .from(table)
         .update({
           status: 'rejected',
           rejection_reason: rejectionReason,
@@ -163,78 +170,12 @@ const Admin = () => {
         description: "L'utente è stato notificato"
       });
       setRejectionReason('');
-      loadVerificationRequests();
-    } catch (error: any) {
-      toast({
-        title: "Errore",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setProcessingId(null);
-    }
-  };
-
-  const handlePhotoApprove = async (requestId: string) => {
-    setProcessingId(requestId);
-    try {
-      const { error } = await supabase
-        .from('profile_photo_verifications')
-        .update({
-          status: 'verified',
-          reviewed_at: new Date().toISOString(),
-          reviewed_by: user?.id
-        })
-        .eq('id', requestId);
-
-      if (error) throw error;
-
-      toast({
-        title: "Foto approvata",
-        description: "La foto profilo è stata verificata"
-      });
-      loadPhotoVerificationRequests();
-    } catch (error: any) {
-      toast({
-        title: "Errore",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setProcessingId(null);
-    }
-  };
-
-  const handlePhotoReject = async (requestId: string) => {
-    if (!rejectionReason.trim()) {
-      toast({
-        title: "Errore",
-        description: "Inserisci un motivo per il rifiuto",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setProcessingId(requestId);
-    try {
-      const { error } = await supabase
-        .from('profile_photo_verifications')
-        .update({
-          status: 'rejected',
-          rejection_reason: rejectionReason,
-          reviewed_at: new Date().toISOString(),
-          reviewed_by: user?.id
-        })
-        .eq('id', requestId);
-
-      if (error) throw error;
-
-      toast({
-        title: "Foto rifiutata",
-        description: "L'utente è stato notificato"
-      });
-      setRejectionReason('');
-      loadPhotoVerificationRequests();
+      
+      if (type === 'identity') {
+        loadVerificationRequests();
+      } else {
+        loadPhotoVerificationRequests();
+      }
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -333,16 +274,16 @@ const Admin = () => {
 
                     {request.status === 'pending' && (
                       <div className="space-y-4 pt-4 border-t">
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={() => handleApprove(request.id)}
-                            disabled={processingId === request.id}
-                            className="flex-1"
-                          >
-                            <CheckCircle className="w-4 h-4 mr-2" />
-                            Approva
-                          </Button>
-                        </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => handleApprove(request.id, 'identity')}
+                          disabled={processingId === request.id}
+                          className="flex-1"
+                        >
+                          <CheckCircle className="w-4 h-4 mr-2" />
+                          Approva
+                        </Button>
+                      </div>
                         <div className="space-y-2">
                           <Textarea
                             placeholder="Motivo del rifiuto (obbligatorio)"
@@ -350,15 +291,15 @@ const Admin = () => {
                             onChange={(e) => setRejectionReason(e.target.value)}
                             disabled={processingId !== null && processingId !== request.id}
                           />
-                          <Button
-                            variant="destructive"
-                            onClick={() => handleReject(request.id)}
-                            disabled={processingId !== null}
-                            className="w-full"
-                          >
-                            <XCircle className="w-4 h-4 mr-2" />
-                            Rifiuta
-                          </Button>
+                        <Button
+                          variant="destructive"
+                          onClick={() => handleReject(request.id, 'identity')}
+                          disabled={processingId !== null}
+                          className="w-full"
+                        >
+                          <XCircle className="w-4 h-4 mr-2" />
+                          Rifiuta
+                        </Button>
                         </div>
                       </div>
                     )}
@@ -431,7 +372,7 @@ const Admin = () => {
                       <div className="space-y-4 pt-4 border-t">
                         <div className="flex gap-2">
                           <Button
-                            onClick={() => handlePhotoApprove(request.id)}
+                            onClick={() => handleApprove(request.id, 'photo')}
                             disabled={processingId === request.id}
                             className="flex-1"
                           >
@@ -448,7 +389,7 @@ const Admin = () => {
                           />
                           <Button
                             variant="destructive"
-                            onClick={() => handlePhotoReject(request.id)}
+                            onClick={() => handleReject(request.id, 'photo')}
                             disabled={processingId !== null}
                             className="w-full"
                           >
