@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Users, Calendar, Star, LogOut, Shield } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -23,6 +23,7 @@ const Dashboard = () => {
   const [tokens, setTokens] = useState<TokenBalance | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [updatingLocation, setUpdatingLocation] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -90,6 +91,44 @@ const Dashboard = () => {
     }
   };
 
+  const updateLocation = async () => {
+    setUpdatingLocation(true);
+    
+    if (!navigator.geolocation) {
+      toast.error('Geolocalizzazione non supportata dal browser');
+      setUpdatingLocation(false);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { error } = await supabase
+            .from('profiles')
+            .update({
+              location_lat: position.coords.latitude,
+              location_lon: position.coords.longitude
+            })
+            .eq('id', user?.id);
+
+          if (error) throw error;
+
+          toast.success('Posizione aggiornata con successo');
+          loadProfile();
+        } catch (error: any) {
+          toast.error('Errore nell\'aggiornamento della posizione');
+        } finally {
+          setUpdatingLocation(false);
+        }
+      },
+      (error) => {
+        toast.error('Impossibile ottenere la posizione. Assicurati di aver dato i permessi.');
+        setUpdatingLocation(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -101,16 +140,27 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <header className="bg-card border-b shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-primary fill-primary" />
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              SCOPAMI
-            </h1>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center gap-2">
+              <Heart className="w-8 h-8 text-primary fill-primary" />
+              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                SCOPAMI
+              </h1>
+            </div>
+            <Button variant="ghost" onClick={handleLogout}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Esci
+            </Button>
           </div>
-          <Button variant="ghost" onClick={handleLogout}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Esci
+          <Button 
+            onClick={updateLocation} 
+            disabled={updatingLocation}
+            className="w-full"
+            variant="outline"
+          >
+            <MapPin className="w-4 h-4 mr-2" />
+            {updatingLocation ? 'Aggiornamento...' : 'Aggiorna Posizione'}
           </Button>
         </div>
       </header>
