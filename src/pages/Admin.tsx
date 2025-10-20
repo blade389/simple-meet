@@ -64,17 +64,38 @@ const Admin = () => {
 
   const loadVerificationRequests = async () => {
     try {
-      const { data, error } = await supabase
+      const { data: requests, error: requestsError } = await supabase
         .from('verification_requests')
-        .select(`
-          *,
-          profiles:user_id (full_name, gender, location_city)
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setRequests(data || []);
+      if (requestsError) throw requestsError;
+
+      if (!requests || requests.length === 0) {
+        setRequests([]);
+        return;
+      }
+
+      // Get user IDs from requests
+      const userIds = requests.map(r => r.user_id);
+
+      // Fetch profiles separately
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, full_name, gender, location_city')
+        .in('id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      // Merge data
+      const requestsWithProfiles = requests.map(request => ({
+        ...request,
+        profiles: profiles?.find(p => p.id === request.user_id) || null
+      }));
+
+      setRequests(requestsWithProfiles);
     } catch (error: any) {
+      console.error('Error loading verification requests:', error);
       toast({
         title: "Errore",
         description: "Impossibile caricare le richieste",
@@ -85,17 +106,38 @@ const Admin = () => {
 
   const loadPhotoVerificationRequests = async () => {
     try {
-      const { data, error } = await supabase
+      const { data: requests, error: requestsError } = await supabase
         .from('profile_photo_verifications')
-        .select(`
-          *,
-          profiles:user_id (full_name, gender, location_city)
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setPhotoRequests(data || []);
+      if (requestsError) throw requestsError;
+
+      if (!requests || requests.length === 0) {
+        setPhotoRequests([]);
+        return;
+      }
+
+      // Get user IDs from requests
+      const userIds = requests.map(r => r.user_id);
+
+      // Fetch profiles separately
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, full_name, gender, location_city')
+        .in('id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      // Merge data
+      const requestsWithProfiles = requests.map(request => ({
+        ...request,
+        profiles: profiles?.find(p => p.id === request.user_id) || null
+      }));
+
+      setPhotoRequests(requestsWithProfiles);
     } catch (error: any) {
+      console.error('Error loading photo verification requests:', error);
       toast({
         title: "Errore",
         description: "Impossibile caricare le richieste foto",
