@@ -82,6 +82,7 @@ export type Database = {
       match_requests: {
         Row: {
           created_at: string | null
+          expires_at: string | null
           id: string
           message: string | null
           receiver_id: string
@@ -91,6 +92,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          expires_at?: string | null
           id?: string
           message?: string | null
           receiver_id: string
@@ -100,6 +102,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          expires_at?: string | null
           id?: string
           message?: string | null
           receiver_id?: string

@@ -200,6 +200,20 @@ const Browse = () => {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-match-request-email', {
+          body: {
+            receiverId,
+            senderName: myProfile?.full_name,
+            senderEmail: user?.email
+          }
+        });
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+        // Don't throw - email failure shouldn't block the request
+      }
+
       toast({
         title: "Richiesta inviata",
         description: "La tua richiesta è stata inviata con successo"
