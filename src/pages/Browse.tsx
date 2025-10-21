@@ -215,20 +215,60 @@ const Browse = () => {
     }
   };
 
-  const respondToRequest = async (requestId: string, action: 'accepted' | 'rejected') => {
+  const respondToRequest = async (requestId: string, action: 'accepted' | 'rejected', blockUser: boolean = false) => {
     setRespondingToRequest(requestId);
     try {
-      const { error } = await supabase
+      const request = matchRequests.find(r => r.id === requestId);
+      if (!request) throw new Error("Richiesta non trovata");
+
+      // Update match request status
+      const { error: updateError } = await supabase
         .from('match_requests')
         .update({ status: action })
         .eq('id', requestId);
 
-      if (error) throw error;
+      if (updateError) throw updateError;
+
+      // If rejecting, deduct token
+      if (action === 'rejected') {
+        const { data: tokenData, error: tokenFetchError } = await supabase
+          .from('tokens')
+          .select('amount')
+          .eq('user_id', user?.id)
+          .single();
+
+        if (tokenFetchError) throw tokenFetchError;
+
+        if (tokenData.amount < 1) {
+          throw new Error("Non hai abbastanza gettoni");
+        }
+
+        const { error: tokenUpdateError } = await supabase
+          .from('tokens')
+          .update({ amount: tokenData.amount - 1 })
+          .eq('user_id', user?.id);
+
+        if (tokenUpdateError) throw tokenUpdateError;
+      }
+
+      // If blocking, add to blocked_users
+      if (blockUser) {
+        const { error: blockError } = await supabase
+          .from('blocked_users')
+          .insert({
+            blocker_id: user?.id,
+            blocked_id: request.sender_id
+          });
+
+        if (blockError) throw blockError;
+      }
 
       toast({
-        title: action === 'accepted' ? "Richiesta accettata" : "Richiesta rifiutata",
+        title: action === 'accepted' ? "Richiesta accettata" : blockUser ? "Utente bloccato" : "Richiesta rifiutata",
         description: action === 'accepted' 
           ? "Puoi procedere a fissare un appuntamento" 
+          : blockUser
+          ? "L'utente è stato bloccato e non potrà più inviarti richieste"
           : "La richiesta è stata rifiutata"
       });
 
@@ -311,24 +351,34 @@ const Browse = () => {
                         {request.sender_profile.bio}
                       </p>
                     )}
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2">
                       <Button
-                        onClick={() => respondToRequest(request.id, 'accepted')}
+                        onClick={() => respondToRequest(request.id, 'accepted', false)}
                         disabled={respondingToRequest === request.id}
-                        className="flex-1"
+                        className="w-full"
                         variant="default"
                       >
                         <Heart className="w-4 h-4 mr-2" />
                         Accetta
                       </Button>
-                      <Button
-                        onClick={() => respondToRequest(request.id, 'rejected')}
-                        disabled={respondingToRequest === request.id}
-                        className="flex-1"
-                        variant="outline"
-                      >
-                        Rifiuta
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => respondToRequest(request.id, 'rejected', false)}
+                          disabled={respondingToRequest === request.id}
+                          className="flex-1"
+                          variant="outline"
+                        >
+                          Rifiuta
+                        </Button>
+                        <Button
+                          onClick={() => respondToRequest(request.id, 'rejected', true)}
+                          disabled={respondingToRequest === request.id}
+                          className="flex-1"
+                          variant="destructive"
+                        >
+                          Rifiuta e Blocca
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
