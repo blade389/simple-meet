@@ -1,1 +1,7 @@
 project_id = "tdkovomoosffywhajhkj"
+
+[functions.send-match-request-email]
+verify_jwt = false
+
+[functions.process-expired-requests]
+verify_jwt = false

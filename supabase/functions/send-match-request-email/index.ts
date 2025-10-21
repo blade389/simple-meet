@@ -1,8 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@4.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -49,23 +46,38 @@ const handler = async (req: Request): Promise<Response> => {
       throw userError || new Error("Receiver email not found");
     }
 
-    const emailResponse = await resend.emails.send({
-      from: "Match App <onboarding@resend.dev>",
-      to: [user.email],
-      subject: "Hai ricevuto una nuova richiesta di match!",
-      html: `
-        <h1>Ciao ${receiverProfile.full_name}!</h1>
-        <p><strong>${senderName}</strong> ti ha inviato una richiesta di match.</p>
-        <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
-        <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
-        <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
-        <p>Buona fortuna!</p>
-      `,
+    // Send email using Resend API
+    const resendResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+      },
+      body: JSON.stringify({
+        from: "Match App <onboarding@resend.dev>",
+        to: [user.email],
+        subject: "Hai ricevuto una nuova richiesta di match!",
+        html: `
+          <h1>Ciao ${receiverProfile.full_name}!</h1>
+          <p><strong>${senderName}</strong> ti ha inviato una richiesta di match.</p>
+          <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
+          <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
+          <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
+          <p>Buona fortuna!</p>
+        `,
+      }),
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    if (!resendResponse.ok) {
+      const error = await resendResponse.text();
+      console.error("Resend API error:", error);
+      throw new Error(`Failed to send email: ${error}`);
+    }
 
-    return new Response(JSON.stringify(emailResponse), {
+    const emailResult = await resendResponse.json();
+    console.log("Email sent successfully:", emailResult);
+
+    return new Response(JSON.stringify(emailResult), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
