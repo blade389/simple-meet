@@ -46,6 +46,7 @@ const ProfileDetailsDialog = ({ open, onOpenChange, profile }: ProfileDetailsDia
         .order('created_at', { ascending: false });
 
       if (error) throw error;
+      console.log('Loaded photos for profile:', profile.id, 'Count:', data?.length, 'Data:', data);
       setPhotos(data || []);
     } catch (error) {
       console.error('Error loading photos:', error);
