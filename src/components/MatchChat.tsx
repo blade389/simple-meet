@@ -37,6 +37,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [isFemaleUser, setIsFemaleUser] = useState(false);
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [canReview, setCanReview] = useState(false);
@@ -48,7 +49,20 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) setCurrentUserId(user.id);
+      if (user) {
+        setCurrentUserId(user.id);
+        
+        // Fetch user profile to check gender
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('gender')
+          .eq('id', user.id)
+          .single();
+        
+        if (profile) {
+          setIsFemaleUser(profile.gender === 'female');
+        }
+      }
     };
     fetchUser();
   }, []);
@@ -192,7 +206,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
       <div className="border-b p-4 space-y-3">
         <div className="flex justify-between items-center">
           <h3 className="font-semibold">Chat con {otherUserName}</h3>
-          {!appointment && !showAppointmentForm && (
+          {!appointment && !showAppointmentForm && isFemaleUser && (
             <Button
               variant="outline"
               size="sm"
