@@ -96,6 +96,8 @@ const Browse = () => {
 
       if (error) throw error;
 
+      const myAge = calculateAge(myProfile.birth_date);
+
       const profilesWithDistance = data
         .map((profile: any) => {
           const distance = calculateDistance(
@@ -106,7 +108,20 @@ const Browse = () => {
           );
           return { ...profile, distance };
         })
-        .filter((profile: any) => profile.distance <= 20)
+        .filter((profile: any) => {
+          // Filter by distance
+          if (profile.distance > 20) return false;
+          
+          // Filter by age preferences: check if my age falls within the profile's age preferences
+          if (profile.min_age_preference !== null && myAge < profile.min_age_preference) {
+            return false;
+          }
+          if (profile.max_age_preference !== null && myAge > profile.max_age_preference) {
+            return false;
+          }
+          
+          return true;
+        })
         .sort((a: any, b: any) => a.distance - b.distance);
 
       setProfiles(profilesWithDistance);
