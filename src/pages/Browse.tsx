@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 
 interface Profile {
   id: string;
@@ -41,6 +42,8 @@ const Browse = () => {
   const [loading, setLoading] = useState(true);
   const [sendingRequest, setSendingRequest] = useState<string | null>(null);
   const [respondingToRequest, setRespondingToRequest] = useState<string | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [showProfileDialog, setShowProfileDialog] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -352,7 +355,16 @@ const Browse = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {matchRequests.map((request) => (
-                <Card key={request.id}>
+                <Card 
+                  key={request.id}
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() => {
+                    if (request.sender_profile) {
+                      setSelectedProfile(request.sender_profile);
+                      setShowProfileDialog(true);
+                    }
+                  }}
+                >
                   <CardHeader>
                     <div className="flex justify-center mb-4">
                       <Avatar className="w-24 h-24">
@@ -374,9 +386,9 @@ const Browse = () => {
                       </div>
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent onClick={(e) => e.stopPropagation()}>
                     {request.sender_profile?.bio && (
-                      <p className="text-sm text-muted-foreground mb-4 text-center">
+                      <p className="text-sm text-muted-foreground mb-4 text-center line-clamp-2">
                         {request.sender_profile.bio}
                       </p>
                     )}
@@ -414,6 +426,14 @@ const Browse = () => {
               ))}
             </div>
           )}
+
+          {selectedProfile && (
+            <ProfileDetailsDialog
+              open={showProfileDialog}
+              onOpenChange={setShowProfileDialog}
+              profile={selectedProfile}
+            />
+          )}
         </main>
       </div>
     );
@@ -449,7 +469,14 @@ const Browse = () => {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {profiles.map((profile) => (
-              <Card key={profile.id}>
+              <Card 
+                key={profile.id}
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => {
+                  setSelectedProfile(profile);
+                  setShowProfileDialog(true);
+                }}
+              >
                 <CardHeader>
                   <div className="flex justify-center mb-4">
                     <Avatar className="w-24 h-24">
@@ -471,9 +498,9 @@ const Browse = () => {
                     </div>
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent onClick={(e) => e.stopPropagation()}>
                   {profile.bio && (
-                    <p className="text-sm text-muted-foreground mb-4 text-center">
+                    <p className="text-sm text-muted-foreground mb-4 text-center line-clamp-2">
                       {profile.bio}
                     </p>
                   )}
@@ -489,6 +516,14 @@ const Browse = () => {
               </Card>
             ))}
           </div>
+        )}
+
+        {selectedProfile && (
+          <ProfileDetailsDialog
+            open={showProfileDialog}
+            onOpenChange={setShowProfileDialog}
+            profile={selectedProfile}
+          />
         )}
       </main>
     </div>

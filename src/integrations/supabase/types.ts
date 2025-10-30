@@ -151,6 +151,7 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          is_primary: boolean | null
           photo_url: string
           rejection_reason: string | null
           reviewed_at: string | null
@@ -161,6 +162,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
+          is_primary?: boolean | null
           photo_url: string
           rejection_reason?: string | null
           reviewed_at?: string | null
@@ -171,6 +173,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           id?: string
+          is_primary?: boolean | null
           photo_url?: string
           rejection_reason?: string | null
           reviewed_at?: string | null

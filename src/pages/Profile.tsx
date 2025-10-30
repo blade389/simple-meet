@@ -17,6 +17,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [profile, setProfile] = useState<any>(null);
+  const [photos, setPhotos] = useState<any[]>([]);
   
   const [formData, setFormData] = useState({
     full_name: '',
@@ -29,6 +30,7 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       loadProfile();
+      loadPhotos();
     }
   }, [user]);
 
@@ -93,15 +95,31 @@ const Profile = () => {
     }
   };
 
+  const loadPhotos = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profile_photo_verifications')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('is_primary', { ascending: false })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPhotos(data || []);
+    } catch (error) {
+      console.error('Error loading photos:', error);
+    }
+  };
+
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     // Check if account is verified
     if (profile?.is_verified !== 'verified') {
       toast({
         title: "Account non verificato",
-        description: "Devi prima verificare il tuo account per caricare una foto profilo",
+        description: "Devi prima verificare il tuo account per caricare foto",
         variant: "destructive"
       });
       return;
@@ -109,35 +127,41 @@ const Profile = () => {
 
     setUploading(true);
     try {
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${user?.id}/profile-${Date.now()}.${fileExt}`;
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const fileExt = file.name.split('.').pop();
+        const filePath = `${user?.id}/profile-${Date.now()}-${Math.random()}.${fileExt}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('profile-photos')
-        .upload(filePath, file, { upsert: true });
+        const { error: uploadError } = await supabase.storage
+          .from('profile-photos')
+          .upload(filePath, file, { upsert: true });
 
-      if (uploadError) throw uploadError;
+        if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('profile-photos')
-        .getPublicUrl(filePath);
+        const { data: { publicUrl } } = supabase.storage
+          .from('profile-photos')
+          .getPublicUrl(filePath);
 
-      // Create photo verification request
-      const { error: verificationError } = await supabase
-        .from('profile_photo_verifications')
-        .insert({
-          user_id: user?.id,
-          photo_url: publicUrl,
-          status: 'pending'
-        });
+        // Check if this is the first photo
+        const isFirstPhoto = photos.length === 0;
 
-      if (verificationError) throw verificationError;
+        // Create photo verification request
+        return await supabase
+          .from('profile_photo_verifications')
+          .insert({
+            user_id: user?.id,
+            photo_url: publicUrl,
+            status: 'pending',
+            is_primary: isFirstPhoto
+          });
+      });
+
+      await Promise.all(uploadPromises);
 
       toast({
-        title: "Foto caricata",
-        description: "La tua foto è stata inviata per la verifica"
+        title: "Foto caricate",
+        description: `${files.length} foto ${files.length === 1 ? 'è stata inviata' : 'sono state inviate'} per la verifica`
       });
-      loadProfile();
+      loadPhotos();
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -146,6 +170,37 @@ const Profile = () => {
       });
     } finally {
       setUploading(false);
+    }
+  };
+
+  const setPrimaryPhoto = async (photoId: string) => {
+    try {
+      // Set all photos as non-primary
+      await supabase
+        .from('profile_photo_verifications')
+        .update({ is_primary: false })
+        .eq('user_id', user?.id);
+
+      // Set selected photo as primary
+      const { error } = await supabase
+        .from('profile_photo_verifications')
+        .update({ is_primary: true })
+        .eq('id', photoId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Foto principale aggiornata",
+        description: "La foto principale è stata modificata"
+      });
+      loadPhotos();
+      loadProfile();
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
     }
   };
 
@@ -190,24 +245,19 @@ const Profile = () => {
         <h2 className="text-3xl font-bold mb-6">Il Mio Profilo</h2>
         
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
-          <Card className="md:col-span-1">
+          <Card className="md:col-span-3">
             <CardHeader>
               <CardTitle>Foto Profilo</CardTitle>
-              <CardDescription>Carica la tua foto profilo</CardDescription>
+              <CardDescription>Carica più foto del tuo profilo (la prima sarà la principale)</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col items-center gap-4">
-              <Avatar className="w-32 h-32">
-                <AvatarImage src={profile?.profile_photo_url} />
-                <AvatarFallback>
-                  {profile?.full_name?.charAt(0)?.toUpperCase() || 'U'}
-                </AvatarFallback>
-              </Avatar>
-              <div>
+            <CardContent className="space-y-6">
+              <div className="flex flex-col items-center gap-4">
                 <input
                   type="file"
                   id="photo-upload"
                   className="hidden"
                   accept="image/*"
+                  multiple
                   onChange={handlePhotoUpload}
                   disabled={uploading || profile?.is_verified !== 'verified'}
                 />
@@ -215,29 +265,74 @@ const Profile = () => {
                   variant="outline"
                   onClick={() => document.getElementById('photo-upload')?.click()}
                   disabled={uploading || profile?.is_verified !== 'verified'}
+                  size="lg"
                 >
                   <Camera className="w-4 h-4 mr-2" />
-                  {uploading ? 'Caricamento...' : 'Cambia Foto'}
+                  {uploading ? 'Caricamento...' : 'Carica Nuove Foto'}
                 </Button>
                 {profile?.is_verified !== 'verified' && (
-                  <p className="text-xs text-muted-foreground mt-2 text-center">
+                  <p className="text-xs text-muted-foreground text-center">
                     Completa prima la verifica dell'account
                   </p>
                 )}
               </div>
-              <div className="text-center mt-4 space-y-2">
+
+              {photos.length > 0 && (
+                <div>
+                  <h3 className="font-semibold mb-4">Le tue foto</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {photos.map((photo) => (
+                      <div key={photo.id} className="relative group">
+                        <img
+                          src={photo.photo_url}
+                          alt="Profile"
+                          className="w-full aspect-square object-cover rounded-lg"
+                        />
+                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center flex-col gap-2">
+                          <div className={`flex items-center gap-2 ${
+                            photo.status === 'verified' ? 'text-green-400' : 
+                            photo.status === 'rejected' ? 'text-red-400' : 
+                            'text-yellow-400'
+                          }`}>
+                            {photo.status === 'verified' ? <CheckCircle className="w-5 h-5" /> : 
+                             photo.status === 'rejected' ? <XCircle className="w-5 h-5" /> : 
+                             <Clock className="w-5 h-5" />}
+                            <span className="text-sm font-medium">
+                              {photo.status === 'verified' ? 'Verificata' : 
+                               photo.status === 'rejected' ? 'Rifiutata' : 
+                               'In attesa'}
+                            </span>
+                          </div>
+                          {photo.is_primary && (
+                            <span className="text-white text-xs font-semibold bg-primary px-2 py-1 rounded">
+                              Principale
+                            </span>
+                          )}
+                          {!photo.is_primary && photo.status === 'verified' && (
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              onClick={() => setPrimaryPhoto(photo.id)}
+                            >
+                              Imposta come principale
+                            </Button>
+                          )}
+                        </div>
+                        {photo.rejection_reason && (
+                          <p className="text-xs text-red-500 mt-1">{photo.rejection_reason}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="text-center pt-4 border-t space-y-2">
                 <div>
                   <p className="text-sm font-medium mb-1">Verifica Account</p>
                   <div className={`flex items-center gap-2 justify-center ${status.color}`}>
                     <StatusIcon className="w-5 h-5" />
                     <span className="text-sm font-medium">{status.text}</span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium mb-1">Verifica Foto</p>
-                  <div className={`flex items-center gap-2 justify-center ${photoStatus.color}`}>
-                    <PhotoStatusIcon className="w-5 h-5" />
-                    <span className="text-sm font-medium">{photoStatus.text}</span>
                   </div>
                 </div>
               </div>

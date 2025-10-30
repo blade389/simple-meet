@@ -109,6 +109,7 @@ const Admin = () => {
       const { data: requests, error: requestsError } = await supabase
         .from('profile_photo_verifications')
         .select('*')
+        .order('is_primary', { ascending: false })
         .order('created_at', { ascending: false });
 
       if (requestsError) throw requestsError;
@@ -377,7 +378,14 @@ const Admin = () => {
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
-                        <CardTitle>{request.profiles?.full_name}</CardTitle>
+                        <CardTitle className="flex items-center gap-2">
+                          {request.profiles?.full_name}
+                          {request.is_primary && (
+                            <span className="text-xs font-normal bg-primary text-primary-foreground px-2 py-1 rounded">
+                              Foto Principale
+                            </span>
+                          )}
+                        </CardTitle>
                         <CardDescription>
                           {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
                         </CardDescription>
