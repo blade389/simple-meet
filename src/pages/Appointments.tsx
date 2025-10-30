@@ -12,6 +12,10 @@ interface AcceptedMatch {
   receiver_id: string;
   senderName?: string;
   receiverName?: string;
+  senderPositiveReviews?: number;
+  senderNegativeReviews?: number;
+  receiverPositiveReviews?: number;
+  receiverNegativeReviews?: number;
 }
 
 const Appointments = () => {
@@ -41,16 +45,28 @@ const Appointments = () => {
           const userIds = [...new Set(data.flatMap(m => [m.sender_id, m.receiver_id]))];
           const { data: profiles } = await supabase
             .from('profiles')
-            .select('id, full_name')
+            .select('id, full_name, positive_reviews_count, negative_reviews_count')
             .in('id', userIds);
 
-          const profileMap = new Map(profiles?.map(p => [p.id, p.full_name]));
+          const profileMap = new Map(profiles?.map(p => [p.id, {
+            name: p.full_name,
+            positiveReviews: p.positive_reviews_count || 0,
+            negativeReviews: p.negative_reviews_count || 0,
+          }]));
           
-          const matchesWithNames = data.map(match => ({
-            ...match,
-            senderName: profileMap.get(match.sender_id),
-            receiverName: profileMap.get(match.receiver_id)
-          }));
+          const matchesWithNames = data.map(match => {
+            const sender = profileMap.get(match.sender_id);
+            const receiver = profileMap.get(match.receiver_id);
+            return {
+              ...match,
+              senderName: sender?.name,
+              senderPositiveReviews: sender?.positiveReviews,
+              senderNegativeReviews: sender?.negativeReviews,
+              receiverName: receiver?.name,
+              receiverPositiveReviews: receiver?.positiveReviews,
+              receiverNegativeReviews: receiver?.negativeReviews,
+            };
+          });
 
           setAcceptedMatches(matchesWithNames);
           setSelectedMatch(data[0].id);
@@ -69,7 +85,9 @@ const Appointments = () => {
     const isUserSender = match.sender_id === currentUserId;
     return {
       id: isUserSender ? match.receiver_id : match.sender_id,
-      name: isUserSender ? match.receiverName : match.senderName
+      name: isUserSender ? match.receiverName : match.senderName,
+      positiveReviews: isUserSender ? match.receiverPositiveReviews : match.senderPositiveReviews,
+      negativeReviews: isUserSender ? match.receiverNegativeReviews : match.senderNegativeReviews,
     };
   };
 
@@ -116,8 +134,11 @@ const Appointments = () => {
                 {acceptedMatches.map((match) => {
                   const otherUser = getOtherUser(match);
                   return (
-                    <TabsTrigger key={match.id} value={match.id}>
-                      {otherUser.name}
+                    <TabsTrigger key={match.id} value={match.id} className="flex items-center gap-2">
+                      <span>{otherUser.name}</span>
+                      <span className="text-xs">
+                        👍🏼 {otherUser.positiveReviews || 0} 👎🏼 {otherUser.negativeReviews || 0}
+                      </span>
                     </TabsTrigger>
                   );
                 })}

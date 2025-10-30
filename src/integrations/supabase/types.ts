@@ -23,6 +23,7 @@ export type Database = {
           location: string | null
           male_user_id: string
           match_request_id: string | null
+          review_deadline: string | null
           status: Database["public"]["Enums"]["appointment_status"] | null
           updated_at: string | null
         }
@@ -34,6 +35,7 @@ export type Database = {
           location?: string | null
           male_user_id: string
           match_request_id?: string | null
+          review_deadline?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
@@ -45,6 +47,7 @@ export type Database = {
           location?: string | null
           male_user_id?: string
           match_request_id?: string | null
+          review_deadline?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
@@ -192,9 +195,11 @@ export type Database = {
           location_lon: number | null
           max_age_preference: number | null
           min_age_preference: number | null
+          negative_reviews_count: number | null
           photo_verification_status:
             | Database["public"]["Enums"]["verification_status"]
             | null
+          positive_reviews_count: number | null
           profile_photo_url: string | null
           updated_at: string | null
         }
@@ -214,9 +219,11 @@ export type Database = {
           location_lon?: number | null
           max_age_preference?: number | null
           min_age_preference?: number | null
+          negative_reviews_count?: number | null
           photo_verification_status?:
             | Database["public"]["Enums"]["verification_status"]
             | null
+          positive_reviews_count?: number | null
           profile_photo_url?: string | null
           updated_at?: string | null
         }
@@ -236,9 +243,11 @@ export type Database = {
           location_lon?: number | null
           max_age_preference?: number | null
           min_age_preference?: number | null
+          negative_reviews_count?: number | null
           photo_verification_status?:
             | Database["public"]["Enums"]["verification_status"]
             | null
+          positive_reviews_count?: number | null
           profile_photo_url?: string | null
           updated_at?: string | null
         }

@@ -7,7 +7,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ChatMessage } from './ChatMessage';
 import { AppointmentForm } from './AppointmentForm';
-import { Send, Calendar } from 'lucide-react';
+import { AppointmentInfo } from './AppointmentInfo';
+import { ReviewForm } from './ReviewForm';
+import { Send, Calendar, MessageCircleOff } from 'lucide-react';
 
 interface MatchChatProps {
   matchRequestId: string;
@@ -22,13 +24,24 @@ interface Message {
   created_at: string;
 }
 
+interface Appointment {
+  id: string;
+  appointment_date: string;
+  location: string;
+  status: string;
+  review_deadline: string | null;
+}
+
 export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchChatProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string>('');
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
-  const [hasAppointment, setHasAppointment] = useState(false);
+  const [appointment, setAppointment] = useState<Appointment | null>(null);
+  const [canReview, setCanReview] = useState(false);
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -60,15 +73,42 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
     const checkAppointment = async () => {
       const { data } = await supabase
         .from('appointments')
-        .select('id')
+        .select('*')
         .eq('match_request_id', matchRequestId)
-        .single();
+        .maybeSingle();
       
-      setHasAppointment(!!data);
+      if (data) {
+        setAppointment(data);
+        
+        // Check if appointment is completed and within review period
+        const now = new Date();
+        const appointmentDate = new Date(data.appointment_date);
+        const oneHourAfter = new Date(appointmentDate.getTime() + 60 * 60 * 1000);
+        const reviewDeadline = data.review_deadline ? new Date(data.review_deadline) : null;
+        
+        const isAfterOneHour = now >= oneHourAfter;
+        const isWithinReviewPeriod = reviewDeadline ? now <= reviewDeadline : false;
+        
+        setCanReview(isAfterOneHour && isWithinReviewPeriod);
+        
+        // Check if user has already reviewed
+        if (isAfterOneHour && currentUserId) {
+          const { data: existingReview } = await supabase
+            .from('reviews')
+            .select('id')
+            .eq('appointment_id', data.id)
+            .eq('reviewer_id', currentUserId)
+            .maybeSingle();
+          
+          setHasReviewed(!!existingReview);
+        }
+      }
     };
 
     fetchMessages();
-    checkAppointment();
+    if (currentUserId) {
+      checkAppointment();
+    }
 
     const channel = supabase
       .channel(`chat:${matchRequestId}`)
@@ -89,7 +129,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [matchRequestId]);
+  }, [matchRequestId, currentUserId]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -127,53 +167,112 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
     }
   };
 
+  const isChatDisabled = canReview || (appointment?.status === 'completed' && !canReview);
+
+  if (canReview && !hasReviewed && showReviewForm) {
+    return (
+      <ReviewForm
+        appointmentId={appointment!.id}
+        reviewedUserId={otherUserId}
+        reviewedUserName={otherUserName}
+        onSuccess={() => {
+          setHasReviewed(true);
+          setShowReviewForm(false);
+          toast({
+            title: 'Recensione inviata',
+            description: 'La tua recensione è stata registrata con successo.',
+          });
+        }}
+      />
+    );
+  }
+
   return (
     <Card className="flex flex-col h-[600px]">
-      <div className="border-b p-4 flex justify-between items-center">
-        <h3 className="font-semibold">Chat con {otherUserName}</h3>
-        {!hasAppointment && !showAppointmentForm && (
+      <div className="border-b p-4 space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold">Chat con {otherUserName}</h3>
+          {!appointment && !showAppointmentForm && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowAppointmentForm(true)}
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Registra Appuntamento
+            </Button>
+          )}
+        </div>
+
+        {appointment && (
+          <AppointmentInfo
+            date={appointment.appointment_date}
+            location={appointment.location}
+          />
+        )}
+
+        {canReview && !hasReviewed && (
           <Button
-            variant="outline"
+            variant="default"
             size="sm"
-            onClick={() => setShowAppointmentForm(true)}
+            className="w-full"
+            onClick={() => setShowReviewForm(true)}
           >
-            <Calendar className="w-4 h-4 mr-2" />
-            Registra Appuntamento
+            Lascia una recensione
           </Button>
+        )}
+
+        {hasReviewed && (
+          <p className="text-sm text-muted-foreground text-center">
+            Hai già lasciato una recensione per questo appuntamento.
+          </p>
         )}
       </div>
 
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        {messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            message={msg.message}
-            isMine={msg.sender_id === currentUserId}
-            timestamp={msg.created_at}
-          />
-        ))}
-      </ScrollArea>
+      {isChatDisabled ? (
+        <div className="flex-1 flex items-center justify-center p-8">
+          <div className="text-center space-y-2">
+            <MessageCircleOff className="w-12 h-12 mx-auto text-muted-foreground" />
+            <p className="text-muted-foreground">
+              La chat è stata chiusa dopo l'appuntamento.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          <ScrollArea className="flex-1 p-4" ref={scrollRef}>
+            {messages.map((msg) => (
+              <ChatMessage
+                key={msg.id}
+                message={msg.message}
+                isMine={msg.sender_id === currentUserId}
+                timestamp={msg.created_at}
+              />
+            ))}
+          </ScrollArea>
 
-      <form onSubmit={sendMessage} className="border-t p-4 flex gap-2">
-        <Input
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Scrivi un messaggio..."
-          disabled={loading}
-        />
-        <Button type="submit" disabled={loading || !newMessage.trim()}>
-          <Send className="w-4 h-4" />
-        </Button>
-      </form>
+          <form onSubmit={sendMessage} className="border-t p-4 flex gap-2">
+            <Input
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Scrivi un messaggio..."
+              disabled={loading}
+            />
+            <Button type="submit" disabled={loading || !newMessage.trim()}>
+              <Send className="w-4 h-4" />
+            </Button>
+          </form>
+        </>
+      )}
 
-      {showAppointmentForm && !hasAppointment && (
+      {showAppointmentForm && !appointment && (
         <div className="p-4 border-t">
           <AppointmentForm
             matchRequestId={matchRequestId}
             otherUserId={otherUserId}
             onSuccess={() => {
               setShowAppointmentForm(false);
-              setHasAppointment(true);
+              window.location.reload();
             }}
           />
         </div>
