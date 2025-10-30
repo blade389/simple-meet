@@ -201,8 +201,8 @@ const Dashboard = () => {
                 <h3 className="text-lg font-semibold mb-1">I Tuoi Gettoni</h3>
                 <p className="text-2xl font-bold">{tokens.amount}</p>
               </div>
-              <Button variant="secondary" size="lg">
-                Acquista Gettoni
+              <Button variant="secondary" size="lg" asChild>
+                <Link to="/buy-tokens">Acquista Gettoni</Link>
               </Button>
             </div>
           </Card>

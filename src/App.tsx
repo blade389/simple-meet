@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Appointments from "./pages/Appointments";
 import Verify from "./pages/Verify";
 import Admin from "./pages/Admin";
+import BuyTokens from "./pages/BuyTokens";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/verify" element={<Verify />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/buy-tokens" element={<BuyTokens />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
