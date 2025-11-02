@@ -40,19 +40,38 @@ serve(async (req) => {
     
     logStep("User authenticated", { userId: user.id });
 
+    // First check database for manual premium activations
+    logStep("Checking database for premium status");
+    const { data: profile, error: profileError } = await supabaseClient
+      .from("profiles")
+      .select("is_premium, subscription_status, subscription_end, stripe_product_id")
+      .eq("id", user.id)
+      .single();
+
+    if (!profileError && profile?.is_premium && profile?.subscription_status === "active") {
+      logStep("Found active premium in database", { 
+        subscriptionEnd: profile.subscription_end,
+        productId: profile.stripe_product_id 
+      });
+      return new Response(
+        JSON.stringify({
+          isPremium: true,
+          subscriptionEnd: profile.subscription_end,
+          productId: profile.stripe_product_id,
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        }
+      );
+    }
+
+    // If not manually activated, check Stripe
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     
     if (customers.data.length === 0) {
-      logStep("No customer found");
-      await supabaseClient.from('profiles').update({
-        is_premium: false,
-        subscription_status: null,
-        subscription_end: null,
-        stripe_subscription_id: null,
-        stripe_product_id: null
-      }).eq('id', user.id);
-      
+      logStep("No customer found and no manual activation");
       return new Response(JSON.stringify({ isPremium: false }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
