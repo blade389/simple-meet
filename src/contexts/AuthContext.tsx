@@ -7,6 +7,9 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  isPremium: boolean;
+  subscriptionEnd: string | null;
+  checkPremiumStatus: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -16,7 +19,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isPremium, setIsPremium] = useState(false);
+  const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const checkPremiumStatus = async () => {
+    if (!session) return;
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('check-premium-subscription');
+      if (error) throw error;
+      
+      setIsPremium(data.isPremium || false);
+      setSubscriptionEnd(data.subscriptionEnd || null);
+    } catch (error) {
+      console.error('Error checking premium status:', error);
+    }
+  };
 
   useEffect(() => {
     // Setup auth state listener
@@ -27,6 +46,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         
         if (event === 'SIGNED_IN') {
           navigate('/dashboard');
+          // Check premium status after sign in
+          if (session) {
+            setTimeout(() => {
+              checkPremiumStatus();
+            }, 0);
+          }
         }
       }
     );
@@ -36,6 +61,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+      
+      // Check premium status if user exists
+      if (session) {
+        setTimeout(() => {
+          checkPremiumStatus();
+        }, 0);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -47,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isPremium, subscriptionEnd, checkPremiumStatus, signOut }}>
       {children}
     </AuthContext.Provider>
   );

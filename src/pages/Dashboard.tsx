@@ -3,7 +3,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -18,7 +19,7 @@ interface TokenBalance {
 }
 
 const Dashboard = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isPremium } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [tokens, setTokens] = useState<TokenBalance | null>(null);
   const [loading, setLoading] = useState(true);
@@ -253,6 +254,61 @@ const Dashboard = () => {
             </div>
           </Card>
         </div>
+
+        {/* Premium Section */}
+        {profile?.gender === 'female' && !isPremium && (
+          <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
+            <Link to="/premium-subscription" className="block">
+              <div className="flex items-center gap-4">
+                <Crown className="w-12 h-12 text-yellow-500" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                    Diventa Premium
+                    <Badge className="bg-yellow-500 text-black">Nuovo!</Badge>
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Aumenta la tua visibilità e imposta le tue tariffe personalizzate
+                  </p>
+                </div>
+                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black">
+                  Scopri di più
+                </Button>
+              </div>
+            </Link>
+          </Card>
+        )}
+
+        {profile?.gender === 'female' && isPremium && (
+          <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
+            <Link to="/premium-requests" className="block">
+              <div className="flex items-center gap-4">
+                <Crown className="w-12 h-12 text-yellow-500" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">Richieste Premium</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Gestisci le tue richieste di appuntamento premium
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </Card>
+        )}
+
+        {profile?.gender === 'male' && (
+          <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
+            <Link to="/premium-profiles" className="block">
+              <div className="flex items-center gap-4">
+                <Crown className="w-12 h-12 text-yellow-500" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">Profili Premium</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Scopri i profili premium disponibili nella tua zona
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </Card>
+        )}
 
         {isAdmin && (
           <Card className="p-6 mb-8 bg-gradient-primary text-white">

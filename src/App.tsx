@@ -13,6 +13,9 @@ import Appointments from "./pages/Appointments";
 import Verify from "./pages/Verify";
 import Admin from "./pages/Admin";
 import BuyTokens from "./pages/BuyTokens";
+import PremiumProfiles from "./pages/PremiumProfiles";
+import PremiumRequests from "./pages/PremiumRequests";
+import PremiumSubscription from "./pages/PremiumSubscription";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +37,9 @@ const App = () => (
             <Route path="/verify" element={<Verify />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/buy-tokens" element={<BuyTokens />} />
+            <Route path="/premium-profiles" element={<PremiumProfiles />} />
+            <Route path="/premium-requests" element={<PremiumRequests />} />
+            <Route path="/premium-subscription" element={<PremiumSubscription />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
