@@ -171,10 +171,13 @@ const ConversationReviews = () => {
         });
       }
 
-      // Update match request status
+      // Close the match request (remove from appointments section)
       await supabase
         .from('match_requests')
-        .update({ chat_status: 'blocked' })
+        .update({ 
+          status: 'rejected',
+          chat_status: 'blocked' 
+        })
         .eq('id', review.match_request_id);
 
       setAdminNotes('');
