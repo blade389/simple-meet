@@ -177,6 +177,7 @@ export type Database = {
       premium_rates: {
         Row: {
           created_at: string | null
+          description: string | null
           duration_hours: number
           id: string
           price_euros: number
@@ -184,6 +185,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          description?: string | null
           duration_hours: number
           id?: string
           price_euros: number
@@ -191,6 +193,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          description?: string | null
           duration_hours?: number
           id?: string
           price_euros?: number

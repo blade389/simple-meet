@@ -7,12 +7,14 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Plus, Trash2, Euro, Clock } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Euro, Clock, FileText } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 interface PremiumRate {
   id: string;
   duration_hours: number;
   price_euros: number;
+  description?: string;
 }
 
 const PremiumRatesManagement = () => {
@@ -23,6 +25,7 @@ const PremiumRatesManagement = () => {
   const [loading, setLoading] = useState(true);
   const [newDuration, setNewDuration] = useState('');
   const [newPrice, setNewPrice] = useState('');
+  const [newDescription, setNewDescription] = useState('');
   const [addingRate, setAddingRate] = useState(false);
 
   useEffect(() => {
@@ -85,6 +88,7 @@ const PremiumRatesManagement = () => {
           user_id: user!.id,
           duration_hours: duration,
           price_euros: price,
+          description: newDescription || null,
         });
 
       if (error) throw error;
@@ -96,6 +100,7 @@ const PremiumRatesManagement = () => {
 
       setNewDuration('');
       setNewPrice('');
+      setNewDescription('');
       loadRates();
     } catch (error) {
       console.error('Error adding rate:', error);
@@ -198,6 +203,21 @@ const PremiumRatesManagement = () => {
                 </div>
               </div>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">
+                Descrizione <span className="text-muted-foreground text-xs">(opzionale)</span>
+              </Label>
+              <div className="relative">
+                <FileText className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                <Textarea
+                  id="description"
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  placeholder="es. Include cena romantica e massaggio"
+                  className="pl-10 min-h-[80px]"
+                />
+              </div>
+            </div>
             <Button type="submit" disabled={addingRate} className="w-full">
               {addingRate ? 'Aggiunta in corso...' : 'Aggiungi Tariffa'}
             </Button>
@@ -217,22 +237,30 @@ const PremiumRatesManagement = () => {
             <div className="space-y-3">
               {rates.map((rate) => (
                 <Card key={rate.id} className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-primary" />
-                        <span className="font-medium">{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-5 h-5 text-primary" />
+                          <span className="font-medium">{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Euro className="w-5 h-5 text-primary" />
+                          <span className="font-medium text-lg">{rate.price_euros}€</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Euro className="w-5 h-5 text-primary" />
-                        <span className="font-medium text-lg">{rate.price_euros}€</span>
-                      </div>
+                      {rate.description && (
+                        <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <FileText className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                          <p>{rate.description}</p>
+                        </div>
+                      )}
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDeleteRate(rate.id)}
-                      className="text-destructive hover:text-destructive"
+                      className="text-destructive hover:text-destructive flex-shrink-0"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
