@@ -18,6 +18,11 @@ interface AcceptedMatch {
   senderNegativeReviews?: number;
   receiverPositiveReviews?: number;
   receiverNegativeReviews?: number;
+  premiumRate?: {
+    price_euros: number;
+    duration_hours: number;
+    description?: string;
+  };
 }
 
 const Appointments = () => {
@@ -36,7 +41,13 @@ const Appointments = () => {
 
         const { data, error } = await supabase
           .from('match_requests')
-          .select('id, sender_id, receiver_id, is_premium')
+          .select(`
+            id, 
+            sender_id, 
+            receiver_id, 
+            is_premium,
+            premium_rates:selected_rate_id(price_euros, duration_hours, description)
+          `)
           .eq('status', 'accepted')
           .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`);
 
@@ -67,6 +78,7 @@ const Appointments = () => {
               receiverName: receiver?.name,
               receiverPositiveReviews: receiver?.positiveReviews,
               receiverNegativeReviews: receiver?.negativeReviews,
+              premiumRate: (match as any).premium_rates || undefined,
             };
           });
 
@@ -161,6 +173,7 @@ const Appointments = () => {
                       otherUserName={otherUser.name}
                       otherUserId={otherUser.id}
                       isPremium={match.is_premium}
+                      premiumRate={match.premiumRate}
                     />
                   </TabsContent>
                 );

@@ -17,6 +17,11 @@ interface MatchChatProps {
   otherUserName: string;
   otherUserId: string;
   isPremium?: boolean;
+  premiumRate?: {
+    price_euros: number;
+    duration_hours: number;
+    description?: string;
+  };
 }
 
 interface Message {
@@ -35,7 +40,7 @@ interface Appointment {
   is_premium: boolean;
 }
 
-export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremium }: MatchChatProps) => {
+export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremium, premiumRate }: MatchChatProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -208,13 +213,19 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     <Card className="flex flex-col h-[600px]">
       <div className="border-b p-4 space-y-3">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <h3 className="font-semibold">Chat con {otherUserName}</h3>
             {isPremium && (
               <Badge className="bg-yellow-500 text-black text-xs">
                 <Crown className="h-3 w-3 mr-1" />
                 Premium
               </Badge>
+            )}
+            {isPremium && premiumRate && (
+              <span className="text-sm text-muted-foreground">
+                €{premiumRate.price_euros} • {premiumRate.duration_hours}h
+                {premiumRate.description && ` • ${premiumRate.description}`}
+              </span>
             )}
           </div>
           {!appointment && !showAppointmentForm && isFemaleUser && (
