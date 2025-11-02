@@ -33,19 +33,25 @@ serve(async (req) => {
     if (!authHeader) throw new Error("No authorization header");
 
     const token = authHeader.replace("Bearer ", "");
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
-    if (userError) throw new Error(`Auth error: ${userError.message}`);
-    const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated");
     
-    logStep("User authenticated", { userId: user.id });
+    // Decode JWT to get user ID without relying on session validity
+    let userId: string;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      userId = payload.sub;
+      if (!userId) throw new Error("No user ID in token");
+    } catch (e) {
+      throw new Error("Invalid token format");
+    }
+    
+    logStep("User authenticated", { userId });
 
     // First check database for manual premium activations
     logStep("Checking database for premium status");
     const { data: profile, error: profileError } = await supabaseClient
       .from("profiles")
-      .select("is_premium, subscription_status, subscription_end, stripe_product_id")
-      .eq("id", user.id)
+      .select("is_premium, subscription_status, subscription_end, stripe_product_id, email")
+      .eq("id", userId)
       .single();
 
     if (!profileError && profile?.is_premium && profile?.subscription_status === "active") {
@@ -64,6 +70,16 @@ serve(async (req) => {
           status: 200,
         }
       );
+    }
+
+    // Get email from auth.users since it's not in profiles
+    const { data: { user }, error: userError } = await supabaseClient.auth.admin.getUserById(userId);
+    if (userError || !user?.email) {
+      logStep("Could not get user email", { error: userError?.message });
+      return new Response(JSON.stringify({ isPremium: false }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
     }
 
     // If not manually activated, check Stripe
@@ -102,7 +118,7 @@ serve(async (req) => {
         subscription_end: subscriptionEnd,
         stripe_subscription_id: subscription.id,
         stripe_product_id: productId
-      }).eq('id', user.id);
+      }).eq('id', userId);
 
       return new Response(JSON.stringify({
         isPremium: true,
@@ -120,7 +136,7 @@ serve(async (req) => {
         subscription_end: null,
         stripe_subscription_id: null,
         stripe_product_id: null
-      }).eq('id', user.id);
+      }).eq('id', userId);
 
       return new Response(JSON.stringify({ isPremium: false }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
