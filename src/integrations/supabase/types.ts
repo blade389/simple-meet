@@ -20,10 +20,12 @@ export type Database = {
           created_at: string | null
           female_user_id: string
           id: string
+          is_premium: boolean | null
           location: string | null
           male_user_id: string
           match_request_id: string | null
           review_deadline: string | null
+          selected_rate_id: string | null
           status: Database["public"]["Enums"]["appointment_status"] | null
           updated_at: string | null
         }
@@ -32,10 +34,12 @@ export type Database = {
           created_at?: string | null
           female_user_id: string
           id?: string
+          is_premium?: boolean | null
           location?: string | null
           male_user_id: string
           match_request_id?: string | null
           review_deadline?: string | null
+          selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
@@ -44,10 +48,12 @@ export type Database = {
           created_at?: string | null
           female_user_id?: string
           id?: string
+          is_premium?: boolean | null
           location?: string | null
           male_user_id?: string
           match_request_id?: string | null
           review_deadline?: string | null
+          selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
         }
@@ -57,6 +63,13 @@ export type Database = {
             columns: ["match_request_id"]
             isOneToOne: false
             referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_selected_rate_id_fkey"
+            columns: ["selected_rate_id"]
+            isOneToOne: false
+            referencedRelation: "premium_rates"
             referencedColumns: ["id"]
           },
         ]
@@ -119,8 +132,10 @@ export type Database = {
           created_at: string | null
           expires_at: string | null
           id: string
+          is_premium: boolean | null
           message: string | null
           receiver_id: string
+          selected_rate_id: string | null
           sender_id: string
           status: string | null
           updated_at: string | null
@@ -129,8 +144,10 @@ export type Database = {
           created_at?: string | null
           expires_at?: string | null
           id?: string
+          is_premium?: boolean | null
           message?: string | null
           receiver_id: string
+          selected_rate_id?: string | null
           sender_id: string
           status?: string | null
           updated_at?: string | null
@@ -139,11 +156,45 @@ export type Database = {
           created_at?: string | null
           expires_at?: string | null
           id?: string
+          is_premium?: boolean | null
           message?: string | null
           receiver_id?: string
+          selected_rate_id?: string | null
           sender_id?: string
           status?: string | null
           updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_requests_selected_rate_id_fkey"
+            columns: ["selected_rate_id"]
+            isOneToOne: false
+            referencedRelation: "premium_rates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      premium_rates: {
+        Row: {
+          created_at: string | null
+          duration_hours: number
+          id: string
+          price_euros: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          duration_hours: number
+          id?: string
+          price_euros: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          duration_hours?: number
+          id?: string
+          price_euros?: number
+          user_id?: string
         }
         Relationships: []
       }
@@ -192,6 +243,7 @@ export type Database = {
           gender: Database["public"]["Enums"]["gender"]
           id: string
           is_blocked: boolean | null
+          is_premium: boolean | null
           is_verified: Database["public"]["Enums"]["verification_status"] | null
           location_city: string
           location_lat: number | null
@@ -204,6 +256,10 @@ export type Database = {
             | null
           positive_reviews_count: number | null
           profile_photo_url: string | null
+          stripe_product_id: string | null
+          stripe_subscription_id: string | null
+          subscription_end: string | null
+          subscription_status: string | null
           updated_at: string | null
         }
         Insert: {
@@ -214,6 +270,7 @@ export type Database = {
           gender: Database["public"]["Enums"]["gender"]
           id: string
           is_blocked?: boolean | null
+          is_premium?: boolean | null
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]
             | null
@@ -228,6 +285,10 @@ export type Database = {
             | null
           positive_reviews_count?: number | null
           profile_photo_url?: string | null
+          stripe_product_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_end?: string | null
+          subscription_status?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -238,6 +299,7 @@ export type Database = {
           gender?: Database["public"]["Enums"]["gender"]
           id?: string
           is_blocked?: boolean | null
+          is_premium?: boolean | null
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]
             | null
@@ -252,6 +314,10 @@ export type Database = {
             | null
           positive_reviews_count?: number | null
           profile_photo_url?: string | null
+          stripe_product_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_end?: string | null
+          subscription_status?: string | null
           updated_at?: string | null
         }
         Relationships: []
