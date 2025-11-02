@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, MapPin, Crown } from 'lucide-react';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface Profile {
   id: string;
@@ -27,6 +28,7 @@ interface PremiumRate {
 const PremiumProfiles = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { toast } = useToast();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
@@ -67,6 +69,47 @@ const PremiumProfiles = () => {
       age--;
     }
     return age;
+  };
+
+  const handleSendRequest = async (selectedRateId?: string, message?: string) => {
+    if (!user || !selectedProfile) return;
+
+    try {
+      const { error: requestError } = await supabase
+        .from('match_requests')
+        .insert({
+          sender_id: user.id,
+          receiver_id: selectedProfile.id,
+          is_premium: true,
+          selected_rate_id: selectedRateId,
+          message: message,
+          status: 'pending',
+        });
+
+      if (requestError) throw requestError;
+
+      // Send email notification
+      await supabase.functions.invoke('send-match-request-email', {
+        body: {
+          receiverId: selectedProfile.id,
+          senderName: user.email,
+        },
+      });
+
+      toast({
+        title: 'Richiesta inviata!',
+        description: 'La tua richiesta premium è stata inviata con successo.',
+      });
+
+      loadProfiles();
+    } catch (error) {
+      console.error('Error sending request:', error);
+      toast({
+        title: 'Errore',
+        description: 'Si è verificato un errore durante l\'invio della richiesta.',
+        variant: 'destructive',
+      });
+    }
   };
 
   if (loading) {
@@ -162,8 +205,11 @@ const PremiumProfiles = () => {
             bio: selectedProfile.bio,
             birth_date: selectedProfile.birth_date,
             location_city: selectedProfile.location_city,
-            profile_photo_url: selectedProfile.profile_photo_url
+            profile_photo_url: selectedProfile.profile_photo_url,
+            is_premium: selectedProfile.is_premium
           }}
+          onSendRequest={handleSendRequest}
+          showSendRequest={true}
         />
       )}
     </div>
