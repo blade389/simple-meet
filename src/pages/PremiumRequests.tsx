@@ -47,14 +47,19 @@ const PremiumRequests = () => {
       const { data, error } = await supabase
         .from('match_requests')
         .select(`
-          *,
-          profiles!match_requests_sender_id_fkey(
+          id,
+          sender_id,
+          message,
+          created_at,
+          is_premium,
+          selected_rate_id,
+          sender:profiles!fk_match_requests_sender(
             full_name,
             birth_date,
             location_city,
             profile_photo_url
           ),
-          premium_rates!match_requests_selected_rate_id_fkey(
+          premium_rate:premium_rates!fk_match_requests_selected_rate(
             duration_hours,
             price_euros
           )
@@ -65,15 +70,7 @@ const PremiumRequests = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
-      // Transform the data to match the expected interface
-      const transformedData = data?.map(request => ({
-        ...request,
-        sender: request.profiles,
-        premium_rate: request.premium_rates
-      })) || [];
-      
-      setRequests(transformedData as any);
+      setRequests((data as any) || []);
     } catch (error) {
       console.error('Error loading premium requests:', error);
     } finally {
