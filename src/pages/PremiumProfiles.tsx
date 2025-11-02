@@ -75,6 +75,33 @@ const PremiumProfiles = () => {
     if (!user || !selectedProfile) return;
 
     try {
+      // Check token balance first
+      const { data: tokenData, error: tokenFetchError } = await supabase
+        .from('tokens')
+        .select('amount')
+        .eq('user_id', user.id)
+        .single();
+
+      if (tokenFetchError) throw tokenFetchError;
+
+      if (!tokenData || tokenData.amount < 1) {
+        toast({
+          title: 'Gettoni insufficienti',
+          description: 'Hai bisogno di almeno 1 gettone per inviare una richiesta premium.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Deduct 1 token
+      const { error: tokenUpdateError } = await supabase
+        .from('tokens')
+        .update({ amount: tokenData.amount - 1, last_updated: new Date().toISOString() })
+        .eq('user_id', user.id);
+
+      if (tokenUpdateError) throw tokenUpdateError;
+
+      // Create match request
       const { error: requestError } = await supabase
         .from('match_requests')
         .insert({
@@ -86,19 +113,31 @@ const PremiumProfiles = () => {
           status: 'pending',
         });
 
-      if (requestError) throw requestError;
+      if (requestError) {
+        // Rollback token deduction if request creation fails
+        await supabase
+          .from('tokens')
+          .update({ amount: tokenData.amount, last_updated: new Date().toISOString() })
+          .eq('user_id', user.id);
+        throw requestError;
+      }
 
       // Send email notification
-      await supabase.functions.invoke('send-match-request-email', {
-        body: {
-          receiverId: selectedProfile.id,
-          senderName: user.email,
-        },
-      });
+      try {
+        await supabase.functions.invoke('send-match-request-email', {
+          body: {
+            receiverId: selectedProfile.id,
+            senderName: user.email,
+          },
+        });
+      } catch (emailError) {
+        console.error('Error sending email:', emailError);
+        // Don't throw - email failure shouldn't block the request
+      }
 
       toast({
         title: 'Richiesta inviata!',
-        description: 'La tua richiesta premium è stata inviata con successo.',
+        description: 'La tua richiesta premium è stata inviata con successo. 1 gettone scalato.',
       });
 
       loadProfiles();

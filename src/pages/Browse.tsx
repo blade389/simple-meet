@@ -253,6 +253,15 @@ const Browse = () => {
       const request = matchRequests.find(r => r.id === requestId);
       if (!request) throw new Error("Richiesta non trovata");
 
+      // Get full request details including is_premium flag
+      const { data: requestData, error: requestFetchError } = await supabase
+        .from('match_requests')
+        .select('is_premium, sender_id')
+        .eq('id', requestId)
+        .single();
+
+      if (requestFetchError) throw requestFetchError;
+
       // Update match request status
       const { error: updateError } = await supabase
         .from('match_requests')
@@ -261,8 +270,33 @@ const Browse = () => {
 
       if (updateError) throw updateError;
 
-      // If rejecting, deduct token
-      if (action === 'rejected') {
+      // If rejecting a premium request and the current user is premium, refund token to sender
+      if (action === 'rejected' && requestData.is_premium && myProfile?.is_premium) {
+        const { data: senderTokenData, error: senderTokenFetchError } = await supabase
+          .from('tokens')
+          .select('amount')
+          .eq('user_id', requestData.sender_id)
+          .single();
+
+        if (senderTokenFetchError) {
+          console.error("Error fetching sender tokens:", senderTokenFetchError);
+        } else {
+          const { error: tokenRefundError } = await supabase
+            .from('tokens')
+            .update({ 
+              amount: senderTokenData.amount + 1,
+              last_updated: new Date().toISOString()
+            })
+            .eq('user_id', requestData.sender_id);
+
+          if (tokenRefundError) {
+            console.error("Error refunding token:", tokenRefundError);
+          }
+        }
+      }
+
+      // If rejecting (non-premium request), deduct token from receiver
+      if (action === 'rejected' && !requestData.is_premium) {
         const { data: tokenData, error: tokenFetchError } = await supabase
           .from('tokens')
           .select('amount')
@@ -301,6 +335,8 @@ const Browse = () => {
           ? "Puoi procedere a fissare un appuntamento" 
           : blockUser
           ? "L'utente è stato bloccato e non potrà più inviarti richieste"
+          : requestData.is_premium && myProfile?.is_premium
+          ? "La richiesta premium è stata rifiutata e il gettone è stato rimborsato"
           : "La richiesta è stata rifiutata"
       });
 
