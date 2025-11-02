@@ -291,7 +291,7 @@ const Dashboard = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Gestisci le tue tariffe e richieste premium
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" asChild>
                     <Link to="/premium-rates">Gestisci Tariffe</Link>
                   </Button>
