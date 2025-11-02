@@ -46,7 +46,7 @@ const Appointments = () => {
             sender_id, 
             receiver_id, 
             is_premium,
-            premium_rates:selected_rate_id(price_euros, duration_hours, description)
+            premium_rates!match_requests_selected_rate_id_fkey(price_euros, duration_hours, description)
           `)
           .eq('status', 'accepted')
           .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`);
