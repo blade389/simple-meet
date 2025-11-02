@@ -9,12 +9,14 @@ import { ChatMessage } from './ChatMessage';
 import { AppointmentForm } from './AppointmentForm';
 import { AppointmentInfo } from './AppointmentInfo';
 import { ReviewForm } from './ReviewForm';
-import { Send, Calendar, MessageCircleOff } from 'lucide-react';
+import { Send, Calendar, MessageCircleOff, Crown } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface MatchChatProps {
   matchRequestId: string;
   otherUserName: string;
   otherUserId: string;
+  isPremium?: boolean;
 }
 
 interface Message {
@@ -33,7 +35,7 @@ interface Appointment {
   is_premium: boolean;
 }
 
-export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchChatProps) => {
+export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremium }: MatchChatProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -206,7 +208,15 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
     <Card className="flex flex-col h-[600px]">
       <div className="border-b p-4 space-y-3">
         <div className="flex justify-between items-center">
-          <h3 className="font-semibold">Chat con {otherUserName}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="font-semibold">Chat con {otherUserName}</h3>
+            {isPremium && (
+              <Badge className="bg-yellow-500 text-black text-xs">
+                <Crown className="h-3 w-3 mr-1" />
+                Premium
+              </Badge>
+            )}
+          </div>
           {!appointment && !showAppointmentForm && isFemaleUser && (
             <Button
               variant="outline"

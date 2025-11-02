@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-import { Heart, ArrowLeft, MessageCircle } from 'lucide-react';
+import { Heart, ArrowLeft, MessageCircle, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { MatchChat } from '@/components/MatchChat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 
 interface AcceptedMatch {
   id: string;
   sender_id: string;
   receiver_id: string;
+  is_premium: boolean;
   senderName?: string;
   receiverName?: string;
   senderPositiveReviews?: number;
@@ -34,7 +36,7 @@ const Appointments = () => {
 
         const { data, error } = await supabase
           .from('match_requests')
-          .select('id, sender_id, receiver_id')
+          .select('id, sender_id, receiver_id, is_premium')
           .eq('status', 'accepted')
           .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`);
 
@@ -136,6 +138,12 @@ const Appointments = () => {
                   return (
                     <TabsTrigger key={match.id} value={match.id} className="flex items-center gap-2">
                       <span>{otherUser.name}</span>
+                      {match.is_premium && (
+                        <Badge className="bg-yellow-500 text-black text-xs">
+                          <Crown className="h-3 w-3 mr-1" />
+                          Premium
+                        </Badge>
+                      )}
                       <span className="text-xs">
                         👍🏼 {otherUser.positiveReviews || 0} 👎🏼 {otherUser.negativeReviews || 0}
                       </span>
@@ -152,6 +160,7 @@ const Appointments = () => {
                       matchRequestId={match.id}
                       otherUserName={otherUser.name}
                       otherUserId={otherUser.id}
+                      isPremium={match.is_premium}
                     />
                   </TabsContent>
                 );
