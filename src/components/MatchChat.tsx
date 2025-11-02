@@ -30,6 +30,7 @@ interface Appointment {
   location: string;
   status: string;
   review_deadline: string | null;
+  is_premium: boolean;
 }
 
 export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchChatProps) => {
@@ -222,6 +223,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId }: MatchC
           <AppointmentInfo
             date={appointment.appointment_date}
             location={appointment.location}
+            isPremium={appointment.is_premium}
           />
         )}
 

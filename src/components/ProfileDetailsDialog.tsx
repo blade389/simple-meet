@@ -1,14 +1,26 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar, MapPin, Crown, Clock, Euro, Send } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProfilePhoto {
   id: string;
   photo_url: string;
   is_primary: boolean;
+}
+
+interface PremiumRate {
+  id: string;
+  duration_hours: number;
+  price_euros: number;
 }
 
 interface ProfileDetailsDialogProps {
@@ -21,19 +33,36 @@ interface ProfileDetailsDialogProps {
     birth_date: string;
     location_city: string;
     profile_photo_url: string | null;
+    is_premium?: boolean;
     distance?: number;
   };
+  onSendRequest?: (selectedRateId?: string, message?: string) => Promise<void>;
+  showSendRequest?: boolean;
 }
 
-const ProfileDetailsDialog = ({ open, onOpenChange, profile }: ProfileDetailsDialogProps) => {
+const ProfileDetailsDialog = ({ 
+  open, 
+  onOpenChange, 
+  profile,
+  onSendRequest,
+  showSendRequest = false 
+}: ProfileDetailsDialogProps) => {
   const [photos, setPhotos] = useState<ProfilePhoto[]>([]);
+  const [premiumRates, setPremiumRates] = useState<PremiumRate[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRateId, setSelectedRateId] = useState<string>('');
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (open && profile.id) {
       loadPhotos();
+      if (profile.is_premium) {
+        loadPremiumRates();
+      }
     }
-  }, [open, profile.id]);
+  }, [open, profile.id, profile.is_premium]);
 
   const loadPhotos = async () => {
     try {
@@ -55,6 +84,46 @@ const ProfileDetailsDialog = ({ open, onOpenChange, profile }: ProfileDetailsDia
     }
   };
 
+  const loadPremiumRates = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('premium_rates')
+        .select('*')
+        .eq('user_id', profile.id)
+        .order('duration_hours', { ascending: true });
+
+      if (error) throw error;
+      setPremiumRates(data || []);
+    } catch (error) {
+      console.error('Error loading premium rates:', error);
+    }
+  };
+
+  const handleSendRequest = async () => {
+    if (!onSendRequest) return;
+    
+    if (profile.is_premium && !selectedRateId) {
+      toast({
+        title: 'Seleziona una tariffa',
+        description: 'Devi selezionare una tariffa per inviare una richiesta premium.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setSending(true);
+    try {
+      await onSendRequest(profile.is_premium ? selectedRateId : undefined, message);
+      onOpenChange(false);
+      setSelectedRateId('');
+      setMessage('');
+    } catch (error) {
+      console.error('Error sending request:', error);
+    } finally {
+      setSending(false);
+    }
+  };
+
   const calculateAge = (birthDate: string): number => {
     const today = new Date();
     const birth = new Date(birthDate);
@@ -70,7 +139,15 @@ const ProfileDetailsDialog = ({ open, onOpenChange, profile }: ProfileDetailsDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">{profile.full_name}</DialogTitle>
+          <DialogTitle className="text-2xl flex items-center gap-2">
+            {profile.full_name}
+            {profile.is_premium && (
+              <Badge variant="secondary" className="gap-1">
+                <Crown className="w-3 h-3" />
+                Premium
+              </Badge>
+            )}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -131,6 +208,80 @@ const ProfileDetailsDialog = ({ open, onOpenChange, profile }: ProfileDetailsDia
               <div className="pt-4 border-t">
                 <h3 className="font-semibold mb-2">Bio</h3>
                 <p className="text-muted-foreground whitespace-pre-wrap">{profile.bio}</p>
+              </div>
+            )}
+
+            {/* Premium Rates Section */}
+            {profile.is_premium && premiumRates.length > 0 && (
+              <div className="pt-4 border-t">
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <Crown className="w-4 h-4 text-primary" />
+                  Tariffe Premium
+                </h3>
+                <div className="space-y-2">
+                  {premiumRates.map((rate) => (
+                    <div
+                      key={rate.id}
+                      className="flex items-center justify-between p-3 rounded-lg bg-primary/5 border border-primary/20"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-sm">
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span>{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                        </div>
+                        <div className="flex items-center gap-1 font-semibold text-primary">
+                          <Euro className="w-4 h-4" />
+                          <span>{rate.price_euros}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Send Request Section */}
+            {showSendRequest && onSendRequest && (
+              <div className="pt-4 border-t space-y-4">
+                <h3 className="font-semibold">Invia Richiesta</h3>
+                
+                {profile.is_premium && premiumRates.length > 0 && (
+                  <div className="space-y-3">
+                    <Label>Seleziona Tariffa *</Label>
+                    <RadioGroup value={selectedRateId} onValueChange={setSelectedRateId}>
+                      {premiumRates.map((rate) => (
+                        <div key={rate.id} className="flex items-center space-x-2">
+                          <RadioGroupItem value={rate.id} id={rate.id} />
+                          <Label htmlFor={rate.id} className="flex items-center gap-3 cursor-pointer">
+                            <Clock className="w-4 h-4 text-primary" />
+                            <span>{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                            <span className="font-semibold text-primary">€{rate.price_euros}</span>
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <Label htmlFor="message">Messaggio (opzionale)</Label>
+                  <Textarea
+                    id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Scrivi un messaggio..."
+                    rows={3}
+                  />
+                </div>
+
+                <Button
+                  onClick={handleSendRequest}
+                  disabled={sending || (profile.is_premium && !selectedRateId)}
+                  className="w-full"
+                >
+                  <Send className="w-4 h-4 mr-2" />
+                  {sending ? 'Invio in corso...' : 'Invia Richiesta'}
+                </Button>
               </div>
             )}
           </div>

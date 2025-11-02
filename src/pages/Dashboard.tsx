@@ -255,7 +255,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Premium Section */}
+        {/* Premium Section - Female Non-Premium */}
         {profile?.gender === 'female' && !isPremium && (
           <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
             <Link to="/premium-subscription" className="block">
@@ -278,19 +278,32 @@ const Dashboard = () => {
           </Card>
         )}
 
+        {/* Premium Section - Female Premium */}
         {profile?.gender === 'female' && isPremium && (
           <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
-            <Link to="/premium-requests" className="block">
-              <div className="flex items-center gap-4">
-                <Crown className="w-12 h-12 text-yellow-500" />
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Richieste Premium</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Gestisci le tue richieste di appuntamento premium
-                  </p>
+            <div className="flex items-center gap-4">
+              <Crown className="w-12 h-12 text-yellow-500" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                  Account Premium Attivo
+                  <Badge className="bg-yellow-500 text-black">Premium</Badge>
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Gestisci le tue tariffe e richieste premium
+                </p>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/premium-rates">Gestisci Tariffe</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/premium-requests">Richieste Premium</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/premium-subscription">Gestisci Abbonamento</Link>
+                  </Button>
                 </div>
               </div>
-            </Link>
+            </div>
           </Card>
         )}
 
