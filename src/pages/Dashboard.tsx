@@ -25,13 +25,62 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [updatingLocation, setUpdatingLocation] = useState(false);
+  const [premiumRequestsCount, setPremiumRequestsCount] = useState(0);
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   useEffect(() => {
     if (user) {
       loadProfile();
       loadTokens();
       checkAdminRole();
+      loadPremiumRequestsCount();
+      loadUnreadMessagesCount();
     }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Realtime subscription for premium requests
+    const premiumRequestsChannel = supabase
+      .channel('premium-requests-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'match_requests',
+          filter: `receiver_id=eq.${user.id}`
+        },
+        () => {
+          loadPremiumRequestsCount();
+        }
+      )
+      .subscribe();
+
+    // Realtime subscription for chat messages
+    const messagesChannel = supabase
+      .channel('messages-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'chat_messages'
+        },
+        (payload) => {
+          // Only count if message is not from current user
+          if (payload.new.sender_id !== user.id) {
+            loadUnreadMessagesCount();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(premiumRequestsChannel);
+      supabase.removeChannel(messagesChannel);
+    };
   }, [user]);
 
   const checkAdminRole = async () => {
@@ -80,6 +129,53 @@ const Dashboard = () => {
       setTokens(data);
     } catch (error) {
       console.error('Error loading tokens:', error);
+    }
+  };
+
+  const loadPremiumRequestsCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from('match_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('receiver_id', user?.id)
+        .eq('is_premium', true)
+        .eq('status', 'pending');
+
+      if (error) throw error;
+      setPremiumRequestsCount(count || 0);
+    } catch (error) {
+      console.error('Error loading premium requests count:', error);
+    }
+  };
+
+  const loadUnreadMessagesCount = async () => {
+    try {
+      // Get all accepted matches for the user
+      const { data: matches, error: matchesError } = await supabase
+        .from('match_requests')
+        .select('id')
+        .eq('status', 'accepted')
+        .or(`sender_id.eq.${user?.id},receiver_id.eq.${user?.id}`);
+
+      if (matchesError) throw matchesError;
+
+      if (!matches || matches.length === 0) {
+        setUnreadMessagesCount(0);
+        return;
+      }
+
+      // Count messages where user is not the sender
+      const matchIds = matches.map(m => m.id);
+      const { count, error } = await supabase
+        .from('chat_messages')
+        .select('*', { count: 'exact', head: true })
+        .in('match_request_id', matchIds)
+        .neq('sender_id', user?.id);
+
+      if (error) throw error;
+      setUnreadMessagesCount(count || 0);
+    } catch (error) {
+      console.error('Error loading unread messages count:', error);
     }
   };
 
@@ -226,7 +322,14 @@ const Dashboard = () => {
 
           <Card className="p-6 hover:shadow-glow transition-shadow">
             <Link to="/appointments" className="block">
-              <Calendar className="w-12 h-12 text-primary mb-4" />
+              <div className="flex items-center justify-between mb-4">
+                <Calendar className="w-12 h-12 text-primary" />
+                {unreadMessagesCount > 0 && (
+                  <Badge className="bg-destructive text-destructive-foreground">
+                    {unreadMessagesCount}
+                  </Badge>
+                )}
+              </div>
               <h3 className="font-semibold text-lg mb-2">Appuntamenti</h3>
               <p className="text-sm text-muted-foreground">
                 I tuoi incontri programmati
@@ -295,8 +398,15 @@ const Dashboard = () => {
                   <Button variant="outline" size="sm" asChild>
                     <Link to="/premium-rates">Gestisci Tariffe</Link>
                   </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <Link to="/premium-requests">Richieste Premium</Link>
+                  <Button variant="outline" size="sm" asChild className="relative">
+                    <Link to="/premium-requests">
+                      Richieste Premium
+                      {premiumRequestsCount > 0 && (
+                        <Badge className="ml-2 bg-destructive text-destructive-foreground">
+                          {premiumRequestsCount}
+                        </Badge>
+                      )}
+                    </Link>
                   </Button>
                   <Button variant="outline" size="sm" asChild>
                     <Link to="/premium-subscription">Gestisci Abbonamento</Link>
