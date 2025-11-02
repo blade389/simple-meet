@@ -166,6 +166,27 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "fk_match_requests_receiver"
+            columns: ["receiver_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_match_requests_selected_rate"
+            columns: ["selected_rate_id"]
+            isOneToOne: false
+            referencedRelation: "premium_rates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_match_requests_sender"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "match_requests_selected_rate_id_fkey"
             columns: ["selected_rate_id"]
             isOneToOne: false
