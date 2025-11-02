@@ -20,6 +20,7 @@ interface Profile {
   photo_verification_status: string;
   location_lat: number | null;
   location_lon: number | null;
+  is_premium?: boolean;
   distance?: number;
 }
 
