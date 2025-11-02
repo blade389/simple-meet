@@ -104,6 +104,16 @@ const PremiumRequests = () => {
 
   const handleReject = async (requestId: string) => {
     try {
+      // Get request data to refund token to sender
+      const { data: requestData, error: fetchError } = await supabase
+        .from('match_requests')
+        .select('sender_id, is_premium')
+        .eq('id', requestId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Update request status to rejected
       const { error } = await supabase
         .from('match_requests')
         .update({ status: 'rejected' })
@@ -111,9 +121,29 @@ const PremiumRequests = () => {
 
       if (error) throw error;
 
+      // Refund token to sender if it was a premium request
+      if (requestData.is_premium) {
+        const { data: tokenData } = await supabase
+          .from('tokens')
+          .select('amount')
+          .eq('user_id', requestData.sender_id)
+          .maybeSingle();
+
+        if (tokenData) {
+          await supabase
+            .from('tokens')
+            .update({ amount: tokenData.amount + 1 })
+            .eq('user_id', requestData.sender_id);
+        } else {
+          await supabase
+            .from('tokens')
+            .insert({ user_id: requestData.sender_id, amount: 1 });
+        }
+      }
+
       toast({
         title: "Richiesta rifiutata",
-        description: "La richiesta è stata rifiutata.",
+        description: "La richiesta è stata rifiutata e il gettone è stato rimborsato.",
       });
 
       loadRequests();
