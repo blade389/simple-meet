@@ -27,6 +27,7 @@ const Dashboard = () => {
   const [updatingLocation, setUpdatingLocation] = useState(false);
   const [premiumRequestsCount, setPremiumRequestsCount] = useState(0);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+  const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -35,6 +36,7 @@ const Dashboard = () => {
       checkAdminRole();
       loadPremiumRequestsCount();
       loadUnreadMessagesCount();
+      loadReceivedRequestsCount();
     }
   }, [user]);
 
@@ -54,6 +56,7 @@ const Dashboard = () => {
         },
         () => {
           loadPremiumRequestsCount();
+          loadReceivedRequestsCount();
         }
       )
       .subscribe();
@@ -176,6 +179,21 @@ const Dashboard = () => {
       setUnreadMessagesCount(count || 0);
     } catch (error) {
       console.error('Error loading unread messages count:', error);
+    }
+  };
+
+  const loadReceivedRequestsCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from('match_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('receiver_id', user?.id)
+        .eq('status', 'pending');
+
+      if (error) throw error;
+      setReceivedRequestsCount(count || 0);
+    } catch (error) {
+      console.error('Error loading received requests count:', error);
     }
   };
 
@@ -308,7 +326,14 @@ const Dashboard = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="p-6 hover:shadow-glow transition-shadow">
             <Link to="/browse" className="block">
-              <Users className="w-12 h-12 text-primary mb-4" />
+              <div className="flex items-center justify-between mb-4">
+                <Users className="w-12 h-12 text-primary" />
+                {profile?.gender === 'male' && receivedRequestsCount > 0 && (
+                  <Badge className="bg-destructive text-destructive-foreground">
+                    {receivedRequestsCount}
+                  </Badge>
+                )}
+              </div>
               <h3 className="font-semibold text-lg mb-2">
                 {profile?.gender === 'female' ? 'Scopri Profili' : 'Richieste'}
               </h3>
