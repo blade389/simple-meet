@@ -24,9 +24,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const checkPremiumStatus = async () => {
-    if (!session) return;
+    if (!user) return;
     
     try {
+      // First check directly from database for immediate response
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('is_premium, subscription_status, subscription_end')
+        .eq('id', user.id)
+        .single();
+      
+      if (!profileError && profile) {
+        const isActive = profile.is_premium && profile.subscription_status === 'active';
+        setIsPremium(isActive);
+        setSubscriptionEnd(profile.subscription_end);
+        return;
+      }
+      
+      // Fallback to edge function
       const { data, error } = await supabase.functions.invoke('check-premium-subscription');
       if (error) throw error;
       
@@ -72,6 +87,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  // Re-check premium status when user changes
+  useEffect(() => {
+    if (user) {
+      checkPremiumStatus();
+    }
+  }, [user?.id]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
