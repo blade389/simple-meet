@@ -233,7 +233,10 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     }
   };
 
-  const isChatDisabled = canReview || (appointment?.status === 'completed' && !canReview);
+  // Check if appointment deadline has passed
+  const isDeadlinePassed = !appointment && appointmentDeadline && new Date(appointmentDeadline) < new Date();
+  
+  const isChatDisabled = canReview || (appointment?.status === 'completed' && !canReview) || isDeadlinePassed || chatStatus !== 'active';
 
   if (canReview && !hasReviewed && showReviewForm) {
     return (
