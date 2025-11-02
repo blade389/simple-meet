@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera } from 'lucide-react';
+import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Users, FileText, Crown, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -272,7 +272,51 @@ const Admin = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-6">Pannello Admin - Verifiche</h2>
+        <h2 className="text-3xl font-bold mb-6">Pannello Admin</h2>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Link to="/admin/verification-requests">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <Users className="w-12 h-12 text-primary mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Richieste Verifica</h3>
+              <p className="text-muted-foreground text-sm">
+                Gestisci verifiche identità
+              </p>
+            </Card>
+          </Link>
+
+          <Link to="/admin/photo-verification">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <Camera className="w-12 h-12 text-primary mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Verifica Foto</h3>
+              <p className="text-muted-foreground text-sm">
+                Approva foto profilo
+              </p>
+            </Card>
+          </Link>
+
+          <Link to="/admin/premium-rates">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <Crown className="w-12 h-12 text-primary mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Tariffe Premium</h3>
+              <p className="text-muted-foreground text-sm">
+                Gestisci le tariffe premium
+              </p>
+            </Card>
+          </Link>
+
+          <Link to="/admin/conversation-reviews">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <AlertTriangle className="w-12 h-12 text-primary mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Revisioni</h3>
+              <p className="text-muted-foreground text-sm">
+                Revisiona conversazioni scadute
+              </p>
+            </Card>
+          </Link>
+        </div>
+
+        <h2 className="text-2xl font-bold mb-6">Verifiche in Attesa</h2>
         
         <Tabs defaultValue="identity" className="w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2">

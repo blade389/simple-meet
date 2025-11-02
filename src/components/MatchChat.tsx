@@ -9,7 +9,7 @@ import { ChatMessage } from './ChatMessage';
 import { AppointmentForm } from './AppointmentForm';
 import { AppointmentInfo } from './AppointmentInfo';
 import { ReviewForm } from './ReviewForm';
-import { Send, Calendar, MessageCircleOff, Crown } from 'lucide-react';
+import { Send, Calendar, MessageCircleOff, Crown, Clock, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface MatchChatProps {
@@ -51,6 +51,9 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
   const [canReview, setCanReview] = useState(false);
   const [hasReviewed, setHasReviewed] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [appointmentDeadline, setAppointmentDeadline] = useState<string | null>(null);
+  const [chatStatus, setChatStatus] = useState<string>('active');
+  const [timeRemaining, setTimeRemaining] = useState<string>('');
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -92,6 +95,19 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
       }
     };
 
+    const checkMatchStatus = async () => {
+      const { data: matchData } = await supabase
+        .from('match_requests')
+        .select('appointment_deadline, chat_status')
+        .eq('id', matchRequestId)
+        .single();
+
+      if (matchData) {
+        setAppointmentDeadline(matchData.appointment_deadline);
+        setChatStatus(matchData.chat_status || 'active');
+      }
+    };
+
     const checkAppointment = async () => {
       const { data } = await supabase
         .from('appointments')
@@ -128,6 +144,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     };
 
     fetchMessages();
+    checkMatchStatus();
     if (currentUserId) {
       checkAppointment();
     }
@@ -158,6 +175,33 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Countdown timer for appointment deadline
+  useEffect(() => {
+    if (!appointmentDeadline || appointment || chatStatus !== 'active') return;
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const deadline = new Date(appointmentDeadline).getTime();
+      const distance = deadline - now;
+
+      if (distance < 0) {
+        setTimeRemaining('Scaduto');
+        return;
+      }
+
+      const hours = Math.floor(distance / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [appointmentDeadline, appointment, chatStatus]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,7 +272,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
               </span>
             )}
           </div>
-          {!appointment && !showAppointmentForm && isFemaleUser && (
+          {!appointment && !showAppointmentForm && isFemaleUser && chatStatus === 'active' && (
             <Button
               variant="outline"
               size="sm"
@@ -239,6 +283,38 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             </Button>
           )}
         </div>
+
+        {/* Countdown timer */}
+        {!appointment && chatStatus === 'active' && appointmentDeadline && (
+          <div className="p-3 bg-primary/10 border border-primary/20 rounded-md">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-sm font-medium">Tempo per fissare l'appuntamento</p>
+                <p className="text-lg font-bold text-primary">{timeRemaining}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {chatStatus === 'under_review' && (
+          <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+              <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400">
+                Conversazione in revisione da parte dell'amministratore
+              </p>
+            </div>
+          </div>
+        )}
+
+        {chatStatus === 'blocked' && (
+          <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+            <p className="text-sm font-medium text-destructive">
+              🚫 Conversazione bloccata
+            </p>
+          </div>
+        )}
 
         {appointment && (
           <AppointmentInfo
@@ -266,12 +342,16 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
         )}
       </div>
 
-      {isChatDisabled ? (
+      {(isChatDisabled || chatStatus !== 'active') ? (
         <div className="flex-1 flex items-center justify-center p-8">
           <div className="text-center space-y-2">
             <MessageCircleOff className="w-12 h-12 mx-auto text-muted-foreground" />
             <p className="text-muted-foreground">
-              La chat è stata chiusa dopo l'appuntamento.
+              {chatStatus === 'under_review' 
+                ? 'Conversazione in attesa di revisione amministrativa' 
+                : chatStatus === 'blocked'
+                ? 'Conversazione bloccata'
+                : 'La chat è stata chiusa dopo l\'appuntamento.'}
             </p>
           </div>
         </div>

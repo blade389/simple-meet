@@ -127,8 +127,48 @@ export type Database = {
           },
         ]
       }
+      conversation_reviews: {
+        Row: {
+          action_taken: string | null
+          admin_notes: string | null
+          created_at: string
+          id: string
+          match_request_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+        }
+        Insert: {
+          action_taken?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          match_request_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+        }
+        Update: {
+          action_taken?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          match_request_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_reviews_match_request_id_fkey"
+            columns: ["match_request_id"]
+            isOneToOne: true
+            referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       match_requests: {
         Row: {
+          appointment_deadline: string | null
+          chat_status: string | null
           created_at: string | null
           expires_at: string | null
           id: string
@@ -141,6 +181,8 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          appointment_deadline?: string | null
+          chat_status?: string | null
           created_at?: string | null
           expires_at?: string | null
           id?: string
@@ -153,6 +195,8 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          appointment_deadline?: string | null
+          chat_status?: string | null
           created_at?: string | null
           expires_at?: string | null
           id?: string

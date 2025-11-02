@@ -17,6 +17,7 @@ import PremiumProfiles from './pages/PremiumProfiles';
 import PremiumRequests from './pages/PremiumRequests';
 import PremiumSubscription from './pages/PremiumSubscription';
 import PremiumRatesManagement from './pages/PremiumRatesManagement';
+import ConversationReviews from './pages/ConversationReviews';
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,10 @@ const App = () => (
             <Route path="/premium-requests" element={<PremiumRequests />} />
             <Route path="/premium-subscription" element={<PremiumSubscription />} />
             <Route path="/premium-rates" element={<PremiumRatesManagement />} />
+            <Route path="/admin/verification-requests" element={<Admin />} />
+            <Route path="/admin/photo-verification" element={<Admin />} />
+            <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
+            <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
