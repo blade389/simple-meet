@@ -280,6 +280,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
               variant="outline"
               size="sm"
               onClick={() => setShowAppointmentForm(true)}
+              disabled={isDeadlinePassed}
             >
               <Calendar className="w-4 h-4 mr-2" />
               Registra Appuntamento
