@@ -444,17 +444,34 @@ const Dashboard = () => {
 
         {profile?.gender === 'male' && (
           <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
-            <Link to="/premium-profiles" className="block">
-              <div className="flex items-center gap-4">
+            {profile?.is_verified === 'verified' ? (
+              <Link to="/premium-profiles" className="block">
+                <div className="flex items-center gap-4">
+                  <Crown className="w-12 h-12 text-yellow-500" />
+                  <div>
+                    <h3 className="font-semibold text-lg mb-1">Profili Premium</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Scopri i profili premium disponibili nella tua zona
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="flex items-center gap-4 opacity-60">
                 <Crown className="w-12 h-12 text-yellow-500" />
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Profili Premium</h3>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-lg">Profili Premium</h3>
+                    <Badge variant="outline" className="border-yellow-500 text-yellow-600 dark:text-yellow-400">
+                      Verifica Richiesta
+                    </Badge>
+                  </div>
                   <p className="text-sm text-muted-foreground">
-                    Scopri i profili premium disponibili nella tua zona
+                    Completa la verifica del tuo account per accedere ai profili premium
                   </p>
                 </div>
               </div>
-            </Link>
+            )}
           </Card>
         )}
 
