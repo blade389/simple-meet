@@ -1,5 +1,8 @@
 project_id = "tdkovomoosffywhajhkj"
 
+[functions.test-email]
+verify_jwt = false
+
 [functions.send-match-request-email]
 verify_jwt = false
 

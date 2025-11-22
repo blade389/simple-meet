@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
       }
     );
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing appointment deadlines:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
