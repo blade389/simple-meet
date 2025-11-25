@@ -392,6 +392,8 @@ export type Database = {
       }
       reviews: {
         Row: {
+          admin_notes: string | null
+          admin_status: string | null
           appointment_id: string
           comment: string | null
           created_at: string | null
@@ -403,6 +405,8 @@ export type Database = {
           reviewer_id: string
         }
         Insert: {
+          admin_notes?: string | null
+          admin_status?: string | null
           appointment_id: string
           comment?: string | null
           created_at?: string | null
@@ -414,6 +418,8 @@ export type Database = {
           reviewer_id: string
         }
         Update: {
+          admin_notes?: string | null
+          admin_status?: string | null
           appointment_id?: string
           comment?: string | null
           created_at?: string | null
