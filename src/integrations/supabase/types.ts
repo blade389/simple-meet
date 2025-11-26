@@ -528,6 +528,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      recalculate_all_review_counts: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
