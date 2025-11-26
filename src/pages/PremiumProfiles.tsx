@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Crown } from 'lucide-react';
+import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown } from 'lucide-react';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { useToast } from '@/hooks/use-toast';
 
@@ -17,6 +17,8 @@ interface Profile {
   bio: string | null;
   profile_photo_url: string | null;
   is_premium: boolean;
+  positive_reviews_count?: number;
+  negative_reviews_count?: number;
 }
 
 interface PremiumRate {
@@ -33,6 +35,26 @@ const PremiumProfiles = () => {
   const [loading, setLoading] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isRequestPending, setIsRequestPending] = useState(false);
+
+  useEffect(() => {
+    if (selectedProfile && user) {
+      checkPendingRequest(selectedProfile.id);
+    }
+  }, [selectedProfile, user]);
+
+  const checkPendingRequest = async (receiverId: string) => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('match_requests')
+      .select('id')
+      .eq('sender_id', user.id)
+      .eq('receiver_id', receiverId)
+      .eq('status', 'pending')
+      .maybeSingle();
+
+    setIsRequestPending(!!data);
+  };
 
   useEffect(() => {
     if (!user) {
@@ -75,6 +97,26 @@ const PremiumProfiles = () => {
     if (!user || !selectedProfile) return;
 
     try {
+      // Check for existing pending request
+      const { data: existingRequest, error: existingRequestError } = await supabase
+        .from('match_requests')
+        .select('id')
+        .eq('sender_id', user.id)
+        .eq('receiver_id', selectedProfile.id)
+        .eq('status', 'pending')
+        .maybeSingle();
+
+      if (existingRequestError) throw existingRequestError;
+
+      if (existingRequest) {
+        toast({
+          title: "Richiesta già inviata",
+          description: "Hai già una richiesta in attesa per questo utente.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       // Check token balance first
       const { data: tokenData, error: tokenFetchError } = await supabase
         .from('tokens')
@@ -111,6 +153,7 @@ const PremiumProfiles = () => {
           selected_rate_id: selectedRateId,
           message: message,
           status: 'pending',
+          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
         });
 
       if (requestError) {
@@ -139,6 +182,7 @@ const PremiumProfiles = () => {
         title: 'Richiesta inviata!',
         description: 'La tua richiesta premium è stata inviata con successo. 1 gettone scalato.',
       });
+      setIsRequestPending(true);
 
       loadProfiles();
     } catch (error) {
@@ -186,8 +230,8 @@ const PremiumProfiles = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {profiles.map((profile) => (
-              <Card 
-                key={profile.id} 
+              <Card
+                key={profile.id}
                 className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer border-2 border-yellow-500/20"
                 onClick={() => {
                   setSelectedProfile(profile);
@@ -215,6 +259,16 @@ const PremiumProfiles = () => {
                   <CardTitle className="flex items-center justify-between">
                     <span>{profile.full_name}, {calculateAge(profile.birth_date)}</span>
                   </CardTitle>
+                  <div className="flex items-center gap-4 mt-2 mb-1">
+                    <div className="flex items-center gap-1 text-green-600">
+                      <ThumbsUp className="w-4 h-4" />
+                      <span className="text-sm font-medium">{profile.positive_reviews_count || 0}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-red-600">
+                      <ThumbsDown className="w-4 h-4" />
+                      <span className="text-sm font-medium">{profile.negative_reviews_count || 0}</span>
+                    </div>
+                  </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
                     {profile.location_city}
@@ -249,6 +303,7 @@ const PremiumProfiles = () => {
           }}
           onSendRequest={handleSendRequest}
           showSendRequest={true}
+          isRequestPending={isRequestPending}
         />
       )}
     </div>

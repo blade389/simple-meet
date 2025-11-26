@@ -54,9 +54,11 @@ const Index = () => {
                     Inizia Ora Gratis
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl" className="w-full sm:w-auto">
-                  Scopri di Più
-                </Button>
+                <Link to="/features">
+                  <Button variant="outline" size="xl" className="w-full sm:w-auto">
+                    Scopri di Più
+                  </Button>
+                </Link>
               </div>
               <div className="flex gap-8 pt-4">
                 <div>
@@ -216,19 +218,19 @@ const Index = () => {
               <h5 className="font-semibold mb-4">Prodotto</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/features" className="hover:text-foreground transition-colors">
                     Caratteristiche
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/pricing" className="hover:text-foreground transition-colors">
                     Prezzi
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/faq" className="hover:text-foreground transition-colors">
                     FAQ
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -236,18 +238,14 @@ const Index = () => {
               <h5 className="font-semibold mb-4">Azienda</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/about" className="hover:text-foreground transition-colors">
                     Chi Siamo
-                  </a>
+                  </Link>
                 </li>
+
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
-                    Contatti
+                  <a href="mailto:support@scopami.online" className="hover:text-foreground transition-colors">
+                    Contattaci
                   </a>
                 </li>
               </ul>
@@ -256,19 +254,19 @@ const Index = () => {
               <h5 className="font-semibold mb-4">Legale</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/terms-of-service" className="hover:text-foreground transition-colors">
                     Termini di Servizio
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-foreground transition-colors">
+                  <Link to="/cookie-policy" className="hover:text-foreground transition-colors">
                     Cookie Policy
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

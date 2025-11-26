@@ -42,7 +42,7 @@ const Auth = () => {
       });
 
       if (error) throw error;
-      
+
       toast.success("Login effettuato con successo!");
       navigate('/dashboard');
     } catch (error: any) {
@@ -271,13 +271,13 @@ const Auth = () => {
                   />
                   <label htmlFor="terms" className="text-sm text-muted-foreground">
                     Accetto i{" "}
-                    <a href="#" className="text-primary hover:underline">
+                    <Link to="/terms-of-service" className="text-primary hover:underline">
                       Termini di Servizio
-                    </a>{" "}
+                    </Link>{" "}
                     e la{" "}
-                    <a href="#" className="text-primary hover:underline">
+                    <Link to="/privacy-policy" className="text-primary hover:underline">
                       Privacy Policy
-                    </a>
+                    </Link>
                   </label>
                 </div>
                 <Button

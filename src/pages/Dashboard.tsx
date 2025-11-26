@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { HowItWorksDialog } from '@/components/HowItWorksDialog';
 
 interface Profile {
   full_name: string;
@@ -208,7 +209,7 @@ const Dashboard = () => {
 
   const updateLocation = async () => {
     setUpdatingLocation(true);
-    
+
     if (!navigator.geolocation) {
       toast.error('Geolocalizzazione non supportata dal browser');
       setUpdatingLocation(false);
@@ -268,8 +269,8 @@ const Dashboard = () => {
               Esci
             </Button>
           </div>
-          <Button 
-            onClick={updateLocation} 
+          <Button
+            onClick={updateLocation}
             disabled={updatingLocation}
             className="w-full"
             variant="outline"
@@ -281,13 +282,16 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">
-            Ciao, {profile?.full_name || 'Utente'}!
-          </h2>
-          <p className="text-muted-foreground">
-            Benvenuto nella tua dashboard
-          </p>
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">
+              Ciao, {profile?.full_name || 'Utente'}!
+            </h2>
+            <p className="text-muted-foreground">
+              Benvenuto nella tua dashboard
+            </p>
+          </div>
+          {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
         </div>
 
         {profile?.is_verified !== 'verified' && (
@@ -338,8 +342,8 @@ const Dashboard = () => {
                 {profile?.gender === 'female' ? 'Scopri Profili' : 'Richieste'}
               </h3>
               <p className="text-sm text-muted-foreground">
-                {profile?.gender === 'female' 
-                  ? 'Trova persone interessanti nella tua zona' 
+                {profile?.gender === 'female'
+                  ? 'Trova persone interessanti nella tua zona'
                   : 'Gestisci le richieste ricevute'}
               </p>
             </Link>
@@ -372,15 +376,7 @@ const Dashboard = () => {
             </Link>
           </Card>
 
-          <Card className="p-6 hover:shadow-glow transition-shadow">
-            <div className="block">
-              <Star className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Recensioni</h3>
-              <p className="text-sm text-muted-foreground">
-                Le tue valutazioni
-              </p>
-            </div>
-          </Card>
+
         </div>
 
         {/* Premium Section - Female Non-Premium */}

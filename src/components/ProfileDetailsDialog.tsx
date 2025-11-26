@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Calendar, MapPin, Crown, Clock, Euro, Send } from 'lucide-react';
+import { Calendar, MapPin, Crown, Clock, Euro, Send, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -35,17 +35,21 @@ interface ProfileDetailsDialogProps {
     profile_photo_url: string | null;
     is_premium?: boolean;
     distance?: number;
+    positive_reviews_count?: number;
+    negative_reviews_count?: number;
   };
   onSendRequest?: (selectedRateId?: string, message?: string) => Promise<void>;
   showSendRequest?: boolean;
+  isRequestPending?: boolean;
 }
 
-const ProfileDetailsDialog = ({ 
-  open, 
-  onOpenChange, 
+const ProfileDetailsDialog = ({
+  open,
+  onOpenChange,
   profile,
   onSendRequest,
-  showSendRequest = false 
+  showSendRequest = false,
+  isRequestPending = false
 }: ProfileDetailsDialogProps) => {
   const [photos, setPhotos] = useState<ProfilePhoto[]>([]);
   const [premiumRates, setPremiumRates] = useState<PremiumRate[]>([]);
@@ -101,7 +105,7 @@ const ProfileDetailsDialog = ({
 
   const handleSendRequest = async () => {
     if (!onSendRequest) return;
-    
+
     if (profile.is_premium && !selectedRateId) {
       toast({
         title: 'Seleziona una tariffa',
@@ -139,14 +143,26 @@ const ProfileDetailsDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl flex items-center gap-2">
-            {profile.full_name}
-            {profile.is_premium && (
-              <Badge variant="secondary" className="gap-1">
-                <Crown className="w-3 h-3" />
-                Premium
-              </Badge>
-            )}
+          <DialogTitle className="text-2xl flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              {profile.full_name}
+              {profile.is_premium && (
+                <Badge variant="secondary" className="gap-1">
+                  <Crown className="w-3 h-3" />
+                  Premium
+                </Badge>
+              )}
+            </div>
+            <div className="flex items-center gap-4 text-base font-normal">
+              <div className="flex items-center gap-1 text-green-600">
+                <ThumbsUp className="w-4 h-4" />
+                <span>{profile.positive_reviews_count || 0}</span>
+              </div>
+              <div className="flex items-center gap-1 text-red-600">
+                <ThumbsDown className="w-4 h-4" />
+                <span>{profile.negative_reviews_count || 0}</span>
+              </div>
+            </div>
           </DialogTitle>
         </DialogHeader>
 
@@ -244,7 +260,7 @@ const ProfileDetailsDialog = ({
             {showSendRequest && onSendRequest && (
               <div className="pt-4 border-t space-y-4">
                 <h3 className="font-semibold">Invia Richiesta</h3>
-                
+
                 {profile.is_premium && premiumRates.length > 0 && (
                   <div className="space-y-3">
                     <Label>Seleziona Tariffa *</Label>
@@ -276,11 +292,11 @@ const ProfileDetailsDialog = ({
 
                 <Button
                   onClick={handleSendRequest}
-                  disabled={sending || (profile.is_premium && !selectedRateId)}
+                  disabled={sending || (profile.is_premium && !selectedRateId) || isRequestPending}
                   className="w-full"
                 >
                   <Send className="w-4 h-4 mr-2" />
-                  {sending ? 'Invio in corso...' : 'Invia Richiesta'}
+                  {sending ? 'Invio in corso...' : isRequestPending ? 'Richiesta Inviata' : 'Invia Richiesta'}
                 </Button>
               </div>
             )}

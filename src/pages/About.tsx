@@ -1,0 +1,155 @@
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Heart, Shield, Users, Sparkles, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const About = () => {
+    return (
+        <div className="min-h-screen bg-background">
+            {/* Header / Nav */}
+            <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
+                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Link to="/" className="flex items-center gap-2">
+                            <Heart className="w-8 h-8 text-primary fill-primary" />
+                            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                                SCOPAMI
+                            </span>
+                        </Link>
+                    </div>
+                    <nav className="flex items-center gap-6">
+                        <Link to="/">
+                            <Button variant="ghost" className="gap-2">
+                                <ArrowLeft className="w-4 h-4" />
+                                Torna alla Home
+                            </Button>
+                        </Link>
+                    </nav>
+                </div>
+            </header>
+
+            {/* Hero Section */}
+            <section className="pt-32 pb-20 px-4 bg-gradient-hero">
+                <div className="container mx-auto text-center max-w-4xl">
+                    <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        Rivoluzioniamo il modo di{" "}
+                        <span className="bg-gradient-primary bg-clip-text text-transparent">
+                            Incontrarsi
+                        </span>
+                    </h1>
+                    <p className="text-xl text-muted-foreground mb-8">
+                        SCOPAMI nasce con un obiettivo chiaro: creare uno spazio sicuro, rispettoso ed eccitante dove le connessioni autentiche prendono vita, mettendo il controllo nelle mani giuste.
+                    </p>
+                </div>
+            </section>
+
+            {/* Mission Section */}
+            <section className="py-20 px-4">
+                <div className="container mx-auto">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-6">
+                            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <Heart className="w-6 h-6 text-primary" />
+                            </div>
+                            <h2 className="text-3xl font-bold">La Nostra Filosofia</h2>
+                            <p className="text-lg text-muted-foreground">
+                                Crediamo che il dating online debba essere un'esperienza piacevole e sicura per tutti. Per questo abbiamo ribaltato le regole tradizionali: su SCOPAMI, sono le donne a fare la prima mossa o a decidere chi può contattarle.
+                            </p>
+                            <p className="text-lg text-muted-foreground">
+                                Questo approccio non solo riduce i messaggi indesiderati, ma garantisce che ogni interazione inizi con un reale interesse reciproco, elevando la qualità degli incontri.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <Card className="p-6 bg-gradient-card border-0 shadow-lg">
+                                <h3 className="text-4xl font-bold text-primary mb-2">100%</h3>
+                                <p className="text-sm text-muted-foreground">Profili Verificati</p>
+                            </Card>
+                            <Card className="p-6 bg-gradient-card border-0 shadow-lg mt-8">
+                                <h3 className="text-4xl font-bold text-primary mb-2">24/7</h3>
+                                <p className="text-sm text-muted-foreground">Supporto Dedicato</p>
+                            </Card>
+                            <Card className="p-6 bg-gradient-card border-0 shadow-lg">
+                                <h3 className="text-4xl font-bold text-primary mb-2">0</h3>
+                                <p className="text-sm text-muted-foreground">Bot o Fake</p>
+                            </Card>
+                            <Card className="p-6 bg-gradient-card border-0 shadow-lg mt-8">
+                                <h3 className="text-4xl font-bold text-primary mb-2">Top</h3>
+                                <p className="text-sm text-muted-foreground">Privacy & Sicurezza</p>
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Values Section */}
+            <section className="py-20 px-4 bg-muted/30">
+                <div className="container mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl font-bold mb-4">I Nostri Valori Fondamentali</h2>
+                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            Ciò che guida ogni nostra decisione e funzionalità
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <Card className="p-8 bg-background border-none shadow-xl hover:shadow-2xl transition-all">
+                            <div className="w-14 h-14 bg-secondary/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <Shield className="w-7 h-7 text-secondary-foreground" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-center">Sicurezza Prima di Tutto</h3>
+                            <p className="text-muted-foreground text-center">
+                                Implementiamo rigorosi controlli di identità e sistemi di moderazione avanzati per garantire che ogni utente sia reale e affidabile.
+                            </p>
+                        </Card>
+
+                        <Card className="p-8 bg-background border-none shadow-xl hover:shadow-2xl transition-all">
+                            <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <Users className="w-7 h-7 text-primary" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-center">Rispetto Reciproco</h3>
+                            <p className="text-muted-foreground text-center">
+                                Promuoviamo una cultura del rispetto. Il nostro sistema di feedback e rating incentiva comportamenti positivi e cortesi.
+                            </p>
+                        </Card>
+
+                        <Card className="p-8 bg-background border-none shadow-xl hover:shadow-2xl transition-all">
+                            <div className="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <Sparkles className="w-7 h-7 text-accent-foreground" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-center">Trasparenza Totale</h3>
+                            <p className="text-muted-foreground text-center">
+                                Nessun costo nascosto, regole chiare e un sistema di gettoni semplice. Vogliamo che tu sappia sempre cosa aspettarti.
+                            </p>
+                        </Card>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="py-20 px-4">
+                <div className="container mx-auto text-center">
+                    <div className="bg-gradient-primary rounded-3xl p-12 text-primary-foreground shadow-glow">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                            Pronto a far parte della rivoluzione?
+                        </h2>
+                        <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+                            Unisciti oggi stesso a SCOPAMI e scopri un nuovo modo di vivere gli incontri online.
+                        </p>
+                        <Link to="/auth">
+                            <Button size="xl" variant="secondary" className="font-bold text-lg px-8">
+                                Inizia Ora
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer Simple */}
+            <footer className="py-8 text-center text-muted-foreground text-sm border-t">
+                <p>© 2025 SCOPAMI. Tutti i diritti riservati.</p>
+            </footer>
+        </div>
+    );
+};
+
+export default About;

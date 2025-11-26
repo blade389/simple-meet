@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Users, FileText, Crown, AlertTriangle } from 'lucide-react';
+import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Users, FileText, Crown, AlertTriangle, ThumbsDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -166,7 +166,7 @@ const Admin = () => {
         title: "Richiesta approvata",
         description: type === 'identity' ? "L'utente è stato verificato con successo" : "La foto è stata verificata con successo"
       });
-      
+
       if (type === 'identity') {
         loadVerificationRequests();
       } else {
@@ -213,7 +213,7 @@ const Admin = () => {
         description: "L'utente è stato notificato"
       });
       setRejectionReason('');
-      
+
       if (type === 'identity') {
         loadVerificationRequests();
       } else {
@@ -275,35 +275,7 @@ const Admin = () => {
         <h2 className="text-3xl font-bold mb-6">Pannello Admin</h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Link to="/admin/verification-requests">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
-              <Users className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Richieste Verifica</h3>
-              <p className="text-muted-foreground text-sm">
-                Gestisci verifiche identità
-              </p>
-            </Card>
-          </Link>
 
-          <Link to="/admin/photo-verification">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
-              <Camera className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Verifica Foto</h3>
-              <p className="text-muted-foreground text-sm">
-                Approva foto profilo
-              </p>
-            </Card>
-          </Link>
-
-          <Link to="/admin/premium-rates">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
-              <Crown className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Tariffe Premium</h3>
-              <p className="text-muted-foreground text-sm">
-                Gestisci le tariffe premium
-              </p>
-            </Card>
-          </Link>
 
           <Link to="/admin/conversation-reviews">
             <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
@@ -314,10 +286,20 @@ const Admin = () => {
               </p>
             </Card>
           </Link>
+
+          <Link to="/admin/user-reviews">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <ThumbsDown className="w-12 h-12 text-destructive mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Segnalazioni</h3>
+              <p className="text-muted-foreground text-sm">
+                Gestisci recensioni negative
+              </p>
+            </Card>
+          </Link>
         </div>
 
         <h2 className="text-2xl font-bold mb-6">Verifiche in Attesa</h2>
-        
+
         <Tabs defaultValue="identity" className="w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2">
             <TabsTrigger value="identity">Identità ({requests.length})</TabsTrigger>
@@ -361,16 +343,16 @@ const Admin = () => {
 
                     {request.status === 'pending' && (
                       <div className="space-y-4 pt-4 border-t">
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={() => handleApprove(request.id, 'identity')}
-                          disabled={processingId === request.id}
-                          className="flex-1"
-                        >
-                          <CheckCircle className="w-4 h-4 mr-2" />
-                          Approva
-                        </Button>
-                      </div>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleApprove(request.id, 'identity')}
+                            disabled={processingId === request.id}
+                            className="flex-1"
+                          >
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            Approva
+                          </Button>
+                        </div>
                         <div className="space-y-2">
                           <Textarea
                             placeholder="Motivo del rifiuto (obbligatorio)"
@@ -378,15 +360,15 @@ const Admin = () => {
                             onChange={(e) => setRejectionReason(e.target.value)}
                             disabled={processingId !== null && processingId !== request.id}
                           />
-                        <Button
-                          variant="destructive"
-                          onClick={() => handleReject(request.id, 'identity')}
-                          disabled={processingId !== null}
-                          className="w-full"
-                        >
-                          <XCircle className="w-4 h-4 mr-2" />
-                          Rifiuta
-                        </Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() => handleReject(request.id, 'identity')}
+                            disabled={processingId !== null}
+                            className="w-full"
+                          >
+                            <XCircle className="w-4 h-4 mr-2" />
+                            Rifiuta
+                          </Button>
                         </div>
                       </div>
                     )}
@@ -453,9 +435,9 @@ const Admin = () => {
                       </div>
                       {request.photo_url && (
                         <div className="mt-4">
-                          <img 
-                            src={request.photo_url} 
-                            alt="Foto profilo" 
+                          <img
+                            src={request.photo_url}
+                            alt="Foto profilo"
                             className="w-48 h-48 object-cover rounded-lg border"
                           />
                         </div>
@@ -512,8 +494,8 @@ const Admin = () => {
             )}
           </TabsContent>
         </Tabs>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 };
 

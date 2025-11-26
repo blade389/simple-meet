@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, ArrowLeft, MapPin, Calendar } from 'lucide-react';
+import { Heart, ArrowLeft, MapPin, Calendar, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,6 +22,8 @@ interface Profile {
   location_lon: number | null;
   is_premium?: boolean;
   distance?: number;
+  positive_reviews_count?: number;
+  negative_reviews_count?: number;
 }
 
 interface MatchRequest {
@@ -31,8 +33,57 @@ interface MatchRequest {
   status: string;
   message: string | null;
   created_at: string;
+  expires_at?: string;
   sender_profile?: Profile;
 }
+
+const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?: string }) => {
+  const [timeLeft, setTimeLeft] = useState<string>("");
+  const [isExpired, setIsExpired] = useState(false);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      let expires;
+      if (expiresAt) {
+        expires = new Date(expiresAt).getTime();
+      } else {
+        const created = new Date(createdAt).getTime();
+        expires = created + 48 * 60 * 60 * 1000; // 48 hours default
+      }
+
+      const now = new Date().getTime();
+      const difference = expires - now;
+
+      if (difference <= 0) {
+        setIsExpired(true);
+        setTimeLeft("Scaduta");
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      if (days > 0) {
+        setTimeLeft(`${days}g ${hours}h ${minutes}m`);
+      } else {
+        setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, [createdAt, expiresAt]);
+
+  return (
+    <div className={`text-sm font-medium mb-1 text-center ${isExpired ? 'text-destructive' : 'text-orange-500'}`}>
+      {isExpired ? "Richiesta Scaduta" : `Scade in: ${timeLeft}`}
+    </div>
+  );
+};
 
 const Browse = () => {
   const { user } = useAuth();
@@ -45,6 +96,7 @@ const Browse = () => {
   const [respondingToRequest, setRespondingToRequest] = useState<string | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [showProfileDialog, setShowProfileDialog] = useState(false);
+  const [sentRequests, setSentRequests] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -62,7 +114,7 @@ const Browse = () => {
 
       if (error) throw error;
       setMyProfile(data);
-      
+
       if (data.gender === 'female') {
         loadNearbyProfiles(data);
       } else if (data.gender === 'male') {
@@ -115,7 +167,7 @@ const Browse = () => {
         .filter((profile: any) => {
           // Filter by distance
           if (profile.distance > 20) return false;
-          
+
           // Filter by age preferences: check if my age falls within the profile's age preferences
           if (profile.min_age_preference !== null && myAge < profile.min_age_preference) {
             return false;
@@ -123,12 +175,28 @@ const Browse = () => {
           if (profile.max_age_preference !== null && myAge > profile.max_age_preference) {
             return false;
           }
-          
+
           return true;
         })
         .sort((a: any, b: any) => a.distance - b.distance);
 
       setProfiles(profilesWithDistance);
+
+      // Fetch pending requests sent by me to these profiles
+      const profileIds = profilesWithDistance.map((p: any) => p.id);
+      if (profileIds.length > 0) {
+        const { data: requests, error: requestsError } = await supabase
+          .from('match_requests')
+          .select('receiver_id')
+          .eq('sender_id', user?.id)
+          .eq('status', 'pending')
+          .in('receiver_id', profileIds);
+
+        if (!requestsError && requests) {
+          const pendingReceiverIds = requests.map((r: any) => r.receiver_id);
+          setSentRequests(pendingReceiverIds);
+        }
+      }
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -142,9 +210,9 @@ const Browse = () => {
     const R = 6371;
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
-    const a = 
+    const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * 
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
@@ -209,12 +277,34 @@ const Browse = () => {
   const sendMatchRequest = async (receiverId: string) => {
     setSendingRequest(receiverId);
     try {
+      // Check for existing pending request
+      const { data: existingRequest, error: existingRequestError } = await supabase
+        .from('match_requests')
+        .select('id')
+        .eq('sender_id', user?.id)
+        .eq('receiver_id', receiverId)
+        .eq('status', 'pending')
+        .maybeSingle();
+
+      if (existingRequestError) throw existingRequestError;
+
+      if (existingRequest) {
+        toast({
+          title: "Richiesta già inviata",
+          description: "Hai già una richiesta in attesa per questo utente.",
+          variant: "destructive"
+        });
+        setSendingRequest(null);
+        return;
+      }
+
       const { error } = await supabase
         .from('match_requests')
         .insert({
           sender_id: user?.id,
           receiver_id: receiverId,
-          status: 'pending'
+          status: 'pending',
+          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
         });
 
       if (error) throw error;
@@ -237,6 +327,7 @@ const Browse = () => {
         title: "Richiesta inviata",
         description: "La tua richiesta è stata inviata con successo"
       });
+      setSentRequests(prev => [...prev, receiverId]);
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -264,9 +355,18 @@ const Browse = () => {
       if (requestFetchError) throw requestFetchError;
 
       // Update match request status
+      const updateData: any = { status: action };
+
+      if (action === 'accepted') {
+        const deadline = new Date();
+        deadline.setHours(deadline.getHours() + 72); // 72 hours deadline to fix appointment
+        updateData.appointment_deadline = deadline.toISOString();
+        updateData.chat_status = 'active';
+      }
+
       const { error: updateError } = await supabase
         .from('match_requests')
-        .update({ status: action })
+        .update(updateData)
         .eq('id', requestId);
 
       if (updateError) throw updateError;
@@ -284,7 +384,7 @@ const Browse = () => {
         } else {
           const { error: tokenRefundError } = await supabase
             .from('tokens')
-            .update({ 
+            .update({
               amount: senderTokenData.amount + 1,
               last_updated: new Date().toISOString()
             })
@@ -332,13 +432,13 @@ const Browse = () => {
 
       toast({
         title: action === 'accepted' ? "Richiesta accettata" : blockUser ? "Utente bloccato" : "Richiesta rifiutata",
-        description: action === 'accepted' 
-          ? "Puoi procedere a fissare un appuntamento" 
+        description: action === 'accepted'
+          ? "Puoi procedere a fissare un appuntamento"
           : blockUser
-          ? "L'utente è stato bloccato e non potrà più inviarti richieste"
-          : requestData.is_premium && myProfile?.is_premium
-          ? "La richiesta premium è stata rifiutata e il gettone è stato rimborsato"
-          : "La richiesta è stata rifiutata"
+            ? "L'utente è stato bloccato e non potrà più inviarti richieste"
+            : requestData.is_premium && myProfile?.is_premium
+              ? "La richiesta premium è stata rifiutata e il gettone è stato rimborsato"
+              : "La richiesta è stata rifiutata"
       });
 
       loadMatchRequests();
@@ -382,7 +482,7 @@ const Browse = () => {
 
         <main className="container mx-auto px-4 py-8">
           <h2 className="text-3xl font-bold mb-6">Richieste Ricevute</h2>
-          
+
           {matchRequests.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-muted-foreground">
@@ -392,7 +492,7 @@ const Browse = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {matchRequests.map((request) => (
-                <Card 
+                <Card
                   key={request.id}
                   className="cursor-pointer hover:shadow-lg transition-shadow"
                   onClick={() => {
@@ -412,6 +512,16 @@ const Browse = () => {
                       </Avatar>
                     </div>
                     <CardTitle className="text-center">{request.sender_profile?.full_name}</CardTitle>
+                    <div className="flex items-center justify-center gap-4 my-2">
+                      <div className="flex items-center gap-1 text-green-600">
+                        <ThumbsUp className="w-4 h-4" />
+                        <span className="text-sm font-medium">{request.sender_profile?.positive_reviews_count || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-red-600">
+                        <ThumbsDown className="w-4 h-4" />
+                        <span className="text-sm font-medium">{request.sender_profile?.negative_reviews_count || 0}</span>
+                      </div>
+                    </div>
                     <CardDescription className="text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Calendar className="w-4 h-4" />
@@ -430,6 +540,7 @@ const Browse = () => {
                       </p>
                     )}
                     <div className="flex flex-col gap-2">
+                      <RequestTimer createdAt={request.created_at} expiresAt={request.expires_at} />
                       <Button
                         onClick={() => respondToRequest(request.id, 'accepted', false)}
                         disabled={respondingToRequest === request.id}
@@ -496,7 +607,7 @@ const Browse = () => {
 
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-6">Profili Vicini</h2>
-        
+
         {profiles.length === 0 ? (
           <Card className="p-8 text-center">
             <p className="text-muted-foreground">
@@ -506,7 +617,7 @@ const Browse = () => {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {profiles.map((profile) => (
-              <Card 
+              <Card
                 key={profile.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
                 onClick={() => {
@@ -524,6 +635,16 @@ const Browse = () => {
                     </Avatar>
                   </div>
                   <CardTitle className="text-center">{profile.full_name}</CardTitle>
+                  <div className="flex items-center justify-center gap-4 my-2">
+                    <div className="flex items-center gap-1 text-green-600">
+                      <ThumbsUp className="w-4 h-4" />
+                      <span className="text-sm font-medium">{profile.positive_reviews_count || 0}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-red-600">
+                      <ThumbsDown className="w-4 h-4" />
+                      <span className="text-sm font-medium">{profile.negative_reviews_count || 0}</span>
+                    </div>
+                  </div>
                   <CardDescription className="text-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <Calendar className="w-4 h-4" />
@@ -543,11 +664,11 @@ const Browse = () => {
                   )}
                   <Button
                     onClick={() => sendMatchRequest(profile.id)}
-                    disabled={sendingRequest === profile.id}
+                    disabled={sendingRequest === profile.id || sentRequests.includes(profile.id)}
                     className="w-full"
                   >
                     <Heart className="w-4 h-4 mr-2" />
-                    {sendingRequest === profile.id ? 'Invio...' : 'Invia Richiesta'}
+                    {sendingRequest === profile.id ? 'Invio...' : sentRequests.includes(profile.id) ? 'Richiesta Inviata' : 'Invia Richiesta'}
                   </Button>
                 </CardContent>
               </Card>

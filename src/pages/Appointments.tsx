@@ -66,7 +66,7 @@ const Appointments = () => {
             positiveReviews: p.positive_reviews_count || 0,
             negativeReviews: p.negative_reviews_count || 0,
           }]));
-          
+
           const matchesWithNames = data.map(match => {
             const sender = profileMap.get(match.sender_id);
             const receiver = profileMap.get(match.receiver_id);
@@ -125,7 +125,7 @@ const Appointments = () => {
 
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-6">I Miei Appuntamenti</h2>
-        
+
         {loading ? (
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 text-center">
@@ -148,7 +148,11 @@ const Appointments = () => {
                 {acceptedMatches.map((match) => {
                   const otherUser = getOtherUser(match);
                   return (
-                    <TabsTrigger key={match.id} value={match.id} className="flex items-center gap-2">
+                    <TabsTrigger
+                      key={match.id}
+                      value={match.id}
+                      className="flex items-center gap-2 data-[state=active]:bg-pink-500 data-[state=active]:text-white"
+                    >
                       <span>{otherUser.name}</span>
                       {match.is_premium && (
                         <Badge className="bg-yellow-500 text-black text-xs">

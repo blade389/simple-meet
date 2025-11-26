@@ -25,7 +25,7 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (rating === null) {
       toast({
         title: 'Errore',
@@ -95,18 +95,18 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
           <div className="flex gap-4 justify-center">
             <Button
               type="button"
-              variant={rating === 1 ? 'default' : 'outline'}
+              variant={rating === 5 ? 'default' : 'outline'}
               size="lg"
-              onClick={() => setRating(1)}
+              onClick={() => setRating(5)}
               className="flex-1 h-20 text-4xl"
             >
               <ThumbsUp className="w-8 h-8" />
             </Button>
             <Button
               type="button"
-              variant={rating === -1 ? 'default' : 'outline'}
+              variant={rating === 1 ? 'default' : 'outline'}
               size="lg"
-              onClick={() => setRating(-1)}
+              onClick={() => setRating(1)}
               className="flex-1 h-20 text-4xl"
             >
               <ThumbsDown className="w-8 h-8" />

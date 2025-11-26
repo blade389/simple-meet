@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -18,7 +19,15 @@ import PremiumRequests from './pages/PremiumRequests';
 import PremiumSubscription from './pages/PremiumSubscription';
 import PremiumRatesManagement from './pages/PremiumRatesManagement';
 import ConversationReviews from './pages/ConversationReviews';
+import AdminUserReviews from './pages/AdminUserReviews';
 import NotFound from "./pages/NotFound";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import FAQ from "./pages/FAQ";
+import Features from "./pages/Features";
+import Pricing from "./pages/Pricing";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +37,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -47,6 +57,14 @@ const App = () => (
             <Route path="/admin/photo-verification" element={<Admin />} />
             <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
             <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
+            <Route path="/admin/user-reviews" element={<AdminUserReviews />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/about" element={<About />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
