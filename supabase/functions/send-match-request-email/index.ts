@@ -10,7 +10,6 @@ const corsHeaders = {
 interface EmailRequest {
   receiverId: string;
   senderName: string;
-  senderEmail: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -24,7 +23,7 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { receiverId, senderName, senderEmail }: EmailRequest = await req.json();
+    const { receiverId, senderName }: EmailRequest = await req.json();
 
     // Get receiver's profile and email
     const { data: receiverProfile, error: profileError } = await supabase

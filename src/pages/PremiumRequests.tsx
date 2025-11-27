@@ -80,12 +80,30 @@ const PremiumRequests = () => {
 
   const handleAccept = async (requestId: string) => {
     try {
+      // Get request data to send email
+      const request = requests.find(r => r.id === requestId);
+      
       const { error } = await supabase
         .from('match_requests')
         .update({ status: 'accepted' })
         .eq('id', requestId);
 
       if (error) throw error;
+
+      // Send acceptance email to sender
+      if (request) {
+        try {
+          await supabase.functions.invoke('send-request-accepted-email', {
+            body: {
+              senderId: request.sender_id,
+              receiverName: user?.user_metadata?.full_name || 'Utente'
+            }
+          });
+        } catch (emailError) {
+          console.error('Failed to send acceptance email:', emailError);
+          // Don't fail the whole operation if email fails
+        }
+      }
 
       toast({
         title: "Richiesta accettata",
