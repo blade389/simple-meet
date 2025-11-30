@@ -10,11 +10,12 @@ const handler = async (_req: Request): Promise<Response> => {
 
     console.log("Processing expired match requests...");
 
-    // Find all pending requests that have expired
+    // Find all pending non-premium requests that have expired (donna→uomo)
     const { data: expiredRequests, error: fetchError } = await supabase
       .from("match_requests")
-      .select("id, receiver_id")
+      .select("id, receiver_id, is_premium")
       .eq("status", "pending")
+      .eq("is_premium", false)
       .lt("expires_at", new Date().toISOString());
 
     if (fetchError) {
@@ -31,9 +32,9 @@ const handler = async (_req: Request): Promise<Response> => {
       );
     }
 
-    // Process each expired request
+    // Process each expired non-premium request (donna→uomo)
     for (const request of expiredRequests) {
-      // Update request status to rejected
+      // Update request status to rejected (trigger will NOT refund premium tokens)
       const { error: updateError } = await supabase
         .from("match_requests")
         .update({ status: "rejected" })
@@ -44,12 +45,12 @@ const handler = async (_req: Request): Promise<Response> => {
         continue;
       }
 
-      // Deduct 1 token from the receiver
+      // Deduct 1 token from the male receiver (since this is donna→uomo)
       const { data: currentTokens, error: tokenFetchError } = await supabase
         .from("tokens")
         .select("amount")
         .eq("user_id", request.receiver_id)
-        .single();
+        .maybeSingle();
 
       if (tokenFetchError) {
         console.error(`Error fetching tokens for user ${request.receiver_id}:`, tokenFetchError);
@@ -66,8 +67,25 @@ const handler = async (_req: Request): Promise<Response> => {
       if (tokenUpdateError) {
         console.error(`Error updating tokens for user ${request.receiver_id}:`, tokenUpdateError);
       } else {
-        console.log(`Successfully processed expired request ${request.id}, deducted 1 token from user ${request.receiver_id}`);
+        console.log(`Successfully processed expired non-premium request ${request.id}, deducted 1 token from male user ${request.receiver_id}`);
       }
+    }
+
+    // Process expired premium requests (uomo→donna) - just reject, trigger will refund
+    const { data: expiredPremiumRequests } = await supabase
+      .from("match_requests")
+      .select("id")
+      .eq("status", "pending")
+      .eq("is_premium", true)
+      .lt("expires_at", new Date().toISOString());
+
+    for (const request of expiredPremiumRequests || []) {
+      await supabase
+        .from("match_requests")
+        .update({ status: "rejected" })
+        .eq("id", request.id);
+      
+      console.log(`Rejected expired premium request ${request.id}, trigger will refund token`);
     }
 
     return new Response(

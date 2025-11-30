@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Users, FileText, Crown, AlertTriangle, ThumbsDown } from 'lucide-react';
+import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Trash2, AlertTriangle, ThumbsDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -230,6 +230,42 @@ const Admin = () => {
     }
   };
 
+  const handleDelete = async (requestId: string, type: 'identity' | 'photo' = 'identity') => {
+    if (!confirm('Sei sicuro di voler eliminare questo documento? Lo stato di verifica dell\'utente rimarrà invariato.')) {
+      return;
+    }
+
+    setProcessingId(requestId);
+    try {
+      const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
+      const { error } = await supabase
+        .from(table)
+        .delete()
+        .eq('id', requestId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Documento eliminato",
+        description: "Il documento è stato rimosso dal sistema"
+      });
+
+      if (type === 'identity') {
+        loadVerificationRequests();
+      } else {
+        loadPhotoVerificationRequests();
+      }
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'verified':
@@ -381,9 +417,22 @@ const Admin = () => {
                     )}
 
                     {request.reviewed_at && (
-                      <p className="text-xs text-muted-foreground pt-2 border-t">
-                        Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
-                      </p>
+                      <div className="pt-2 border-t">
+                        <p className="text-xs text-muted-foreground">
+                          Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
+                        </p>
+                        {request.status === 'verified' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDelete(request.id, 'identity')}
+                            disabled={processingId !== null}
+                            className="mt-2 w-full"
+                          >
+                            Elimina Documento (mantieni verifica)
+                          </Button>
+                        )}
+                      </div>
                     )}
                   </CardContent>
                 </Card>
@@ -484,9 +533,22 @@ const Admin = () => {
                     )}
 
                     {request.reviewed_at && (
-                      <p className="text-xs text-muted-foreground pt-2 border-t">
-                        Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
-                      </p>
+                      <div className="pt-2 border-t">
+                        <p className="text-xs text-muted-foreground">
+                          Verificato il: {new Date(request.reviewed_at).toLocaleString('it-IT')}
+                        </p>
+                        {request.status === 'verified' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDelete(request.id, 'photo')}
+                            disabled={processingId !== null}
+                            className="mt-2 w-full"
+                          >
+                            Elimina Foto (mantieni verifica)
+                          </Button>
+                        )}
+                      </div>
                     )}
                   </CardContent>
                 </Card>
