@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { buildPushHTTPRequest } from "https://esm.sh/@pushforge/builder@1.0.3";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -107,26 +108,53 @@ const handler = async (req: Request): Promise<Response> => {
           },
         };
 
-        // Use web-push library (imported dynamically)
-        const { default: webPush } = await import("https://esm.sh/web-push@3.6.7?target=deno");
-        
-        webPush.setVapidDetails(
-          vapidSubject,
-          vapidPublicKey,
-          vapidPrivateKey
-        );
+        // Parse the VAPID private key as JWK
+        const privateJWK = JSON.parse(vapidPrivateKey);
 
-        await webPush.sendNotification(pushSubscription, payload);
-        
-        console.log(`Push notification sent successfully to endpoint: ${subscription.endpoint.substring(0, 50)}...`);
-        results.push({ success: true, endpoint: subscription.endpoint });
+        // Create message with PushForge
+        const message = {
+          payload: JSON.parse(payload),
+          options: {
+            ttl: 3600,
+            urgency: "normal" as const,
+          },
+          adminContact: vapidSubject,
+        };
+
+        // Build the push notification request using PushForge
+        const { endpoint: pushEndpoint, headers: pushHeaders, body: pushBody } = await buildPushHTTPRequest({
+          privateJWK,
+          message,
+          subscription: pushSubscription,
+        });
+
+        // Send the push notification
+        const response = await fetch(pushEndpoint, {
+          method: "POST",
+          headers: pushHeaders,
+          body: pushBody,
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`Push notification failed with status ${response.status}: ${errorText}`);
+          
+          // If subscription is invalid or expired, mark for deletion
+          if (response.status === 404 || response.status === 410) {
+            failedSubscriptions.push(subscription.id);
+          }
+          
+          results.push({ 
+            success: false, 
+            endpoint: subscription.endpoint,
+            error: `HTTP ${response.status}: ${errorText}` 
+          });
+        } else {
+          console.log(`Push notification sent successfully to endpoint: ${subscription.endpoint.substring(0, 50)}...`);
+          results.push({ success: true, endpoint: subscription.endpoint });
+        }
       } catch (error: any) {
         console.error(`Failed to send push notification:`, error);
-        
-        // If subscription is invalid or expired, mark for deletion
-        if (error.statusCode === 404 || error.statusCode === 410) {
-          failedSubscriptions.push(subscription.id);
-        }
         
         results.push({ 
           success: false, 
