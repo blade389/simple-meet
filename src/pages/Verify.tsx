@@ -70,15 +70,14 @@ const Verify = () => {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('verification-docs')
-        .getPublicUrl(filePath);
+      // Store the file path instead of public URL since bucket is now private
+      const documentPath = filePath;
 
       const { error: insertError } = await supabase
         .from('verification_requests')
         .insert({
           user_id: user?.id,
-          document_url: publicUrl,
+          document_url: documentPath,
           status: 'pending'
         });
 
