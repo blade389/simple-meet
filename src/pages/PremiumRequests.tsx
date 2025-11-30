@@ -32,6 +32,7 @@ const PremiumRequests = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [requests, setRequests] = useState<MatchRequest[]>([]);
+  const [myProfile, setMyProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,8 +40,24 @@ const PremiumRequests = () => {
       navigate('/auth');
       return;
     }
+    loadMyProfile();
     loadRequests();
   }, [user, navigate]);
+
+  const loadMyProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user?.id)
+        .single();
+
+      if (error) throw error;
+      setMyProfile(data);
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    }
+  };
 
   const loadRequests = async () => {
     try {
@@ -96,7 +113,7 @@ const PremiumRequests = () => {
           await supabase.functions.invoke('send-request-accepted-email', {
             body: {
               senderId: request.sender_id,
-              receiverName: user?.user_metadata?.full_name || 'Utente'
+              receiverName: myProfile?.full_name || 'Utente'
             }
           });
         } catch (emailError) {

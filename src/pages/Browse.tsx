@@ -314,8 +314,7 @@ const Browse = () => {
         await supabase.functions.invoke('send-match-request-email', {
           body: {
             receiverId,
-            senderName: myProfile?.full_name,
-            senderEmail: user?.email
+            senderName: myProfile?.full_name || 'Utente'
           }
         });
       } catch (emailError) {
