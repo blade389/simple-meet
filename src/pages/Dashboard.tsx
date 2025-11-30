@@ -8,6 +8,7 @@ import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown } from 'luc
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
+import { PushNotificationManager } from '@/components/PushNotificationManager';
 
 interface Profile {
   full_name: string;
@@ -292,6 +293,11 @@ const Dashboard = () => {
             </p>
           </div>
           {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
+        </div>
+
+        {/* Push Notifications */}
+        <div className="mb-6">
+          <PushNotificationManager />
         </div>
 
         {profile?.is_verified !== 'verified' && (
