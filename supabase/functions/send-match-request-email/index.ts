@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,10 +8,10 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface EmailRequest {
-  receiverId: string;
-  senderName: string;
-}
+const EmailRequestSchema = z.object({
+  receiverId: z.string().uuid(),
+  senderName: z.string().min(1).max(200),
+});
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -23,7 +24,19 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { receiverId, senderName }: EmailRequest = await req.json();
+    // Validate input
+    const requestBody = await req.json();
+    const validationResult = EmailRequestSchema.safeParse(requestBody);
+    
+    if (!validationResult.success) {
+      console.error('Validation error:', validationResult.error);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request data', details: validationResult.error.issues }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const { receiverId, senderName } = validationResult.data;
 
     // Get receiver's profile and email
     const { data: receiverProfile, error: profileError } = await supabase
@@ -78,6 +91,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send push notification
     try {
+      const pushSecret = Deno.env.get("PUSH_NOTIFICATION_SECRET")!;
       await supabase.functions.invoke("send-push-notification", {
         body: {
           userId: receiverId,
@@ -85,6 +99,9 @@ const handler = async (req: Request): Promise<Response> => {
           body: `${senderName} vuole conoscerti`,
           url: "/dashboard",
           tag: "match-request",
+        },
+        headers: {
+          'x-internal-secret': pushSecret,
         },
       });
       console.log("Push notification sent for match request");
