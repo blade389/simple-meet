@@ -108,7 +108,7 @@ const handler = async (req: Request): Promise<Response> => {
         };
 
         // Use web-push library (imported dynamically)
-        const webPush = await import("https://esm.sh/web-push@3.6.7");
+        const { default: webPush } = await import("https://esm.sh/web-push@3.6.7?target=deno");
         
         webPush.setVapidDetails(
           vapidSubject,
