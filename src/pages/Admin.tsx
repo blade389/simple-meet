@@ -370,7 +370,20 @@ const Admin = () => {
                       </p>
                       <Button
                         variant="outline"
-                        onClick={() => window.open(request.document_url, '_blank')}
+                        onClick={async () => {
+                          const { data, error } = await supabase.storage
+                            .from('verification-docs')
+                            .createSignedUrl(request.document_url.split('/verification-docs/')[1], 300);
+                          if (error) {
+                            toast({
+                              title: "Errore",
+                              description: "Impossibile caricare il documento",
+                              variant: "destructive"
+                            });
+                            return;
+                          }
+                          window.open(data.signedUrl, '_blank');
+                        }}
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Visualizza Documento
