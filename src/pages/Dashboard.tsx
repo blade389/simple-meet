@@ -292,12 +292,10 @@ const Dashboard = () => {
               Benvenuto nella tua dashboard
             </p>
           </div>
-          {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
-        </div>
-
-        {/* Push Notifications */}
-        <div className="mb-6">
-          <PushNotificationManager />
+          <div className="flex items-center gap-3">
+            <PushNotificationManager />
+            {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
+          </div>
         </div>
 
         {profile?.is_verified !== 'verified' && (
