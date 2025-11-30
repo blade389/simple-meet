@@ -64,6 +64,24 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResult = await resendResponse.json();
     console.log("Email sent successfully:", emailResult);
 
+    // Send push notification
+    try {
+      await supabase.functions.invoke("send-push-notification", {
+        body: {
+          userId: senderId,
+          title: "Match confermato! 🎉",
+          body: `${receiverName} ha accettato la tua richiesta`,
+          url: "/appointments",
+          tag: "match-accepted",
+          requireInteraction: true,
+        },
+      });
+      console.log("Push notification sent for accepted match");
+    } catch (pushError) {
+      console.error("Failed to send push notification:", pushError);
+      // Don't fail the whole request if push fails
+    }
+
     return new Response(JSON.stringify(emailResult), {
       status: 200,
       headers: {

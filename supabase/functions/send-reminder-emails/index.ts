@@ -79,6 +79,22 @@ const handler = async (req: Request): Promise<Response> => {
             console.error(`Failed to send reminder for request ${request.id}:`, error);
           } else {
             console.log(`Reminder sent for request ${request.id}`);
+            
+            // Send push notification
+            try {
+              await supabase.functions.invoke("send-push-notification", {
+                body: {
+                  userId: request.receiver_id,
+                  title: "⏰ Richiesta in scadenza",
+                  body: `La richiesta di ${senderName} scade tra 1 ora`,
+                  url: "/dashboard",
+                  tag: "request-expiring",
+                  requireInteraction: true,
+                },
+              });
+            } catch (pushError) {
+              console.error("Failed to send push notification:", pushError);
+            }
           }
         } catch (error) {
           console.error(`Error processing request ${request.id}:`, error);
@@ -155,6 +171,32 @@ const handler = async (req: Request): Promise<Response> => {
               console.error(`Failed to send appointment reminder for match ${match.id}:`, error);
             } else {
               console.log(`Appointment reminder sent for match ${match.id}`);
+              
+              // Send push notifications to both users
+              try {
+                await supabase.functions.invoke("send-push-notification", {
+                  body: {
+                    userId: match.sender_id,
+                    title: "📅 Fissa l'appuntamento",
+                    body: "Il tempo sta per scadere! Hai ancora 1 ora",
+                    url: "/appointments",
+                    tag: "appointment-deadline",
+                    requireInteraction: true,
+                  },
+                });
+                await supabase.functions.invoke("send-push-notification", {
+                  body: {
+                    userId: match.receiver_id,
+                    title: "📅 Fissa l'appuntamento",
+                    body: "Il tempo sta per scadere! Hai ancora 1 ora",
+                    url: "/appointments",
+                    tag: "appointment-deadline",
+                    requireInteraction: true,
+                  },
+                });
+              } catch (pushError) {
+                console.error("Failed to send push notifications:", pushError);
+              }
             }
           }
         } catch (error) {
