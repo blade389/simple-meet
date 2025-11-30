@@ -1,8 +1,9 @@
 // VAPID Public Key for Web Push Notifications
 // This is a public key and can be safely stored in the codebase
-// Replace this with your actual VAPID public key from the secrets you configured
+// TODO: Replace 'YOUR_VAPID_PUBLIC_KEY_HERE' with your actual VAPID public key
+// Get this from the VAPID keys you generated earlier (same one you saved as VAPID_PUBLIC_KEY secret)
 
-export const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY || '';
+export const VAPID_PUBLIC_KEY = 'YOUR_VAPID_PUBLIC_KEY_HERE';
 
-// Note: Make sure to add VITE_VAPID_PUBLIC_KEY to your .env file
-// You can get this value from the VAPID_PUBLIC_KEY secret you configured
+// The VAPID public key is safe to store in code - it's designed to be public
+// It's used by the browser to establish a secure connection for push notifications
