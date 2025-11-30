@@ -32,8 +32,8 @@ function base64UrlEncode(buffer: Uint8Array): string {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
-// Create VAPID JWT token
-async function createVapidToken(audience: string, subject: string, privateKeyPem: string): Promise<string> {
+// Create VAPID JWT token (chiave in formato base64url raw)
+async function createVapidToken(audience: string, subject: string, privateKeyB64: string): Promise<string> {
   const header = { typ: "JWT", alg: "ES256" };
   const now = Math.floor(Date.now() / 1000);
   const payload = {
@@ -46,16 +46,13 @@ async function createVapidToken(audience: string, subject: string, privateKeyPem
   const payloadB64 = base64UrlEncode(new TextEncoder().encode(JSON.stringify(payload)));
   const unsignedToken = `${headerB64}.${payloadB64}`;
 
-  // Import the private key
-  const pemContents = privateKeyPem
-    .replace(/-----BEGIN PRIVATE KEY-----/, '')
-    .replace(/-----END PRIVATE KEY-----/, '')
-    .replace(/\s/g, '');
-  const keyData = base64UrlDecode(pemContents.replace(/\+/g, '-').replace(/\//g, '_'));
+  // Decodifica la chiave privata da base64url
+  const privateKeyBytes = base64UrlDecode(privateKeyB64);
   
+  // Importa come raw key (formato standard per VAPID)
   const privateKey = await crypto.subtle.importKey(
-    "pkcs8",
-    keyData.slice(0).buffer as ArrayBuffer,
+    "raw",
+    privateKeyBytes.slice(0).buffer as ArrayBuffer,
     { name: "ECDSA", namedCurve: "P-256" },
     false,
     ["sign"]
