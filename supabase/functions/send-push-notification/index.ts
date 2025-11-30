@@ -1,21 +1,22 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-internal-secret",
 };
 
-interface PushNotificationRequest {
-  userId: string;
-  title: string;
-  body: string;
-  url?: string;
-  tag?: string;
-  requireInteraction?: boolean;
-  matchRequestId?: string;
-  appointmentId?: string;
-}
+const RequestSchema = z.object({
+  userId: z.string().uuid(),
+  title: z.string().min(1).max(200),
+  body: z.string().min(1).max(1000),
+  url: z.string().optional(),
+  tag: z.string().optional(),
+  requireInteraction: z.boolean().optional(),
+  matchRequestId: z.string().uuid().optional(),
+  appointmentId: z.string().uuid().optional(),
+});
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -23,12 +24,34 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Verify internal secret for security
+    const internalSecret = req.headers.get('x-internal-secret');
+    if (internalSecret !== Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
+      console.error('Unauthorized: Invalid internal secret');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }), 
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { userId, title, body, url, tag, requireInteraction, matchRequestId, appointmentId }: PushNotificationRequest = await req.json();
+    // Validate input
+    const requestBody = await req.json();
+    const validationResult = RequestSchema.safeParse(requestBody);
+    
+    if (!validationResult.success) {
+      console.error('Validation error:', validationResult.error);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request data', details: validationResult.error.issues }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const { userId, title, body, url, tag, requireInteraction, matchRequestId, appointmentId } = validationResult.data;
 
     console.log(`Sending push notification to user ${userId}`);
 
