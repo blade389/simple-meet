@@ -90,25 +90,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Email sent successfully:", emailResult);
 
     // Send push notification
-    try {
-      const pushSecret = Deno.env.get("PUSH_NOTIFICATION_SECRET")!;
-      await supabase.functions.invoke("send-push-notification", {
-        body: {
-          userId: receiverId,
-          title: "Nuova richiesta di match!",
-          body: `${senderName} vuole conoscerti`,
-          url: "/dashboard",
-          tag: "match-request",
-        },
-        headers: {
-          'x-internal-secret': pushSecret,
-        },
-      });
-      console.log("Push notification sent for match request");
-    } catch (pushError) {
-      console.error("Failed to send push notification:", pushError);
-      // Don't fail the whole request if push fails
-    }
+    // Push notification logic removed
 
     return new Response(JSON.stringify(emailResult), {
       status: 200,

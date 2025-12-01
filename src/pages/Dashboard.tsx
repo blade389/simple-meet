@@ -8,7 +8,6 @@ import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown } from 'luc
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
-import { PushNotificationManager } from '@/components/PushNotificationManager';
 
 interface Profile {
   full_name: string;
@@ -246,32 +245,6 @@ const Dashboard = () => {
     );
   };
 
-  const testPushNotification = async () => {
-    try {
-      if (!user) return;
-      
-      toast.info('Invio notifica di prova...');
-      
-      const { data, error } = await supabase.functions.invoke('send-push-notification', {
-        body: {
-          userId: user.id,
-          title: 'Test Notifica',
-          body: 'Questa è una notifica di prova!',
-          url: '/dashboard',
-          tag: 'test-notification',
-        }
-      });
-
-      if (error) throw error;
-      
-      console.log('Test push result:', data);
-      toast.success('Notifica inviata! Controlla se la ricevi.');
-    } catch (error: any) {
-      console.error('Error sending test push:', error);
-      toast.error(`Errore: ${error.message}`);
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -319,10 +292,6 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" onClick={testPushNotification}>
-              Test Push
-            </Button>
-            <PushNotificationManager />
             {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
           </div>
         </div>
