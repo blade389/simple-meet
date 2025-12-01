@@ -3,7 +3,7 @@ import OneSignal from "react-onesignal";
 export const runOneSignal = async () => {
   try {
     await OneSignal.init({
-      appId: "6c1a6559-422c-4b84-84c7-95574fcc3ae1", // TODO: Sostituisci con il tuo App ID di OneSignal
+      appId: "6c1a6559-422c-4b84-84c7-95574fcc3ae1",
       allowLocalhostAsSecureOrigin: true,
     });
     console.log("OneSignal initialized");
@@ -26,5 +26,15 @@ export const loginOneSignal = async (userId: string) => {
     console.log("OneSignal user logged in:", userId);
   } catch (error) {
     console.error("Error logging in OneSignal user:", error);
+  }
+};
+
+export const isPushEnabled = async (): Promise<boolean> => {
+  try {
+    const permission = await OneSignal.Notifications.permission;
+    return permission === true;
+  } catch (error) {
+    console.error("Error checking push permission:", error);
+    return false;
   }
 };
