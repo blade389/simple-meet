@@ -93,26 +93,39 @@ const handler = async (req: Request): Promise<Response> => {
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
+    console.log("OneSignal App ID configured:", !!oneSignalAppId);
+    console.log("OneSignal REST API Key configured:", !!oneSignalRestApiKey);
+    console.log("Target receiver ID for notification:", receiverId);
+
     if (oneSignalAppId && oneSignalRestApiKey) {
       try {
+        const notificationPayload = {
+          app_id: oneSignalAppId,
+          include_aliases: { external_id: [receiverId] },
+          target_channel: "push",
+          headings: { en: "Nuova Richiesta!", it: "Nuova Richiesta!" },
+          contents: { en: `${senderName} ti ha inviato una richiesta di match.`, it: `${senderName} ti ha inviato una richiesta di match.` },
+          url: "https://scopami.online/dashboard",
+        };
+        
+        console.log("Sending OneSignal notification with payload:", JSON.stringify(notificationPayload));
+        
         const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Basic ${oneSignalRestApiKey}`,
           },
-          body: JSON.stringify({
-            app_id: oneSignalAppId,
-            include_aliases: { external_id: [receiverId] },
-            target_channel: "push",
-            headings: { en: "Nuova Richiesta!", it: "Nuova Richiesta!" },
-            contents: { en: `${senderName} ti ha inviato una richiesta di match.`, it: `${senderName} ti ha inviato una richiesta di match.` },
-            url: "https://scopami.online/dashboard",
-          }),
+          body: JSON.stringify(notificationPayload),
         });
         
         const notificationResult = await notificationResponse.json();
-        console.log("Push notification sent:", notificationResult);
+        console.log("OneSignal API response status:", notificationResponse.status);
+        console.log("OneSignal API response:", JSON.stringify(notificationResult));
+        
+        if (!notificationResponse.ok) {
+          console.error("OneSignal API error:", notificationResult);
+        }
       } catch (pushError) {
         console.error("Error sending push notification:", pushError);
       }
