@@ -57,19 +57,14 @@ const Dashboard = () => {
           filter: `receiver_id=eq.${user.id}`
         },
         () => {
-        },
-        (payload) => {
-          // Only count if message is not from current user
-          if (payload.new.sender_id !== user.id) {
-            loadUnreadMessagesCount();
-          }
+          loadPremiumRequestsCount();
+          loadReceivedRequestsCount();
         }
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(premiumRequestsChannel);
-      supabase.removeChannel(messagesChannel);
     };
   }, [user]);
 
