@@ -8,7 +8,7 @@ import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell } fro
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
-import { showOneSignalPrompt, loginOneSignal } from '@/lib/onesignal';
+import { showOneSignalPrompt, loginOneSignal, isPushEnabled } from '@/lib/onesignal';
 
 interface Profile {
   full_name: string;
@@ -29,6 +29,7 @@ const Dashboard = () => {
   const [premiumRequestsCount, setPremiumRequestsCount] = useState(0);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -39,8 +40,14 @@ const Dashboard = () => {
       loadUnreadMessagesCount();
       loadReceivedRequestsCount();
       loginOneSignal(user.id);
+      checkNotificationStatus();
     }
   }, [user]);
+
+  const checkNotificationStatus = async () => {
+    const enabled = await isPushEnabled();
+    setNotificationsEnabled(enabled);
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -259,14 +266,19 @@ const Dashboard = () => {
             <MapPin className="w-4 h-4 mr-2" />
             {updatingLocation ? 'Aggiornamento...' : 'Aggiorna Posizione'}
           </Button>
-          <Button
-            onClick={showOneSignalPrompt}
-            variant="outline"
-            className="w-full mt-2"
-          >
-            <Bell className="w-4 h-4 mr-2" />
-            Attiva Notifiche
-          </Button>
+          {!notificationsEnabled && (
+            <Button
+              onClick={async () => {
+                await showOneSignalPrompt();
+                checkNotificationStatus();
+              }}
+              variant="outline"
+              className="w-full mt-2"
+            >
+              <Bell className="w-4 h-4 mr-2" />
+              Attiva Notifiche
+            </Button>
+          )}
         </div>
       </header>
 
