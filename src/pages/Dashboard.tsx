@@ -19,7 +19,6 @@ interface Profile {
 interface TokenBalance {
   amount: number;
 }
-
 const Dashboard = () => {
   const { user, signOut, isPremium } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -32,6 +31,20 @@ const Dashboard = () => {
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
 
   useEffect(() => {
+    if (user) {
+      loadProfile();
+      loadTokens();
+      checkAdminRole();
+      loadPremiumRequestsCount();
+      loadUnreadMessagesCount();
+      loadReceivedRequestsCount();
+      loginOneSignal(user.id);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
     // Realtime subscription for premium requests
     const premiumRequestsChannel = supabase
       .channel('premium-requests-changes')
@@ -44,21 +57,6 @@ const Dashboard = () => {
           filter: `receiver_id=eq.${user.id}`
         },
         () => {
-          loadPremiumRequestsCount();
-          loadReceivedRequestsCount();
-        }
-      )
-      .subscribe();
-
-    // Realtime subscription for chat messages
-    const messagesChannel = supabase
-      .channel('messages-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'chat_messages'
         },
         (payload) => {
           // Only count if message is not from current user
