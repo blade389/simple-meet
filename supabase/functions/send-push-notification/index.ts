@@ -48,15 +48,31 @@ Deno.serve(async (req) => {
     const authHeader = req.headers.get('Authorization');
     let isAuthorized = false;
 
+    console.log('Auth check:', { 
+      hasInternalSecret: !!internalSecret, 
+      hasAuthHeader: !!authHeader,
+      targetUserId: userId 
+    });
+
     if (internalSecret && internalSecret === Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
       isAuthorized = true;
+      console.log('Authorized via internal secret');
     } else if (authHeader) {
       const token = authHeader.replace('Bearer ', '');
       const { data: { user }, error } = await supabase.auth.getUser(token);
       
-      if (!error && user && user.id === userId) {
+      if (error) {
+        console.error('Auth error:', error);
+      } else if (!user) {
+        console.error('Auth failed: No user found from token');
+      } else if (user.id !== userId) {
+        console.error('Auth failed: User ID mismatch', { tokenUserId: user.id, targetUserId: userId });
+      } else {
         isAuthorized = true;
+        console.log('Authorized via user token');
       }
+    } else {
+      console.error('Auth failed: No credentials provided');
     }
 
     if (!isAuthorized) {
