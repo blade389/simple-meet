@@ -8,7 +8,7 @@ import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell } fro
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
-import { showOneSignalPrompt } from '@/lib/onesignal';
+import { showOneSignalPrompt, loginOneSignal } from '@/lib/onesignal';
 
 interface Profile {
   full_name: string;
@@ -32,19 +32,6 @@ const Dashboard = () => {
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
 
   useEffect(() => {
-    if (user) {
-      loadProfile();
-      loadTokens();
-      checkAdminRole();
-      loadPremiumRequestsCount();
-      loadUnreadMessagesCount();
-      loadReceivedRequestsCount();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!user) return;
-
     // Realtime subscription for premium requests
     const premiumRequestsChannel = supabase
       .channel('premium-requests-changes')

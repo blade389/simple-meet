@@ -78,25 +78,34 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Email sent successfully:", emailResult);
 
     // Send push notification
-    try {
-      const pushSecret = Deno.env.get("PUSH_NOTIFICATION_SECRET")!;
-      await supabase.functions.invoke("send-push-notification", {
-        body: {
-          userId: senderId,
-          title: "Match confermato! 🎉",
-          body: `${receiverName} ha accettato la tua richiesta`,
-          url: "/appointments",
-          tag: "match-accepted",
-          requireInteraction: true,
-        },
-        headers: {
-          'x-internal-secret': pushSecret,
-        },
-      });
-      console.log("Push notification sent for accepted match");
-    } catch (pushError) {
-      console.error("Failed to send push notification:", pushError);
-      // Don't fail the whole request if push fails
+    const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
+    const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
+
+    if (oneSignalAppId && oneSignalRestApiKey) {
+      try {
+        const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${oneSignalRestApiKey}`,
+          },
+          body: JSON.stringify({
+            app_id: oneSignalAppId,
+            include_aliases: { external_id: [senderId] },
+            target_channel: "push",
+            headings: { en: "Match confermato! 🎉", it: "Match confermato! 🎉" },
+            contents: { en: `${receiverName} ha accettato la tua richiesta`, it: `${receiverName} ha accettato la tua richiesta` },
+            url: "https://scopami.online/appointments",
+          }),
+        });
+        
+        const notificationResult = await notificationResponse.json();
+        console.log("Push notification sent for accepted match:", notificationResult);
+      } catch (pushError) {
+        console.error("Failed to send push notification:", pushError);
+      }
+    } else {
+      console.log("OneSignal credentials not configured, skipping push notification");
     }
 
     return new Response(JSON.stringify(emailResult), {

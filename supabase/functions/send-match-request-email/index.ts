@@ -90,7 +90,35 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Email sent successfully:", emailResult);
 
     // Send push notification
-    // Push notification logic removed
+    const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
+    const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
+
+    if (oneSignalAppId && oneSignalRestApiKey) {
+      try {
+        const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${oneSignalRestApiKey}`,
+          },
+          body: JSON.stringify({
+            app_id: oneSignalAppId,
+            include_aliases: { external_id: [receiverId] },
+            target_channel: "push",
+            headings: { en: "Nuova Richiesta!", it: "Nuova Richiesta!" },
+            contents: { en: `${senderName} ti ha inviato una richiesta di match.`, it: `${senderName} ti ha inviato una richiesta di match.` },
+            url: "https://scopami.online/dashboard",
+          }),
+        });
+        
+        const notificationResult = await notificationResponse.json();
+        console.log("Push notification sent:", notificationResult);
+      } catch (pushError) {
+        console.error("Error sending push notification:", pushError);
+      }
+    } else {
+      console.log("OneSignal credentials not configured, skipping push notification");
+    }
 
     return new Response(JSON.stringify(emailResult), {
       status: 200,

@@ -19,3 +19,12 @@ export const showOneSignalPrompt = async () => {
     console.error("Error showing OneSignal prompt:", error);
   }
 };
+
+export const loginOneSignal = async (userId: string) => {
+  try {
+    await OneSignal.login(userId);
+    console.log("OneSignal user logged in:", userId);
+  } catch (error) {
+    console.error("Error logging in OneSignal user:", error);
+  }
+};
