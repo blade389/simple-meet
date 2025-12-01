@@ -4,10 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
+import { showOneSignalPrompt } from '@/lib/onesignal';
 
 interface Profile {
   full_name: string;
@@ -277,6 +278,14 @@ const Dashboard = () => {
           >
             <MapPin className="w-4 h-4 mr-2" />
             {updatingLocation ? 'Aggiornamento...' : 'Aggiorna Posizione'}
+          </Button>
+          <Button
+            onClick={showOneSignalPrompt}
+            variant="outline"
+            className="w-full mt-2"
+          >
+            <Bell className="w-4 h-4 mr-2" />
+            Attiva Notifiche
           </Button>
         </div>
       </header>

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { runOneSignal } from "./lib/onesignal";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,47 +33,53 @@ import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/appointments" element={<Appointments />} />
-            <Route path="/verify" element={<Verify />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/buy-tokens" element={<BuyTokens />} />
-            <Route path="/premium-profiles" element={<PremiumProfiles />} />
-            <Route path="/premium-requests" element={<PremiumRequests />} />
-            <Route path="/premium-subscription" element={<PremiumSubscription />} />
-            <Route path="/premium-rates" element={<PremiumRatesManagement />} />
-            <Route path="/admin/verification-requests" element={<Admin />} />
-            <Route path="/admin/photo-verification" element={<Admin />} />
-            <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
-            <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
-            <Route path="/admin/user-reviews" element={<AdminUserReviews />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/about" element={<About />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    runOneSignal();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/appointments" element={<Appointments />} />
+              <Route path="/verify" element={<Verify />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/buy-tokens" element={<BuyTokens />} />
+              <Route path="/premium-profiles" element={<PremiumProfiles />} />
+              <Route path="/premium-requests" element={<PremiumRequests />} />
+              <Route path="/premium-subscription" element={<PremiumSubscription />} />
+              <Route path="/premium-rates" element={<PremiumRatesManagement />} />
+              <Route path="/admin/verification-requests" element={<Admin />} />
+              <Route path="/admin/photo-verification" element={<Admin />} />
+              <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
+              <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
+              <Route path="/admin/user-reviews" element={<AdminUserReviews />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/about" element={<About />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
