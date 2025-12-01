@@ -249,60 +249,6 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-subtle">
-      <header className="bg-card border-b shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-2">
-              <Heart className="w-8 h-8 text-primary fill-primary" />
-              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SCOPAMI
-              </h1>
-            </div>
-            <Button variant="ghost" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Esci
-            </Button>
-          </div>
-          <Button
-            onClick={updateLocation}
-            disabled={updatingLocation}
-            className="w-full"
-            variant="outline"
-          >
-            <MapPin className="w-4 h-4 mr-2" />
-            {updatingLocation ? 'Aggiornamento...' : 'Aggiorna Posizione'}
-          </Button>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <h2 className="text-3xl font-bold mb-2">
-              Ciao, {profile?.full_name || 'Utente'}!
-            </h2>
-            <p className="text-muted-foreground">
-              Benvenuto nella tua dashboard
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <PushNotificationManager />
-            {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
-          </div>
-        </div>
-
-        {profile?.is_verified !== 'verified' && (
-          <Card className="p-6 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
-            <div className="flex items-start gap-4">
-              <Shield className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
-              <div className="flex-1">
                 <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
                   Verifica Identità Richiesta
                 </h3>

@@ -25,15 +25,6 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const internalSecret = req.headers.get('x-internal-secret');
-    if (internalSecret !== Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
-      console.error('Unauthorized: Invalid internal secret');
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
-    }
-
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -51,6 +42,30 @@ Deno.serve(async (req) => {
     }
 
     const { userId, title, body, url, tag, requireInteraction, matchRequestId, appointmentId } = validationResult.data;
+
+    // Authorization check
+    const internalSecret = req.headers.get('x-internal-secret');
+    const authHeader = req.headers.get('Authorization');
+    let isAuthorized = false;
+
+    if (internalSecret && internalSecret === Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
+      isAuthorized = true;
+    } else if (authHeader) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error } = await supabase.auth.getUser(token);
+      
+      if (!error && user && user.id === userId) {
+        isAuthorized = true;
+      }
+    }
+
+    if (!isAuthorized) {
+      console.error('Unauthorized request');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
     console.log(`Sending push notification to user ${userId}`);
 
     const { data: subscriptions, error: subsError } = await supabase
