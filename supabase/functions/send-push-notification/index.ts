@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
       console.error('Validation error:', validationResult.error);
       return new Response(
         JSON.stringify({ error: 'Invalid request data', details: validationResult.error.issues }),
-        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
@@ -47,6 +47,7 @@ Deno.serve(async (req) => {
     const internalSecret = req.headers.get('x-internal-secret');
     const authHeader = req.headers.get('Authorization');
     let isAuthorized = false;
+    let authErrorDetail = '';
 
     console.log('Auth check:', { 
       hasInternalSecret: !!internalSecret, 
@@ -63,23 +64,27 @@ Deno.serve(async (req) => {
       
       if (error) {
         console.error('Auth error:', error);
+        authErrorDetail = `Auth error: ${error.message}`;
       } else if (!user) {
         console.error('Auth failed: No user found from token');
+        authErrorDetail = 'No user found from token';
       } else if (user.id !== userId) {
         console.error('Auth failed: User ID mismatch', { tokenUserId: user.id, targetUserId: userId });
+        authErrorDetail = `User ID mismatch: token=${user.id}, target=${userId}`;
       } else {
         isAuthorized = true;
         console.log('Authorized via user token');
       }
     } else {
       console.error('Auth failed: No credentials provided');
+      authErrorDetail = 'No credentials provided';
     }
 
     if (!isAuthorized) {
       console.error('Unauthorized request');
       return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        JSON.stringify({ error: 'Unauthorized', detail: authErrorDetail }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
     console.log(`Sending push notification to user ${userId}`);
@@ -91,7 +96,10 @@ Deno.serve(async (req) => {
 
     if (subsError) {
       console.error("Error fetching subscriptions:", subsError);
-      throw subsError;
+      return new Response(
+        JSON.stringify({ error: 'Database error', details: subsError }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
     }
 
     if (!subscriptions || subscriptions.length === 0) {
@@ -107,7 +115,10 @@ Deno.serve(async (req) => {
     const vapidSubject = Deno.env.get("VAPID_SUBJECT");
 
     if (!vapidPublicKey || !vapidPrivateKey || !vapidSubject) {
-      throw new Error("VAPID keys not configured");
+      return new Response(
+        JSON.stringify({ error: 'Configuration error', details: 'VAPID keys not configured' }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
     }
 
     webpush.setVapidDetails(
@@ -177,7 +188,7 @@ Deno.serve(async (req) => {
     console.error("Error in send-push-notification:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 });
