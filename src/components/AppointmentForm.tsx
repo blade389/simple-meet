@@ -51,6 +51,24 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, onSuccess }: Appo
 
       if (error) throw error;
 
+      // Send push notification to the other user (fire and forget)
+      const formattedDate = appointmentDateTime.toLocaleDateString('it-IT', {
+        day: 'numeric',
+        month: 'long',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      supabase.functions.invoke('send-push-notification', {
+        body: {
+          userId: otherUserId,
+          title: '📅 Appuntamento fissato!',
+          body: `Appuntamento il ${formattedDate} - ${location}`,
+          url: '/appointments',
+          tag: 'appointment-scheduled',
+        },
+      }).catch(err => console.log('Push notification error (non-blocking):', err));
+
       toast({
         title: 'Appuntamento registrato!',
         description: 'L\'appuntamento è stato salvato con successo.',
