@@ -268,6 +268,7 @@ export type Database = {
       }
       profile_photo_verifications: {
         Row: {
+          admin_archived: boolean | null
           created_at: string | null
           id: string
           is_primary: boolean | null
@@ -279,6 +280,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          admin_archived?: boolean | null
           created_at?: string | null
           id?: string
           is_primary?: boolean | null
@@ -290,6 +292,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          admin_archived?: boolean | null
           created_at?: string | null
           id?: string
           is_primary?: boolean | null
@@ -511,6 +514,7 @@ export type Database = {
       }
       verification_requests: {
         Row: {
+          admin_archived: boolean | null
           created_at: string | null
           document_url: string
           id: string
@@ -521,6 +525,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          admin_archived?: boolean | null
           created_at?: string | null
           document_url: string
           id?: string
@@ -531,6 +536,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          admin_archived?: boolean | null
           created_at?: string | null
           document_url?: string
           id?: string

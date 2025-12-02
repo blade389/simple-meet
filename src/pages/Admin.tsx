@@ -67,6 +67,7 @@ const Admin = () => {
       const { data: requests, error: requestsError } = await supabase
         .from('verification_requests')
         .select('*')
+        .or('admin_archived.is.null,admin_archived.eq.false')
         .order('created_at', { ascending: false });
 
       if (requestsError) throw requestsError;
@@ -109,6 +110,7 @@ const Admin = () => {
       const { data: requests, error: requestsError } = await supabase
         .from('profile_photo_verifications')
         .select('*')
+        .or('admin_archived.is.null,admin_archived.eq.false')
         .order('is_primary', { ascending: false })
         .order('created_at', { ascending: false });
 
@@ -231,7 +233,7 @@ const Admin = () => {
   };
 
   const handleDelete = async (requestId: string, type: 'identity' | 'photo' = 'identity') => {
-    if (!confirm('Sei sicuro di voler eliminare questo documento? Lo stato di verifica dell\'utente rimarrà invariato.')) {
+    if (!confirm('Sei sicuro di voler nascondere questo documento dalla vista admin? L\'utente continuerà a vedere i propri dati.')) {
       return;
     }
 
@@ -240,14 +242,14 @@ const Admin = () => {
       const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
       const { error } = await supabase
         .from(table)
-        .delete()
+        .update({ admin_archived: true })
         .eq('id', requestId);
 
       if (error) throw error;
 
       toast({
-        title: "Documento eliminato",
-        description: "Il documento è stato rimosso dal sistema"
+        title: "Documento archiviato",
+        description: "Il documento è stato nascosto dalla vista admin"
       });
 
       if (type === 'identity') {
@@ -442,7 +444,7 @@ const Admin = () => {
                             disabled={processingId !== null}
                             className="mt-2 w-full"
                           >
-                            Elimina Documento (mantieni verifica)
+                            Archivia Documento (mantieni verifica)
                           </Button>
                         )}
                       </div>
@@ -558,7 +560,7 @@ const Admin = () => {
                             disabled={processingId !== null}
                             className="mt-2 w-full"
                           >
-                            Elimina Foto (mantieni verifica)
+                            Archivia Foto (mantieni verifica)
                           </Button>
                         )}
                       </div>
