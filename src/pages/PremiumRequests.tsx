@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Check, X, Crown } from 'lucide-react';
+import { ArrowLeft, Check, X, Crown, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface MatchRequest {
@@ -13,6 +13,7 @@ interface MatchRequest {
   sender_id: string;
   message: string | null;
   created_at: string;
+  expires_at: string | null;
   is_premium: boolean;
   selected_rate_id: string | null;
   sender: {
@@ -26,6 +27,48 @@ interface MatchRequest {
     price_euros: number;
   } | null;
 }
+
+// Countdown component
+const CountdownTimer = ({ expiresAt }: { expiresAt: string }) => {
+  const [timeRemaining, setTimeRemaining] = useState<string>('');
+  const [isUrgent, setIsUrgent] = useState(false);
+
+  useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const deadline = new Date(expiresAt).getTime();
+      const distance = deadline - now;
+
+      if (distance < 0) {
+        setTimeRemaining('Scaduta');
+        setIsUrgent(true);
+        return;
+      }
+
+      const hours = Math.floor(distance / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
+      setIsUrgent(hours < 6); // Urgent if less than 6 hours
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, [expiresAt]);
+
+  return (
+    <div className={`flex items-center gap-2 p-2 rounded-md ${isUrgent ? 'bg-destructive/10 text-destructive' : 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400'}`}>
+      <Clock className="h-4 w-4" />
+      <div>
+        <p className="text-xs font-medium">Tempo rimanente per accettare</p>
+        <p className="text-sm font-bold">{timeRemaining}</p>
+      </div>
+    </div>
+  );
+};
 
 const PremiumRequests = () => {
   const navigate = useNavigate();
@@ -68,6 +111,7 @@ const PremiumRequests = () => {
           sender_id,
           message,
           created_at,
+          expires_at,
           is_premium,
           selected_rate_id,
           sender:profiles!fk_match_requests_sender(
@@ -266,6 +310,9 @@ const PremiumRequests = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {request.expires_at && (
+                    <CountdownTimer expiresAt={request.expires_at} />
+                  )}
                   {request.premium_rate && (
                     <div className="bg-yellow-500/10 p-3 rounded-lg">
                       <p className="font-semibold">Tariffa selezionata:</p>
@@ -278,6 +325,9 @@ const PremiumRequests = () => {
                       <p className="text-sm text-muted-foreground">{request.message}</p>
                     </div>
                   )}
+                  <p className="text-xs text-muted-foreground">
+                    Se non rispondi entro la scadenza, la richiesta sarà rifiutata automaticamente e il gettone sarà rimborsato.
+                  </p>
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleAccept(request.id)}
