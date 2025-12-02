@@ -208,6 +208,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     if (!newMessage.trim() || loading) return;
 
     setLoading(true);
+    const messageToSend = newMessage.trim();
 
     try {
       const { error } = await supabase
@@ -215,12 +216,22 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
         .insert({
           match_request_id: matchRequestId,
           sender_id: currentUserId,
-          message: newMessage.trim(),
+          message: messageToSend,
         });
 
       if (error) throw error;
 
       setNewMessage('');
+
+      // Send push notification to the other user (fire and forget)
+      supabase.functions.invoke('send-chat-message-notification', {
+        body: {
+          matchRequestId,
+          senderId: currentUserId,
+          message: messageToSend,
+        },
+      }).catch(err => console.log('Push notification error (non-blocking):', err));
+
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
