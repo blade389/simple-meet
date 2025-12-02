@@ -184,26 +184,13 @@ const handler = async (req: Request): Promise<Response> => {
             } else {
               console.log(`Appointment reminder sent for match ${match.id}`);
               
-              // Send push notifications to both users
+              // Send push notification only to receiver (female user who needs to schedule)
               try {
-                await supabase.functions.invoke("send-push-notification", {
-                  body: {
-                    userId: match.sender_id,
-                    title: "📅 Fissa l'appuntamento",
-                    body: "Il tempo sta per scadere! Hai ancora 1 ora",
-                    url: "/appointments",
-                    tag: "appointment-deadline",
-                    requireInteraction: true,
-                  },
-                  headers: {
-                    'x-internal-secret': pushSecret,
-                  },
-                });
                 await supabase.functions.invoke("send-push-notification", {
                   body: {
                     userId: match.receiver_id,
                     title: "📅 Fissa l'appuntamento",
-                    body: "Il tempo sta per scadere! Hai ancora 1 ora",
+                    body: "Il tempo sta per scadere! Hai ancora 1 ora per fissare l'appuntamento",
                     url: "/appointments",
                     tag: "appointment-deadline",
                     requireInteraction: true,
@@ -213,7 +200,7 @@ const handler = async (req: Request): Promise<Response> => {
                   },
                 });
               } catch (pushError) {
-                console.error("Failed to send push notifications:", pushError);
+                console.error("Failed to send push notification:", pushError);
               }
             }
           }
