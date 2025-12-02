@@ -11,6 +11,7 @@ const corsHeaders = {
 const EmailRequestSchema = z.object({
   receiverId: z.string().uuid(),
   senderName: z.string().min(1).max(200),
+  isPremium: z.boolean().optional().default(false),
 });
 
 const handler = async (req: Request): Promise<Response> => {
@@ -36,7 +37,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { receiverId, senderName } = validationResult.data;
+    const { receiverId, senderName, isPremium } = validationResult.data;
 
     // Get receiver's profile and email
     const { data: receiverProfile, error: profileError } = await supabase
@@ -58,6 +59,29 @@ const handler = async (req: Request): Promise<Response> => {
       throw userError || new Error("Receiver email not found");
     }
 
+    // Different email content for premium vs normal requests
+    const emailContent = isPremium 
+      ? `
+        <h1>Ciao ${receiverProfile.full_name}!</h1>
+        <p><strong>${senderName}</strong> ti ha inviato una <strong>richiesta premium</strong>.</p>
+        <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
+        <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata.</p>
+        <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
+        <p>Buona fortuna!</p>
+      `
+      : `
+        <h1>Ciao ${receiverProfile.full_name}!</h1>
+        <p><strong>${senderName}</strong> ti ha inviato una richiesta di match.</p>
+        <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
+        <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
+        <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
+        <p>Buona fortuna!</p>
+      `;
+
+    const emailSubject = isPremium 
+      ? "Hai ricevuto una richiesta premium!"
+      : "Hai ricevuto una nuova richiesta di match!";
+
     // Send email using Resend API
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -68,15 +92,8 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Match App <noreply@scopami.online>",
         to: [user.email],
-        subject: "Hai ricevuto una nuova richiesta di match!",
-        html: `
-          <h1>Ciao ${receiverProfile.full_name}!</h1>
-          <p><strong>${senderName}</strong> ti ha inviato una richiesta di match.</p>
-          <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
-          <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
-          <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
-          <p>Buona fortuna!</p>
-        `,
+        subject: emailSubject,
+        html: emailContent,
       }),
     });
 
@@ -99,13 +116,21 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (oneSignalAppId && oneSignalRestApiKey) {
       try {
+        const notificationTitle = isPremium ? "Nuova Richiesta Premium! 👑" : "Nuova Richiesta!";
+        const notificationContent = isPremium 
+          ? `${senderName} ti ha inviato una richiesta premium.`
+          : `${senderName} ti ha inviato una richiesta di match.`;
+        const notificationUrl = isPremium 
+          ? "https://scopami.online/premium-requests"
+          : "https://scopami.online/dashboard";
+
         const notificationPayload = {
           app_id: oneSignalAppId,
           include_aliases: { external_id: [receiverId] },
           target_channel: "push",
-          headings: { en: "Nuova Richiesta!", it: "Nuova Richiesta!" },
-          contents: { en: `${senderName} ti ha inviato una richiesta di match.`, it: `${senderName} ti ha inviato una richiesta di match.` },
-          url: "https://scopami.online/dashboard",
+          headings: { en: notificationTitle, it: notificationTitle },
+          contents: { en: notificationContent, it: notificationContent },
+          url: notificationUrl,
         };
         
         console.log("Sending OneSignal notification with payload:", JSON.stringify(notificationPayload));

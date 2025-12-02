@@ -188,6 +188,7 @@ const PremiumProfiles = () => {
           body: {
             receiverId: selectedProfile.id,
             senderName: myProfile?.full_name || 'Utente',
+            isPremium: true,
           },
         });
       } catch (emailError) {
