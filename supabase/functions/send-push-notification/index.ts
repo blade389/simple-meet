@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,10 +22,37 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Verify internal secret for security (only other edge functions can call this)
+    // Accept either internal secret (from other edge functions) or valid JWT (from frontend)
     const internalSecret = req.headers.get('x-internal-secret');
-    if (internalSecret !== Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
-      console.error('Unauthorized: Invalid internal secret');
+    const authHeader = req.headers.get('authorization');
+    
+    let isAuthorized = false;
+    
+    // Check internal secret first
+    if (internalSecret === Deno.env.get('PUSH_NOTIFICATION_SECRET')) {
+      isAuthorized = true;
+    }
+    
+    // If no valid internal secret, check JWT
+    if (!isAuthorized && authHeader) {
+      const supabase = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_ANON_KEY")!,
+        {
+          global: {
+            headers: { Authorization: authHeader },
+          },
+        }
+      );
+      
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (user && !error) {
+        isAuthorized = true;
+      }
+    }
+    
+    if (!isAuthorized) {
+      console.error('Unauthorized: Invalid credentials');
       return new Response('Unauthorized', { status: 401, headers: corsHeaders });
     }
 

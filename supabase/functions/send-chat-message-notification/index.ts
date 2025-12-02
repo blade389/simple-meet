@@ -19,6 +19,26 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const authHeader = req.headers.get('authorization');
+    
+    // Verify user is authenticated
+    const supabaseAuth = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      {
+        global: {
+          headers: { Authorization: authHeader || '' },
+        },
+      }
+    );
+    
+    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+    if (!user || authError) {
+      console.error('Unauthorized: Invalid JWT');
+      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+    }
+
+    // Use service role for database operations
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
