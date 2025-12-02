@@ -38,6 +38,7 @@ const handler = async (req: Request): Promise<Response> => {
         expires_at,
         receiver_id,
         sender_id,
+        is_premium,
         sender:profiles!match_requests_sender_id_fkey(full_name),
         receiver:profiles!match_requests_receiver_id_fkey(full_name)
       `)
@@ -62,6 +63,26 @@ const handler = async (req: Request): Promise<Response> => {
 
           const senderName = (request.sender as any)?.full_name || "Un utente";
           const receiverName = (request.receiver as any)?.full_name || "Utente";
+          const isPremium = (request as any).is_premium === true;
+
+          // Different email content for premium vs normal requests
+          const emailSubject = isPremium 
+            ? "Promemoria: richiesta premium in scadenza!"
+            : "Promemoria: richiesta di match in scadenza!";
+          
+          const emailHtml = isPremium
+            ? `
+              <h1>Ciao ${receiverName}!</h1>
+              <p>Ti ricordiamo che hai una <strong>richiesta premium</strong> da <strong>${senderName}</strong> che scadrà tra circa 1 ora.</p>
+              <p>Se non risponderai in tempo, la richiesta sarà automaticamente rifiutata.</p>
+              <p>Accedi all'app per accettare o rifiutare la richiesta.</p>
+            `
+            : `
+              <h1>Ciao ${receiverName}!</h1>
+              <p>Ti ricordiamo che hai una richiesta di match da <strong>${senderName}</strong> che scadrà tra circa 1 ora.</p>
+              <p>Se non risponderai in tempo, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
+              <p>Accedi all'app per accettare o rifiutare la richiesta.</p>
+            `;
 
           // Send reminder email
           const resendResponse = await fetch("https://api.resend.com/emails", {
@@ -73,13 +94,8 @@ const handler = async (req: Request): Promise<Response> => {
             body: JSON.stringify({
               from: "Match App <noreply@scopami.online>",
               to: [user.email],
-              subject: "Promemoria: richiesta di match in scadenza!",
-              html: `
-                <h1>Ciao ${receiverName}!</h1>
-                <p>Ti ricordiamo che hai una richiesta di match da <strong>${senderName}</strong> che scadrà tra circa 1 ora.</p>
-                <p>Se non risponderai in tempo, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
-                <p>Accedi all'app per accettare o rifiutare la richiesta.</p>
-              `,
+              subject: emailSubject,
+              html: emailHtml,
             }),
           });
 
@@ -90,13 +106,16 @@ const handler = async (req: Request): Promise<Response> => {
             console.log(`Reminder sent for request ${request.id}`);
             
             // Send push notification
+            const pushUrl = isPremium ? "/premium-requests" : "/dashboard";
+            const pushTitle = isPremium ? "⏰ Richiesta premium in scadenza" : "⏰ Richiesta in scadenza";
+            
             try {
               await supabase.functions.invoke("send-push-notification", {
                 body: {
                   userId: request.receiver_id,
-                  title: "⏰ Richiesta in scadenza",
+                  title: pushTitle,
                   body: `La richiesta di ${senderName} scade tra 1 ora`,
-                  url: "/dashboard",
+                  url: pushUrl,
                   tag: "request-expiring",
                   requireInteraction: true,
                 },
