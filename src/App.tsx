@@ -22,6 +22,7 @@ import PremiumSubscription from './pages/PremiumSubscription';
 import PremiumRatesManagement from './pages/PremiumRatesManagement';
 import ConversationReviews from './pages/ConversationReviews';
 import AdminUserReviews from './pages/AdminUserReviews';
+import Favorites from './pages/Favorites';
 import NotFound from "./pages/NotFound";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -65,6 +66,7 @@ const App = () => {
               <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
               <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
               <Route path="/admin/user-reviews" element={<AdminUserReviews />} />
+              <Route path="/favorites" element={<Favorites />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />

@@ -5,9 +5,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown, Heart } from 'lucide-react';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { useToast } from '@/hooks/use-toast';
+import { toast as sonnerToast } from 'sonner';
 
 interface Profile {
   id: string;
@@ -37,6 +38,7 @@ const PremiumProfiles = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isRequestPending, setIsRequestPending] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
     if (selectedProfile && user) {
@@ -64,7 +66,48 @@ const PremiumProfiles = () => {
     }
     loadMyProfile();
     loadProfiles();
+    loadFavorites();
   }, [user, navigate]);
+
+  const loadFavorites = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('favorites')
+      .select('favorite_user_id')
+      .eq('user_id', user.id);
+    if (data) {
+      setFavorites(data.map(f => f.favorite_user_id));
+    }
+  };
+
+  const toggleFavorite = async (profileId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!user) return;
+
+    const isFavorite = favorites.includes(profileId);
+    
+    if (isFavorite) {
+      const { error } = await supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('favorite_user_id', profileId);
+      
+      if (!error) {
+        setFavorites(prev => prev.filter(id => id !== profileId));
+        sonnerToast.success('Rimosso dai preferiti');
+      }
+    } else {
+      const { error } = await supabase
+        .from('favorites')
+        .insert({ user_id: user.id, favorite_user_id: profileId });
+      
+      if (!error) {
+        setFavorites(prev => [...prev, profileId]);
+        sonnerToast.success('Aggiunto ai preferiti');
+      }
+    }
+  };
 
   const loadMyProfile = async () => {
     try {
@@ -272,6 +315,14 @@ const PremiumProfiles = () => {
                     <Crown className="h-3 w-3 mr-1" />
                     Premium
                   </Badge>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 left-2 bg-background/80 hover:bg-background"
+                    onClick={(e) => toggleFavorite(profile.id, e)}
+                  >
+                    <Heart className={`w-5 h-5 ${favorites.includes(profile.id) ? 'fill-primary text-primary' : ''}`} />
+                  </Button>
                 </div>
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
