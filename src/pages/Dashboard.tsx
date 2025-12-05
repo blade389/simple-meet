@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell, Bookmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [favoritesCount, setFavoritesCount] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -39,6 +40,7 @@ const Dashboard = () => {
       loadPremiumRequestsCount();
       loadUnreadMessagesCount();
       loadReceivedRequestsCount();
+      loadFavoritesCount();
       loginOneSignal(user.id);
       checkNotificationStatus();
     }
@@ -183,6 +185,20 @@ const Dashboard = () => {
       setReceivedRequestsCount(count || 0);
     } catch (error) {
       console.error('Error loading received requests count:', error);
+    }
+  };
+
+  const loadFavoritesCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from('favorites')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+      setFavoritesCount(count || 0);
+    } catch (error) {
+      console.error('Error loading favorites count:', error);
     }
   };
 
@@ -379,7 +395,22 @@ const Dashboard = () => {
             </Link>
           </Card>
 
-
+          <Card className="p-6 hover:shadow-glow transition-shadow">
+            <Link to="/favorites" className="block">
+              <div className="flex items-center justify-between mb-4">
+                <Bookmark className="w-12 h-12 text-primary" />
+                {favoritesCount > 0 && (
+                  <Badge className="bg-primary text-primary-foreground">
+                    {favoritesCount}
+                  </Badge>
+                )}
+              </div>
+              <h3 className="font-semibold text-lg mb-2">I Miei Preferiti</h3>
+              <p className="text-sm text-muted-foreground">
+                Profili salvati nei preferiti
+              </p>
+            </Link>
+          </Card>
         </div>
 
         {/* Premium Section - Female Non-Premium */}

@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
+import { toast as sonnerToast } from 'sonner';
 
 interface Profile {
   id: string;
@@ -97,12 +98,54 @@ const Browse = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
       loadMyProfile();
+      loadFavorites();
     }
   }, [user]);
+
+  const loadFavorites = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('favorites')
+      .select('favorite_user_id')
+      .eq('user_id', user.id);
+    if (data) {
+      setFavorites(data.map(f => f.favorite_user_id));
+    }
+  };
+
+  const toggleFavorite = async (profileId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!user) return;
+
+    const isFavorite = favorites.includes(profileId);
+    
+    if (isFavorite) {
+      const { error } = await supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('favorite_user_id', profileId);
+      
+      if (!error) {
+        setFavorites(prev => prev.filter(id => id !== profileId));
+        sonnerToast.success('Rimosso dai preferiti');
+      }
+    } else {
+      const { error } = await supabase
+        .from('favorites')
+        .insert({ user_id: user.id, favorite_user_id: profileId });
+      
+      if (!error) {
+        setFavorites(prev => [...prev, profileId]);
+        sonnerToast.success('Aggiunto ai preferiti');
+      }
+    }
+  };
 
   const loadMyProfile = async () => {
     try {
@@ -624,7 +667,15 @@ const Browse = () => {
                   setShowProfileDialog(true);
                 }}
               >
-                <CardHeader>
+                <CardHeader className="relative">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 z-10"
+                    onClick={(e) => toggleFavorite(profile.id, e)}
+                  >
+                    <Heart className={`w-5 h-5 ${favorites.includes(profile.id) ? 'fill-primary text-primary' : ''}`} />
+                  </Button>
                   <div className="flex justify-center mb-4">
                     <Avatar className="w-24 h-24">
                       <AvatarImage src={profile.profile_photo_url || undefined} />

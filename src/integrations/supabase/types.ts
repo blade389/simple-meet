@@ -165,6 +165,27 @@ export type Database = {
           },
         ]
       }
+      favorites: {
+        Row: {
+          created_at: string
+          favorite_user_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          favorite_user_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          favorite_user_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       match_requests: {
         Row: {
           appointment_deadline: string | null
