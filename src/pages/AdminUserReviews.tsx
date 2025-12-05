@@ -64,11 +64,12 @@ const AdminUserReviews = () => {
 
     const loadReviews = async () => {
         try {
-            // Fetch reviews with rating 1 or reported = true, and status pending
+            // Fetch reviews with rating 1 or reported = true, that need admin review
+            // Include both admin_status = 'pending' AND admin_status = null (for legacy reviews)
             const { data: reviewsData, error } = await supabase
                 .from('reviews')
                 .select('*')
-                .eq('admin_status', 'pending')
+                .or('admin_status.eq.pending,admin_status.is.null')
                 .or('rating.eq.1,reported.eq.true')
                 .order('created_at', { ascending: false });
 

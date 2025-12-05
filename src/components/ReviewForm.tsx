@@ -50,6 +50,9 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Non autenticato');
 
+      // Set admin_status to 'pending' if negative review or reported
+      const needsAdminReview = rating === 1 || reported;
+      
       const { error } = await supabase
         .from('reviews')
         .insert({
@@ -60,6 +63,7 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
           comment: comment.trim() || null,
           reported,
           report_reason: reported ? reportReason.trim() : null,
+          admin_status: needsAdminReview ? 'pending' : null,
         });
 
       if (error) throw error;
