@@ -110,11 +110,34 @@ const ConversationReviews = () => {
     }
   };
 
+  // Helper to get male/female user IDs based on request type
+  const getUserIds = (review: Review) => {
+    // For premium requests: sender is male (uomo), receiver is female (donna)
+    // For non-premium requests: sender is female (donna), receiver is male (uomo)
+    if (review.match_request.is_premium) {
+      return {
+        maleUserId: review.match_request.sender_id,
+        femaleUserId: review.match_request.receiver_id,
+        maleName: review.sender_profile?.full_name,
+        femaleName: review.receiver_profile?.full_name,
+      };
+    } else {
+      return {
+        maleUserId: review.match_request.receiver_id,
+        femaleUserId: review.match_request.sender_id,
+        maleName: review.receiver_profile?.full_name,
+        femaleName: review.sender_profile?.full_name,
+      };
+    }
+  };
+
   const handleAction = async (reviewId: string, action: 'deduct_token_male' | 'block_female' | 'no_action') => {
     setProcessing(true);
     try {
       const review = reviews.find(r => r.id === reviewId);
       if (!review) return;
+
+      const { maleUserId, femaleUserId } = getUserIds(review);
 
       // Update the review
       const { error: reviewError } = await supabase
@@ -133,20 +156,22 @@ const ConversationReviews = () => {
         const { data: tokens, error: fetchError } = await supabase
           .from('tokens')
           .select('amount')
-          .eq('user_id', review.match_request.receiver_id)
-          .single();
+          .eq('user_id', maleUserId)
+          .maybeSingle();
 
         if (fetchError) throw fetchError;
 
-        const { error: updateError } = await supabase
-          .from('tokens')
-          .update({
-            amount: Math.max(0, (tokens?.amount || 0) - 1),
-            last_updated: new Date().toISOString(),
-          })
-          .eq('user_id', review.match_request.receiver_id);
+        if (tokens) {
+          const { error: updateError } = await supabase
+            .from('tokens')
+            .update({
+              amount: Math.max(0, (tokens.amount || 0) - 1),
+              last_updated: new Date().toISOString(),
+            })
+            .eq('user_id', maleUserId);
 
-        if (updateError) throw updateError;
+          if (updateError) throw updateError;
+        }
 
         toast({
           title: 'Azione eseguita',
@@ -156,7 +181,7 @@ const ConversationReviews = () => {
         const { error: blockError } = await supabase
           .from('profiles')
           .update({ is_blocked: true })
-          .eq('id', review.match_request.sender_id);
+          .eq('id', femaleUserId);
 
         if (blockError) throw blockError;
 
@@ -171,7 +196,7 @@ const ConversationReviews = () => {
         });
       }
 
-      // Close the match request (remove from appointments section)
+      // Close the match request
       await supabase
         .from('match_requests')
         .update({ 
@@ -268,18 +293,18 @@ const ConversationReviews = () => {
                       />
                       <div className="flex gap-2 flex-wrap">
                         <Button
-                          onClick={() => handleAction(review.id, review.sender_profile?.gender === 'female' ? 'deduct_token_male' : 'deduct_token_male')}
+                          onClick={() => handleAction(review.id, 'deduct_token_male')}
                           disabled={processing}
                           variant="destructive"
                         >
-                          Scala gettone a {review.receiver_profile?.gender === 'male' ? 'Uomo' : 'Donna'}
+                          Scala gettone a {getUserIds(review).maleName} (Uomo)
                         </Button>
                         <Button
                           onClick={() => handleAction(review.id, 'block_female')}
                           disabled={processing}
                           variant="destructive"
                         >
-                          Blocca {review.sender_profile?.full_name}
+                          Blocca {getUserIds(review).femaleName} (Donna)
                         </Button>
                         <Button
                           onClick={() => handleAction(review.id, 'no_action')}
