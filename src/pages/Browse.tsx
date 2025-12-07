@@ -9,6 +9,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { toast as sonnerToast } from 'sonner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import SwipeView from '@/components/SwipeView';
 
 interface Profile {
   id: string;
@@ -99,6 +101,7 @@ const Browse = () => {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [skippedProfiles, setSkippedProfiles] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -381,6 +384,12 @@ const Browse = () => {
     }
   };
 
+  const handleSkipProfile = (profileId: string) => {
+    setSkippedProfiles(prev => [...prev, profileId]);
+  };
+
+  const swipeProfiles = profiles.filter(p => !skippedProfiles.includes(p.id) && !sentRequests.includes(p.id));
+
   const respondToRequest = async (requestId: string, action: 'accepted' | 'rejected', blockUser: boolean = false) => {
     setRespondingToRequest(requestId);
     try {
@@ -650,81 +659,99 @@ const Browse = () => {
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-6">Profili Vicini</h2>
 
-        {profiles.length === 0 ? (
-          <Card className="p-8 text-center">
-            <p className="text-muted-foreground">
-              Nessun profilo trovato nel raggio di 20 km
-            </p>
-          </Card>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {profiles.map((profile) => (
-              <Card
-                key={profile.id}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => {
-                  setSelectedProfile(profile);
-                  setShowProfileDialog(true);
-                }}
-              >
-                <CardHeader className="relative">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-2 right-2 z-10"
-                    onClick={(e) => toggleFavorite(profile.id, e)}
-                  >
-                    <Heart className={`w-5 h-5 ${favorites.includes(profile.id) ? 'fill-primary text-primary' : ''}`} />
-                  </Button>
-                  <div className="flex justify-center mb-4">
-                    <Avatar className="w-24 h-24">
-                      <AvatarImage src={profile.profile_photo_url || undefined} />
-                      <AvatarFallback>
-                        {profile.full_name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <CardTitle className="text-center">{profile.full_name}</CardTitle>
-                  <div className="flex items-center justify-center gap-4 my-2">
-                    <div className="flex items-center gap-1 text-green-600">
-                      <ThumbsUp className="w-4 h-4" />
-                      <span className="text-sm font-medium">{profile.positive_reviews_count || 0}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-red-600">
-                      <ThumbsDown className="w-4 h-4" />
-                      <span className="text-sm font-medium">{profile.negative_reviews_count || 0}</span>
-                    </div>
-                  </div>
-                  <CardDescription className="text-center">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Calendar className="w-4 h-4" />
-                      {calculateAge(profile.birth_date)} anni
-                    </div>
-                    <div className="flex items-center justify-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      {profile.location_city} • {profile.distance?.toFixed(1)} km
-                    </div>
-                  </CardDescription>
-                </CardHeader>
-                <CardContent onClick={(e) => e.stopPropagation()}>
-                  {profile.bio && (
-                    <p className="text-sm text-muted-foreground mb-4 text-center line-clamp-2">
-                      {profile.bio}
-                    </p>
-                  )}
-                  <Button
-                    onClick={() => sendMatchRequest(profile.id)}
-                    disabled={sendingRequest === profile.id || sentRequests.includes(profile.id)}
-                    className="w-full"
-                  >
-                    <Heart className="w-4 h-4 mr-2" />
-                    {sendingRequest === profile.id ? 'Invio...' : sentRequests.includes(profile.id) ? 'Richiesta Inviata' : 'Invia Richiesta'}
-                  </Button>
-                </CardContent>
+        <Tabs defaultValue="grid" className="w-full">
+          <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
+            <TabsTrigger value="grid">Griglia</TabsTrigger>
+            <TabsTrigger value="swipe">Swipe</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="grid">
+            {profiles.length === 0 ? (
+              <Card className="p-8 text-center">
+                <p className="text-muted-foreground">
+                  Nessun profilo trovato nel raggio di 20 km
+                </p>
               </Card>
-            ))}
-          </div>
-        )}
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {profiles.map((profile) => (
+                  <Card
+                    key={profile.id}
+                    className="cursor-pointer hover:shadow-lg transition-shadow"
+                    onClick={() => {
+                      setSelectedProfile(profile);
+                      setShowProfileDialog(true);
+                    }}
+                  >
+                    <CardHeader className="relative">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2 z-10"
+                        onClick={(e) => toggleFavorite(profile.id, e)}
+                      >
+                        <Heart className={`w-5 h-5 ${favorites.includes(profile.id) ? 'fill-primary text-primary' : ''}`} />
+                      </Button>
+                      <div className="flex justify-center mb-4">
+                        <Avatar className="w-24 h-24">
+                          <AvatarImage src={profile.profile_photo_url || undefined} />
+                          <AvatarFallback>
+                            {profile.full_name.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <CardTitle className="text-center">{profile.full_name}</CardTitle>
+                      <div className="flex items-center justify-center gap-4 my-2">
+                        <div className="flex items-center gap-1 text-green-600">
+                          <ThumbsUp className="w-4 h-4" />
+                          <span className="text-sm font-medium">{profile.positive_reviews_count || 0}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-red-600">
+                          <ThumbsDown className="w-4 h-4" />
+                          <span className="text-sm font-medium">{profile.negative_reviews_count || 0}</span>
+                        </div>
+                      </div>
+                      <CardDescription className="text-center">
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <Calendar className="w-4 h-4" />
+                          {calculateAge(profile.birth_date)} anni
+                        </div>
+                        <div className="flex items-center justify-center gap-2">
+                          <MapPin className="w-4 h-4" />
+                          {profile.location_city} • {profile.distance?.toFixed(1)} km
+                        </div>
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent onClick={(e) => e.stopPropagation()}>
+                      {profile.bio && (
+                        <p className="text-sm text-muted-foreground mb-4 text-center line-clamp-2">
+                          {profile.bio}
+                        </p>
+                      )}
+                      <Button
+                        onClick={() => sendMatchRequest(profile.id)}
+                        disabled={sendingRequest === profile.id || sentRequests.includes(profile.id)}
+                        className="w-full"
+                      >
+                        <Heart className="w-4 h-4 mr-2" />
+                        {sendingRequest === profile.id ? 'Invio...' : sentRequests.includes(profile.id) ? 'Richiesta Inviata' : 'Invia Richiesta'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="swipe">
+            <SwipeView
+              profiles={swipeProfiles}
+              sentRequests={sentRequests}
+              onSendRequest={sendMatchRequest}
+              onSkip={handleSkipProfile}
+            />
+          </TabsContent>
+        </Tabs>
 
         {selectedProfile && (
           <ProfileDetailsDialog
