@@ -153,6 +153,16 @@ const Admin = () => {
     setProcessingId(requestId);
     try {
       const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
+      
+      // Get the request data first to have user info for notification
+      const { data: requestData, error: fetchError } = await supabase
+        .from(table)
+        .select('user_id')
+        .eq('id', requestId)
+        .single();
+      
+      if (fetchError) throw fetchError;
+      
       const { error } = await supabase
         .from(table)
         .update({
@@ -164,9 +174,37 @@ const Admin = () => {
 
       if (error) throw error;
 
+      // Send notification only for identity verification approval
+      if (type === 'identity' && requestData?.user_id) {
+        try {
+          // Get user name for notification
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', requestData.user_id)
+            .single();
+          
+          const { error: notificationError } = await supabase.functions.invoke('send-verification-approved', {
+            body: {
+              user_id: requestData.user_id,
+              user_name: profile?.full_name || 'Utente'
+            }
+          });
+          
+          if (notificationError) {
+            console.error('Error sending verification notification:', notificationError);
+          } else {
+            console.log('Verification notification sent successfully');
+          }
+        } catch (notifError) {
+          console.error('Error sending notification:', notifError);
+          // Don't fail the approval if notification fails
+        }
+      }
+
       toast({
         title: "Richiesta approvata",
-        description: type === 'identity' ? "L'utente è stato verificato con successo" : "La foto è stata verificata con successo"
+        description: type === 'identity' ? "L'utente è stato verificato e notificato" : "La foto è stata verificata con successo"
       });
 
       if (type === 'identity') {
