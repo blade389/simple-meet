@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
@@ -22,10 +22,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isPremium, setIsPremium] = useState(false);
   const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const checkPremiumStatus = async () => {
     if (!user) return;
-    
+
     try {
       // First check directly from database for immediate response
       const { data: profile, error: profileError } = await supabase
@@ -33,18 +34,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .select('is_premium, subscription_status, subscription_end')
         .eq('id', user.id)
         .single();
-      
+
       if (!profileError && profile) {
         const isActive = profile.is_premium && profile.subscription_status === 'active';
         setIsPremium(isActive);
         setSubscriptionEnd(profile.subscription_end);
         return;
       }
-      
+
       // Fallback to edge function
       const { data, error } = await supabase.functions.invoke('check-premium-subscription');
       if (error) throw error;
-      
+
       setIsPremium(data.isPremium || false);
       setSubscriptionEnd(data.subscriptionEnd || null);
     } catch (error) {
@@ -54,29 +55,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     // Setup auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (event === 'SIGNED_IN') {
-          navigate('/dashboard');
-          // Check premium status after sign in
-          if (session) {
-            setTimeout(() => {
-              checkPremiumStatus();
-            }, 0);
-          }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+
+      // Avoid unexpected redirects: only send users to the dashboard right after login.
+      if (event === 'SIGNED_IN' && (location.pathname === '/' || location.pathname === '/auth')) {
+        navigate('/dashboard', { replace: true });
+        // Check premium status after sign in
+        if (session) {
+          setTimeout(() => {
+            checkPremiumStatus();
+          }, 0);
         }
       }
-    );
+    });
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
-      
+
       // Check premium status if user exists
       if (session) {
         setTimeout(() => {
@@ -86,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   // Re-check premium status when user changes
   useEffect(() => {
