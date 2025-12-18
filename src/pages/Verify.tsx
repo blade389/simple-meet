@@ -89,9 +89,10 @@ const Verify = () => {
       });
       loadVerificationRequest();
     } catch (error: any) {
+      console.error('Verification upload error:', error);
       toast({
         title: "Errore",
-        description: error.message,
+        description: error.message || "Errore durante il caricamento",
         variant: "destructive"
       });
     } finally {

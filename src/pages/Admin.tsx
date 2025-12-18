@@ -375,8 +375,9 @@ const Admin = () => {
                         onClick={async () => {
                           const { data, error } = await supabase.storage
                             .from('verification-docs')
-                            .createSignedUrl(request.document_url.split('/verification-docs/')[1], 300);
+                            .createSignedUrl(request.document_url, 300);
                           if (error) {
+                            console.error('Signed URL error:', error);
                             toast({
                               title: "Errore",
                               description: "Impossibile caricare il documento",
