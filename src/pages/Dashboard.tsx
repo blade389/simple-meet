@@ -43,6 +43,8 @@ const Dashboard = () => {
       loadFavoritesCount();
       loginOneSignal(user.id);
       checkNotificationStatus();
+      // Aggiorna automaticamente la posizione ad ogni accesso (silenzioso)
+      updateLocationSilent();
     }
   }, [user]);
 
@@ -211,11 +213,11 @@ const Dashboard = () => {
     }
   };
 
-  const updateLocation = async () => {
-    setUpdatingLocation(true);
+  const updateLocation = async (silent = false) => {
+    if (!silent) setUpdatingLocation(true);
 
     if (!navigator.geolocation) {
-      toast.error('Geolocalizzazione non supportata dal browser');
+      if (!silent) toast.error('Geolocalizzazione non supportata dal browser');
       setUpdatingLocation(false);
       return;
     }
@@ -233,21 +235,28 @@ const Dashboard = () => {
 
           if (error) throw error;
 
-          toast.success('Posizione aggiornata con successo');
+          if (!silent) {
+            toast.success('Posizione aggiornata con successo');
+          }
           loadProfile();
         } catch (error: any) {
-          toast.error('Errore nell\'aggiornamento della posizione');
+          if (!silent) toast.error('Errore nell\'aggiornamento della posizione');
         } finally {
           setUpdatingLocation(false);
         }
       },
       (error) => {
-        toast.error('Impossibile ottenere la posizione. Assicurati di aver dato i permessi.');
+        // In modalità silenziosa non mostrare errori (l'utente potrebbe non aver concesso i permessi)
+        if (!silent) {
+          toast.error('Impossibile ottenere la posizione. Assicurati di aver dato i permessi.');
+        }
         setUpdatingLocation(false);
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   };
+
+  const updateLocationSilent = () => updateLocation(true);
 
   if (loading) {
     return (
@@ -274,7 +283,7 @@ const Dashboard = () => {
             </Button>
           </div>
           <Button
-            onClick={updateLocation}
+            onClick={() => updateLocation()}
             disabled={updatingLocation}
             className="w-full"
             variant="outline"
