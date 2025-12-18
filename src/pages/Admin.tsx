@@ -155,15 +155,29 @@ const Admin = () => {
       const table = type === 'identity' ? 'verification_requests' : 'profile_photo_verifications';
       
       // Get the request data first to have user info for notification
-      const { data: requestData, error: fetchError } = await supabase
-        .from(table)
-        .select('user_id')
-        .eq('id', requestId)
-        .single();
+      let userId: string | null = null;
+      let isPrimary = false;
       
-      if (fetchError) throw fetchError;
+      if (type === 'identity') {
+        const { data, error } = await supabase
+          .from('verification_requests')
+          .select('user_id')
+          .eq('id', requestId)
+          .single();
+        if (error) throw error;
+        userId = data?.user_id;
+      } else {
+        const { data, error } = await supabase
+          .from('profile_photo_verifications')
+          .select('user_id, is_primary')
+          .eq('id', requestId)
+          .single();
+        if (error) throw error;
+        userId = data?.user_id;
+        isPrimary = data?.is_primary || false;
+      }
       
-      const { error } = await supabase
+      const { error: updateError } = await supabase
         .from(table)
         .update({
           status: 'verified',
@@ -172,29 +186,45 @@ const Admin = () => {
         })
         .eq('id', requestId);
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
-      // Send notification only for identity verification approval
-      if (type === 'identity' && requestData?.user_id) {
+      // Send notification for approvals
+      if (userId) {
         try {
           // Get user name for notification
           const { data: profile } = await supabase
             .from('profiles')
             .select('full_name')
-            .eq('id', requestData.user_id)
+            .eq('id', userId)
             .single();
           
-          const { error: notificationError } = await supabase.functions.invoke('send-verification-approved', {
-            body: {
-              user_id: requestData.user_id,
-              user_name: profile?.full_name || 'Utente'
+          if (type === 'identity') {
+            const { error: notificationError } = await supabase.functions.invoke('send-verification-approved', {
+              body: {
+                user_id: userId,
+                user_name: profile?.full_name || 'Utente'
+              }
+            });
+            
+            if (notificationError) {
+              console.error('Error sending verification notification:', notificationError);
+            } else {
+              console.log('Verification notification sent successfully');
             }
-          });
-          
-          if (notificationError) {
-            console.error('Error sending verification notification:', notificationError);
-          } else {
-            console.log('Verification notification sent successfully');
+          } else if (type === 'photo') {
+            const { error: notificationError } = await supabase.functions.invoke('send-photo-approved', {
+              body: {
+                user_id: userId,
+                user_name: profile?.full_name || 'Utente',
+                is_primary: isPrimary
+              }
+            });
+            
+            if (notificationError) {
+              console.error('Error sending photo notification:', notificationError);
+            } else {
+              console.log('Photo notification sent successfully');
+            }
           }
         } catch (notifError) {
           console.error('Error sending notification:', notifError);
@@ -204,7 +234,7 @@ const Admin = () => {
 
       toast({
         title: "Richiesta approvata",
-        description: type === 'identity' ? "L'utente è stato verificato e notificato" : "La foto è stata verificata con successo"
+        description: type === 'identity' ? "L'utente è stato verificato e notificato" : "La foto è stata verificata e l'utente notificato"
       });
 
       if (type === 'identity') {
