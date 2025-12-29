@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
 
     const now = new Date();
     const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
-    const twentyFourHoursFromNow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    const oneHourFromNow = new Date(now.getTime() + 1 * 60 * 60 * 1000); // 1 hour for testing (was 24 hours)
 
     // Find appointments that passed 1 hour ago and need review deadline
     const { data: appointments, error: fetchError } = await supabase
@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
         .from('appointments')
         .update({
           status: 'completed',
-          review_deadline: twentyFourHoursFromNow.toISOString(),
+          review_deadline: oneHourFromNow.toISOString(),
         })
         .eq('id', appointment.id);
 

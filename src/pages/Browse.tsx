@@ -51,7 +51,7 @@ const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?:
         expires = new Date(expiresAt).getTime();
       } else {
         const created = new Date(createdAt).getTime();
-        expires = created + 48 * 60 * 60 * 1000; // 48 hours default
+        expires = created + 1 * 60 * 60 * 1000; // 1 hour for testing (was 48 hours)
       }
 
       const now = new Date().getTime();
@@ -350,7 +350,7 @@ const Browse = () => {
           sender_id: user?.id,
           receiver_id: receiverId,
           status: 'pending',
-          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+          expires_at: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString() // 1 hour for testing (was 48 hours)
         });
 
       if (error) throw error;
@@ -410,7 +410,7 @@ const Browse = () => {
 
       if (action === 'accepted') {
         const deadline = new Date();
-        deadline.setHours(deadline.getHours() + 72); // 72 hours deadline to fix appointment
+        deadline.setHours(deadline.getHours() + 1); // 1 hour for testing (was 72 hours)
         updateData.appointment_deadline = deadline.toISOString();
         updateData.chat_status = 'active';
       }
