@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
 Deno.serve(async (req) => {
@@ -11,13 +11,6 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Verify cron secret for security
-    const cronSecret = req.headers.get('x-cron-secret');
-    if (cronSecret !== Deno.env.get('CRON_SECRET')) {
-      console.error('Unauthorized: Invalid cron secret');
-      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
-    }
-
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -26,6 +19,8 @@ Deno.serve(async (req) => {
     const now = new Date();
     const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
     const oneHourFromNow = new Date(now.getTime() + 1 * 60 * 60 * 1000); // 1 hour for testing (was 24 hours)
+
+    console.log('Processing completed appointments...');
 
     // Find appointments that passed 1 hour ago and need review deadline
     const { data: appointments, error: fetchError } = await supabase
