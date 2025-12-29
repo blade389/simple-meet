@@ -213,7 +213,7 @@ const PremiumProfiles = () => {
           selected_rate_id: selectedRateId,
           message: message,
           status: 'pending',
-          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+          expires_at: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString() // 1 hour for testing (was 48 hours)
         });
 
       if (requestError) {
