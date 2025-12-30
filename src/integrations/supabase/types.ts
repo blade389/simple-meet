@@ -24,6 +24,7 @@ export type Database = {
           location: string | null
           male_user_id: string
           match_request_id: string | null
+          reminder_sent: boolean | null
           review_deadline: string | null
           selected_rate_id: string | null
           status: Database["public"]["Enums"]["appointment_status"] | null
@@ -38,6 +39,7 @@ export type Database = {
           location?: string | null
           male_user_id: string
           match_request_id?: string | null
+          reminder_sent?: boolean | null
           review_deadline?: string | null
           selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
@@ -52,6 +54,7 @@ export type Database = {
           location?: string | null
           male_user_id?: string
           match_request_id?: string | null
+          reminder_sent?: boolean | null
           review_deadline?: string | null
           selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
