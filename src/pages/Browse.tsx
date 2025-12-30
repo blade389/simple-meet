@@ -481,6 +481,23 @@ const Browse = () => {
         if (blockError) throw blockError;
       }
 
+      // Send email and push notification if accepted
+      if (action === 'accepted') {
+        try {
+          await supabase.functions.invoke('send-request-accepted-email', {
+            body: {
+              senderId: request.sender_id,
+              receiverId: user?.id,
+              senderName: request.sender_profile?.full_name || 'Utente',
+              receiverName: myProfile?.full_name || 'Utente'
+            }
+          });
+        } catch (emailError) {
+          console.error('Failed to send acceptance email:', emailError);
+          // Don't fail the whole operation if email fails
+        }
+      }
+
       toast({
         title: action === 'accepted' ? "Richiesta accettata" : blockUser ? "Utente bloccato" : "Richiesta rifiutata",
         description: action === 'accepted'

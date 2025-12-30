@@ -10,6 +10,8 @@ const corsHeaders = {
 
 const EmailRequestSchema = z.object({
   senderId: z.string().uuid(),
+  receiverId: z.string().uuid(),
+  senderName: z.string().min(1).max(200),
   receiverName: z.string().min(1).max(200),
 });
 
@@ -36,18 +38,26 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { senderId, receiverName } = validationResult.data;
+    const { senderId, receiverId, senderName, receiverName } = validationResult.data;
 
     // Get sender's email from auth.users
-    const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(senderId);
+    const { data: { user: senderUser }, error: senderError } = await supabase.auth.admin.getUserById(senderId);
 
-    if (userError || !user?.email) {
-      console.error("Error fetching sender email:", userError);
-      throw userError || new Error("Sender email not found");
+    if (senderError || !senderUser?.email) {
+      console.error("Error fetching sender email:", senderError);
+      throw senderError || new Error("Sender email not found");
     }
 
-    // Send email using Resend API
-    const resendResponse = await fetch("https://api.resend.com/emails", {
+    // Get receiver's email from auth.users
+    const { data: { user: receiverUser }, error: receiverError } = await supabase.auth.admin.getUserById(receiverId);
+
+    if (receiverError || !receiverUser?.email) {
+      console.error("Error fetching receiver email:", receiverError);
+      throw receiverError || new Error("Receiver email not found");
+    }
+
+    // Send email to SENDER (the one who made the request)
+    const senderEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +65,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "Match App <noreply@scopami.online>",
-        to: [user.email],
+        to: [senderUser.email],
         subject: "La tua richiesta è stata accettata!",
         html: `
           <h1>Buone notizie!</h1>
@@ -68,22 +78,49 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    if (!resendResponse.ok) {
-      const error = await resendResponse.text();
-      console.error("Resend API error:", error);
-      throw new Error(`Failed to send email: ${error}`);
+    if (!senderEmailResponse.ok) {
+      const error = await senderEmailResponse.text();
+      console.error("Resend API error (sender email):", error);
+    } else {
+      console.log("Email sent to sender successfully");
     }
 
-    const emailResult = await resendResponse.json();
-    console.log("Email sent successfully:", emailResult);
+    // Send email to RECEIVER (the one who accepted the request)
+    const receiverEmailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+      },
+      body: JSON.stringify({
+        from: "Match App <noreply@scopami.online>",
+        to: [receiverUser.email],
+        subject: "Match confermato! Ora puoi chattare",
+        html: `
+          <h1>Match confermato! 🎉</h1>
+          <p>Hai accettato la richiesta di <strong>${senderName}</strong>!</p>
+          <p>Ora potete chattare e fissare un appuntamento insieme.</p>
+          <p>Ricorda: avete <strong>48 ore</strong> per fissare l'appuntamento, altrimenti la conversazione verrà chiusa automaticamente.</p>
+          <p>Accedi all'app per iniziare a chattare!</p>
+        `,
+      }),
+    });
 
-    // Send push notification
+    if (!receiverEmailResponse.ok) {
+      const error = await receiverEmailResponse.text();
+      console.error("Resend API error (receiver email):", error);
+    } else {
+      console.log("Email sent to receiver successfully");
+    }
+
+    // Send push notification to SENDER
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
     if (oneSignalAppId && oneSignalRestApiKey) {
       try {
-        const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
+        // Push to sender
+        const senderNotificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -99,8 +136,28 @@ const handler = async (req: Request): Promise<Response> => {
           }),
         });
         
-        const notificationResult = await notificationResponse.json();
-        console.log("Push notification sent for accepted match:", notificationResult);
+        const senderNotificationResult = await senderNotificationResponse.json();
+        console.log("Push notification sent to sender:", senderNotificationResult);
+
+        // Push to receiver
+        const receiverNotificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${oneSignalRestApiKey}`,
+          },
+          body: JSON.stringify({
+            app_id: oneSignalAppId,
+            include_aliases: { external_id: [receiverId] },
+            target_channel: "push",
+            headings: { en: "Match confermato! 🎉", it: "Match confermato! 🎉" },
+            contents: { en: `Ora puoi chattare con ${senderName}`, it: `Ora puoi chattare con ${senderName}` },
+            url: "https://scopami.online/appointments",
+          }),
+        });
+        
+        const receiverNotificationResult = await receiverNotificationResponse.json();
+        console.log("Push notification sent to receiver:", receiverNotificationResult);
       } catch (pushError) {
         console.error("Failed to send push notification:", pushError);
       }
@@ -108,7 +165,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("OneSignal credentials not configured, skipping push notification");
     }
 
-    return new Response(JSON.stringify(emailResult), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
