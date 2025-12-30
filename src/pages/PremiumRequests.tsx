@@ -151,12 +151,14 @@ const PremiumRequests = () => {
 
       if (error) throw error;
 
-      // Send acceptance email to sender
+      // Send acceptance email and push notification to sender and receiver
       if (request) {
         try {
           await supabase.functions.invoke('send-request-accepted-email', {
             body: {
               senderId: request.sender_id,
+              receiverId: user?.id,
+              senderName: request.sender?.full_name || 'Utente',
               receiverName: myProfile?.full_name || 'Utente'
             }
           });
