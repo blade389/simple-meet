@@ -16,6 +16,8 @@ const RequestSchema = z.object({
 });
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log("send-appointment-scheduled function called");
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -28,6 +30,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Validate input
     const requestBody = await req.json();
+    console.log("Request body received:", JSON.stringify(requestBody));
+    
     const validationResult = RequestSchema.safeParse(requestBody);
     
     if (!validationResult.success) {
@@ -39,6 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const { recipientUserId, schedulerName, appointmentDate, location } = validationResult.data;
+    console.log(`Sending appointment notification to ${recipientUserId} from ${schedulerName}`);
 
     // Get recipient's email from auth.users
     const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(recipientUserId);
