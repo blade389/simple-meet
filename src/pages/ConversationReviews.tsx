@@ -63,41 +63,69 @@ const ConversationReviews = () => {
 
   const loadReviews = async () => {
     try {
-      const { data, error } = await supabase
+      console.log('Loading conversation reviews...');
+      
+      // First, get all pending conversation reviews
+      const { data: reviewsData, error: reviewsError } = await supabase
         .from('conversation_reviews')
-        .select(`
-          *,
-          match_request:match_requests!conversation_reviews_match_request_id_fkey(
-            sender_id,
-            receiver_id,
-            is_premium
-          )
-        `)
+        .select('*')
         .is('action_taken', null)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      console.log('Reviews data:', reviewsData, 'Error:', reviewsError);
 
-      // Fetch profiles for all users
-      const userIds = [...new Set(data?.flatMap(r => [
-        r.match_request.sender_id,
-        r.match_request.receiver_id
-      ]))];
+      if (reviewsError) throw reviewsError;
 
-      const { data: profiles } = await supabase
+      if (!reviewsData || reviewsData.length === 0) {
+        setReviews([]);
+        setLoading(false);
+        return;
+      }
+
+      // Get match request IDs
+      const matchRequestIds = reviewsData.map(r => r.match_request_id);
+      
+      // Fetch match requests separately
+      const { data: matchRequests, error: matchError } = await supabase
+        .from('match_requests')
+        .select('id, sender_id, receiver_id, is_premium')
+        .in('id', matchRequestIds);
+
+      console.log('Match requests:', matchRequests, 'Error:', matchError);
+
+      if (matchError) throw matchError;
+
+      const matchRequestMap = new Map(matchRequests?.map(mr => [mr.id, mr]));
+
+      // Get all user IDs from match requests
+      const userIds = [...new Set(matchRequests?.flatMap(mr => [mr.sender_id, mr.receiver_id]) || [])];
+
+      // Fetch profiles
+      const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
         .select('id, full_name, gender')
         .in('id', userIds);
 
+      console.log('Profiles:', profiles, 'Error:', profilesError);
+
+      if (profilesError) throw profilesError;
+
       const profileMap = new Map(profiles?.map(p => [p.id, p]));
 
-      const reviewsWithProfiles = data?.map(review => ({
-        ...review,
-        sender_profile: profileMap.get(review.match_request.sender_id),
-        receiver_profile: profileMap.get(review.match_request.receiver_id),
-      }));
+      // Combine data
+      const reviewsWithProfiles = reviewsData.map(review => {
+        const matchRequest = matchRequestMap.get(review.match_request_id);
+        return {
+          ...review,
+          match_request: matchRequest || { sender_id: '', receiver_id: '', is_premium: false },
+          sender_profile: matchRequest ? profileMap.get(matchRequest.sender_id) : undefined,
+          receiver_profile: matchRequest ? profileMap.get(matchRequest.receiver_id) : undefined,
+        };
+      }).filter(r => r.match_request.sender_id); // Filter out reviews without valid match requests
 
-      setReviews(reviewsWithProfiles || []);
+      console.log('Final reviews with profiles:', reviewsWithProfiles);
+
+      setReviews(reviewsWithProfiles as Review[]);
     } catch (error) {
       console.error('Error loading reviews:', error);
       toast({
