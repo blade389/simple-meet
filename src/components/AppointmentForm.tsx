@@ -10,10 +10,11 @@ import { Calendar } from 'lucide-react';
 interface AppointmentFormProps {
   matchRequestId: string;
   otherUserId: string;
+  otherUserName: string;
   onSuccess: () => void;
 }
 
-export const AppointmentForm = ({ matchRequestId, otherUserId, onSuccess }: AppointmentFormProps) => {
+export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, onSuccess }: AppointmentFormProps) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
@@ -27,6 +28,13 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, onSuccess }: Appo
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Non autenticato');
+
+      // Get current user's profile name
+      const { data: myProfile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
 
       const { data: matchRequest } = await supabase
         .from('match_requests')
@@ -51,23 +59,15 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, onSuccess }: Appo
 
       if (error) throw error;
 
-      // Send push notification to the other user (fire and forget)
-      const formattedDate = appointmentDateTime.toLocaleDateString('it-IT', {
-        day: 'numeric',
-        month: 'long',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      
-      supabase.functions.invoke('send-push-notification', {
+      // Send email and push notification to the other user
+      supabase.functions.invoke('send-appointment-scheduled', {
         body: {
-          userId: otherUserId,
-          title: '📅 Appuntamento fissato!',
-          body: `Appuntamento il ${formattedDate} - ${location}`,
-          url: '/appointments',
-          tag: 'appointment-scheduled',
+          recipientUserId: otherUserId,
+          schedulerName: myProfile?.full_name || 'Utente',
+          appointmentDate: appointmentDateTime.toISOString(),
+          location,
         },
-      }).catch(err => console.log('Push notification error (non-blocking):', err));
+      }).catch(err => console.log('Appointment notification error (non-blocking):', err));
 
       toast({
         title: 'Appuntamento registrato!',
