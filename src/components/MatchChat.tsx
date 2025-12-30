@@ -402,6 +402,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
           <AppointmentForm
             matchRequestId={matchRequestId}
             otherUserId={otherUserId}
+            otherUserName={otherUserName}
             onSuccess={() => {
               setShowAppointmentForm(false);
               window.location.reload();
