@@ -3,10 +3,18 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Heart, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Heart, ArrowLeft, AlertTriangle, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+
+interface ChatMessage {
+  id: string;
+  sender_id: string;
+  message: string;
+  created_at: string;
+}
 
 interface Review {
   id: string;
@@ -27,12 +35,14 @@ interface Review {
     full_name: string;
     gender: string;
   };
+  messages?: ChatMessage[];
 }
 
 const ConversationReviews = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedReview, setSelectedReview] = useState<string | null>(null);
+  const [expandedChat, setExpandedChat] = useState<string | null>(null);
   const [adminNotes, setAdminNotes] = useState('');
   const [processing, setProcessing] = useState(false);
   const { toast } = useToast();
@@ -112,6 +122,25 @@ const ConversationReviews = () => {
 
       const profileMap = new Map(profiles?.map(p => [p.id, p]));
 
+      // Fetch chat messages for all match requests
+      const { data: allMessages, error: messagesError } = await supabase
+        .from('chat_messages')
+        .select('id, match_request_id, sender_id, message, created_at')
+        .in('match_request_id', matchRequestIds)
+        .order('created_at', { ascending: true });
+
+      if (messagesError) {
+        console.error('Error fetching messages:', messagesError);
+      }
+
+      // Group messages by match_request_id
+      const messagesMap = new Map<string, ChatMessage[]>();
+      allMessages?.forEach(msg => {
+        const existing = messagesMap.get(msg.match_request_id) || [];
+        existing.push(msg);
+        messagesMap.set(msg.match_request_id, existing);
+      });
+
       // Combine data
       const reviewsWithProfiles = reviewsData.map(review => {
         const matchRequest = matchRequestMap.get(review.match_request_id);
@@ -120,6 +149,7 @@ const ConversationReviews = () => {
           match_request: matchRequest || { sender_id: '', receiver_id: '', is_premium: false },
           sender_profile: matchRequest ? profileMap.get(matchRequest.sender_id) : undefined,
           receiver_profile: matchRequest ? profileMap.get(matchRequest.receiver_id) : undefined,
+          messages: messagesMap.get(review.match_request_id) || [],
         };
       }).filter(r => r.match_request.sender_id); // Filter out reviews without valid match requests
 
@@ -309,6 +339,78 @@ const ConversationReviews = () => {
                         })}
                       </p>
                     </div>
+                  </div>
+
+                  {/* Chat Messages Section */}
+                  <div className="border rounded-lg">
+                    <Button
+                      variant="ghost"
+                      className="w-full flex items-center justify-between p-4"
+                      onClick={() => setExpandedChat(expandedChat === review.id ? null : review.id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5" />
+                        <span>Visualizza conversazione ({review.messages?.length || 0} messaggi)</span>
+                      </div>
+                      {expandedChat === review.id ? (
+                        <ChevronUp className="w-5 h-5" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5" />
+                      )}
+                    </Button>
+                    
+                    {expandedChat === review.id && (
+                      <div className="border-t">
+                        <ScrollArea className="h-[300px] p-4">
+                          {review.messages && review.messages.length > 0 ? (
+                            <div className="space-y-3">
+                              {review.messages.map((msg) => {
+                                const isSender = msg.sender_id === review.match_request.sender_id;
+                                const senderName = isSender 
+                                  ? review.sender_profile?.full_name 
+                                  : review.receiver_profile?.full_name;
+                                const senderGender = isSender
+                                  ? review.sender_profile?.gender
+                                  : review.receiver_profile?.gender;
+                                
+                                return (
+                                  <div 
+                                    key={msg.id} 
+                                    className={`p-3 rounded-lg ${
+                                      isSender 
+                                        ? 'bg-primary/10 ml-0 mr-12' 
+                                        : 'bg-muted ml-12 mr-0'
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <span className="font-medium text-sm">
+                                        {senderName}
+                                      </span>
+                                      <Badge variant="outline" className="text-xs">
+                                        {senderGender === 'female' ? 'Donna' : 'Uomo'}
+                                      </Badge>
+                                      <span className="text-xs text-muted-foreground ml-auto">
+                                        {new Date(msg.created_at).toLocaleString('it-IT', {
+                                          day: '2-digit',
+                                          month: '2-digit',
+                                          hour: '2-digit',
+                                          minute: '2-digit'
+                                        })}
+                                      </span>
+                                    </div>
+                                    <p className="text-sm">{msg.message}</p>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <p className="text-center text-muted-foreground py-8">
+                              Nessun messaggio in questa conversazione
+                            </p>
+                          )}
+                        </ScrollArea>
+                      </div>
+                    )}
                   </div>
 
                   {selectedReview === review.id ? (
