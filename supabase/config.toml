@@ -50,3 +50,6 @@ verify_jwt = false
 
 [functions.send-appointment-reminders]
 verify_jwt = false
+
+[functions.send-review-action-email]
+verify_jwt = false

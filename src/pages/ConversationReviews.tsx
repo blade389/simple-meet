@@ -209,6 +209,9 @@ const ConversationReviews = () => {
 
       if (reviewError) throw reviewError;
 
+      // Determine which user to email based on action
+      let emailUserId: string | null = null;
+
       // Execute the action
       if (action === 'deduct_token_male') {
         const { data: tokens, error: fetchError } = await supabase
@@ -231,6 +234,8 @@ const ConversationReviews = () => {
           if (updateError) throw updateError;
         }
 
+        emailUserId = maleUserId;
+
         toast({
           title: 'Azione eseguita',
           description: 'Gettone scalato all\'utente uomo',
@@ -243,6 +248,8 @@ const ConversationReviews = () => {
 
         if (blockError) throw blockError;
 
+        emailUserId = femaleUserId;
+
         toast({
           title: 'Azione eseguita',
           description: 'Account donna bloccato',
@@ -252,6 +259,27 @@ const ConversationReviews = () => {
           title: 'Azione eseguita',
           description: 'Nessuna azione intrapresa',
         });
+      }
+
+      // Send email notification if action was taken
+      if (emailUserId && action !== 'no_action') {
+        try {
+          const { error: emailError } = await supabase.functions.invoke('send-review-action-email', {
+            body: {
+              action,
+              userId: emailUserId,
+              adminNotes: adminNotes || '',
+            },
+          });
+
+          if (emailError) {
+            console.error('Error sending review action email:', emailError);
+          } else {
+            console.log('Review action email sent successfully');
+          }
+        } catch (emailErr) {
+          console.error('Error invoking email function:', emailErr);
+        }
       }
 
       // Close the match request
