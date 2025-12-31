@@ -53,3 +53,6 @@ verify_jwt = false
 
 [functions.send-review-action-email]
 verify_jwt = false
+
+[functions.send-admin-review-notification]
+verify_jwt = false
