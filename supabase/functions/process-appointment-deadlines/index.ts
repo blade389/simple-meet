@@ -47,6 +47,19 @@ Deno.serve(async (req) => {
         if (!appointment) {
           console.log(`Processing expired match ${match.id} - no appointment created`);
 
+          // Get profile names for the notification
+          const { data: senderProfile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', match.sender_id)
+            .single();
+
+          const { data: receiverProfile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', match.receiver_id)
+            .single();
+
           // Update match request to blocked/under_review
           const { error: updateError } = await supabase
             .from('match_requests')
@@ -73,6 +86,34 @@ Deno.serve(async (req) => {
             console.error(`Error creating review for match ${match.id}:`, reviewError);
           } else {
             console.log(`Successfully created review for match ${match.id}`);
+
+            // Send email notification to admin
+            try {
+              const notificationResponse = await fetch(
+                `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-admin-review-notification`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+                  },
+                  body: JSON.stringify({
+                    matchRequestId: match.id,
+                    senderName: senderProfile?.full_name || 'Utente',
+                    receiverName: receiverProfile?.full_name || 'Utente',
+                    isPremium: match.is_premium || false,
+                  }),
+                }
+              );
+
+              if (!notificationResponse.ok) {
+                console.error('Error sending admin notification:', await notificationResponse.text());
+              } else {
+                console.log('Admin notification sent successfully');
+              }
+            } catch (notifError) {
+              console.error('Error sending admin notification:', notifError);
+            }
           }
         } else {
           console.log(`Appointment already exists for match ${match.id}, skipping`);
