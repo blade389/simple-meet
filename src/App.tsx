@@ -25,6 +25,7 @@ import AdminUserReviews from './pages/AdminUserReviews';
 import BlockedUsers from './pages/BlockedUsers';
 import Favorites from './pages/Favorites';
 import NotFound from "./pages/NotFound";
+import Blocked from "./pages/Blocked";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -51,6 +52,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/blocked" element={<Blocked />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/browse" element={<Browse />} />
               <Route path="/profile" element={<Profile />} />
