@@ -9,6 +9,7 @@ interface AuthContextType {
   loading: boolean;
   isPremium: boolean;
   subscriptionEnd: string | null;
+  isBlocked: boolean;
   checkPremiumStatus: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -21,8 +22,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [isPremium, setIsPremium] = useState(false);
   const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
+  const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const checkBlockedStatus = async (userId: string) => {
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('is_blocked')
+        .eq('id', userId)
+        .single();
+
+      if (!error && profile) {
+        setIsBlocked(profile.is_blocked || false);
+        if (profile.is_blocked) {
+          navigate('/blocked', { replace: true });
+        }
+      }
+    } catch (error) {
+      console.error('Error checking blocked status:', error);
+    }
+  };
 
   const checkPremiumStatus = async () => {
     if (!user) return;
@@ -57,12 +78,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Setup auth state listener
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
 
       // Avoid unexpected redirects: only send users to the dashboard right after login.
       if (event === 'SIGNED_IN' && (location.pathname === '/' || location.pathname === '/auth')) {
+        // Check blocked status before redirecting
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_blocked')
+            .eq('id', session.user.id)
+            .single();
+          
+          if (profile?.is_blocked) {
+            setIsBlocked(true);
+            navigate('/blocked', { replace: true });
+            return;
+          }
+        }
+        
         navigate('/dashboard', { replace: true });
         // Check premium status after sign in
         if (session) {
@@ -74,13 +110,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
 
-      // Check premium status if user exists
-      if (session) {
+      // Check blocked and premium status if user exists
+      if (session?.user) {
+        await checkBlockedStatus(session.user.id);
         setTimeout(() => {
           checkPremiumStatus();
         }, 0);
@@ -90,9 +127,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, [navigate, location.pathname]);
 
-  // Re-check premium status when user changes
+  // Re-check blocked and premium status when user changes
   useEffect(() => {
     if (user) {
+      checkBlockedStatus(user.id);
       checkPremiumStatus();
     }
   }, [user?.id]);
@@ -103,7 +141,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isPremium, subscriptionEnd, checkPremiumStatus, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isPremium, subscriptionEnd, isBlocked, checkPremiumStatus, signOut }}>
       {children}
     </AuthContext.Provider>
   );
