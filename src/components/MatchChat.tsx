@@ -118,19 +118,21 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
       if (data) {
         setAppointment(data);
         
-        // Check if appointment is completed and within review period
         const now = new Date();
         const appointmentDate = new Date(data.appointment_date);
         const oneHourAfter = new Date(appointmentDate.getTime() + 60 * 60 * 1000);
         const reviewDeadline = data.review_deadline ? new Date(data.review_deadline) : null;
         
+        // Can review if: appointment completed OR 1 hour passed, AND within review period (or no deadline yet but 1 hour passed)
         const isAfterOneHour = now >= oneHourAfter;
-        const isWithinReviewPeriod = reviewDeadline ? now <= reviewDeadline : false;
+        const isCompleted = data.status === 'completed';
+        const isWithinReviewPeriod = reviewDeadline ? now <= reviewDeadline : isAfterOneHour;
         
-        setCanReview(isAfterOneHour && isWithinReviewPeriod);
+        // Allow review if completed or 1 hour has passed (before cron runs)
+        setCanReview((isCompleted || isAfterOneHour) && isWithinReviewPeriod);
         
         // Check if user has already reviewed
-        if (isAfterOneHour && currentUserId) {
+        if ((isCompleted || isAfterOneHour) && currentUserId) {
           const { data: existingReview } = await supabase
             .from('reviews')
             .select('id')
@@ -331,29 +333,58 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
           </div>
         )}
 
-        {appointment && (
-          <AppointmentInfo
-            date={appointment.appointment_date}
-            location={appointment.location}
-            isPremium={appointment.is_premium}
-          />
-        )}
+      {appointment && (
+          <div className="space-y-3">
+            <AppointmentInfo
+              date={appointment.appointment_date}
+              location={appointment.location}
+              isPremium={appointment.is_premium}
+            />
 
-        {canReview && !hasReviewed && (
-          <Button
-            variant="default"
-            size="sm"
-            className="w-full"
-            onClick={() => setShowReviewForm(true)}
-          >
-            Lascia una recensione
-          </Button>
-        )}
+            {/* Review section - shown prominently under appointment info */}
+            {canReview && !hasReviewed && (
+              <Card className="p-4 bg-primary/5 border-primary/20">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">⭐</span>
+                    <h4 className="font-semibold text-sm">Lascia una recensione</h4>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    L'appuntamento è terminato! Lascia una recensione per {otherUserName}.
+                  </p>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => setShowReviewForm(true)}
+                  >
+                    Scrivi recensione
+                  </Button>
+                </div>
+              </Card>
+            )}
 
-        {hasReviewed && (
-          <p className="text-sm text-muted-foreground text-center">
-            Hai già lasciato una recensione per questo appuntamento.
-          </p>
+            {hasReviewed && (
+              <Card className="p-3 bg-green-500/10 border-green-500/20">
+                <p className="text-sm text-green-600 dark:text-green-400 text-center">
+                  ✓ Hai già lasciato una recensione per questo appuntamento.
+                </p>
+              </Card>
+            )}
+
+            {/* Show review deadline countdown if within review period */}
+            {canReview && !hasReviewed && appointment.review_deadline && (
+              <p className="text-xs text-muted-foreground text-center">
+                Hai tempo fino al {new Date(appointment.review_deadline).toLocaleDateString('it-IT', { 
+                  day: 'numeric', 
+                  month: 'long', 
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })} per lasciare la recensione.
+              </p>
+            )}
+          </div>
         )}
       </div>
 

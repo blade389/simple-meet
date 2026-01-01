@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
 
     const now = new Date();
     const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
-    const oneHourFromNow = new Date(now.getTime() + 1 * 60 * 60 * 1000); // 1 hour for testing (was 24 hours)
+    const fortyEightHoursFromNow = new Date(now.getTime() + 48 * 60 * 60 * 1000); // 48 hours for review deadline
 
     console.log('Processing completed appointments...');
 
@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
         .from('appointments')
         .update({
           status: 'completed',
-          review_deadline: oneHourFromNow.toISOString(),
+          review_deadline: fortyEightHoursFromNow.toISOString(),
         })
         .eq('id', appointment.id);
 

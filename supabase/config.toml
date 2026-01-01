@@ -56,3 +56,6 @@ verify_jwt = false
 
 [functions.send-admin-review-notification]
 verify_jwt = false
+
+[functions.process-expired-reviews]
+verify_jwt = false
