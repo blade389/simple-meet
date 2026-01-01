@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Trash2, AlertTriangle, ThumbsDown } from 'lucide-react';
+import { Heart, ArrowLeft, CheckCircle, XCircle, Clock, ExternalLink, Camera, Trash2, AlertTriangle, ThumbsDown, UserX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -399,6 +399,16 @@ const Admin = () => {
               <h3 className="font-semibold text-lg mb-2">Segnalazioni</h3>
               <p className="text-muted-foreground text-sm">
                 Gestisci recensioni negative
+              </p>
+            </Card>
+          </Link>
+
+          <Link to="/admin/blocked-users">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <UserX className="w-12 h-12 text-orange-500 mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Utenti Bloccati</h3>
+              <p className="text-muted-foreground text-sm">
+                Gestisci e sblocca utenti
               </p>
             </Card>
           </Link>
