@@ -128,6 +128,10 @@ const AdminUserReviews = () => {
 
             if (reviewError) throw reviewError;
 
+            // Determine which user to email based on action
+            let emailUserId: string | null = null;
+            let emailAction: 'deduct_token_male' | 'block_female' | 'no_action' = 'no_action';
+
             // Execute the action
             if (action === 'deduct_token') {
                 const targetUserId = review.reviewed.gender === 'male' ? review.reviewed.id : review.reviewer.gender === 'male' ? review.reviewer_id : null;
@@ -160,6 +164,9 @@ const AdminUserReviews = () => {
 
                 if (updateError) throw updateError;
 
+                emailUserId = targetUserId;
+                emailAction = 'deduct_token_male';
+
                 toast({
                     title: 'Azione eseguita',
                     description: 'Gettone scalato all\'utente uomo',
@@ -184,6 +191,9 @@ const AdminUserReviews = () => {
 
                 if (blockError) throw blockError;
 
+                emailUserId = targetUserId;
+                emailAction = 'block_female';
+
                 toast({
                     title: 'Azione eseguita',
                     description: 'Account utente bloccato',
@@ -193,6 +203,27 @@ const AdminUserReviews = () => {
                     title: 'Azione eseguita',
                     description: 'Recensione archiviata',
                 });
+            }
+
+            // Send email notification if action was taken
+            if (emailUserId && emailAction !== 'no_action') {
+                try {
+                    const { error: emailError } = await supabase.functions.invoke('send-review-action-email', {
+                        body: {
+                            action: emailAction,
+                            userId: emailUserId,
+                            adminNotes: adminNotes || '',
+                        },
+                    });
+
+                    if (emailError) {
+                        console.error('Error sending review action email:', emailError);
+                    } else {
+                        console.log('Review action email sent successfully');
+                    }
+                } catch (emailErr) {
+                    console.error('Error invoking email function:', emailErr);
+                }
             }
 
             setAdminNotes('');
