@@ -596,6 +596,10 @@ export type Database = {
       }
       is_blocked_between: { Args: { _a: string; _b: string }; Returns: boolean }
       recalculate_all_review_counts: { Args: never; Returns: undefined }
+      viewer_in_age_range: {
+        Args: { _profile_id: string; _viewer_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "user"
