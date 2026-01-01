@@ -26,6 +26,7 @@ export type Database = {
           match_request_id: string | null
           reminder_sent: boolean | null
           review_deadline: string | null
+          review_reminder_sent: boolean | null
           selected_rate_id: string | null
           status: Database["public"]["Enums"]["appointment_status"] | null
           updated_at: string | null
@@ -41,6 +42,7 @@ export type Database = {
           match_request_id?: string | null
           reminder_sent?: boolean | null
           review_deadline?: string | null
+          review_reminder_sent?: boolean | null
           selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
@@ -56,6 +58,7 @@ export type Database = {
           match_request_id?: string | null
           reminder_sent?: boolean | null
           review_deadline?: string | null
+          review_reminder_sent?: boolean | null
           selected_rate_id?: string | null
           status?: Database["public"]["Enums"]["appointment_status"] | null
           updated_at?: string | null
