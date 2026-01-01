@@ -87,16 +87,25 @@ const Auth = () => {
       if (authError) throw authError;
       if (!authData.user) throw new Error("Registrazione fallita");
 
-      // Create profile
+      // Create profile - set default age preferences for males
+      const profileData: any = {
+        id: authData.user.id,
+        full_name: validated.name,
+        gender: validated.gender,
+        birth_date: validated.birthDate,
+        location_city: validated.city
+      };
+
+      // Males get default locked age preferences
+      if (validated.gender === 'male') {
+        profileData.min_age_preference = 18;
+        profileData.max_age_preference = 100;
+        profileData.age_preferences_unlocked = false;
+      }
+
       const { error: profileError } = await supabase
         .from('profiles')
-        .insert({
-          id: authData.user.id,
-          full_name: validated.name,
-          gender: validated.gender,
-          birth_date: validated.birthDate,
-          location_city: validated.city
-        });
+        .insert(profileData);
 
       if (profileError) throw profileError;
 

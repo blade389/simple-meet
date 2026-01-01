@@ -334,6 +334,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          age_preferences_unlocked: boolean | null
           bio: string | null
           birth_date: string
           created_at: string | null
@@ -361,6 +362,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          age_preferences_unlocked?: boolean | null
           bio?: string | null
           birth_date: string
           created_at?: string | null
@@ -390,6 +392,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          age_preferences_unlocked?: boolean | null
           bio?: string | null
           birth_date?: string
           created_at?: string | null

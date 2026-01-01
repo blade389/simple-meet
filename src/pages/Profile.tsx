@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera } from 'lucide-react';
+import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera, Lock, Unlock, Coins } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,8 +16,10 @@ const Profile = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const [photos, setPhotos] = useState<any[]>([]);
+  const [tokens, setTokens] = useState<number>(0);
   
   const [formData, setFormData] = useState({
     full_name: '',
@@ -31,8 +33,71 @@ const Profile = () => {
     if (user) {
       loadProfile();
       loadPhotos();
+      loadTokens();
     }
   }, [user]);
+
+  const loadTokens = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('tokens')
+        .select('amount')
+        .eq('user_id', user?.id)
+        .single();
+
+      if (data) {
+        setTokens(data.amount);
+      }
+    } catch (error) {
+      console.error('Error loading tokens:', error);
+    }
+  };
+
+  const handleUnlockAgePreferences = async () => {
+    if (tokens < 2) {
+      toast({
+        title: "Gettoni insufficienti",
+        description: "Hai bisogno di 2 gettoni per sbloccare le preferenze età",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setUnlocking(true);
+    try {
+      // Deduct 2 tokens
+      const { error: tokenError } = await supabase
+        .from('tokens')
+        .update({ amount: tokens - 2, last_updated: new Date().toISOString() })
+        .eq('user_id', user?.id);
+
+      if (tokenError) throw tokenError;
+
+      // Unlock age preferences
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ age_preferences_unlocked: true })
+        .eq('id', user?.id);
+
+      if (profileError) throw profileError;
+
+      toast({
+        title: "Preferenze sbloccate!",
+        description: "Ora puoi modificare le tue preferenze di età"
+      });
+
+      setTokens(tokens - 2);
+      loadProfile();
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setUnlocking(false);
+    }
+  };
 
   const loadProfile = async () => {
     try {
@@ -377,30 +442,73 @@ const Profile = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="min_age">Età Minima Preferita</Label>
-                    <Input
-                      id="min_age"
-                      type="number"
-                      value={formData.min_age_preference}
-                      onChange={(e) => setFormData({ ...formData, min_age_preference: e.target.value })}
-                      min="18"
-                      max="100"
-                    />
+                {/* Age preferences section - locked for males until unlocked */}
+                {profile?.gender === 'male' && !profile?.age_preferences_unlocked ? (
+                  <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Lock className="w-5 h-5 text-muted-foreground" />
+                        <span className="font-medium">Preferenze Età Bloccate</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">18 - 100 anni</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Le preferenze di età sono bloccate per impostazione predefinita. 
+                      Sbloccale per filtrare i profili e ricevere solo richieste da donne nella fascia d'età desiderata.
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleUnlockAgePreferences}
+                      disabled={unlocking || tokens < 2}
+                      className="w-full"
+                    >
+                      <Coins className="w-4 h-4 mr-2" />
+                      {unlocking ? 'Sblocco in corso...' : `Sblocca per 2 Gettoni (hai ${tokens})`}
+                    </Button>
+                    {tokens < 2 && (
+                      <p className="text-xs text-destructive text-center">
+                        Non hai abbastanza gettoni.{' '}
+                        <Link to="/buy-tokens" className="underline">Acquista gettoni</Link>
+                      </p>
+                    )}
                   </div>
-                  <div>
-                    <Label htmlFor="max_age">Età Massima Preferita</Label>
-                    <Input
-                      id="max_age"
-                      type="number"
-                      value={formData.max_age_preference}
-                      onChange={(e) => setFormData({ ...formData, max_age_preference: e.target.value })}
-                      min="18"
-                      max="100"
-                    />
+                ) : (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="min_age" className="flex items-center gap-2">
+                        Età Minima Preferita
+                        {profile?.gender === 'male' && profile?.age_preferences_unlocked && (
+                          <Unlock className="w-4 h-4 text-green-600" />
+                        )}
+                      </Label>
+                      <Input
+                        id="min_age"
+                        type="number"
+                        value={formData.min_age_preference}
+                        onChange={(e) => setFormData({ ...formData, min_age_preference: e.target.value })}
+                        min="18"
+                        max="100"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="max_age" className="flex items-center gap-2">
+                        Età Massima Preferita
+                        {profile?.gender === 'male' && profile?.age_preferences_unlocked && (
+                          <Unlock className="w-4 h-4 text-green-600" />
+                        )}
+                      </Label>
+                      <Input
+                        id="max_age"
+                        type="number"
+                        value={formData.max_age_preference}
+                        onChange={(e) => setFormData({ ...formData, max_age_preference: e.target.value })}
+                        min="18"
+                        max="100"
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <Button type="submit" disabled={loading} className="w-full">
                   {loading ? 'Salvataggio...' : 'Salva Modifiche'}
