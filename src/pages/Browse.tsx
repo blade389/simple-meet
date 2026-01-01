@@ -188,6 +188,14 @@ const Browse = () => {
     }
 
     try {
+      // First, get users who have blocked me
+      const { data: blockedByData } = await supabase
+        .from('blocked_users')
+        .select('blocker_id')
+        .eq('blocked_id', user?.id);
+      
+      const blockedByIds = blockedByData?.map(b => b.blocker_id) || [];
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -201,6 +209,7 @@ const Browse = () => {
       const myAge = calculateAge(myProfile.birth_date);
 
       const profilesWithDistance = data
+        .filter((profile: any) => !blockedByIds.includes(profile.id)) // Filter out users who blocked me
         .map((profile: any) => {
           const distance = calculateDistance(
             myProfile.location_lat!,
@@ -323,6 +332,26 @@ const Browse = () => {
   const sendMatchRequest = async (receiverId: string) => {
     setSendingRequest(receiverId);
     try {
+      // Check if receiver has blocked me
+      const { data: blockCheck } = await supabase
+        .from('blocked_users')
+        .select('id')
+        .eq('blocker_id', receiverId)
+        .eq('blocked_id', user?.id)
+        .maybeSingle();
+
+      if (blockCheck) {
+        toast({
+          title: "Impossibile inviare la richiesta",
+          description: "Non puoi inviare richieste a questo utente.",
+          variant: "destructive"
+        });
+        // Remove from visible profiles
+        setProfiles(prev => prev.filter(p => p.id !== receiverId));
+        setSendingRequest(null);
+        return;
+      }
+
       // Check for existing pending request
       const { data: existingRequest, error: existingRequestError } = await supabase
         .from('match_requests')
