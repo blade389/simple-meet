@@ -205,6 +205,46 @@ const AdminUserReviews = () => {
                 });
             }
 
+            // Close the associated match request
+            try {
+                // First get the appointment to find the match_request_id
+                const { data: appointment } = await supabase
+                    .from('appointments')
+                    .select('match_request_id')
+                    .eq('id', review.appointment_id)
+                    .single();
+
+                if (appointment?.match_request_id) {
+                    // Close the match request
+                    const { error: matchError } = await supabase
+                        .from('match_requests')
+                        .update({ 
+                            status: 'completed',
+                            chat_status: 'closed',
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', appointment.match_request_id);
+
+                    if (matchError) {
+                        console.error('Error closing match request:', matchError);
+                    } else {
+                        console.log('Match request closed successfully');
+                    }
+
+                    // Delete the appointment since the review process is complete
+                    const { error: deleteError } = await supabase
+                        .from('appointments')
+                        .delete()
+                        .eq('id', review.appointment_id);
+
+                    if (deleteError) {
+                        console.error('Error deleting appointment:', deleteError);
+                    }
+                }
+            } catch (matchErr) {
+                console.error('Error closing match:', matchErr);
+            }
+
             // Send email notification if action was taken
             if (emailUserId && emailAction !== 'no_action') {
                 try {
