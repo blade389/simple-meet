@@ -266,6 +266,55 @@ const Dashboard = () => {
     );
   }
 
+  // Admin-only dashboard
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle">
+        <header className="bg-card border-b shadow-sm">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Heart className="w-8 h-8 text-primary fill-primary" />
+                <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                  SCOPAMI
+                </h1>
+              </div>
+              <Button variant="ghost" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Esci
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-8">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold mb-2">
+              Dashboard Admin
+            </h2>
+            <p className="text-muted-foreground">
+              Benvenuto nel pannello di amministrazione
+            </p>
+          </div>
+
+          <Card className="p-6 bg-gradient-primary text-white">
+            <Link to="/admin" className="block">
+              <div className="flex items-center gap-4">
+                <Shield className="w-12 h-12" />
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">Pannello Admin</h3>
+                  <p className="text-sm opacity-90">
+                    Gestisci le richieste di verifica e le segnalazioni
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </Card>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <header className="bg-card border-b shadow-sm">
@@ -511,22 +560,6 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
-          </Card>
-        )}
-
-        {isAdmin && (
-          <Card className="p-6 mb-8 bg-gradient-primary text-white">
-            <Link to="/admin" className="block">
-              <div className="flex items-center gap-4">
-                <Shield className="w-12 h-12" />
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Pannello Admin</h3>
-                  <p className="text-sm opacity-90">
-                    Gestisci le richieste di verifica
-                  </p>
-                </div>
-              </div>
-            </Link>
           </Card>
         )}
       </main>
