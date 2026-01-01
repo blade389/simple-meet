@@ -5,9 +5,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown, Heart, Trash2 } from 'lucide-react';
+import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown, Heart, Trash2, Send } from 'lucide-react';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 
 interface Profile {
   id: string;
@@ -20,6 +23,13 @@ interface Profile {
   gender: string;
   positive_reviews_count?: number;
   negative_reviews_count?: number;
+}
+
+interface PremiumRate {
+  id: string;
+  duration_hours: number;
+  price_euros: number;
+  description: string | null;
 }
 
 interface Favorite {
@@ -38,14 +48,47 @@ const Favorites = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [myProfile, setMyProfile] = useState<{ gender: string; full_name: string } | null>(null);
+  const [sendingRequest, setSendingRequest] = useState<string | null>(null);
+  const [sentRequests, setSentRequests] = useState<string[]>([]);
+  
+  // Premium request dialog state (for male users)
+  const [premiumDialogOpen, setPremiumDialogOpen] = useState(false);
+  const [selectedPremiumProfile, setSelectedPremiumProfile] = useState<Profile | null>(null);
+  const [premiumRates, setPremiumRates] = useState<PremiumRate[]>([]);
+  const [selectedRateId, setSelectedRateId] = useState<string>('');
+  const [loadingRates, setLoadingRates] = useState(false);
 
   useEffect(() => {
     if (!user) {
       navigate('/auth');
       return;
     }
+    loadMyProfile();
     loadFavorites();
   }, [user, navigate]);
+
+  const loadMyProfile = async () => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('gender, full_name')
+      .eq('id', user?.id)
+      .single();
+    if (data) setMyProfile(data);
+  };
+
+  const loadSentRequests = async (profileIds: string[]) => {
+    if (profileIds.length === 0) return;
+    const { data } = await supabase
+      .from('match_requests')
+      .select('receiver_id')
+      .eq('sender_id', user?.id)
+      .eq('status', 'pending')
+      .in('receiver_id', profileIds);
+    if (data) {
+      setSentRequests(data.map(r => r.receiver_id));
+    }
+  };
 
   const loadFavorites = async () => {
     try {
@@ -78,6 +121,9 @@ const Favorites = () => {
       })).filter(f => f.profile) as Favorite[];
 
       setFavorites(favoritesWithProfiles);
+      
+      // Load sent requests for these profiles
+      await loadSentRequests(profileIds);
     } catch (error) {
       console.error('Error loading favorites:', error);
       toast({
@@ -127,6 +173,201 @@ const Favorites = () => {
       age--;
     }
     return age;
+  };
+
+  // Send normal request (for female users)
+  const sendNormalRequest = async (receiverId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSendingRequest(receiverId);
+    try {
+      // Check for existing pending request
+      const { data: existingRequest } = await supabase
+        .from('match_requests')
+        .select('id')
+        .eq('sender_id', user?.id)
+        .eq('receiver_id', receiverId)
+        .eq('status', 'pending')
+        .maybeSingle();
+
+      if (existingRequest) {
+        toast({
+          title: "Richiesta già inviata",
+          description: "Hai già una richiesta in attesa per questo utente.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const { error } = await supabase
+        .from('match_requests')
+        .insert({
+          sender_id: user?.id,
+          receiver_id: receiverId,
+          status: 'pending',
+          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+        });
+
+      if (error) throw error;
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-match-request-email', {
+          body: {
+            receiverId,
+            senderName: myProfile?.full_name || 'Utente'
+          }
+        });
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+      }
+
+      toast({
+        title: "Richiesta inviata",
+        description: "La tua richiesta è stata inviata con successo"
+      });
+      setSentRequests(prev => [...prev, receiverId]);
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setSendingRequest(null);
+    }
+  };
+
+  // Open premium request dialog (for male users)
+  const openPremiumDialog = async (profile: Profile, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedPremiumProfile(profile);
+    setLoadingRates(true);
+    setPremiumDialogOpen(true);
+
+    // Load premium rates for this profile
+    const { data: rates } = await supabase
+      .from('premium_rates')
+      .select('*')
+      .eq('user_id', profile.id)
+      .order('duration_hours', { ascending: true });
+
+    setPremiumRates(rates || []);
+    setLoadingRates(false);
+  };
+
+  // Send premium request (for male users)
+  const sendPremiumRequest = async () => {
+    if (!selectedPremiumProfile || !selectedRateId) return;
+    
+    setSendingRequest(selectedPremiumProfile.id);
+    try {
+      // Check token balance
+      const { data: tokenData, error: tokenError } = await supabase
+        .from('tokens')
+        .select('amount')
+        .eq('user_id', user?.id)
+        .single();
+
+      if (tokenError) throw tokenError;
+      if (!tokenData || tokenData.amount < 1) {
+        toast({
+          title: "Gettoni insufficienti",
+          description: "Hai bisogno di almeno 1 gettone per inviare una richiesta premium.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check for existing pending request
+      const { data: existingRequest } = await supabase
+        .from('match_requests')
+        .select('id')
+        .eq('sender_id', user?.id)
+        .eq('receiver_id', selectedPremiumProfile.id)
+        .eq('status', 'pending')
+        .maybeSingle();
+
+      if (existingRequest) {
+        toast({
+          title: "Richiesta già inviata",
+          description: "Hai già una richiesta in attesa per questo utente.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Deduct token
+      const { error: tokenUpdateError } = await supabase
+        .from('tokens')
+        .update({ amount: tokenData.amount - 1, last_updated: new Date().toISOString() })
+        .eq('user_id', user?.id);
+
+      if (tokenUpdateError) throw tokenUpdateError;
+
+      // Create premium request
+      const { error: requestError } = await supabase
+        .from('match_requests')
+        .insert({
+          sender_id: user?.id,
+          receiver_id: selectedPremiumProfile.id,
+          status: 'pending',
+          is_premium: true,
+          selected_rate_id: selectedRateId,
+          expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+        });
+
+      if (requestError) {
+        // Rollback token
+        await supabase
+          .from('tokens')
+          .update({ amount: tokenData.amount, last_updated: new Date().toISOString() })
+          .eq('user_id', user?.id);
+        throw requestError;
+      }
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke('send-match-request-email', {
+          body: {
+            receiverId: selectedPremiumProfile.id,
+            senderName: myProfile?.full_name || 'Utente',
+            isPremium: true
+          }
+        });
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+      }
+
+      toast({
+        title: "Richiesta premium inviata",
+        description: "La tua richiesta premium è stata inviata con successo"
+      });
+      setSentRequests(prev => [...prev, selectedPremiumProfile.id]);
+      setPremiumDialogOpen(false);
+      setSelectedPremiumProfile(null);
+      setSelectedRateId('');
+    } catch (error: any) {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive"
+      });
+    } finally {
+      setSendingRequest(null);
+    }
+  };
+
+  const canSendRequest = (profile: Profile): boolean => {
+    // Can't send to profiles that already have pending requests
+    if (sentRequests.includes(profile.id)) return false;
+    
+    // Female users can send to male profiles
+    if (myProfile?.gender === 'female' && profile.gender === 'male') return true;
+    
+    // Male users can send premium requests to premium female profiles
+    if (myProfile?.gender === 'male' && profile.gender === 'female' && profile.is_premium) return true;
+    
+    return false;
   };
 
   if (loading) {
@@ -227,7 +468,33 @@ const Favorites = () => {
                 </CardHeader>
                 <CardContent>
                   {favorite.profile.bio && (
-                    <p className="text-sm text-muted-foreground line-clamp-2">{favorite.profile.bio}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{favorite.profile.bio}</p>
+                  )}
+                  
+                  {canSendRequest(favorite.profile) && (
+                    <Button
+                      className="w-full"
+                      size="sm"
+                      disabled={sendingRequest === favorite.profile.id || sentRequests.includes(favorite.profile.id)}
+                      onClick={(e) => {
+                        if (myProfile?.gender === 'female') {
+                          sendNormalRequest(favorite.profile.id, e);
+                        } else {
+                          openPremiumDialog(favorite.profile, e);
+                        }
+                      }}
+                    >
+                      {sendingRequest === favorite.profile.id ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                      ) : sentRequests.includes(favorite.profile.id) ? (
+                        "Richiesta inviata"
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4 mr-2" />
+                          {myProfile?.gender === 'male' ? 'Invia Richiesta Premium' : 'Invia Richiesta'}
+                        </>
+                      )}
+                    </Button>
                   )}
                 </CardContent>
               </Card>
@@ -256,6 +523,61 @@ const Favorites = () => {
           }}
         />
       )}
+
+      {/* Premium Request Dialog for Male Users */}
+      <Dialog open={premiumDialogOpen} onOpenChange={setPremiumDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Invia Richiesta Premium</DialogTitle>
+            <DialogDescription>
+              Seleziona una tariffa per inviare la richiesta a {selectedPremiumProfile?.full_name}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {loadingRates ? (
+            <div className="flex justify-center py-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            </div>
+          ) : premiumRates.length === 0 ? (
+            <p className="text-center text-muted-foreground py-4">
+              Questo profilo non ha ancora configurato le tariffe.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <Label>Seleziona tariffa</Label>
+                <Select value={selectedRateId} onValueChange={setSelectedRateId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Scegli una tariffa" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {premiumRates.map(rate => (
+                      <SelectItem key={rate.id} value={rate.id}>
+                        {rate.duration_hours}h - €{rate.price_euros} {rate.description ? `(${rate.description})` : ''}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPremiumDialogOpen(false)}>
+              Annulla
+            </Button>
+            <Button 
+              onClick={sendPremiumRequest}
+              disabled={!selectedRateId || sendingRequest === selectedPremiumProfile?.id}
+            >
+              {sendingRequest === selectedPremiumProfile?.id ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+              ) : null}
+              Invia Richiesta (1 gettone)
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
