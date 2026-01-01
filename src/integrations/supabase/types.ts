@@ -591,6 +591,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_blocked_between: { Args: { _a: string; _b: string }; Returns: boolean }
       recalculate_all_review_counts: { Args: never; Returns: undefined }
     }
     Enums: {
