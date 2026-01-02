@@ -21,7 +21,7 @@ Deno.serve(async (req) => {
     // Find completed appointments
     const { data: appointments, error: fetchError } = await supabase
       .from('appointments')
-      .select('id, female_user_id, male_user_id')
+      .select('id, female_user_id, male_user_id, match_request_id')
       .eq('status', 'completed');
 
     if (fetchError) {
@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
       // Check if both users have left reviews
       const { data: reviews, error: reviewError } = await supabase
         .from('reviews')
-        .select('id, reviewer_id')
+        .select('id, reviewer_id, reported, admin_status')
         .eq('appointment_id', appointment.id);
 
       if (reviewError) {
@@ -49,8 +49,25 @@ Deno.serve(async (req) => {
       const hasFemaleReview = reviewerIds.includes(appointment.female_user_id);
       const hasMaleReview = reviewerIds.includes(appointment.male_user_id);
 
-      // If both have reviewed, delete the appointment
-      if (hasFemaleReview && hasMaleReview) {
+      // Check if any review has a pending report that needs admin attention
+      const hasPendingReport = reviews?.some(r => r.reported && r.admin_status === 'pending');
+
+      // If both have reviewed and no pending reports, close the match and delete appointment
+      if (hasFemaleReview && hasMaleReview && !hasPendingReport) {
+        // First close the match request
+        const { error: updateMatchError } = await supabase
+          .from('match_requests')
+          .update({ 
+            status: 'completed',
+            chat_status: 'closed'
+          })
+          .eq('id', appointment.match_request_id);
+
+        if (updateMatchError) {
+          console.error(`Error closing match ${appointment.match_request_id}:`, updateMatchError);
+        }
+
+        // Then delete the appointment
         const { error: deleteError } = await supabase
           .from('appointments')
           .delete()
@@ -59,9 +76,11 @@ Deno.serve(async (req) => {
         if (deleteError) {
           console.error(`Error deleting appointment ${appointment.id}:`, deleteError);
         } else {
-          console.log(`Deleted appointment ${appointment.id} - both users have reviewed`);
+          console.log(`Closed match and deleted appointment ${appointment.id} - both users have reviewed without reports`);
           deletedCount++;
         }
+      } else if (hasFemaleReview && hasMaleReview && hasPendingReport) {
+        console.log(`Appointment ${appointment.id} has pending report - waiting for admin review`);
       }
     }
 

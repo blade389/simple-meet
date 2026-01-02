@@ -50,8 +50,8 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Non autenticato');
 
-      // Set admin_status to 'pending' if negative review or reported
-      const needsAdminReview = rating === 1 || reported;
+      // Set admin_status to 'pending' ONLY if reported (not for negative reviews without report)
+      const needsAdminReview = reported;
       
       const { error } = await supabase
         .from('reviews')

@@ -38,10 +38,27 @@ Deno.serve(async (req) => {
     let closedCount = 0;
 
     for (const appointment of appointments || []) {
-      // Update match request chat_status to 'closed'
+      // Check if there are any pending reports that need admin review
+      const { data: reviews } = await supabase
+        .from('reviews')
+        .select('id, reported, admin_status')
+        .eq('appointment_id', appointment.id);
+
+      const hasPendingReport = reviews?.some(r => r.reported && r.admin_status === 'pending');
+
+      // Don't close if there's a pending report
+      if (hasPendingReport) {
+        console.log(`Appointment ${appointment.id} has pending report - skipping closure`);
+        continue;
+      }
+
+      // Update match request to completed and closed
       const { error: updateMatchError } = await supabase
         .from('match_requests')
-        .update({ chat_status: 'closed' })
+        .update({ 
+          status: 'completed',
+          chat_status: 'closed'
+        })
         .eq('id', appointment.match_request_id);
 
       if (updateMatchError) {
