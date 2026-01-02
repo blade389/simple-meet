@@ -110,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "SCOPAMI <onboarding@resend.dev>",
+      from: "SCOPAMI <noreply@scopami.online>",
       to: adminEmails,
       subject: subject,
       html: htmlContent,
