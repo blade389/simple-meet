@@ -62,3 +62,12 @@ verify_jwt = false
 
 [functions.send-review-reminders]
 verify_jwt = false
+
+[functions.send-admin-report-notification]
+verify_jwt = false
+
+[functions.send-verification-approved]
+verify_jwt = false
+
+[functions.send-photo-approved]
+verify_jwt = false
