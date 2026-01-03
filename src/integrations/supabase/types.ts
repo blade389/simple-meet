@@ -453,6 +453,45 @@ export type Database = {
         }
         Relationships: []
       }
+      review_history: {
+        Row: {
+          archived_at: string | null
+          comment: string | null
+          created_at: string | null
+          id: string
+          original_review_id: string | null
+          rating: number | null
+          report_reason: string | null
+          reported: boolean | null
+          reviewed_id: string
+          reviewer_id: string
+        }
+        Insert: {
+          archived_at?: string | null
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          original_review_id?: string | null
+          rating?: number | null
+          report_reason?: string | null
+          reported?: boolean | null
+          reviewed_id: string
+          reviewer_id: string
+        }
+        Update: {
+          archived_at?: string | null
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          original_review_id?: string | null
+          rating?: number | null
+          report_reason?: string | null
+          reported?: boolean | null
+          reviewed_id?: string
+          reviewer_id?: string
+        }
+        Relationships: []
+      }
       reviews: {
         Row: {
           admin_notes: string | null
