@@ -50,10 +50,17 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Non autenticato');
 
+      // Get reviewer's profile name
+      const { data: reviewerProfile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+
       // Set admin_status to 'pending' ONLY if reported (not for negative reviews without report)
       const needsAdminReview = reported;
       
-      const { error } = await supabase
+      const { data: insertedReview, error } = await supabase
         .from('reviews')
         .insert({
           appointment_id: appointmentId,
@@ -64,9 +71,29 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
           reported,
           report_reason: reported ? reportReason.trim() : null,
           admin_status: needsAdminReview ? 'pending' : null,
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // If reported, send email notification to admins
+      if (reported && insertedReview) {
+        try {
+          await supabase.functions.invoke('send-admin-report-notification', {
+            body: {
+              reviewId: insertedReview.id,
+              reporterName: reviewerProfile?.full_name || 'Utente',
+              reportedName: reviewedUserName,
+              reportReason: reportReason.trim(),
+            },
+          });
+          console.log('Admin notification sent for report');
+        } catch (notifError) {
+          console.error('Error sending admin notification:', notifError);
+          // Don't fail the review submission if notification fails
+        }
+      }
 
       toast({
         title: 'Recensione inviata!',
