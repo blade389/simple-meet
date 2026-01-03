@@ -205,10 +205,55 @@ const AdminUserReviews = () => {
                 });
             }
 
-            // Note: We no longer close the match here immediately.
-            // The match will be closed automatically by:
-            // - process-completed-reviews: when both users have reviewed (and no pending reports)
-            // - process-expired-reviews: when review deadline expires (and no pending reports)
+            // Check if both users have reviewed for this appointment
+            // If so, close the match since this was the last pending report
+            const { data: appointment } = await supabase
+                .from('appointments')
+                .select('id, match_request_id, female_user_id, male_user_id')
+                .eq('id', review.appointment_id)
+                .single();
+
+            if (appointment) {
+                // Check all reviews for this appointment
+                const { data: allReviews } = await supabase
+                    .from('reviews')
+                    .select('reviewer_id, reported, admin_status')
+                    .eq('appointment_id', appointment.id);
+
+                const reviewerIds = allReviews?.map(r => r.reviewer_id) || [];
+                const hasFemaleReview = reviewerIds.includes(appointment.female_user_id);
+                const hasMaleReview = reviewerIds.includes(appointment.male_user_id);
+                
+                // Check if there are still pending reports
+                const hasPendingReport = allReviews?.some(r => r.reported && r.admin_status === 'pending');
+
+                // If both have reviewed and no more pending reports, close the match
+                if (hasFemaleReview && hasMaleReview && !hasPendingReport) {
+                    const { error: closeMatchError } = await supabase
+                        .from('match_requests')
+                        .update({ 
+                            status: 'completed',
+                            chat_status: 'closed'
+                        })
+                        .eq('id', appointment.match_request_id);
+
+                    if (closeMatchError) {
+                        console.error('Error closing match:', closeMatchError);
+                    } else {
+                        console.log('Match closed after admin review');
+                    }
+
+                    // Delete the appointment (this will trigger archiving reviews)
+                    const { error: deleteAppointmentError } = await supabase
+                        .from('appointments')
+                        .delete()
+                        .eq('id', appointment.id);
+
+                    if (deleteAppointmentError) {
+                        console.error('Error deleting appointment:', deleteAppointmentError);
+                    }
+                }
+            }
 
             // Send email notification if action was taken
             if (emailUserId && emailAction !== 'no_action') {

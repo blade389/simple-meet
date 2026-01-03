@@ -49,6 +49,7 @@ const Appointments = () => {
             premium_rates!match_requests_selected_rate_id_fkey(price_euros, duration_hours, description)
           `)
           .eq('status', 'accepted')
+          .eq('chat_status', 'active')
           .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`);
 
         if (error) throw error;
