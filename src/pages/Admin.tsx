@@ -21,6 +21,8 @@ const Admin = () => {
   const [photoRequests, setPhotoRequests] = useState<any[]>([]);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
+  const [pendingReportsCount, setPendingReportsCount] = useState(0);
+  const [pendingConversationReviewsCount, setPendingConversationReviewsCount] = useState(0);
 
   useEffect(() => {
     checkAdminAccess();
@@ -50,6 +52,7 @@ const Admin = () => {
       setIsAdmin(true);
       loadVerificationRequests();
       loadPhotoVerificationRequests();
+      loadPendingCounts();
     } catch (error: any) {
       toast({
         title: "Errore",
@@ -59,6 +62,31 @@ const Admin = () => {
       navigate('/dashboard');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadPendingCounts = async () => {
+    try {
+      // Count pending user reports
+      const { count: reportsCount, error: reportsError } = await supabase
+        .from('reviews')
+        .select('*', { count: 'exact', head: true })
+        .eq('reported', true)
+        .eq('admin_status', 'pending');
+
+      if (reportsError) throw reportsError;
+      setPendingReportsCount(reportsCount || 0);
+
+      // Count pending conversation reviews
+      const { count: conversationCount, error: conversationError } = await supabase
+        .from('conversation_reviews')
+        .select('*', { count: 'exact', head: true })
+        .is('action_taken', null);
+
+      if (conversationError) throw conversationError;
+      setPendingConversationReviewsCount(conversationCount || 0);
+    } catch (error) {
+      console.error('Error loading pending counts:', error);
     }
   };
 
@@ -384,22 +412,32 @@ const Admin = () => {
 
 
           <Link to="/admin/conversation-reviews">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer relative">
               <AlertTriangle className="w-12 h-12 text-primary mb-4" />
               <h3 className="font-semibold text-lg mb-2">Revisioni</h3>
               <p className="text-muted-foreground text-sm">
                 Revisiona conversazioni scadute
               </p>
+              {pendingConversationReviewsCount > 0 && (
+                <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground">
+                  {pendingConversationReviewsCount}
+                </Badge>
+              )}
             </Card>
           </Link>
 
           <Link to="/admin/user-reviews">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer relative">
               <ThumbsDown className="w-12 h-12 text-destructive mb-4" />
               <h3 className="font-semibold text-lg mb-2">Segnalazioni</h3>
               <p className="text-muted-foreground text-sm">
                 Gestisci recensioni negative
               </p>
+              {pendingReportsCount > 0 && (
+                <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground">
+                  {pendingReportsCount}
+                </Badge>
+              )}
             </Card>
           </Link>
 
