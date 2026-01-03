@@ -79,8 +79,15 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
 
       // If reported, send email notification to admins
       if (reported && insertedReview) {
+        console.log('Sending admin notification for report...', {
+          reviewId: insertedReview.id,
+          reporterName: reviewerProfile?.full_name || 'Utente',
+          reportedName: reviewedUserName,
+          reportReason: reportReason.trim(),
+        });
+        
         try {
-          await supabase.functions.invoke('send-admin-report-notification', {
+          const { data: notifData, error: notifError } = await supabase.functions.invoke('send-admin-report-notification', {
             body: {
               reviewId: insertedReview.id,
               reporterName: reviewerProfile?.full_name || 'Utente',
@@ -88,9 +95,14 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
               reportReason: reportReason.trim(),
             },
           });
-          console.log('Admin notification sent for report');
+          
+          if (notifError) {
+            console.error('Error from admin notification function:', notifError);
+          } else {
+            console.log('Admin notification sent successfully:', notifData);
+          }
         } catch (notifError) {
-          console.error('Error sending admin notification:', notifError);
+          console.error('Exception sending admin notification:', notifError);
           // Don't fail the review submission if notification fails
         }
       }
