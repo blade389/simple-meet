@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface ProfilePhoto {
   id: string;
@@ -50,6 +51,7 @@ const ProfileDetailsDialog = ({
   showSendRequest = false,
   isRequestPending = false
 }: ProfileDetailsDialogProps) => {
+  const { t } = useTranslation();
   const [photos, setPhotos] = useState<ProfilePhoto[]>([]);
   const [premiumRates, setPremiumRates] = useState<PremiumRate[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,8 +109,8 @@ const ProfileDetailsDialog = ({
 
     if (profile.is_premium && !selectedRateId) {
       toast({
-        title: 'Seleziona una tariffa',
-        description: 'Devi selezionare una tariffa per inviare una richiesta premium.',
+        title: t('profileDialog.selectRateError'),
+        description: t('profileDialog.selectRateErrorDesc'),
         variant: 'destructive',
       });
       return;
@@ -148,7 +150,7 @@ const ProfileDetailsDialog = ({
               {profile.is_premium && (
                 <Badge variant="secondary" className="gap-1">
                   <Crown className="w-3 h-3" />
-                  Premium
+                  {t('profileDialog.premium')}
                 </Badge>
               )}
             </div>
@@ -208,7 +210,7 @@ const ProfileDetailsDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Calendar className="w-4 h-4" />
-              <span>{calculateAge(profile.birth_date)} anni</span>
+              <span>{calculateAge(profile.birth_date)} {t('profileDialog.years')}</span>
             </div>
 
             {profile.distance !== undefined && (
@@ -220,7 +222,7 @@ const ProfileDetailsDialog = ({
 
             {profile.bio && (
               <div className="pt-4 border-t">
-                <h3 className="font-semibold mb-2">Bio</h3>
+                <h3 className="font-semibold mb-2">{t('profileDialog.bio')}</h3>
                 <p className="text-muted-foreground whitespace-pre-wrap">{profile.bio}</p>
               </div>
             )}
@@ -230,7 +232,7 @@ const ProfileDetailsDialog = ({
               <div className="pt-4 border-t">
                 <h3 className="font-semibold mb-3 flex items-center gap-2">
                   <Crown className="w-4 h-4 text-primary" />
-                  Tariffe Premium
+                  {t('profileDialog.premiumRates')}
                 </h3>
                 <div className="space-y-2">
                   {premiumRates.map((rate) => (
@@ -241,7 +243,7 @@ const ProfileDetailsDialog = ({
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2 text-sm">
                           <Clock className="w-4 h-4 text-primary" />
-                          <span>{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                          <span>{rate.duration_hours} {rate.duration_hours === 1 ? t('profileDialog.hour') : t('profileDialog.hours')}</span>
                         </div>
                         <div className="flex items-center gap-1 font-semibold text-primary">
                           <Euro className="w-4 h-4" />
@@ -257,18 +259,18 @@ const ProfileDetailsDialog = ({
             {/* Send Request Section */}
             {showSendRequest && onSendRequest && (
               <div className="pt-4 border-t space-y-4">
-                <h3 className="font-semibold">Invia Richiesta</h3>
+                <h3 className="font-semibold">{t('profileDialog.sendRequest')}</h3>
 
                 {profile.is_premium && premiumRates.length > 0 && (
                   <div className="space-y-3">
-                    <Label>Seleziona Tariffa *</Label>
+                    <Label>{t('profileDialog.selectRate')} *</Label>
                     <RadioGroup value={selectedRateId} onValueChange={setSelectedRateId}>
                       {premiumRates.map((rate) => (
                         <div key={rate.id} className="flex items-center space-x-2">
                           <RadioGroupItem value={rate.id} id={rate.id} />
                           <Label htmlFor={rate.id} className="flex items-center gap-3 cursor-pointer">
                             <Clock className="w-4 h-4 text-primary" />
-                            <span>{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                            <span>{rate.duration_hours} {rate.duration_hours === 1 ? t('profileDialog.hour') : t('profileDialog.hours')}</span>
                             <span className="font-semibold text-primary">€{rate.price_euros}</span>
                           </Label>
                         </div>
@@ -278,12 +280,12 @@ const ProfileDetailsDialog = ({
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Messaggio (opzionale)</Label>
+                  <Label htmlFor="message">{t('profileDialog.messageOptional')}</Label>
                   <Textarea
                     id="message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Scrivi un messaggio..."
+                    placeholder={t('profileDialog.writeMessage')}
                     rows={3}
                   />
                 </div>
@@ -294,7 +296,7 @@ const ProfileDetailsDialog = ({
                   className="w-full"
                 >
                   <Send className="w-4 h-4 mr-2" />
-                  {sending ? 'Invio in corso...' : isRequestPending ? 'Richiesta Inviata' : 'Invia Richiesta'}
+                  {sending ? t('profileDialog.sending') : isRequestPending ? t('profileDialog.requestSent') : t('profileDialog.sendRequest')}
                 </Button>
               </div>
             )}

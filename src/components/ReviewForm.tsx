@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ThumbsUp, ThumbsDown, AlertTriangle } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useTranslation } from 'react-i18next';
 
 interface ReviewFormProps {
   appointmentId: string;
@@ -16,6 +17,7 @@ interface ReviewFormProps {
 }
 
 export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, onSuccess }: ReviewFormProps) => {
+  const { t } = useTranslation();
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [reported, setReported] = useState(false);
@@ -28,8 +30,8 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
 
     if (rating === null) {
       toast({
-        title: 'Errore',
-        description: 'Seleziona una valutazione.',
+        title: t('reviewForm.error'),
+        description: t('reviewForm.selectRating'),
         variant: 'destructive',
       });
       return;
@@ -37,8 +39,8 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
 
     if (reported && !reportReason.trim()) {
       toast({
-        title: 'Errore',
-        description: 'Inserisci il motivo della segnalazione.',
+        title: t('reviewForm.error'),
+        description: t('reviewForm.enterReportReason'),
         variant: 'destructive',
       });
       return;
@@ -108,16 +110,16 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
       }
 
       toast({
-        title: 'Recensione inviata!',
-        description: 'Grazie per il tuo feedback.',
+        title: t('reviewForm.reviewSent'),
+        description: t('reviewForm.thanks'),
       });
 
       onSuccess();
     } catch (error) {
       console.error('Error submitting review:', error);
       toast({
-        title: 'Errore',
-        description: 'Non è stato possibile inviare la recensione.',
+        title: t('reviewForm.error'),
+        description: t('reviewForm.submitError'),
         variant: 'destructive',
       });
     } finally {
@@ -127,14 +129,14 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
 
   return (
     <Card className="p-6">
-      <h3 className="text-xl font-semibold mb-4">Lascia una recensione per {reviewedUserName}</h3>
+      <h3 className="text-xl font-semibold mb-4">{t('reviewForm.leaveReviewFor')} {reviewedUserName}</h3>
       <p className="text-sm text-muted-foreground mb-6">
-        Hai 24 ore dall'appuntamento per lasciare una recensione.
+        {t('reviewForm.reviewTimeLimit')}
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <Label className="mb-3 block">Come è andata?</Label>
+          <Label className="mb-3 block">{t('reviewForm.howWasIt')}</Label>
           <div className="flex gap-4 justify-center">
             <Button
               type="button"
@@ -158,12 +160,12 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
         </div>
 
         <div>
-          <Label htmlFor="comment">Commento (opzionale)</Label>
+          <Label htmlFor="comment">{t('reviewForm.commentOptional')}</Label>
           <Textarea
             id="comment"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Aggiungi un commento sulla tua esperienza..."
+            placeholder={t('reviewForm.addComment')}
             rows={4}
           />
         </div>
@@ -178,22 +180,22 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
             <div className="space-y-1">
               <Label htmlFor="report" className="flex items-center gap-2 cursor-pointer">
                 <AlertTriangle className="w-4 h-4 text-destructive" />
-                Segnala comportamento scorretto
+                {t('reviewForm.reportBehavior')}
               </Label>
               <p className="text-xs text-muted-foreground">
-                Segnala se l'utente non si è presentato o ha avuto un comportamento inappropriato
+                {t('reviewForm.reportDescription')}
               </p>
             </div>
           </div>
 
           {reported && (
             <div>
-              <Label htmlFor="reportReason">Motivo della segnalazione *</Label>
+              <Label htmlFor="reportReason">{t('reviewForm.reportReason')} *</Label>
               <Textarea
                 id="reportReason"
                 value={reportReason}
                 onChange={(e) => setReportReason(e.target.value)}
-                placeholder="Descrivi il problema (es: l'utente non si è presentato)"
+                placeholder={t('reviewForm.reportReasonPlaceholder')}
                 rows={3}
                 required={reported}
               />
@@ -202,7 +204,7 @@ export const ReviewForm = ({ appointmentId, reviewedUserId, reviewedUserName, on
         </div>
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Invio...' : 'Invia Recensione'}
+          {loading ? t('reviewForm.sending') : t('reviewForm.submit')}
         </Button>
       </form>
     </Card>
