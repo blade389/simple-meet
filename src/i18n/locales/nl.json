@@ -16,7 +16,9 @@
     "allRightsReserved": "Alle rechten voorbehouden",
     "privacyPolicy": "Privacybeleid",
     "termsOfService": "Servicevoorwaarden",
-    "cookiePolicy": "Cookiebeleid"
+    "cookiePolicy": "Cookiebeleid",
+    "male": "man",
+    "female": "vrouw"
   },
   "home": {
     "heroTitle": "De Dating App waar",
@@ -263,7 +265,14 @@
     "incomingRequestsDesc": "Reageer op ontmoetingsverzoeken",
     "favorites": "Mijn Favorieten",
     "favoritesDesc": "Profielen die je hebt opgeslagen",
-    "savedProfiles": "opgeslagen profielen"
+    "savedProfiles": "opgeslagen profielen",
+    "howItWorks": "Hoe werkt het?",
+    "howItWorksTitle": "Hoe SCOPAMI werkt",
+    "howItWorksDesc": "Snelgids voor het gebruik van het platform voor je {{gender}} profiel.",
+    "premiumProfiles": "Premium Profielen",
+    "premiumProfilesDesc": "Ontdek premium profielen beschikbaar in je buurt",
+    "verificationRequired": "Verificatie Vereist",
+    "premiumProfilesVerifyDesc": "Voltooi de verificatie van je account om toegang te krijgen tot premium profielen"
   },
   "browse": {
     "title": "Ontdekken",

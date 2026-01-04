@@ -573,9 +573,9 @@ const Dashboard = () => {
                 <div className="flex items-center gap-4">
                   <Crown className="w-12 h-12 text-yellow-500" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">Profili Premium</h3>
+                    <h3 className="font-semibold text-lg mb-1">{t('dashboard.premiumProfiles')}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Scopri i profili premium disponibili nella tua zona
+                      {t('dashboard.premiumProfilesDesc')}
                     </p>
                   </div>
                 </div>
@@ -585,13 +585,13 @@ const Dashboard = () => {
                 <Crown className="w-12 h-12 text-yellow-500" />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-lg">Profili Premium</h3>
+                    <h3 className="font-semibold text-lg">{t('dashboard.premiumProfiles')}</h3>
                     <Badge variant="outline" className="border-yellow-500 text-yellow-600 dark:text-yellow-400">
-                      Verifica Richiesta
+                      {t('dashboard.verificationRequired')}
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Completa la verifica del tuo account per accedere ai profili premium
+                    {t('dashboard.premiumProfilesVerifyDesc')}
                   </p>
                 </div>
               </div>

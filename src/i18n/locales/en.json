@@ -16,7 +16,9 @@
     "allRightsReserved": "All rights reserved",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "cookiePolicy": "Cookie Policy"
+    "cookiePolicy": "Cookie Policy",
+    "male": "male",
+    "female": "female"
   },
   "home": {
     "heroTitle": "The Dating App where",
@@ -263,7 +265,14 @@
     "incomingRequestsDesc": "Respond to meeting requests",
     "favorites": "My Favorites",
     "favoritesDesc": "Profiles you have saved",
-    "savedProfiles": "saved profiles"
+    "savedProfiles": "saved profiles",
+    "howItWorks": "How does it work?",
+    "howItWorksTitle": "How SCOPAMI Works",
+    "howItWorksDesc": "Quick guide to using the platform for your {{gender}} profile.",
+    "premiumProfiles": "Premium Profiles",
+    "premiumProfilesDesc": "Discover premium profiles available in your area",
+    "verificationRequired": "Verification Required",
+    "premiumProfilesVerifyDesc": "Complete your account verification to access premium profiles"
   },
   "browse": {
     "title": "Discover",

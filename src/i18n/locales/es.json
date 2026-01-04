@@ -16,7 +16,9 @@
     "allRightsReserved": "Todos los derechos reservados",
     "privacyPolicy": "Política de Privacidad",
     "termsOfService": "Términos de Servicio",
-    "cookiePolicy": "Política de Cookies"
+    "cookiePolicy": "Política de Cookies",
+    "male": "hombre",
+    "female": "mujer"
   },
   "home": {
     "heroTitle": "La App de Citas donde",
@@ -263,7 +265,14 @@
     "incomingRequestsDesc": "Responde a las solicitudes de encuentro",
     "favorites": "Mis Favoritos",
     "favoritesDesc": "Perfiles que has guardado",
-    "savedProfiles": "perfiles guardados"
+    "savedProfiles": "perfiles guardados",
+    "howItWorks": "¿Cómo funciona?",
+    "howItWorksTitle": "Cómo funciona SCOPAMI",
+    "howItWorksDesc": "Guía rápida para usar la plataforma con tu perfil {{gender}}.",
+    "premiumProfiles": "Perfiles Premium",
+    "premiumProfilesDesc": "Descubre los perfiles premium disponibles en tu zona",
+    "verificationRequired": "Verificación Requerida",
+    "premiumProfilesVerifyDesc": "Completa la verificación de tu cuenta para acceder a los perfiles premium"
   },
   "browse": {
     "title": "Descubrir",
