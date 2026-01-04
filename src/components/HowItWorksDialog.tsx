@@ -8,28 +8,31 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { HelpCircle, CheckCircle2, AlertCircle, Crown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface HowItWorksDialogProps {
     gender: 'male' | 'female';
 }
 
 export function HowItWorksDialog({ gender }: HowItWorksDialogProps) {
+    const { t } = useTranslation();
+    
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2">
                     <HelpCircle className="w-4 h-4" />
-                    Come funziona?
+                    {t('dashboard.howItWorks')}
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className="text-2xl font-bold flex items-center gap-2">
                         <HelpCircle className="w-6 h-6 text-primary" />
-                        Come funziona SCOPAMI
+                        {t('dashboard.howItWorksTitle')}
                     </DialogTitle>
                     <DialogDescription>
-                        Guida rapida all'utilizzo della piattaforma per il tuo profilo {gender === 'male' ? 'uomo' : 'donna'}.
+                        {t('dashboard.howItWorksDesc', { gender: gender === 'male' ? t('common.male') : t('common.female') })}
                     </DialogDescription>
                 </DialogHeader>
 

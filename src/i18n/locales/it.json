@@ -20,7 +20,9 @@
     "product": "Prodotto",
     "company": "Azienda",
     "legal": "Legale",
-    "contactUs": "Contattaci"
+    "contactUs": "Contattaci",
+    "male": "uomo",
+    "female": "donna"
   },
   "home": {
     "heroTitle": "Trova il Tuo",
@@ -274,7 +276,14 @@
     "incomingRequestsDesc": "Rispondi alle richieste di incontro",
     "favorites": "I Miei Preferiti",
     "favoritesDesc": "Profili che hai salvato",
-    "savedProfiles": "profili salvati"
+    "savedProfiles": "profili salvati",
+    "howItWorks": "Come funziona?",
+    "howItWorksTitle": "Come funziona SCOPAMI",
+    "howItWorksDesc": "Guida rapida all'utilizzo della piattaforma per il tuo profilo {{gender}}.",
+    "premiumProfiles": "Profili Premium",
+    "premiumProfilesDesc": "Scopri i profili premium disponibili nella tua zona",
+    "verificationRequired": "Verifica Richiesta",
+    "premiumProfilesVerifyDesc": "Completa la verifica del tuo account per accedere ai profili premium"
   },
   "browse": {
     "title": "Scopri",

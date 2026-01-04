@@ -16,7 +16,9 @@
     "allRightsReserved": "Wszelkie prawa zastrzeżone",
     "privacyPolicy": "Polityka Prywatności",
     "termsOfService": "Regulamin",
-    "cookiePolicy": "Polityka Cookies"
+    "cookiePolicy": "Polityka Cookies",
+    "male": "mężczyzna",
+    "female": "kobieta"
   },
   "home": {
     "heroTitle": "Aplikacja Randkowa, gdzie",
@@ -263,7 +265,14 @@
     "incomingRequestsDesc": "Odpowiedz na prośby o spotkanie",
     "favorites": "Moi Ulubieni",
     "favoritesDesc": "Profile, które zapisałeś",
-    "savedProfiles": "zapisane profile"
+    "savedProfiles": "zapisane profile",
+    "howItWorks": "Jak to działa?",
+    "howItWorksTitle": "Jak działa SCOPAMI",
+    "howItWorksDesc": "Krótki przewodnik korzystania z platformy dla Twojego profilu {{gender}}.",
+    "premiumProfiles": "Profile Premium",
+    "premiumProfilesDesc": "Odkryj profile premium dostępne w Twojej okolicy",
+    "verificationRequired": "Wymagana Weryfikacja",
+    "premiumProfilesVerifyDesc": "Ukończ weryfikację swojego konta, aby uzyskać dostęp do profili premium"
   },
   "browse": {
     "title": "Odkryj",

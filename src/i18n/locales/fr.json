@@ -16,7 +16,9 @@
     "allRightsReserved": "Tous droits réservés",
     "privacyPolicy": "Politique de Confidentialité",
     "termsOfService": "Conditions d'Utilisation",
-    "cookiePolicy": "Politique des Cookies"
+    "cookiePolicy": "Politique des Cookies",
+    "male": "homme",
+    "female": "femme"
   },
   "home": {
     "heroTitle": "L'App de Rencontres où",
@@ -263,7 +265,14 @@
     "incomingRequestsDesc": "Répondez aux demandes de rencontre",
     "favorites": "Mes Favoris",
     "favoritesDesc": "Profils que vous avez sauvegardés",
-    "savedProfiles": "profils sauvegardés"
+    "savedProfiles": "profils sauvegardés",
+    "howItWorks": "Comment ça marche ?",
+    "howItWorksTitle": "Comment fonctionne SCOPAMI",
+    "howItWorksDesc": "Guide rapide d'utilisation de la plateforme pour votre profil {{gender}}.",
+    "premiumProfiles": "Profils Premium",
+    "premiumProfilesDesc": "Découvrez les profils premium disponibles dans votre zone",
+    "verificationRequired": "Vérification Requise",
+    "premiumProfilesVerifyDesc": "Complétez la vérification de votre compte pour accéder aux profils premium"
   },
   "browse": {
     "title": "Découvrir",
