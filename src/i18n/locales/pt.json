@@ -372,5 +372,41 @@
     "none": "Nenhum",
     "yes": "Sim",
     "no": "Não"
+  },
+  "matchChat": {
+    "chatWith": "Chat com",
+    "scheduleAppointment": "Marcar Encontro",
+    "sendMessage": "Enviar mensagem...",
+    "sending": "Enviando...",
+    "noMessages": "Ainda não há mensagens. Inicie a conversa!",
+    "loadingMessages": "Carregando mensagens..."
+  },
+  "profileDialog": {
+    "verified": "Verificado",
+    "premium": "Premium",
+    "years": "anos",
+    "positiveReviews": "avaliações positivas",
+    "negativeReviews": "avaliações negativas",
+    "noReviews": "Ainda não há avaliações",
+    "close": "Fechar"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Deixar avaliação para",
+    "reviewTimeLimit": "Tem 48 horas após o encontro para deixar uma avaliação. Após este prazo, não será mais possível deixar avaliações.",
+    "howWasIt": "Como foi a experiência?",
+    "commentOptional": "Comentário (opcional)",
+    "addComment": "Adicione um comentário sobre a sua experiência...",
+    "reportBehavior": "Denunciar comportamento inadequado",
+    "reportDescription": "Selecione se deseja denunciar um comportamento inadequado ou uma violação das nossas regras.",
+    "reportReason": "Motivo da denúncia",
+    "reportReasonPlaceholder": "Descreva detalhadamente o que aconteceu...",
+    "sending": "Enviando...",
+    "submit": "Enviar avaliação",
+    "error": "Erro",
+    "selectRating": "Selecione uma avaliação",
+    "enterReportReason": "Introduza o motivo da denúncia",
+    "reviewSent": "Avaliação enviada",
+    "thanks": "Obrigado pela sua avaliação!",
+    "submitError": "Erro ao enviar a avaliação"
   }
 }

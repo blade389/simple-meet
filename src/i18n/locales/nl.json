@@ -372,5 +372,41 @@
     "none": "Geen",
     "yes": "Ja",
     "no": "Nee"
+  },
+  "matchChat": {
+    "chatWith": "Chat met",
+    "scheduleAppointment": "Afspraak Plannen",
+    "sendMessage": "Bericht verzenden...",
+    "sending": "Verzenden...",
+    "noMessages": "Nog geen berichten. Start het gesprek!",
+    "loadingMessages": "Berichten laden..."
+  },
+  "profileDialog": {
+    "verified": "Geverifieerd",
+    "premium": "Premium",
+    "years": "jaar",
+    "positiveReviews": "positieve reviews",
+    "negativeReviews": "negatieve reviews",
+    "noReviews": "Nog geen reviews",
+    "close": "Sluiten"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Review achterlaten voor",
+    "reviewTimeLimit": "Je hebt 48 uur na de afspraak om een review achter te laten. Na deze termijn kun je geen reviews meer achterlaten.",
+    "howWasIt": "Hoe was de ervaring?",
+    "commentOptional": "Opmerking (optioneel)",
+    "addComment": "Voeg een opmerking toe over je ervaring...",
+    "reportBehavior": "Ongepast gedrag melden",
+    "reportDescription": "Selecteer als je ongepast gedrag of een overtreding van onze regels wilt melden.",
+    "reportReason": "Reden van melding",
+    "reportReasonPlaceholder": "Beschrijf in detail wat er is gebeurd...",
+    "sending": "Verzenden...",
+    "submit": "Review verzenden",
+    "error": "Fout",
+    "selectRating": "Selecteer een beoordeling",
+    "enterReportReason": "Voer de reden van de melding in",
+    "reviewSent": "Review verzonden",
+    "thanks": "Bedankt voor je review!",
+    "submitError": "Fout bij het verzenden van de review"
   }
 }

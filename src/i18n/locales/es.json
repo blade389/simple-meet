@@ -372,5 +372,41 @@
     "none": "Ninguno",
     "yes": "Sí",
     "no": "No"
+  },
+  "matchChat": {
+    "chatWith": "Chat con",
+    "scheduleAppointment": "Programar Cita",
+    "sendMessage": "Enviar mensaje...",
+    "sending": "Enviando...",
+    "noMessages": "Aún no hay mensajes. ¡Inicia la conversación!",
+    "loadingMessages": "Cargando mensajes..."
+  },
+  "profileDialog": {
+    "verified": "Verificado",
+    "premium": "Premium",
+    "years": "años",
+    "positiveReviews": "reseñas positivas",
+    "negativeReviews": "reseñas negativas",
+    "noReviews": "Aún no hay reseñas",
+    "close": "Cerrar"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Dejar reseña para",
+    "reviewTimeLimit": "Tienes 48 horas después de la cita para dejar una reseña. Después de este plazo, ya no podrás dejar reseñas.",
+    "howWasIt": "¿Cómo fue la experiencia?",
+    "commentOptional": "Comentario (opcional)",
+    "addComment": "Añade un comentario sobre tu experiencia...",
+    "reportBehavior": "Reportar comportamiento inapropiado",
+    "reportDescription": "Selecciona si deseas reportar un comportamiento inapropiado o una violación de nuestras reglas.",
+    "reportReason": "Motivo del reporte",
+    "reportReasonPlaceholder": "Describe detalladamente lo que pasó...",
+    "sending": "Enviando...",
+    "submit": "Enviar reseña",
+    "error": "Error",
+    "selectRating": "Selecciona una valoración",
+    "enterReportReason": "Introduce el motivo del reporte",
+    "reviewSent": "Reseña enviada",
+    "thanks": "¡Gracias por tu reseña!",
+    "submitError": "Error al enviar la reseña"
   }
 }

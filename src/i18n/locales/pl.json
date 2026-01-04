@@ -372,5 +372,41 @@
     "none": "Żaden",
     "yes": "Tak",
     "no": "Nie"
+  },
+  "matchChat": {
+    "chatWith": "Chat z",
+    "scheduleAppointment": "Umów Spotkanie",
+    "sendMessage": "Wyślij wiadomość...",
+    "sending": "Wysyłanie...",
+    "noMessages": "Brak wiadomości. Rozpocznij rozmowę!",
+    "loadingMessages": "Ładowanie wiadomości..."
+  },
+  "profileDialog": {
+    "verified": "Zweryfikowany",
+    "premium": "Premium",
+    "years": "lat",
+    "positiveReviews": "pozytywnych recenzji",
+    "negativeReviews": "negatywnych recenzji",
+    "noReviews": "Brak recenzji",
+    "close": "Zamknij"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Zostaw recenzję dla",
+    "reviewTimeLimit": "Masz 48 godzin po spotkaniu, aby zostawić recenzję. Po tym terminie nie będzie możliwe zostawienie recenzji.",
+    "howWasIt": "Jak było?",
+    "commentOptional": "Komentarz (opcjonalny)",
+    "addComment": "Dodaj komentarz o swoim doświadczeniu...",
+    "reportBehavior": "Zgłoś nieodpowiednie zachowanie",
+    "reportDescription": "Wybierz, jeśli chcesz zgłosić nieodpowiednie zachowanie lub naruszenie naszych zasad.",
+    "reportReason": "Powód zgłoszenia",
+    "reportReasonPlaceholder": "Opisz szczegółowo, co się wydarzyło...",
+    "sending": "Wysyłanie...",
+    "submit": "Wyślij recenzję",
+    "error": "Błąd",
+    "selectRating": "Wybierz ocenę",
+    "enterReportReason": "Wprowadź powód zgłoszenia",
+    "reviewSent": "Recenzja wysłana",
+    "thanks": "Dziękujemy za recenzję!",
+    "submitError": "Błąd podczas wysyłania recenzji"
   }
 }

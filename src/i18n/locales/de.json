@@ -372,5 +372,41 @@
     "none": "Keine",
     "yes": "Ja",
     "no": "Nein"
+  },
+  "matchChat": {
+    "chatWith": "Chat mit",
+    "scheduleAppointment": "Termin vereinbaren",
+    "sendMessage": "Nachricht senden...",
+    "sending": "Senden...",
+    "noMessages": "Noch keine Nachrichten. Starte das Gespräch!",
+    "loadingMessages": "Nachrichten werden geladen..."
+  },
+  "profileDialog": {
+    "verified": "Verifiziert",
+    "premium": "Premium",
+    "years": "Jahre",
+    "positiveReviews": "positive Bewertungen",
+    "negativeReviews": "negative Bewertungen",
+    "noReviews": "Noch keine Bewertungen",
+    "close": "Schließen"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Bewertung abgeben für",
+    "reviewTimeLimit": "Sie haben 48 Stunden nach dem Termin, um eine Bewertung abzugeben. Danach ist keine Bewertung mehr möglich.",
+    "howWasIt": "Wie war die Erfahrung?",
+    "commentOptional": "Kommentar (optional)",
+    "addComment": "Fügen Sie einen Kommentar zu Ihrer Erfahrung hinzu...",
+    "reportBehavior": "Unangemessenes Verhalten melden",
+    "reportDescription": "Wählen Sie, wenn Sie unangemessenes Verhalten oder einen Verstoß gegen unsere Regeln melden möchten.",
+    "reportReason": "Grund der Meldung",
+    "reportReasonPlaceholder": "Beschreiben Sie im Detail, was passiert ist...",
+    "sending": "Senden...",
+    "submit": "Bewertung absenden",
+    "error": "Fehler",
+    "selectRating": "Wählen Sie eine Bewertung",
+    "enterReportReason": "Geben Sie den Grund der Meldung ein",
+    "reviewSent": "Bewertung gesendet",
+    "thanks": "Vielen Dank für Ihre Bewertung!",
+    "submitError": "Fehler beim Senden der Bewertung"
   }
 }
