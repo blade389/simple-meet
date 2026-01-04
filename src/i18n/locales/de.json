@@ -35,7 +35,19 @@
     "feature4Title": "Echte Bewertungen",
     "feature4Desc": "Nach jedem Treffen hinterlassen Sie eine Bewertung. Ein transparentes Feedback-System, das korrektes Verhalten belohnt.",
     "ctaTitle": "Bereit, die Spielregeln zu Ändern?",
-    "ctaDescription": "Schließen Sie sich Tausenden von Menschen an, die bereits eine neue Art des Datings entdeckt haben. Authentisch, respektvoll, aufregend."
+    "ctaDescription": "Schließen Sie sich Tausenden von Menschen an, die bereits eine neue Art des Datings entdeckt haben. Authentisch, respektvoll, aufregend.",
+    "howItWorksTitle": "So Funktioniert Es",
+    "howItWorksSubtitle": "Drei einfache Schritte, um dein Abenteuer zu starten",
+    "step1Title": "Registrieren",
+    "step1Desc": "Erstelle dein Profil, lade ein Foto hoch und verifiziere deine Identität",
+    "step2Title": "Verbinden",
+    "step2Desc": "Durchsuche Profile in deiner Nähe und sende Treffanfragen",
+    "step3Title": "Treffen",
+    "step3Desc": "Organisiere dein Treffen und hinterlasse danach eine Bewertung",
+    "footerTagline": "Die Dating-App, die Frauen das Kommando gibt",
+    "activeUsers": "Aktive Nutzer",
+    "successfulMeetings": "Erfolgreiche Treffen",
+    "averageRating": "Durchschnittliche Bewertung"
   },
   "about": {
     "heroTitle": "Wir Revolutionieren die Art",

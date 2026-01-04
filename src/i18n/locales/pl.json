@@ -35,7 +35,19 @@
     "feature4Title": "Prawdziwe Recenzje",
     "feature4Desc": "Po każdym spotkaniu zostaw recenzję. Przejrzysty system opinii, który nagradza prawidłowe zachowanie.",
     "ctaTitle": "Gotowy Zmienić Zasady Gry?",
-    "ctaDescription": "Dołącz do tysięcy ludzi, którzy już odkryli nowy sposób randkowania. Autentyczny, pełen szacunku, ekscytujący."
+    "ctaDescription": "Dołącz do tysięcy ludzi, którzy już odkryli nowy sposób randkowania. Autentyczny, pełen szacunku, ekscytujący.",
+    "howItWorksTitle": "Jak To Działa",
+    "howItWorksSubtitle": "Trzy proste kroki, aby rozpocząć swoją przygodę",
+    "step1Title": "Zarejestruj się",
+    "step1Desc": "Utwórz swój profil, prześlij zdjęcie i zweryfikuj swoją tożsamość",
+    "step2Title": "Połącz się",
+    "step2Desc": "Przeglądaj profile w swojej okolicy i wysyłaj prośby o spotkanie",
+    "step3Title": "Spotkaj się",
+    "step3Desc": "Zorganizuj swoje spotkanie i zostaw opinię po nim",
+    "footerTagline": "Aplikacja randkowa, która oddaje kobietom kontrolę",
+    "activeUsers": "Aktywni Użytkownicy",
+    "successfulMeetings": "Udane Spotkania",
+    "averageRating": "Średnia Ocena"
   },
   "about": {
     "heroTitle": "Rewolucjonizujemy Sposób",
