@@ -11,6 +11,7 @@ import { AppointmentInfo } from './AppointmentInfo';
 import { ReviewForm } from './ReviewForm';
 import { Send, Calendar, MessageCircleOff, Crown, Clock, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 interface MatchChatProps {
   matchRequestId: string;
@@ -41,6 +42,7 @@ interface Appointment {
 }
 
 export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremium, premiumRate }: MatchChatProps) => {
+  const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -188,7 +190,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
       const distance = deadline - now;
 
       if (distance < 0) {
-        setTimeRemaining('Scaduto');
+        setTimeRemaining(t('matchChat.expired'));
         return;
       }
 
@@ -237,8 +239,8 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
-        title: 'Errore',
-        description: 'Non è stato possibile inviare il messaggio.',
+        title: t('matchChat.error'),
+        description: t('matchChat.sendError'),
         variant: 'destructive',
       });
     } finally {
@@ -261,8 +263,8 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
           setHasReviewed(true);
           setShowReviewForm(false);
           toast({
-            title: 'Recensione inviata',
-            description: 'La tua recensione è stata registrata con successo.',
+            title: t('matchChat.reviewSent'),
+            description: t('matchChat.reviewSuccess'),
           });
         }}
       />
@@ -274,11 +276,11 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
       <div className="border-b p-4 space-y-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-semibold">Chat con {otherUserName}</h3>
+            <h3 className="font-semibold">{t('matchChat.chatWith')} {otherUserName}</h3>
             {isPremium && (
               <Badge className="bg-yellow-500 text-black text-xs">
                 <Crown className="h-3 w-3 mr-1" />
-                Premium
+                {t('matchChat.premium')}
               </Badge>
             )}
             {isPremium && premiumRate && (
@@ -296,7 +298,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
               disabled={isDeadlinePassed}
             >
               <Calendar className="w-4 h-4 mr-2" />
-              Registra Appuntamento
+              {t('matchChat.registerAppointment')}
             </Button>
           )}
         </div>
@@ -307,7 +309,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-primary" />
               <div className="flex-1">
-                <p className="text-sm font-medium">Tempo per fissare l'appuntamento</p>
+                <p className="text-sm font-medium">{t('matchChat.timeToSchedule')}</p>
                 <p className="text-lg font-bold text-primary">{timeRemaining}</p>
               </div>
             </div>
@@ -319,7 +321,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
               <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400">
-                Conversazione in revisione da parte dell'amministratore
+                {t('matchChat.underReview')}
               </p>
             </div>
           </div>
@@ -328,7 +330,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
         {chatStatus === 'blocked' && (
           <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
             <p className="text-sm font-medium text-destructive">
-              🚫 Conversazione bloccata
+              🚫 {t('matchChat.blocked')}
             </p>
           </div>
         )}
@@ -347,10 +349,10 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="text-lg">⭐</span>
-                    <h4 className="font-semibold text-sm">Lascia una recensione</h4>
+                    <h4 className="font-semibold text-sm">{t('matchChat.leaveReview')}</h4>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    L'appuntamento è terminato! Lascia una recensione per {otherUserName}.
+                    {t('matchChat.appointmentEnded')} {otherUserName}.
                   </p>
                   <Button
                     variant="default"
@@ -358,7 +360,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
                     className="w-full"
                     onClick={() => setShowReviewForm(true)}
                   >
-                    Scrivi recensione
+                    {t('matchChat.writeReview')}
                   </Button>
                 </div>
               </Card>
@@ -367,7 +369,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             {hasReviewed && (
               <Card className="p-3 bg-green-500/10 border-green-500/20">
                 <p className="text-sm text-green-600 dark:text-green-400 text-center">
-                  ✓ Hai già lasciato una recensione per questo appuntamento.
+                  ✓ {t('matchChat.alreadyReviewed')}
                 </p>
               </Card>
             )}
@@ -375,13 +377,15 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             {/* Show review deadline countdown if within review period */}
             {canReview && !hasReviewed && appointment.review_deadline && (
               <p className="text-xs text-muted-foreground text-center">
-                Hai tempo fino al {new Date(appointment.review_deadline).toLocaleDateString('it-IT', { 
-                  day: 'numeric', 
-                  month: 'long', 
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })} per lasciare la recensione.
+                {t('matchChat.reviewDeadline', { 
+                  date: new Date(appointment.review_deadline).toLocaleDateString(i18n.language, { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })
+                })}
               </p>
             )}
           </div>
@@ -394,10 +398,10 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             <MessageCircleOff className="w-12 h-12 mx-auto text-muted-foreground" />
             <p className="text-muted-foreground">
               {chatStatus === 'under_review' 
-                ? 'Conversazione in attesa di revisione amministrativa' 
+                ? t('matchChat.awaitingAdminReview')
                 : chatStatus === 'blocked'
-                ? 'Conversazione bloccata'
-                : 'La chat è stata chiusa dopo l\'appuntamento.'}
+                ? t('matchChat.conversationBlocked')
+                : t('matchChat.chatClosedAfterAppointment')}
             </p>
           </div>
         </div>
@@ -418,7 +422,7 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             <Input
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Scrivi un messaggio..."
+              placeholder={t('matchChat.writeMessage')}
               disabled={loading}
             />
             <Button type="submit" disabled={loading || !newMessage.trim()}>
