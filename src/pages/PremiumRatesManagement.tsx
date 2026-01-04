@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Plus, Trash2, Euro, Clock, FileText } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { useTranslation } from 'react-i18next';
 
 interface PremiumRate {
   id: string;
@@ -21,6 +22,7 @@ const PremiumRatesManagement = () => {
   const navigate = useNavigate();
   const { user, isPremium } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [rates, setRates] = useState<PremiumRate[]>([]);
   const [loading, setLoading] = useState(true);
   const [newDuration, setNewDuration] = useState('');
@@ -55,8 +57,8 @@ const PremiumRatesManagement = () => {
     } catch (error) {
       console.error('Error loading rates:', error);
       toast({
-        title: 'Errore',
-        description: 'Impossibile caricare le tariffe.',
+        title: t('premiumRates.error'),
+        description: t('premiumRates.loadError'),
         variant: 'destructive',
       });
     } finally {
@@ -72,8 +74,8 @@ const PremiumRatesManagement = () => {
 
     if (!duration || !price || duration <= 0 || price <= 0) {
       toast({
-        title: 'Errore',
-        description: 'Inserisci valori validi per durata e prezzo.',
+        title: t('premiumRates.error'),
+        description: t('premiumRates.invalidValues'),
         variant: 'destructive',
       });
       return;
@@ -94,8 +96,8 @@ const PremiumRatesManagement = () => {
       if (error) throw error;
 
       toast({
-        title: 'Tariffa aggiunta',
-        description: 'La nuova tariffa è stata aggiunta con successo.',
+        title: t('premiumRates.rateAdded'),
+        description: t('premiumRates.rateAddedDesc'),
       });
 
       setNewDuration('');
@@ -105,8 +107,8 @@ const PremiumRatesManagement = () => {
     } catch (error) {
       console.error('Error adding rate:', error);
       toast({
-        title: 'Errore',
-        description: 'Impossibile aggiungere la tariffa.',
+        title: t('premiumRates.error'),
+        description: t('premiumRates.addError'),
         variant: 'destructive',
       });
     } finally {
@@ -124,16 +126,16 @@ const PremiumRatesManagement = () => {
       if (error) throw error;
 
       toast({
-        title: 'Tariffa eliminata',
-        description: 'La tariffa è stata eliminata con successo.',
+        title: t('premiumRates.rateDeleted'),
+        description: t('premiumRates.rateDeletedDesc'),
       });
 
       loadRates();
     } catch (error) {
       console.error('Error deleting rate:', error);
       toast({
-        title: 'Errore',
-        description: 'Impossibile eliminare la tariffa.',
+        title: t('premiumRates.error'),
+        description: t('premiumRates.deleteError'),
         variant: 'destructive',
       });
     }
@@ -159,19 +161,19 @@ const PremiumRatesManagement = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-2xl font-bold">Gestione Tariffe Premium</h1>
+          <h1 className="text-2xl font-bold">{t('premiumRates.title')}</h1>
         </div>
 
         {/* Add Rate Form */}
         <Card className="p-6">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <Plus className="w-5 h-5" />
-            Aggiungi Nuova Tariffa
+            {t('premiumRates.addNewRate')}
           </h2>
           <form onSubmit={handleAddRate} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="duration">Durata (ore)</Label>
+                <Label htmlFor="duration">{t('premiumRates.duration')}</Label>
                 <div className="relative">
                   <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -180,14 +182,14 @@ const PremiumRatesManagement = () => {
                     min="1"
                     value={newDuration}
                     onChange={(e) => setNewDuration(e.target.value)}
-                    placeholder="es. 2"
+                    placeholder={t('premiumRates.durationPlaceholder')}
                     className="pl-10"
                     required
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="price">Prezzo (€)</Label>
+                <Label htmlFor="price">{t('premiumRates.price')}</Label>
                 <div className="relative">
                   <Euro className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
@@ -196,7 +198,7 @@ const PremiumRatesManagement = () => {
                     min="1"
                     value={newPrice}
                     onChange={(e) => setNewPrice(e.target.value)}
-                    placeholder="es. 100"
+                    placeholder={t('premiumRates.pricePlaceholder')}
                     className="pl-10"
                     required
                   />
@@ -205,7 +207,7 @@ const PremiumRatesManagement = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="description">
-                Descrizione <span className="text-muted-foreground text-xs">(opzionale)</span>
+                {t('premiumRates.description')} <span className="text-muted-foreground text-xs">({t('premiumRates.optional')})</span>
               </Label>
               <div className="relative">
                 <FileText className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
@@ -213,24 +215,24 @@ const PremiumRatesManagement = () => {
                   id="description"
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
-                  placeholder="es. Include cena romantica e massaggio"
+                  placeholder={t('premiumRates.descriptionPlaceholder')}
                   className="pl-10 min-h-[80px]"
                 />
               </div>
             </div>
             <Button type="submit" disabled={addingRate} className="w-full">
-              {addingRate ? 'Aggiunta in corso...' : 'Aggiungi Tariffa'}
+              {addingRate ? t('premiumRates.adding') : t('premiumRates.addRate')}
             </Button>
           </form>
         </Card>
 
         {/* Rates List */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold">Le Tue Tariffe</h2>
+          <h2 className="text-lg font-semibold">{t('premiumRates.yourRates')}</h2>
           {rates.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-muted-foreground">
-                Non hai ancora aggiunto nessuna tariffa.
+                {t('premiumRates.noRates')}
               </p>
             </Card>
           ) : (
@@ -242,7 +244,7 @@ const PremiumRatesManagement = () => {
                       <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
                           <Clock className="w-5 h-5 text-primary" />
-                          <span className="font-medium">{rate.duration_hours} {rate.duration_hours === 1 ? 'ora' : 'ore'}</span>
+                          <span className="font-medium">{rate.duration_hours} {rate.duration_hours === 1 ? t('premiumRates.hour') : t('premiumRates.hours')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Euro className="w-5 h-5 text-primary" />
@@ -273,12 +275,12 @@ const PremiumRatesManagement = () => {
 
         {/* Info Card */}
         <Card className="p-6 bg-primary/5 border-primary/20">
-          <h3 className="font-semibold mb-2">Come funzionano le tariffe?</h3>
+          <h3 className="font-semibold mb-2">{t('premiumRates.howItWorksTitle')}</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>• Le tariffe che imposti saranno visibili agli utenti quando visualizzano il tuo profilo</li>
-            <li>• Gli utenti potranno selezionare una delle tue tariffe quando inviano una richiesta</li>
-            <li>• Puoi aggiungere più tariffe con diverse durate e prezzi</li>
-            <li>• Le tariffe possono essere eliminate in qualsiasi momento</li>
+            <li>• {t('premiumRates.howItWorks1')}</li>
+            <li>• {t('premiumRates.howItWorks2')}</li>
+            <li>• {t('premiumRates.howItWorks3')}</li>
+            <li>• {t('premiumRates.howItWorks4')}</li>
           </ul>
         </Card>
       </div>

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Check, X, Crown, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface MatchRequest {
   id: string;
@@ -28,7 +29,7 @@ interface MatchRequest {
 }
 
 // Countdown component
-const CountdownTimer = ({ expiresAt }: { expiresAt: string }) => {
+const CountdownTimer = ({ expiresAt, t }: { expiresAt: string; t: (key: string) => string }) => {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
   const [isUrgent, setIsUrgent] = useState(false);
 
@@ -39,7 +40,7 @@ const CountdownTimer = ({ expiresAt }: { expiresAt: string }) => {
       const distance = deadline - now;
 
       if (distance < 0) {
-        setTimeRemaining('Scaduta');
+        setTimeRemaining(t('premiumRequestsPage.expired'));
         setIsUrgent(true);
         return;
       }
@@ -56,13 +57,13 @@ const CountdownTimer = ({ expiresAt }: { expiresAt: string }) => {
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
-  }, [expiresAt]);
+  }, [expiresAt, t]);
 
   return (
     <div className={`flex items-center gap-2 p-2 rounded-md ${isUrgent ? 'bg-destructive/10 text-destructive' : 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400'}`}>
       <Clock className="h-4 w-4" />
       <div>
-        <p className="text-xs font-medium">Tempo rimanente per accettare</p>
+        <p className="text-xs font-medium">{t('premiumRequestsPage.timeToAccept')}</p>
         <p className="text-sm font-bold">{timeRemaining}</p>
       </div>
     </div>
@@ -73,6 +74,7 @@ const PremiumRequests = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [requests, setRequests] = useState<MatchRequest[]>([]);
   const [myProfile, setMyProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -167,15 +169,15 @@ const PremiumRequests = () => {
       }
 
       toast({
-        title: "Richiesta accettata",
-        description: "La chat è ora attiva per organizzare l'appuntamento.",
+        title: t('premiumRequestsPage.requestAccepted'),
+        description: t('premiumRequestsPage.chatNowActive'),
       });
 
       loadRequests();
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Impossibile accettare la richiesta.",
+        title: t('premiumRequestsPage.error'),
+        description: t('premiumRequestsPage.acceptError'),
         variant: "destructive",
       });
     }
@@ -221,15 +223,15 @@ const PremiumRequests = () => {
       }
 
       toast({
-        title: "Richiesta rifiutata",
-        description: "La richiesta è stata rifiutata e il gettone è stato rimborsato.",
+        title: t('premiumRequestsPage.requestRejected'),
+        description: t('premiumRequestsPage.tokenRefunded'),
       });
 
       loadRequests();
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Impossibile rifiutare la richiesta.",
+        title: t('premiumRequestsPage.error'),
+        description: t('premiumRequestsPage.rejectError'),
         variant: "destructive",
       });
     }
@@ -266,16 +268,16 @@ const PremiumRequests = () => {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Crown className="h-8 w-8 text-yellow-500" />
-              Richieste Premium
+              {t('premiumRequestsPage.title')}
             </h1>
-            <p className="text-muted-foreground">Gestisci le tue richieste premium</p>
+            <p className="text-muted-foreground">{t('premiumRequestsPage.subtitle')}</p>
           </div>
         </div>
 
         {requests.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">Nessuna richiesta premium al momento.</p>
+              <p className="text-muted-foreground">{t('premiumRequestsPage.noRequests')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -311,22 +313,22 @@ const PremiumRequests = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {request.expires_at && (
-                    <CountdownTimer expiresAt={request.expires_at} />
+                    <CountdownTimer expiresAt={request.expires_at} t={t} />
                   )}
                   {request.premium_rate && (
                     <div className="bg-yellow-500/10 p-3 rounded-lg">
-                      <p className="font-semibold">Tariffa selezionata:</p>
-                      <p className="text-sm">{request.premium_rate.duration_hours} {request.premium_rate.duration_hours === 1 ? 'ora' : 'ore'} - €{request.premium_rate.price_euros}</p>
+                      <p className="font-semibold">{t('premiumRequestsPage.selectedRate')}:</p>
+                      <p className="text-sm">{request.premium_rate.duration_hours} {request.premium_rate.duration_hours === 1 ? t('premiumRates.hour') : t('premiumRates.hours')} - €{request.premium_rate.price_euros}</p>
                     </div>
                   )}
                   {request.message && (
                     <div>
-                      <p className="text-sm font-semibold mb-1">Messaggio:</p>
+                      <p className="text-sm font-semibold mb-1">{t('premiumRequestsPage.message')}:</p>
                       <p className="text-sm text-muted-foreground">{request.message}</p>
                     </div>
                   )}
                   <p className="text-xs text-muted-foreground">
-                    Se non rispondi entro la scadenza, la richiesta sarà rifiutata automaticamente e il gettone sarà rimborsato.
+                    {t('premiumRequestsPage.expiryWarning')}
                   </p>
                   <div className="flex gap-2">
                     <Button
@@ -334,7 +336,7 @@ const PremiumRequests = () => {
                       className="flex-1"
                     >
                       <Check className="h-4 w-4 mr-2" />
-                      Accetta
+                      {t('browse.accept')}
                     </Button>
                     <Button
                       onClick={() => handleReject(request.id)}
@@ -342,7 +344,7 @@ const PremiumRequests = () => {
                       className="flex-1"
                     >
                       <X className="h-4 w-4 mr-2" />
-                      Rifiuta
+                      {t('browse.reject')}
                     </Button>
                   </div>
                 </CardContent>
