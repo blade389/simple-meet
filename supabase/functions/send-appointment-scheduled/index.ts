@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -28,10 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Validate input
     const requestBody = await req.json();
-    console.log("Request body received:", JSON.stringify(requestBody));
-    
     const validationResult = RequestSchema.safeParse(requestBody);
     
     if (!validationResult.success) {
@@ -43,110 +41,98 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const { recipientUserId, schedulerName, appointmentDate, location } = validationResult.data;
-    console.log(`Sending appointment notification to ${recipientUserId} from ${schedulerName}`);
 
-    // Get recipient's email from auth.users
+    // Get recipient's profile with language
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("preferred_language")
+      .eq("id", recipientUserId)
+      .single();
+
+    const t = getTranslation(profile?.preferred_language);
+
+    // Get recipient's email
     const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(recipientUserId);
-
     if (userError || !user?.email) {
-      console.error("Error fetching recipient email:", userError);
       throw userError || new Error("Recipient email not found");
     }
 
-    // Format the date for display
+    // Format the date based on user's language
     const dateObj = new Date(appointmentDate);
-    const formattedDate = dateObj.toLocaleDateString('it-IT', {
+    const locale = profile?.preferred_language || 'it';
+    const formattedDate = dateObj.toLocaleDateString(locale === 'en' ? 'en-US' : `${locale}-${locale.toUpperCase()}`, {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
-    const formattedTime = dateObj.toLocaleTimeString('it-IT', {
+    const formattedTime = dateObj.toLocaleTimeString(locale === 'en' ? 'en-US' : `${locale}-${locale.toUpperCase()}`, {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    // Send email using Resend API
-    const emailResponse = await fetch("https://api.resend.com/emails", {
+    const emailContent = `
+      <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 24px;">${t.appointmentScheduled.title} 🎉</h2>
+      <p style="margin: 0 0 15px 0; color: #4b5563; font-size: 16px;">
+        <strong>${schedulerName}</strong> ${t.appointmentScheduled.message}
+      </p>
+      <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 5px 0;"><strong>📅 ${t.appointmentScheduled.date}:</strong> ${formattedDate}</p>
+        <p style="margin: 5px 0;"><strong>🕐</strong> ${formattedTime}</p>
+        <p style="margin: 5px 0;"><strong>📍 ${t.appointmentScheduled.location}:</strong> ${location}</p>
+      </div>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+          ${t.appointmentScheduled.cta}
+        </a>
+      </div>
+    `;
+
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "Match App <noreply@scopami.online>",
+        from: "SCOPAMI <noreply@scopami.online>",
         to: [user.email],
-        subject: "📅 Appuntamento fissato!",
-        html: `
-          <h1>Appuntamento confermato! 🎉</h1>
-          <p><strong>${schedulerName}</strong> ha fissato un appuntamento con te!</p>
-          <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 5px 0;"><strong>📅 Data:</strong> ${formattedDate}</p>
-            <p style="margin: 5px 0;"><strong>🕐 Ora:</strong> ${formattedTime}</p>
-            <p style="margin: 5px 0;"><strong>📍 Luogo:</strong> ${location}</p>
-          </div>
-          <p>Accedi all'app per vedere i dettagli e chattare.</p>
-          <p>Buon divertimento!</p>
-        `,
+        subject: `📅 ${t.appointmentScheduled.subject}`,
+        html: getEmailWrapper(emailContent, t),
       }),
     });
 
-    if (!emailResponse.ok) {
-      const error = await emailResponse.text();
-      console.error("Resend API error:", error);
-    } else {
-      console.log("Appointment email sent successfully to:", user.email);
-    }
-
-    // Send push notification
+    // Push notification
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
     if (oneSignalAppId && oneSignalRestApiKey) {
-      try {
-        const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Basic ${oneSignalRestApiKey}`,
-          },
-          body: JSON.stringify({
-            app_id: oneSignalAppId,
-            include_aliases: { external_id: [recipientUserId] },
-            target_channel: "push",
-            headings: { en: "📅 Appuntamento fissato!", it: "📅 Appuntamento fissato!" },
-            contents: { 
-              en: `${schedulerName} ha fissato un appuntamento il ${formattedDate} alle ${formattedTime}`, 
-              it: `${schedulerName} ha fissato un appuntamento il ${formattedDate} alle ${formattedTime}` 
-            },
-            url: "https://scopami.online/appointments",
-          }),
-        });
-        
-        const notificationResult = await notificationResponse.json();
-        console.log("Push notification sent:", notificationResult);
-      } catch (pushError) {
-        console.error("Failed to send push notification:", pushError);
-      }
-    } else {
-      console.log("OneSignal credentials not configured, skipping push notification");
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${oneSignalRestApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: oneSignalAppId,
+          include_aliases: { external_id: [recipientUserId] },
+          target_channel: "push",
+          headings: { en: `📅 ${t.appointmentScheduled.title}` },
+          contents: { en: `${schedulerName} ${t.appointmentScheduled.notification}` },
+          url: "https://scopami.online/appointments",
+        }),
+      });
     }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error: any) {
     console.error("Error in send-appointment-scheduled function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };

@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -26,7 +27,6 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Validate input
     const requestBody = await req.json();
     const validationResult = EmailRequestSchema.safeParse(requestBody);
     
@@ -40,146 +40,143 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { senderId, receiverId, senderName, receiverName } = validationResult.data;
 
-    // Get sender's email from auth.users
-    const { data: { user: senderUser }, error: senderError } = await supabase.auth.admin.getUserById(senderId);
+    // Get profiles with language preferences
+    const { data: senderProfile } = await supabase
+      .from("profiles")
+      .select("preferred_language")
+      .eq("id", senderId)
+      .single();
 
+    const { data: receiverProfile } = await supabase
+      .from("profiles")
+      .select("preferred_language")
+      .eq("id", receiverId)
+      .single();
+
+    const senderT = getTranslation(senderProfile?.preferred_language);
+    const receiverT = getTranslation(receiverProfile?.preferred_language);
+
+    // Get sender's email
+    const { data: { user: senderUser }, error: senderError } = await supabase.auth.admin.getUserById(senderId);
     if (senderError || !senderUser?.email) {
-      console.error("Error fetching sender email:", senderError);
       throw senderError || new Error("Sender email not found");
     }
 
-    // Get receiver's email from auth.users
+    // Get receiver's email
     const { data: { user: receiverUser }, error: receiverError } = await supabase.auth.admin.getUserById(receiverId);
-
     if (receiverError || !receiverUser?.email) {
-      console.error("Error fetching receiver email:", receiverError);
       throw receiverError || new Error("Receiver email not found");
     }
 
-    // Send email to SENDER (the one who made the request)
-    const senderEmailResponse = await fetch("https://api.resend.com/emails", {
+    // Email to SENDER (who made the request)
+    const senderContent = `
+      <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 24px;">${senderT.requestAccepted.title} 🎉</h2>
+      <p style="margin: 0 0 15px 0; color: #4b5563; font-size: 16px;">
+        <strong>${receiverName}</strong> ${senderT.requestAccepted.message}
+      </p>
+      <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 14px;">
+        ${senderT.requestAccepted.scheduleReminder}
+      </p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+          ${senderT.requestAccepted.cta}
+        </a>
+      </div>
+    `;
+
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "Match App <noreply@scopami.online>",
+        from: "SCOPAMI <noreply@scopami.online>",
         to: [senderUser.email],
-        subject: "La tua richiesta è stata accettata!",
-        html: `
-          <h1>Buone notizie!</h1>
-          <p><strong>${receiverName}</strong> ha accettato la tua richiesta di match!</p>
-          <p>Ora puoi chattare e fissare un appuntamento.</p>
-          <p>Hai <strong>48 ore</strong> per fissare l'appuntamento, altrimenti la conversazione verrà chiusa.</p>
-          <p>Accedi all'app per iniziare a chattare.</p>
-          <p>Buon divertimento!</p>
-        `,
+        subject: senderT.requestAccepted.subject,
+        html: getEmailWrapper(senderContent, senderT),
       }),
     });
 
-    if (!senderEmailResponse.ok) {
-      const error = await senderEmailResponse.text();
-      console.error("Resend API error (sender email):", error);
-    } else {
-      console.log("Email sent to sender successfully");
-    }
+    // Email to RECEIVER (who accepted)
+    const receiverContent = `
+      <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 24px;">${receiverT.requestAccepted.title} 🎉</h2>
+      <p style="margin: 0 0 15px 0; color: #4b5563; font-size: 16px;">
+        ${receiverT.common.greeting}! Ora puoi chattare con <strong>${senderName}</strong>.
+      </p>
+      <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 14px;">
+        ${receiverT.requestAccepted.scheduleReminder}
+      </p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+          ${receiverT.requestAccepted.cta}
+        </a>
+      </div>
+    `;
 
-    // Send email to RECEIVER (the one who accepted the request)
-    const receiverEmailResponse = await fetch("https://api.resend.com/emails", {
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "Match App <noreply@scopami.online>",
+        from: "SCOPAMI <noreply@scopami.online>",
         to: [receiverUser.email],
-        subject: "Match confermato! Ora puoi chattare",
-        html: `
-          <h1>Match confermato! 🎉</h1>
-          <p>Hai accettato la richiesta di <strong>${senderName}</strong>!</p>
-          <p>Ora potete chattare e fissare un appuntamento insieme.</p>
-          <p>Ricorda: avete <strong>48 ore</strong> per fissare l'appuntamento, altrimenti la conversazione verrà chiusa automaticamente.</p>
-          <p>Accedi all'app per iniziare a chattare!</p>
-        `,
+        subject: receiverT.requestAccepted.subject,
+        html: getEmailWrapper(receiverContent, receiverT),
       }),
     });
 
-    if (!receiverEmailResponse.ok) {
-      const error = await receiverEmailResponse.text();
-      console.error("Resend API error (receiver email):", error);
-    } else {
-      console.log("Email sent to receiver successfully");
-    }
-
-    // Send push notification to SENDER
+    // Push notifications
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
     if (oneSignalAppId && oneSignalRestApiKey) {
-      try {
-        // Push to sender
-        const senderNotificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Basic ${oneSignalRestApiKey}`,
-          },
-          body: JSON.stringify({
-            app_id: oneSignalAppId,
-            include_aliases: { external_id: [senderId] },
-            target_channel: "push",
-            headings: { en: "Match confermato! 🎉", it: "Match confermato! 🎉" },
-            contents: { en: `${receiverName} ha accettato la tua richiesta`, it: `${receiverName} ha accettato la tua richiesta` },
-            url: "https://scopami.online/appointments",
-          }),
-        });
-        
-        const senderNotificationResult = await senderNotificationResponse.json();
-        console.log("Push notification sent to sender:", senderNotificationResult);
+      // Push to sender
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${oneSignalRestApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: oneSignalAppId,
+          include_aliases: { external_id: [senderId] },
+          target_channel: "push",
+          headings: { en: `${senderT.requestAccepted.title} 🎉` },
+          contents: { en: `${receiverName} ${senderT.requestAccepted.notification}` },
+          url: "https://scopami.online/appointments",
+        }),
+      });
 
-        // Push to receiver
-        const receiverNotificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Basic ${oneSignalRestApiKey}`,
-          },
-          body: JSON.stringify({
-            app_id: oneSignalAppId,
-            include_aliases: { external_id: [receiverId] },
-            target_channel: "push",
-            headings: { en: "Match confermato! 🎉", it: "Match confermato! 🎉" },
-            contents: { en: `Ora puoi chattare con ${senderName}`, it: `Ora puoi chattare con ${senderName}` },
-            url: "https://scopami.online/appointments",
-          }),
-        });
-        
-        const receiverNotificationResult = await receiverNotificationResponse.json();
-        console.log("Push notification sent to receiver:", receiverNotificationResult);
-      } catch (pushError) {
-        console.error("Failed to send push notification:", pushError);
-      }
-    } else {
-      console.log("OneSignal credentials not configured, skipping push notification");
+      // Push to receiver
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${oneSignalRestApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: oneSignalAppId,
+          include_aliases: { external_id: [receiverId] },
+          target_channel: "push",
+          headings: { en: `${receiverT.requestAccepted.title} 🎉` },
+          contents: { en: `${receiverT.requestAccepted.cta}` },
+          url: "https://scopami.online/appointments",
+        }),
+      });
     }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error: any) {
     console.error("Error in send-request-accepted-email function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };
