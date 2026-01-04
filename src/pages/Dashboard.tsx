@@ -15,6 +15,8 @@ interface Profile {
   full_name: string;
   gender: string;
   is_verified: string;
+  location_lat: number | null;
+  location_lon: number | null;
 }
 
 interface TokenBalance {
@@ -100,7 +102,7 @@ const Dashboard = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, gender, is_verified')
+        .select('full_name, gender, is_verified, location_lat, location_lon')
         .eq('id', user?.id)
         .single();
 
@@ -377,6 +379,31 @@ const Dashboard = () => {
             {profile && <HowItWorksDialog gender={profile.gender as 'male' | 'female'} />}
           </div>
         </div>
+
+        {/* Location Warning Banner */}
+        {profile && (profile.location_lat === null || profile.location_lon === null) && (
+          <Card className="p-6 mb-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+            <div className="flex items-start gap-4">
+              <MapPin className="w-8 h-8 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                  Attiva la Geolocalizzazione
+                </h3>
+                <p className="text-blue-800 dark:text-blue-200 text-sm mb-4">
+                  Per vedere i profili vicino a te e permettere agli altri di trovarti, attiva la geolocalizzazione cliccando il pulsante qui sotto.
+                </p>
+                <Button 
+                  onClick={() => updateLocation()}
+                  disabled={updatingLocation}
+                  variant="default"
+                >
+                  <MapPin className="w-4 h-4 mr-2" />
+                  {updatingLocation ? 'Attivazione...' : 'Attiva Posizione'}
+                </Button>
+              </div>
+            </div>
+          </Card>
+        )}
 
         {profile?.is_verified !== 'verified' && (
           <Card className="p-6 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
