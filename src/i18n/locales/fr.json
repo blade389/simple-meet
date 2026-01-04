@@ -500,5 +500,20 @@
     "faq2Desc": "Une fois l'abonnement activé, vous pourrez définir vos tarifs depuis votre profil. Les utilisateurs verront ces tarifs lorsqu'ils visiteront votre profil Premium.",
     "faq3Title": "Puis-je annuler à tout moment ?",
     "faq3Desc": "Oui, vous pouvez annuler votre abonnement à tout moment depuis le portail de gestion. Vous continuerez à avoir accès Premium jusqu'à la fin de la période payée."
+  },
+  "premiumProfiles": {
+    "title": "Profils Premium",
+    "subtitle": "Découvrez les profils premium disponibles",
+    "noProfiles": "Aucun profil premium disponible pour le moment.",
+    "distanceNotAvailable": "Distance non disponible",
+    "addedToFavorites": "Ajouté aux favoris",
+    "removedFromFavorites": "Retiré des favoris",
+    "requestAlreadySent": "Demande déjà envoyée",
+    "requestAlreadySentDesc": "Vous avez déjà une demande en attente pour cet utilisateur.",
+    "insufficientTokens": "Jetons insuffisants",
+    "insufficientTokensDesc": "Vous avez besoin d'au moins 1 jeton pour envoyer une demande premium.",
+    "requestSent": "Demande envoyée !",
+    "requestSentDesc": "Votre demande premium a été envoyée avec succès. 1 jeton déduit.",
+    "requestError": "Une erreur s'est produite lors de l'envoi de la demande."
   }
 }

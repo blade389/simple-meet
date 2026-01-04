@@ -500,5 +500,20 @@
     "faq2Desc": "Sobald das Abonnement aktiviert ist, können Sie Ihre Tarife von Ihrem Profil aus festlegen. Nutzer sehen diese Tarife, wenn sie Ihr Premium-Profil besuchen.",
     "faq3Title": "Kann ich jederzeit kündigen?",
     "faq3Desc": "Ja, Sie können Ihr Abonnement jederzeit über das Verwaltungsportal kündigen. Sie haben weiterhin Premium-Zugang bis zum Ende des bezahlten Zeitraums."
+  },
+  "premiumProfiles": {
+    "title": "Premium-Profile",
+    "subtitle": "Entdecke verfügbare Premium-Profile",
+    "noProfiles": "Momentan keine Premium-Profile verfügbar.",
+    "distanceNotAvailable": "Entfernung nicht verfügbar",
+    "addedToFavorites": "Zu Favoriten hinzugefügt",
+    "removedFromFavorites": "Aus Favoriten entfernt",
+    "requestAlreadySent": "Anfrage bereits gesendet",
+    "requestAlreadySentDesc": "Du hast bereits eine ausstehende Anfrage für diesen Benutzer.",
+    "insufficientTokens": "Unzureichende Token",
+    "insufficientTokensDesc": "Du benötigst mindestens 1 Token, um eine Premium-Anfrage zu senden.",
+    "requestSent": "Anfrage gesendet!",
+    "requestSentDesc": "Deine Premium-Anfrage wurde erfolgreich gesendet. 1 Token abgezogen.",
+    "requestError": "Beim Senden der Anfrage ist ein Fehler aufgetreten."
   }
 }

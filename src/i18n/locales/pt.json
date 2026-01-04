@@ -500,5 +500,20 @@
     "faq2Desc": "Uma vez ativada a subscrição, poderá definir as suas tarifas a partir do seu perfil. Os utilizadores verão estas tarifas quando visitarem o seu perfil Premium.",
     "faq3Title": "Posso cancelar a qualquer momento?",
     "faq3Desc": "Sim, pode cancelar a sua subscrição a qualquer momento a partir do portal de gestão. Continuará a ter acesso Premium até ao final do período pago."
+  },
+  "premiumProfiles": {
+    "title": "Perfis Premium",
+    "subtitle": "Descubra os perfis premium disponíveis",
+    "noProfiles": "Nenhum perfil premium disponível no momento.",
+    "distanceNotAvailable": "Distância não disponível",
+    "addedToFavorites": "Adicionado aos favoritos",
+    "removedFromFavorites": "Removido dos favoritos",
+    "requestAlreadySent": "Pedido já enviado",
+    "requestAlreadySentDesc": "Já tem um pedido pendente para este utilizador.",
+    "insufficientTokens": "Fichas insuficientes",
+    "insufficientTokensDesc": "Precisa de pelo menos 1 ficha para enviar um pedido premium.",
+    "requestSent": "Pedido enviado!",
+    "requestSentDesc": "O seu pedido premium foi enviado com sucesso. 1 ficha deduzida.",
+    "requestError": "Ocorreu um erro ao enviar o pedido."
   }
 }

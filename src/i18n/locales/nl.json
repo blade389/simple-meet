@@ -500,5 +500,20 @@
     "faq2Desc": "Zodra het abonnement is geactiveerd, kun je je tarieven instellen vanuit je profiel. Gebruikers zien deze tarieven wanneer ze je Premium profiel bezoeken.",
     "faq3Title": "Kan ik op elk moment annuleren?",
     "faq3Desc": "Ja, je kunt je abonnement op elk moment annuleren via het beheerportaal. Je behoudt Premium toegang tot het einde van de betaalde periode."
+  },
+  "premiumProfiles": {
+    "title": "Premium Profielen",
+    "subtitle": "Ontdek beschikbare premium profielen",
+    "noProfiles": "Geen premium profielen beschikbaar op dit moment.",
+    "distanceNotAvailable": "Afstand niet beschikbaar",
+    "addedToFavorites": "Toegevoegd aan favorieten",
+    "removedFromFavorites": "Verwijderd uit favorieten",
+    "requestAlreadySent": "Verzoek al verzonden",
+    "requestAlreadySentDesc": "Je hebt al een openstaand verzoek voor deze gebruiker.",
+    "insufficientTokens": "Onvoldoende tokens",
+    "insufficientTokensDesc": "Je hebt minstens 1 token nodig om een premium verzoek te sturen.",
+    "requestSent": "Verzoek verzonden!",
+    "requestSentDesc": "Je premium verzoek is succesvol verzonden. 1 token afgetrokken.",
+    "requestError": "Er is een fout opgetreden bij het verzenden van het verzoek."
   }
 }
