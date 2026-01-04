@@ -19,7 +19,6 @@ interface MatchRequest {
   sender: {
     full_name: string;
     birth_date: string;
-    location_city: string;
     profile_photo_url: string | null;
   };
   premium_rate: {
@@ -117,7 +116,6 @@ const PremiumRequests = () => {
           sender:profiles!fk_match_requests_sender(
             full_name,
             birth_date,
-            location_city,
             profile_photo_url
           ),
           premium_rate:premium_rates!fk_match_requests_selected_rate(
@@ -306,7 +304,7 @@ const PremiumRequests = () => {
                             Premium
                           </Badge>
                         </CardTitle>
-                        <p className="text-sm text-muted-foreground">{request.sender.location_city}</p>
+                        
                       </div>
                     </div>
                   </div>

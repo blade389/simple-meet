@@ -14,12 +14,12 @@ interface Profile {
   id: string;
   full_name: string;
   birth_date: string;
-  location_city: string;
   bio: string | null;
   profile_photo_url: string | null;
   is_premium: boolean;
   positive_reviews_count?: number;
   negative_reviews_count?: number;
+  distance?: number;
 }
 
 interface PremiumRate {
@@ -340,7 +340,7 @@ const PremiumProfiles = () => {
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {profile.location_city}
+                    {profile.distance !== undefined ? `${profile.distance.toFixed(1)} km` : 'Distanza non disponibile'}
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -366,9 +366,9 @@ const PremiumProfiles = () => {
             full_name: selectedProfile.full_name,
             bio: selectedProfile.bio,
             birth_date: selectedProfile.birth_date,
-            location_city: selectedProfile.location_city,
             profile_photo_url: selectedProfile.profile_photo_url,
             is_premium: selectedProfile.is_premium,
+            distance: selectedProfile.distance,
             positive_reviews_count: selectedProfile.positive_reviews_count,
             negative_reviews_count: selectedProfile.negative_reviews_count
           }}

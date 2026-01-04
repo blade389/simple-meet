@@ -31,7 +31,6 @@ interface ProfileDetailsDialogProps {
     full_name: string;
     bio: string | null;
     birth_date: string;
-    location_city: string;
     profile_photo_url: string | null;
     is_premium?: boolean;
     distance?: number;
@@ -212,13 +211,12 @@ const ProfileDetailsDialog = ({
               <span>{calculateAge(profile.birth_date)} anni</span>
             </div>
 
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <MapPin className="w-4 h-4" />
-              <span>
-                {profile.location_city}
-                {profile.distance !== undefined && ` • ${profile.distance.toFixed(1)} km`}
-              </span>
-            </div>
+            {profile.distance !== undefined && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                <span>{profile.distance.toFixed(1)} km</span>
+              </div>
+            )}
 
             {profile.bio && (
               <div className="pt-4 border-t">

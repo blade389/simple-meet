@@ -25,7 +25,6 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     full_name: '',
     bio: '',
-    location_city: '',
     min_age_preference: '',
     max_age_preference: ''
   });
@@ -114,7 +113,6 @@ const Profile = () => {
       setFormData({
         full_name: data.full_name || '',
         bio: data.bio || '',
-        location_city: data.location_city || '',
         min_age_preference: data.min_age_preference?.toString() || '',
         max_age_preference: data.max_age_preference?.toString() || ''
       });
@@ -137,7 +135,6 @@ const Profile = () => {
         .update({
           full_name: formData.full_name,
           bio: formData.bio,
-          location_city: formData.location_city,
           min_age_preference: formData.min_age_preference ? parseInt(formData.min_age_preference) : null,
           max_age_preference: formData.max_age_preference ? parseInt(formData.max_age_preference) : null
         })
@@ -433,15 +430,6 @@ const Profile = () => {
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="location_city">Città</Label>
-                  <Input
-                    id="location_city"
-                    value={formData.location_city}
-                    onChange={(e) => setFormData({ ...formData, location_city: e.target.value })}
-                    required
-                  />
-                </div>
 
                 {/* Age preferences section - locked for males until unlocked */}
                 {profile?.gender === 'male' && !profile?.age_preferences_unlocked ? (

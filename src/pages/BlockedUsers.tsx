@@ -13,7 +13,6 @@ interface BlockedUser {
   id: string;
   full_name: string;
   gender: 'male' | 'female';
-  location_city: string;
   profile_photo_url: string | null;
   created_at: string;
 }
@@ -66,7 +65,7 @@ const BlockedUsers = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, full_name, gender, location_city, profile_photo_url, created_at')
+        .select('id, full_name, gender, profile_photo_url, created_at')
         .eq('is_blocked', true)
         .order('full_name');
 
@@ -179,7 +178,7 @@ const BlockedUsers = () => {
                     <div className="flex-1 min-w-0">
                       <CardTitle className="text-lg truncate">{blockedUser.full_name}</CardTitle>
                       <CardDescription>
-                        {blockedUser.gender === 'male' ? 'Uomo' : 'Donna'} • {blockedUser.location_city}
+                        {blockedUser.gender === 'male' ? 'Uomo' : 'Donna'}
                       </CardDescription>
                     </div>
                   </div>
