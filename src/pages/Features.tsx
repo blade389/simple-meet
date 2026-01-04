@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Heart, Shield, Zap, Star, Lock, Users, MessageCircle, CheckCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const Features = () => {
     const features = [
@@ -57,6 +58,7 @@ const Features = () => {
             keywords="caratteristiche dating app, funzionalità scopami, verifica identità, sistema gettoni"
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
+            <Breadcrumbs />
             <div className="max-w-6xl mx-auto space-y-12">
                 <div className="flex items-center gap-4">
                     <Link to="/">

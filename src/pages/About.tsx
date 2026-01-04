@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Heart, Shield, Users, Sparkles, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const About = () => {
     return (
@@ -35,6 +36,10 @@ const About = () => {
                     </nav>
                 </div>
             </header>
+
+            <div className="pt-20">
+                <Breadcrumbs />
+            </div>
 
             {/* Hero Section */}
             <section className="pt-32 pb-20 px-4 bg-gradient-hero">
