@@ -32,21 +32,23 @@ const Index = () => {
               SCOPAMI
             </h1>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
-              {t("common.features")}
-            </a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-              {t("home.howItWorks")}
-            </a>
+          <div className="flex items-center gap-2">
             <LanguageSelector />
-            <Link to="/auth">
-              <Button variant="ghost">{t("common.login")}</Button>
-            </Link>
-            <Link to="/auth">
-              <Button variant="hero">{t("common.signup")}</Button>
-            </Link>
-          </nav>
+            <nav className="hidden md:flex items-center gap-6">
+              <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+                {t("common.features")}
+              </a>
+              <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
+                {t("home.howItWorks")}
+              </a>
+              <Link to="/auth">
+                <Button variant="ghost">{t("common.login")}</Button>
+              </Link>
+              <Link to="/auth">
+                <Button variant="hero">{t("common.signup")}</Button>
+              </Link>
+            </nav>
+          </div>
         </div>
       </header>
 
