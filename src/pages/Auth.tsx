@@ -10,23 +10,26 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import SEOHead from "@/components/SEOHead";
-
-const signupSchema = z.object({
-  name: z.string().min(2, "Il nome deve avere almeno 2 caratteri").max(100),
-  email: z.string().email("Email non valida"),
-  gender: z.enum(["male", "female"], { required_error: "Seleziona un genere" }),
-  birthDate: z.string().min(1, "Data di nascita richiesta"),
-  city: z.string().min(2, "Città richiesta"),
-  password: z.string().min(6, "La password deve avere almeno 6 caratteri"),
-  confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Le password non coincidono",
-  path: ["confirmPassword"]
-});
+import LanguageSelector from "@/components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Auth = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const signupSchema = z.object({
+    name: z.string().min(2, t("auth.fullName")).max(100),
+    email: z.string().email(t("auth.email")),
+    gender: z.enum(["male", "female"]),
+    birthDate: z.string().min(1, t("auth.birthDate")),
+    city: z.string().min(2, t("auth.city")),
+    password: z.string().min(6, t("auth.password")),
+    confirmPassword: z.string()
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: t("auth.confirmPassword"),
+    path: ["confirmPassword"]
+  });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -164,34 +167,37 @@ const Auth = () => {
       />
       <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-hero">
         <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <Heart className="w-10 h-10 text-primary fill-primary" />
-          <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            SCOPAMI
-          </h1>
-        </Link>
+        <div className="flex items-center justify-between mb-8">
+          <Link to="/" className="flex items-center gap-2">
+            <Heart className="w-10 h-10 text-primary fill-primary" />
+            <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              SCOPAMI
+            </h1>
+          </Link>
+          <LanguageSelector />
+        </div>
 
         <Card className="p-8 shadow-glow border-0">
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="login">Accedi</TabsTrigger>
-              <TabsTrigger value="signup">Registrati</TabsTrigger>
+              <TabsTrigger value="login">{t("auth.login")}</TabsTrigger>
+              <TabsTrigger value="signup">{t("auth.signup")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
+                  <Label htmlFor="login-email">{t("auth.email")}</Label>
                   <Input
                     id="login-email"
                     name="email"
                     type="email"
-                    placeholder="tua@email.com"
+                    placeholder={t("auth.yourEmail")}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="login-password">Password</Label>
+                  <Label htmlFor="login-password">{t("auth.password")}</Label>
                   <Input
                     id="login-password"
                     name="password"
@@ -206,14 +212,14 @@ const Auth = () => {
                   className="w-full"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Accesso..." : "Accedi"}
+                  {isLoading ? t("auth.logging") : t("auth.login")}
                 </Button>
                 <div className="text-center">
                   <a
                     href="#"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Password dimenticata?
+                    {t("auth.forgotPassword")}
                   </a>
                 </div>
               </form>
@@ -222,40 +228,40 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name">Nome Completo</Label>
+                  <Label htmlFor="signup-name">{t("auth.fullName")}</Label>
                   <Input
                     id="signup-name"
                     name="name"
                     type="text"
-                    placeholder="Il tuo nome"
+                    placeholder={t("auth.yourName")}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t("auth.email")}</Label>
                   <Input
                     id="signup-email"
                     name="email"
                     type="email"
-                    placeholder="tua@email.com"
+                    placeholder={t("auth.yourEmail")}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-gender">Genere</Label>
+                  <Label htmlFor="signup-gender">{t("auth.gender")}</Label>
                   <select
                     id="signup-gender"
                     name="gender"
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     required
                   >
-                    <option value="">Seleziona...</option>
-                    <option value="female">Femminile (Registrazione Gratuita)</option>
-                    <option value="male">Maschile (1 Gettone Gratuito)</option>
+                    <option value="">{t("auth.selectGender")}</option>
+                    <option value="female">{t("auth.female")}</option>
+                    <option value="male">{t("auth.male")}</option>
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-birthdate">Data di Nascita</Label>
+                  <Label htmlFor="signup-birthdate">{t("auth.birthDate")}</Label>
                   <Input
                     id="signup-birthdate"
                     name="birthDate"
@@ -265,17 +271,17 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-city">Città</Label>
+                  <Label htmlFor="signup-city">{t("auth.city")}</Label>
                   <Input
                     id="signup-city"
                     name="city"
                     type="text"
-                    placeholder="La tua città"
+                    placeholder={t("auth.yourCity")}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t("auth.password")}</Label>
                   <Input
                     id="signup-password"
                     name="password"
@@ -286,7 +292,7 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-confirm">Conferma Password</Label>
+                  <Label htmlFor="signup-confirm">{t("auth.confirmPassword")}</Label>
                   <Input
                     id="signup-confirm"
                     name="confirmPassword"
@@ -303,13 +309,13 @@ const Auth = () => {
                     required
                   />
                   <label htmlFor="terms" className="text-sm text-muted-foreground">
-                    Accetto i{" "}
+                    {t("auth.termsAgree")}{" "}
                     <Link to="/terms-of-service" className="text-primary hover:underline">
-                      Termini di Servizio
+                      {t("common.termsOfService")}
                     </Link>{" "}
-                    e la{" "}
+                    {t("auth.and")}{" "}
                     <Link to="/privacy-policy" className="text-primary hover:underline">
-                      Privacy Policy
+                      {t("common.privacyPolicy")}
                     </Link>
                   </label>
                 </div>
@@ -319,7 +325,7 @@ const Auth = () => {
                   className="w-full"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Registrazione..." : "Registrati"}
+                  {isLoading ? t("auth.registering") : t("auth.signup")}
                 </Button>
               </form>
             </TabsContent>
@@ -327,15 +333,14 @@ const Auth = () => {
 
           <div className="mt-6 p-4 bg-muted rounded-lg">
             <p className="text-xs text-muted-foreground text-center">
-              <strong>Note:</strong> La registrazione è gratuita per le donne. Gli uomini ricevono
-              1 gettone gratuito alla registrazione.
+              <strong>{t("auth.note")}</strong> {t("auth.registrationNote")}
             </p>
           </div>
         </Card>
 
         <p className="text-center mt-6 text-sm text-muted-foreground">
           <Link to="/" className="text-primary hover:underline">
-            ← Torna alla Home
+            ← {t("common.backToHome")}
           </Link>
         </p>
       </div>

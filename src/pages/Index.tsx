@@ -6,8 +6,11 @@ import heroImage from "@/assets/hero-image.jpg";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
 import LanguageSelector from "@/components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <SEOHead
@@ -31,17 +34,17 @@ const Index = () => {
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
-              Caratteristiche
+              {t("common.features")}
             </a>
             <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-              Come Funziona
+              {t("home.howItWorks")}
             </a>
             <LanguageSelector />
             <Link to="/auth">
-              <Button variant="ghost">Accedi</Button>
+              <Button variant="ghost">{t("common.login")}</Button>
             </Link>
             <Link to="/auth">
-              <Button variant="hero">Registrati</Button>
+              <Button variant="hero">{t("common.signup")}</Button>
             </Link>
           </nav>
         </div>
@@ -53,39 +56,38 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-                Trova il Tuo{" "}
+                {t("home.heroTitle")}{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent">
-                  Incontro Perfetto
+                  {t("home.heroHighlight")}
                 </span>
               </h2>
               <p className="text-xl text-muted-foreground">
-                L'app di dating che mette le donne al comando. Sistema innovativo con gettoni per
-                incontri autentici e sicuri.
+                {t("home.heroDescription")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/auth">
                   <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                    Inizia Ora Gratis
+                    {t("common.startFree")}
                   </Button>
                 </Link>
                 <Link to="/features">
                   <Button variant="outline" size="xl" className="w-full sm:w-auto">
-                    Scopri di Più
+                    {t("common.learnMore")}
                   </Button>
                 </Link>
               </div>
               <div className="flex gap-8 pt-4">
                 <div>
                   <div className="text-3xl font-bold text-primary">10K+</div>
-                  <div className="text-sm text-muted-foreground">Utenti Attivi</div>
+                  <div className="text-sm text-muted-foreground">{t("home.activeUsers")}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-primary">95%</div>
-                  <div className="text-sm text-muted-foreground">Incontri Riusciti</div>
+                  <div className="text-sm text-muted-foreground">{t("home.successfulMeetings")}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-primary">4.8★</div>
-                  <div className="text-sm text-muted-foreground">Rating Medio</div>
+                  <div className="text-sm text-muted-foreground">{t("home.averageRating")}</div>
                 </div>
               </div>
             </div>
@@ -105,9 +107,9 @@ const Index = () => {
       <section id="features" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold mb-4">Perché Scegliere SCOPAMI?</h3>
+            <h3 className="text-4xl font-bold mb-4">{t("home.featuresTitle")}</h3>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Un'esperienza di dating unica con funzionalità innovative per connessioni autentiche
+              {t("home.featuresSubtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -115,9 +117,9 @@ const Index = () => {
               <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                 <Heart className="w-6 h-6 text-primary-foreground" />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Donne al Comando</h4>
+              <h4 className="text-xl font-semibold mb-2">{t("home.feature1Title")}</h4>
               <p className="text-muted-foreground">
-                Le donne scelgono, gli uomini rispondono. Un approccio che rispetta tutti.
+                {t("home.feature1Desc")}
               </p>
             </Card>
 
@@ -125,9 +127,9 @@ const Index = () => {
               <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-secondary-foreground" />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Sicurezza Garantita</h4>
+              <h4 className="text-xl font-semibold mb-2">{t("home.feature2Title")}</h4>
               <p className="text-muted-foreground">
-                Verifica identità obbligatoria e sistema di recensioni per tutti.
+                {t("home.feature2Desc")}
               </p>
             </Card>
 
@@ -135,9 +137,9 @@ const Index = () => {
               <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-accent-foreground" />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Sistema Gettoni</h4>
+              <h4 className="text-xl font-semibold mb-2">{t("home.feature3Title")}</h4>
               <p className="text-muted-foreground">
-                Incontri seri garantiti dal nostro innovativo sistema con gettoni.
+                {t("home.feature3Desc")}
               </p>
             </Card>
 
@@ -145,9 +147,9 @@ const Index = () => {
               <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                 <Star className="w-6 h-6 text-primary-foreground" />
               </div>
-              <h4 className="text-xl font-semibold mb-2">Recensioni Verified</h4>
+              <h4 className="text-xl font-semibold mb-2">{t("home.feature4Title")}</h4>
               <p className="text-muted-foreground">
-                Solo recensioni da incontri reali per massima trasparenza.
+                {t("home.feature4Desc")}
               </p>
             </Card>
           </div>
@@ -158,9 +160,9 @@ const Index = () => {
       <section id="how-it-works" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold mb-4">Come Funziona</h3>
+            <h3 className="text-4xl font-bold mb-4">{t("home.howItWorksTitle")}</h3>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Tre semplici passi per iniziare la tua avventura
+              {t("home.howItWorksSubtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -168,27 +170,27 @@ const Index = () => {
               <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center text-2xl font-bold text-primary-foreground mx-auto shadow-glow">
                 1
               </div>
-              <h4 className="text-xl font-semibold">Registrati</h4>
+              <h4 className="text-xl font-semibold">{t("home.step1Title")}</h4>
               <p className="text-muted-foreground">
-                Crea il tuo profilo, carica una foto e verifica la tua identità
+                {t("home.step1Desc")}
               </p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-2xl font-bold text-secondary-foreground mx-auto shadow-glow">
                 2
               </div>
-              <h4 className="text-xl font-semibold">Connettiti</h4>
+              <h4 className="text-xl font-semibold">{t("home.step2Title")}</h4>
               <p className="text-muted-foreground">
-                Scorri i profili nella tua zona e invia richieste di incontro
+                {t("home.step2Desc")}
               </p>
             </div>
             <div className="text-center space-y-4">
               <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-2xl font-bold text-accent-foreground mx-auto shadow-glow">
                 3
               </div>
-              <h4 className="text-xl font-semibold">Incontra</h4>
+              <h4 className="text-xl font-semibold">{t("home.step3Title")}</h4>
               <p className="text-muted-foreground">
-                Organizza il tuo incontro e lascia una recensione dopo
+                {t("home.step3Desc")}
               </p>
             </div>
           </div>
@@ -199,17 +201,17 @@ const Index = () => {
       <section className="py-20 px-4 bg-gradient-primary">
         <div className="container mx-auto text-center">
           <h3 className="text-4xl font-bold text-primary-foreground mb-6">
-            Pronto a Trovare la Tua Connessione?
+            {t("home.ctaTitle")}
           </h3>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Unisciti a migliaia di persone che hanno già trovato incontri autentici su SCOPAMI
+            {t("home.ctaDescription")}
           </p>
           <Link to="/auth">
             <Button
               size="xl"
               className="bg-background text-foreground hover:bg-background/90 shadow-glow"
             >
-              Inizia Gratuitamente
+              {t("common.startFree")}
             </Button>
           </Link>
         </div>
@@ -225,68 +227,68 @@ const Index = () => {
                 <span className="text-xl font-bold">SCOPAMI</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                L'app di dating che mette le donne al comando
+                {t("home.footerTagline")}
               </p>
             </div>
             <div>
-              <h5 className="font-semibold mb-4">Prodotto</h5>
+              <h5 className="font-semibold mb-4">{t("common.product")}</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
                   <Link to="/features" className="hover:text-foreground transition-colors">
-                    Caratteristiche
+                    {t("common.features")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/pricing" className="hover:text-foreground transition-colors">
-                    Prezzi
+                    {t("common.pricing")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/faq" className="hover:text-foreground transition-colors">
-                    FAQ
+                    {t("common.faq")}
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h5 className="font-semibold mb-4">Azienda</h5>
+              <h5 className="font-semibold mb-4">{t("common.company")}</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
                   <Link to="/about" className="hover:text-foreground transition-colors">
-                    Chi Siamo
+                    {t("common.about")}
                   </Link>
                 </li>
 
                 <li>
                   <a href="mailto:support@scopami.online" className="hover:text-foreground transition-colors">
-                    Contattaci
+                    {t("common.contactUs")}
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h5 className="font-semibold mb-4">Legale</h5>
+              <h5 className="font-semibold mb-4">{t("common.legal")}</h5>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
                   <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
-                    Privacy Policy
+                    {t("common.privacyPolicy")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/terms-of-service" className="hover:text-foreground transition-colors">
-                    Termini di Servizio
+                    {t("common.termsOfService")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/cookie-policy" className="hover:text-foreground transition-colors">
-                    Cookie Policy
+                    {t("common.cookiePolicy")}
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            © 2025 SCOPAMI. Tutti i diritti riservati.
+            © 2025 SCOPAMI. {t("common.allRightsReserved")}.
           </div>
         </div>
       </footer>
