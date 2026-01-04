@@ -125,6 +125,8 @@
     "a6": "Nach einem bestätigten Treffen über die App können beide Benutzer eine Bewertung hinterlassen. Dies hilft, eine hohe Community-Qualität aufrechtzuerhalten und belohnt korrekte und respektvolle Benutzer. Nur echte Treffen können bewertet werden.",
     "q7": "Kann ich mein Konto löschen?",
     "a7": "Selbstverständlich. Sie können Ihr Konto jederzeit in Ihren Profileinstellungen löschen. Bitte beachten Sie, dass diese Aktion irreversibel ist und alle Ihre Daten, einschließlich nicht verwendeter Token, verloren gehen.",
-    "noAnswer": "Haben Sie die gesuchte Antwort nicht gefunden?"
+    "noAnswer": "Haben Sie die gesuchte Antwort nicht gefunden?",
+    "notFound": "Haben Sie die gesuchte Antwort nicht gefunden?",
+    "contactSupport": "Support kontaktieren"
   }
 }

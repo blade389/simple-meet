@@ -125,6 +125,8 @@
     "a6": "Après une rencontre confirmée via l'application, les deux utilisateurs peuvent laisser un avis. Cela aide à maintenir une haute qualité de communauté et récompense les utilisateurs corrects et respectueux. Seules les vraies rencontres peuvent être évaluées.",
     "q7": "Puis-je supprimer mon compte ?",
     "a7": "Certainement. Vous pouvez supprimer votre compte à tout moment depuis les paramètres de votre profil. Veuillez noter que cette action est irréversible et toutes vos données, y compris les jetons non utilisés, seront perdues.",
-    "noAnswer": "Vous n'avez pas trouvé la réponse que vous cherchiez ?"
+    "noAnswer": "Vous n'avez pas trouvé la réponse que vous cherchiez ?",
+    "notFound": "Vous n'avez pas trouvé la réponse que vous cherchiez ?",
+    "contactSupport": "Contacter le Support"
   }
 }

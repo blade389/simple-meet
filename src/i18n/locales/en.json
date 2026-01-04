@@ -125,6 +125,8 @@
     "a6": "After a confirmed meeting through the app, both users can leave a review. This helps maintain high community quality and rewards correct and respectful users. Only real meetings can be reviewed.",
     "q7": "Can I delete my account?",
     "a7": "Certainly. You can delete your account at any time from your profile settings. Please note that this action is irreversible and all your data, including unused tokens, will be lost.",
-    "noAnswer": "Didn't find the answer you were looking for?"
+    "noAnswer": "Didn't find the answer you were looking for?",
+    "notFound": "Didn't find the answer you were looking for?",
+    "contactSupport": "Contact Support"
   }
 }

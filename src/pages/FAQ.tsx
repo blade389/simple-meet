@@ -7,49 +7,56 @@ import { cn } from "@/lib/utils";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const FAQ = () => {
+    const { t } = useTranslation();
+
     const faqs = [
         {
-            question: "Come funziona SCOPAMI?",
-            answer: "SCOPAMI è un'app di dating innovativa dove le donne hanno il controllo. Le donne possono sfogliare i profili e inviare richieste, mentre gli uomini possono rispondere. Questo garantisce un ambiente più rispettoso e sicuro per tutti."
+            question: t('faq.q1'),
+            answer: t('faq.a1')
         },
         {
-            question: "Cosa sono i gettoni e come funzionano?",
-            answer: "I gettoni sono la valuta virtuale di SCOPAMI. Vengono utilizzati per sbloccare funzionalità premium, come inviare richieste di incontro o mettere in evidenza il proprio profilo. Puoi acquistare pacchetti di gettoni direttamente dall'app."
+            question: t('faq.q2'),
+            answer: t('faq.a2')
         },
         {
-            question: "L'iscrizione è gratuita?",
-            answer: "Sì, la registrazione e la creazione del profilo sono completamente gratuite. Molte funzionalità di base sono accessibili a tutti. Alcune funzionalità avanzate potrebbero richiedere l'utilizzo di gettoni o un abbonamento Premium."
+            question: t('faq.q3'),
+            answer: t('faq.a3')
         },
         {
-            question: "Come funziona la verifica del profilo?",
-            answer: "La sicurezza è la nostra priorità. Per ottenere il badge di 'Profilo Verificato', devi inviare una foto del tuo documento d'identità e un selfie in tempo reale. Il nostro team verificherà la corrispondenza per garantire che tu sia chi dici di essere."
+            question: t('faq.q4'),
+            answer: t('faq.a4')
         },
         {
-            question: "Le mie informazioni sono al sicuro?",
-            answer: "Assolutamente sì. Utilizziamo tecnologie di crittografia avanzate per proteggere i tuoi dati personali. Non condivideremo mai le tue informazioni con terze parti senza il tuo esplicito consenso. Leggi la nostra Privacy Policy per maggiori dettagli."
+            question: t('faq.q5'),
+            answer: t('faq.a5')
         },
         {
-            question: "Come funzionano le recensioni?",
-            answer: "Dopo un incontro confermato tramite l'app, entrambi gli utenti possono lasciare una recensione. Questo aiuta a mantenere alta la qualità della community e premia gli utenti corretti e rispettosi. Solo gli incontri reali possono essere recensiti."
+            question: t('faq.q6'),
+            answer: t('faq.a6')
         },
         {
-            question: "Posso cancellare il mio account?",
-            answer: "Certamente. Puoi cancellare il tuo account in qualsiasi momento dalle impostazioni del profilo. Tieni presente che questa azione è irreversibile e tutti i tuoi dati, inclusi i gettoni non utilizzati, andranno persi."
+            question: t('faq.q7'),
+            answer: t('faq.a7')
         }
     ];
 
     return (
         <>
         <SEOHead
-            title="FAQ - Domande Frequenti | SCOPAMI"
-            description="Trova risposte alle domande più comuni su SCOPAMI: come funziona, gettoni, verifica profilo, sicurezza, recensioni e molto altro."
+            title={`${t('faq.title')} | SCOPAMI`}
+            description={t('faq.q1')}
             canonicalPath="/faq"
-            keywords="faq scopami, domande frequenti dating, come funziona scopami, gettoni dating"
+            keywords="faq scopami, dating faq, how scopami works, tokens dating"
         />
         <StructuredData schema={{ type: "FAQPage", faqs }} />
         <div className="min-h-screen bg-background p-6 md:p-12">
+            <div className="absolute top-4 right-4 z-50">
+                <LanguageSelector />
+            </div>
             <Breadcrumbs />
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -60,7 +67,7 @@ const FAQ = () => {
                     </Link>
                     <h1 className="text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent flex items-center gap-3">
                         <HelpCircle className="w-8 h-8 text-primary" />
-                        Domande Frequenti (FAQ)
+                        {t('faq.title')}
                     </h1>
                 </div>
 
@@ -71,9 +78,9 @@ const FAQ = () => {
                 </div>
 
                 <div className="text-center mt-12">
-                    <p className="text-muted-foreground mb-4">Non hai trovato la risposta che cercavi?</p>
+                    <p className="text-muted-foreground mb-4">{t('faq.notFound')}</p>
                     <Button variant="outline" asChild>
-                        <a href="mailto:support@scopami.online">Contatta il Supporto</a>
+                        <a href="mailto:support@scopami.online">{t('faq.contactSupport')}</a>
                     </Button>
                 </div>
             </div>
