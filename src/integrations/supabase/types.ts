@@ -344,7 +344,7 @@ export type Database = {
           is_blocked: boolean | null
           is_premium: boolean | null
           is_verified: Database["public"]["Enums"]["verification_status"] | null
-          location_city: string
+          location_city: string | null
           location_lat: number | null
           location_lon: number | null
           max_age_preference: number | null
@@ -376,7 +376,7 @@ export type Database = {
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]
             | null
-          location_city: string
+          location_city?: string | null
           location_lat?: number | null
           location_lon?: number | null
           max_age_preference?: number | null
@@ -408,7 +408,7 @@ export type Database = {
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]
             | null
-          location_city?: string
+          location_city?: string | null
           location_lat?: number | null
           location_lon?: number | null
           max_age_preference?: number | null
