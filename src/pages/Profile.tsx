@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -302,7 +303,7 @@ const Profile = () => {
               SCOPAMI
             </h1>
           </div>
-          <div className="w-20"></div>
+          <LanguageSelector />
         </div>
       </header>
 
