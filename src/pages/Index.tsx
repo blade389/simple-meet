@@ -3,9 +3,21 @@ import { Card } from "@/components/ui/card";
 import { Heart, Shield, Star, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 
 const Index = () => {
   return (
+    <>
+      <SEOHead
+        title="SCOPAMI - App di Dating Innovativa | Incontri Sicuri"
+        description="SCOPAMI è l'app di dating che mette le donne al comando. Sistema innovativo con gettoni per incontri autentici, sicuri e verificati. Registrazione gratuita."
+        canonicalPath="/"
+        keywords="dating app, incontri online, app incontri Italia, dating sicuro, incontri verificati, app appuntamenti"
+      />
+      <StructuredData schema={{ type: "Organization" }} />
+      <StructuredData schema={{ type: "WebSite" }} />
+      <StructuredData schema={{ type: "WebApplication" }} />
     <div className="min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
@@ -277,6 +289,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

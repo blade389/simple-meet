@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Heart, Shield, Zap, Star, Lock, Users, MessageCircle, CheckCircle } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 const Features = () => {
     const features = [
@@ -48,6 +49,13 @@ const Features = () => {
     ];
 
     return (
+        <>
+        <SEOHead
+            title="Caratteristiche Uniche | SCOPAMI Dating App"
+            description="Scopri le funzionalità innovative di SCOPAMI: donne al comando, sistema gettoni, verifica identità, recensioni certificate, chat sicura e supporto 24/7."
+            canonicalPath="/features"
+            keywords="caratteristiche dating app, funzionalità scopami, verifica identità, sistema gettoni"
+        />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-6xl mx-auto space-y-12">
                 <div className="flex items-center gap-4">
@@ -88,6 +96,7 @@ const Features = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

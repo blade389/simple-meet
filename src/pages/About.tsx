@@ -2,9 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Shield, Users, Sparkles, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 
 const About = () => {
     return (
+        <>
+        <SEOHead
+            title="Chi Siamo - SCOPAMI | La Nostra Missione"
+            description="Scopri la filosofia di SCOPAMI: l'app di dating che rivoluziona gli incontri online mettendo le donne al comando. Sicurezza, rispetto e trasparenza."
+            canonicalPath="/about"
+            keywords="chi siamo scopami, app dating italiana, dating sicuro, incontri rispettosi"
+        />
         <div className="min-h-screen bg-background">
             {/* Header / Nav */}
             <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
@@ -149,6 +157,7 @@ const About = () => {
                 <p>© 2025 SCOPAMI. Tutti i diritti riservati.</p>
             </footer>
         </div>
+        </>
     );
 };
 

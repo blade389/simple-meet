@@ -2,9 +2,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Lock, Eye, FileText } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 const PrivacyPolicy = () => {
     return (
+        <>
+        <SEOHead
+            title="Privacy Policy | SCOPAMI"
+            description="Informativa sulla privacy di SCOPAMI. Scopri come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali."
+            canonicalPath="/privacy-policy"
+            keywords="privacy policy, protezione dati, GDPR, privacy dating"
+        />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -77,6 +85,7 @@ const PrivacyPolicy = () => {
                 </Card>
             </div>
         </div>
+        </>
     );
 };
 

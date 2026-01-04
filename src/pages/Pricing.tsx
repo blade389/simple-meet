@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Coins, Crown, Check, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SEOHead from "@/components/SEOHead";
 
 const Pricing = () => {
     const tokenPackages = [
@@ -51,6 +52,13 @@ const Pricing = () => {
     ];
 
     return (
+        <>
+        <SEOHead
+            title="Prezzi e Piani | SCOPAMI - Gettoni e Premium"
+            description="Scopri i prezzi di SCOPAMI: pacchetti gettoni per uomini e abbonamenti premium per donne. Pagamenti sicuri, nessun costo nascosto."
+            canonicalPath="/pricing"
+            keywords="prezzi dating app, costo gettoni, abbonamento premium, scopami prezzi"
+        />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -175,6 +183,7 @@ const Pricing = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
