@@ -554,5 +554,20 @@
     "faq2Desc": "Una volta attivato l'abbonamento, potrai impostare le tue tariffe dal tuo profilo. Gli utenti vedranno queste tariffe quando visiteranno il tuo profilo Premium.",
     "faq3Title": "Posso cancellare in qualsiasi momento?",
     "faq3Desc": "Sì, puoi cancellare il tuo abbonamento in qualsiasi momento dal portale di gestione. Continuerai ad avere accesso Premium fino alla fine del periodo pagato."
+  },
+  "premiumProfiles": {
+    "title": "Profili Premium",
+    "subtitle": "Scopri i profili premium disponibili",
+    "noProfiles": "Nessun profilo premium disponibile al momento.",
+    "distanceNotAvailable": "Distanza non disponibile",
+    "addedToFavorites": "Aggiunto ai preferiti",
+    "removedFromFavorites": "Rimosso dai preferiti",
+    "requestAlreadySent": "Richiesta già inviata",
+    "requestAlreadySentDesc": "Hai già una richiesta in attesa per questo utente.",
+    "insufficientTokens": "Gettoni insufficienti",
+    "insufficientTokensDesc": "Hai bisogno di almeno 1 gettone per inviare una richiesta premium.",
+    "requestSent": "Richiesta inviata!",
+    "requestSentDesc": "La tua richiesta premium è stata inviata con successo. 1 gettone scalato.",
+    "requestError": "Si è verificato un errore durante l'invio della richiesta."
   }
 }

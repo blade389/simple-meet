@@ -9,6 +9,7 @@ import { ArrowLeft, MapPin, Crown, ThumbsUp, ThumbsDown, Heart } from 'lucide-re
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { useToast } from '@/hooks/use-toast';
 import { toast as sonnerToast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 interface Profile {
   id: string;
@@ -29,6 +30,7 @@ interface PremiumRate {
 }
 
 const PremiumProfiles = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -95,7 +97,7 @@ const PremiumProfiles = () => {
       
       if (!error) {
         setFavorites(prev => prev.filter(id => id !== profileId));
-        sonnerToast.success('Rimosso dai preferiti');
+        sonnerToast.success(t('premiumProfiles.removedFromFavorites'));
       }
     } else {
       const { error } = await supabase
@@ -104,7 +106,7 @@ const PremiumProfiles = () => {
       
       if (!error) {
         setFavorites(prev => [...prev, profileId]);
-        sonnerToast.success('Aggiunto ai preferiti');
+        sonnerToast.success(t('premiumProfiles.addedToFavorites'));
       }
     }
   };
@@ -170,8 +172,8 @@ const PremiumProfiles = () => {
 
       if (existingRequest) {
         toast({
-          title: "Richiesta già inviata",
-          description: "Hai già una richiesta in attesa per questo utente.",
+          title: t('premiumProfiles.requestAlreadySent'),
+          description: t('premiumProfiles.requestAlreadySentDesc'),
           variant: "destructive"
         });
         return;
@@ -188,8 +190,8 @@ const PremiumProfiles = () => {
 
       if (!tokenData || tokenData.amount < 1) {
         toast({
-          title: 'Gettoni insufficienti',
-          description: 'Hai bisogno di almeno 1 gettone per inviare una richiesta premium.',
+          title: t('premiumProfiles.insufficientTokens'),
+          description: t('premiumProfiles.insufficientTokensDesc'),
           variant: 'destructive',
         });
         return;
@@ -240,8 +242,8 @@ const PremiumProfiles = () => {
       }
 
       toast({
-        title: 'Richiesta inviata!',
-        description: 'La tua richiesta premium è stata inviata con successo. 1 gettone scalato.',
+        title: t('premiumProfiles.requestSent'),
+        description: t('premiumProfiles.requestSentDesc'),
       });
       setIsRequestPending(true);
 
@@ -249,8 +251,8 @@ const PremiumProfiles = () => {
     } catch (error) {
       console.error('Error sending request:', error);
       toast({
-        title: 'Errore',
-        description: 'Si è verificato un errore durante l\'invio della richiesta.',
+        title: t('common2.error'),
+        description: t('premiumProfiles.requestError'),
         variant: 'destructive',
       });
     }
@@ -276,16 +278,16 @@ const PremiumProfiles = () => {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Crown className="h-8 w-8 text-yellow-500" />
-              Profili Premium
+              {t('premiumProfiles.title')}
             </h1>
-            <p className="text-muted-foreground">Scopri i profili premium disponibili</p>
+            <p className="text-muted-foreground">{t('premiumProfiles.subtitle')}</p>
           </div>
         </div>
 
         {profiles.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">Nessun profilo premium disponibile al momento.</p>
+              <p className="text-muted-foreground">{t('premiumProfiles.noProfiles')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -340,7 +342,7 @@ const PremiumProfiles = () => {
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {profile.distance !== undefined ? `${profile.distance.toFixed(1)} km` : 'Distanza non disponibile'}
+                    {profile.distance !== undefined ? `${profile.distance.toFixed(1)} km` : t('premiumProfiles.distanceNotAvailable')}
                   </div>
                 </CardHeader>
                 <CardContent>

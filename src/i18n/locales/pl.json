@@ -500,5 +500,20 @@
     "faq2Desc": "Po aktywacji subskrypcji możesz ustawić swoje stawki z poziomu swojego profilu. Użytkownicy zobaczą te stawki, gdy odwiedzą Twój profil Premium.",
     "faq3Title": "Czy mogę anulować w dowolnym momencie?",
     "faq3Desc": "Tak, możesz anulować swoją subskrypcję w dowolnym momencie z portalu zarządzania. Będziesz mieć dostęp Premium do końca opłaconego okresu."
+  },
+  "premiumProfiles": {
+    "title": "Profile Premium",
+    "subtitle": "Odkryj dostępne profile premium",
+    "noProfiles": "Brak dostępnych profili premium w tej chwili.",
+    "distanceNotAvailable": "Odległość niedostępna",
+    "addedToFavorites": "Dodano do ulubionych",
+    "removedFromFavorites": "Usunięto z ulubionych",
+    "requestAlreadySent": "Prośba już wysłana",
+    "requestAlreadySentDesc": "Masz już oczekującą prośbę dla tego użytkownika.",
+    "insufficientTokens": "Niewystarczające żetony",
+    "insufficientTokensDesc": "Potrzebujesz co najmniej 1 żetonu, aby wysłać prośbę premium.",
+    "requestSent": "Prośba wysłana!",
+    "requestSentDesc": "Twoja prośba premium została pomyślnie wysłana. 1 żeton odjęty.",
+    "requestError": "Wystąpił błąd podczas wysyłania prośby."
   }
 }
