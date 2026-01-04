@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface TokenPackage {
   tokens: number;
@@ -16,6 +17,7 @@ interface TokenPackage {
 }
 
 const BuyTokens = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState<string | null>(null);
@@ -30,28 +32,28 @@ const BuyTokens = () => {
       tokens: 5,
       price: 40,
       priceId: 'price_1SO2WlB786KnA0dnzgSTyYkd',
-      savings: 'Risparmia €10',
+      savings: t('buyTokens.save', { amount: '€10' }),
     },
     {
       tokens: 10,
       price: 65,
       priceId: 'price_1SO2XHB786KnA0dnqRmNBobB',
       popular: true,
-      savings: 'Risparmia €35',
+      savings: t('buyTokens.save', { amount: '€35' }),
     },
     {
       tokens: 100,
       price: 500,
       priceId: 'price_1SO2XSB786KnA0dnKEnJzWwH',
-      savings: 'Risparmia €500',
+      savings: t('buyTokens.save', { amount: '€500' }),
     },
   ];
 
   const handlePurchase = async (priceId: string, tokens: number) => {
     if (!user) {
       toast({
-        title: "Errore",
-        description: "Devi effettuare l'accesso per acquistare gettoni",
+        title: t('buyTokens.error'),
+        description: t('buyTokens.loginRequired'),
         variant: "destructive"
       });
       return;
@@ -70,8 +72,8 @@ const BuyTokens = () => {
       }
     } catch (error: any) {
       toast({
-        title: "Errore",
-        description: error.message || "Impossibile creare la sessione di pagamento",
+        title: t('buyTokens.error'),
+        description: error.message || t('buyTokens.paymentError'),
         variant: "destructive"
       });
     } finally {
@@ -103,9 +105,9 @@ const BuyTokens = () => {
             <div className="flex justify-center mb-4">
               <Coins className="w-16 h-16 text-primary" />
             </div>
-            <h2 className="text-4xl font-bold mb-4">Acquista Gettoni</h2>
+            <h2 className="text-4xl font-bold mb-4">{t('buyTokens.title')}</h2>
             <p className="text-muted-foreground text-lg">
-              Scegli il pacchetto perfetto per te. I gettoni vengono scalati quando rifiuti una richiesta.
+              {t('buyTokens.subtitle')}
             </p>
           </div>
 
@@ -118,13 +120,13 @@ const BuyTokens = () => {
                 {pkg.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                      Più Popolare
+                      {t('buyTokens.mostPopular')}
                     </span>
                   </div>
                 )}
                 <CardHeader className="text-center pb-4">
                   <CardTitle className="text-3xl font-bold mb-2">
-                    {pkg.tokens} {pkg.tokens === 1 ? 'Gettone' : 'Gettoni'}
+                    {pkg.tokens} {pkg.tokens === 1 ? t('buyTokens.token') : t('buyTokens.tokens')}
                   </CardTitle>
                   <div className="text-4xl font-bold text-primary mb-2">
                     €{pkg.price}
@@ -139,15 +141,15 @@ const BuyTokens = () => {
                   <ul className="space-y-3 mb-6">
                     <li className="flex items-center gap-2">
                       <Check className="w-5 h-5 text-primary" />
-                      <span>{pkg.tokens} {pkg.tokens === 1 ? 'gettone' : 'gettoni'}</span>
+                      <span>{pkg.tokens} {pkg.tokens === 1 ? t('buyTokens.token').toLowerCase() : t('buyTokens.tokens').toLowerCase()}</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Check className="w-5 h-5 text-primary" />
-                      <span>Nessuna scadenza</span>
+                      <span>{t('buyTokens.noExpiry')}</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Check className="w-5 h-5 text-primary" />
-                      <span>Pagamento sicuro</span>
+                      <span>{t('buyTokens.securePayment')}</span>
                     </li>
                   </ul>
                   <Button
@@ -156,7 +158,7 @@ const BuyTokens = () => {
                     className="w-full"
                     variant={pkg.popular ? "default" : "outline"}
                   >
-                    {loading === pkg.priceId ? 'Caricamento...' : 'Acquista'}
+                    {loading === pkg.priceId ? t('buyTokens.loading') : t('buyTokens.buy')}
                   </Button>
                 </CardContent>
               </Card>
@@ -165,18 +167,17 @@ const BuyTokens = () => {
 
           <Card className="mt-12 bg-muted/50">
             <CardHeader>
-              <CardTitle>Come funzionano i gettoni?</CardTitle>
+              <CardTitle>{t('buyTokens.howItWorks')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground">
-                I gettoni vengono utilizzati quando rifiuti una richiesta di match. Ogni rifiuto costa 1 gettone.
-                Accettare richieste non costa gettoni.
+                {t('buyTokens.howItWorksDesc')}
               </p>
               <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                <li>Accetta richieste gratuitamente</li>
-                <li>Rifiuta richieste usando 1 gettone</li>
-                <li>I gettoni non hanno scadenza</li>
-                <li>Acquista più gettoni per risparmiare</li>
+                <li>{t('buyTokens.acceptFree')}</li>
+                <li>{t('buyTokens.rejectCost')}</li>
+                <li>{t('buyTokens.noExpiry')}</li>
+                <li>{t('buyTokens.buyMoreSave')}</li>
               </ul>
             </CardContent>
           </Card>

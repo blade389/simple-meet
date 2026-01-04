@@ -7,11 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Crown, Check, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const MONTHLY_PRICE_ID = "price_1SP4zjB786KnA0dn6gOddSAy";
 const YEARLY_PRICE_ID = "price_1SP51aB786KnA0dnhrvYBz8l";
 
 const PremiumSubscription = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { user, isPremium, subscriptionEnd, checkPremiumStatus } = useAuth();
   const { toast } = useToast();
@@ -45,8 +47,8 @@ const PremiumSubscription = () => {
     } catch (error) {
       console.error('Error creating checkout:', error);
       toast({
-        title: "Errore",
-        description: "Impossibile avviare il pagamento.",
+        title: t('premiumSubscription.error'),
+        description: t('premiumSubscription.paymentError'),
         variant: "destructive",
       });
     } finally {
@@ -64,8 +66,8 @@ const PremiumSubscription = () => {
       }
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Impossibile aprire il portale di gestione.",
+        title: t('premiumSubscription.error'),
+        description: t('premiumSubscription.portalError'),
         variant: "destructive",
       });
     }
@@ -83,9 +85,9 @@ const PremiumSubscription = () => {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Crown className="h-8 w-8 text-yellow-500" />
-              Abbonamento Premium
+              {t('premiumSubscription.title')}
             </h1>
-            <p className="text-muted-foreground">Diventa un profilo premium e aumenta la tua visibilità</p>
+            <p className="text-muted-foreground">{t('premiumSubscription.subtitle')}</p>
           </div>
         </div>
 
@@ -94,15 +96,15 @@ const PremiumSubscription = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-yellow-500" />
-                Sei già Premium!
+                {t('premiumSubscription.alreadyPremium')}
               </CardTitle>
               <CardDescription>
-                {subscriptionEnd && `Il tuo abbonamento è attivo fino al ${new Date(subscriptionEnd).toLocaleDateString('it-IT')}`}
+                {subscriptionEnd && t('premiumSubscription.activeUntil', { date: new Date(subscriptionEnd).toLocaleDateString(i18n.language) })}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button onClick={handleManageSubscription} variant="outline">
-                Gestisci Abbonamento
+                {t('premiumSubscription.manage')}
               </Button>
             </CardContent>
           </Card>
@@ -111,27 +113,27 @@ const PremiumSubscription = () => {
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <Card className={isPremium ? "opacity-50" : ""}>
             <CardHeader>
-              <Badge className="w-fit mb-2">Mensile</Badge>
+              <Badge className="w-fit mb-2">{t('premiumSubscription.monthly')}</Badge>
               <CardTitle className="text-3xl">€19,90</CardTitle>
-              <CardDescription>al mese</CardDescription>
+              <CardDescription>{t('premiumSubscription.perMonth')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Profilo visibile nella sezione Premium</span>
+                  <span>{t('premiumSubscription.feature1')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Imposta le tue tariffe personalizzate</span>
+                  <span>{t('premiumSubscription.feature2')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Ricevi richieste da utenti verificati</span>
+                  <span>{t('premiumSubscription.feature3')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Badge Premium sul profilo</span>
+                  <span>{t('premiumSubscription.feature4')}</span>
                 </li>
               </ul>
               <Button
@@ -139,34 +141,34 @@ const PremiumSubscription = () => {
                 onClick={() => handleSubscribe(MONTHLY_PRICE_ID, false)}
                 disabled={loadingMonthly || isPremium}
               >
-                {loadingMonthly ? "Caricamento..." : "Abbonati Mensilmente"}
+                {loadingMonthly ? t('premiumSubscription.loading') : t('premiumSubscription.subscribeMonthly')}
               </Button>
             </CardContent>
           </Card>
 
           <Card className={`border-2 border-yellow-500 ${isPremium ? "opacity-50" : ""}`}>
             <CardHeader>
-              <Badge className="w-fit mb-2 bg-yellow-500 text-black">Annuale - Risparmia €39</Badge>
+              <Badge className="w-fit mb-2 bg-yellow-500 text-black">{t('premiumSubscription.yearlySave')}</Badge>
               <CardTitle className="text-3xl">€199</CardTitle>
-              <CardDescription>all'anno</CardDescription>
+              <CardDescription>{t('premiumSubscription.perYear')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Tutti i vantaggi del piano mensile</span>
+                  <span>{t('premiumSubscription.allMonthlyFeatures')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Risparmio di €39 all'anno</span>
+                  <span>{t('premiumSubscription.savingsPerYear')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Supporto prioritario</span>
+                  <span>{t('premiumSubscription.prioritySupport')}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>Accesso anticipato a nuove funzionalità</span>
+                  <span>{t('premiumSubscription.earlyAccess')}</span>
                 </li>
               </ul>
               <Button
@@ -174,7 +176,7 @@ const PremiumSubscription = () => {
                 onClick={() => handleSubscribe(YEARLY_PRICE_ID, true)}
                 disabled={loadingYearly || isPremium}
               >
-                {loadingYearly ? "Caricamento..." : "Abbonati Annualmente"}
+                {loadingYearly ? t('premiumSubscription.loading') : t('premiumSubscription.subscribeYearly')}
               </Button>
             </CardContent>
           </Card>
@@ -182,28 +184,25 @@ const PremiumSubscription = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Domande Frequenti</CardTitle>
+            <CardTitle>{t('premiumSubscription.faq')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h3 className="font-semibold mb-2">Come funziona l'abbonamento Premium?</h3>
+              <h3 className="font-semibold mb-2">{t('premiumSubscription.faq1Title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Con l'abbonamento Premium, il tuo profilo diventa visibile nella sezione dedicata agli utenti maschili, 
-                che pagheranno 1 gettone per inviarti una richiesta di appuntamento.
+                {t('premiumSubscription.faq1Desc')}
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">Come imposto le mie tariffe?</h3>
+              <h3 className="font-semibold mb-2">{t('premiumSubscription.faq2Title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Una volta attivato l'abbonamento, potrai impostare le tue tariffe dal tuo profilo. 
-                Gli utenti vedranno queste tariffe quando visiteranno il tuo profilo Premium.
+                {t('premiumSubscription.faq2Desc')}
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">Posso cancellare in qualsiasi momento?</h3>
+              <h3 className="font-semibold mb-2">{t('premiumSubscription.faq3Title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Sì, puoi cancellare il tuo abbonamento in qualsiasi momento dal portale di gestione. 
-                Continuerai ad avere accesso Premium fino alla fine del periodo pagato.
+                {t('premiumSubscription.faq3Desc')}
               </p>
             </div>
           </CardContent>
