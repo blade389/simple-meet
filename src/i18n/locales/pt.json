@@ -129,6 +129,30 @@
     "notFound": "Não encontrou a resposta que procurava?",
     "contactSupport": "Contactar Suporte"
   },
+  "auth": {
+    "login": "Entrar",
+    "signup": "Registar",
+    "email": "Email",
+    "password": "Palavra-passe",
+    "confirmPassword": "Confirmar palavra-passe",
+    "fullName": "Nome completo",
+    "gender": "Género",
+    "selectGender": "Selecionar...",
+    "female": "Feminino (Registo gratuito)",
+    "male": "Masculino (1 ficha grátis)",
+    "birthDate": "Data de nascimento",
+    "city": "Cidade",
+    "yourCity": "A sua cidade",
+    "yourEmail": "seu@email.com",
+    "yourName": "O seu nome",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "termsAgree": "Aceito os",
+    "and": "e a",
+    "logging": "A entrar...",
+    "registering": "A registar...",
+    "note": "Nota:",
+    "registrationNote": "O registo é gratuito para mulheres. Os homens recebem 1 ficha grátis ao registar."
+  },
   "legal": {
     "lastUpdate": "Última atualização",
     "terms": {

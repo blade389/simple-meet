@@ -129,6 +129,30 @@
     "notFound": "Nie znalazłeś odpowiedzi, której szukałeś?",
     "contactSupport": "Skontaktuj się z pomocą techniczną"
   },
+  "auth": {
+    "login": "Zaloguj się",
+    "signup": "Zarejestruj się",
+    "email": "Email",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "fullName": "Imię i nazwisko",
+    "gender": "Płeć",
+    "selectGender": "Wybierz...",
+    "female": "Kobieta (Bezpłatna rejestracja)",
+    "male": "Mężczyzna (1 bezpłatny żeton)",
+    "birthDate": "Data urodzenia",
+    "city": "Miasto",
+    "yourCity": "Twoje miasto",
+    "yourEmail": "twoj@email.com",
+    "yourName": "Twoje imię",
+    "forgotPassword": "Nie pamiętasz hasła?",
+    "termsAgree": "Akceptuję",
+    "and": "i",
+    "logging": "Logowanie...",
+    "registering": "Rejestracja...",
+    "note": "Uwaga:",
+    "registrationNote": "Rejestracja jest bezpłatna dla kobiet. Mężczyźni otrzymują 1 bezpłatny żeton przy rejestracji."
+  },
   "legal": {
     "lastUpdate": "Ostatnia aktualizacja",
     "terms": {

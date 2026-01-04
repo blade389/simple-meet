@@ -129,6 +129,30 @@
     "notFound": "Didn't find the answer you were looking for?",
     "contactSupport": "Contact Support"
   },
+  "auth": {
+    "login": "Log In",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "gender": "Gender",
+    "selectGender": "Select...",
+    "female": "Female (Free Registration)",
+    "male": "Male (1 Free Token)",
+    "birthDate": "Birth Date",
+    "city": "City",
+    "yourCity": "Your city",
+    "yourEmail": "your@email.com",
+    "yourName": "Your name",
+    "forgotPassword": "Forgot password?",
+    "termsAgree": "I agree to the",
+    "and": "and the",
+    "logging": "Logging in...",
+    "registering": "Registering...",
+    "note": "Note:",
+    "registrationNote": "Registration is free for women. Men receive 1 free token upon registration."
+  },
   "legal": {
     "lastUpdate": "Last updated",
     "terms": {

@@ -129,6 +129,30 @@
     "notFound": "Haben Sie die gesuchte Antwort nicht gefunden?",
     "contactSupport": "Support kontaktieren"
   },
+  "auth": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "fullName": "Vollständiger Name",
+    "gender": "Geschlecht",
+    "selectGender": "Auswählen...",
+    "female": "Weiblich (Kostenlose Registrierung)",
+    "male": "Männlich (1 kostenloses Token)",
+    "birthDate": "Geburtsdatum",
+    "city": "Stadt",
+    "yourCity": "Ihre Stadt",
+    "yourEmail": "ihre@email.com",
+    "yourName": "Ihr Name",
+    "forgotPassword": "Passwort vergessen?",
+    "termsAgree": "Ich akzeptiere die",
+    "and": "und die",
+    "logging": "Anmelden...",
+    "registering": "Registrieren...",
+    "note": "Hinweis:",
+    "registrationNote": "Die Registrierung ist für Frauen kostenlos. Männer erhalten 1 kostenloses Token bei der Registrierung."
+  },
   "legal": {
     "lastUpdate": "Letzte Aktualisierung",
     "terms": {
