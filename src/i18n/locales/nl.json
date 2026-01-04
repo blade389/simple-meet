@@ -129,6 +129,30 @@
     "notFound": "Heb je het antwoord dat je zocht niet gevonden?",
     "contactSupport": "Neem contact op met Support"
   },
+  "auth": {
+    "login": "Inloggen",
+    "signup": "Registreren",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "confirmPassword": "Bevestig wachtwoord",
+    "fullName": "Volledige naam",
+    "gender": "Geslacht",
+    "selectGender": "Selecteren...",
+    "female": "Vrouw (Gratis registratie)",
+    "male": "Man (1 gratis token)",
+    "birthDate": "Geboortedatum",
+    "city": "Stad",
+    "yourCity": "Jouw stad",
+    "yourEmail": "jouw@email.com",
+    "yourName": "Jouw naam",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "termsAgree": "Ik accepteer de",
+    "and": "en het",
+    "logging": "Inloggen...",
+    "registering": "Registreren...",
+    "note": "Let op:",
+    "registrationNote": "Registratie is gratis voor vrouwen. Mannen ontvangen 1 gratis token bij registratie."
+  },
   "legal": {
     "lastUpdate": "Laatst bijgewerkt",
     "terms": {

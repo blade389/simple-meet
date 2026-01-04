@@ -129,6 +129,30 @@
     "notFound": "Vous n'avez pas trouvé la réponse que vous cherchiez ?",
     "contactSupport": "Contacter le Support"
   },
+  "auth": {
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "fullName": "Nom complet",
+    "gender": "Genre",
+    "selectGender": "Sélectionner...",
+    "female": "Femme (Inscription gratuite)",
+    "male": "Homme (1 jeton gratuit)",
+    "birthDate": "Date de naissance",
+    "city": "Ville",
+    "yourCity": "Votre ville",
+    "yourEmail": "votre@email.com",
+    "yourName": "Votre nom",
+    "forgotPassword": "Mot de passe oublié ?",
+    "termsAgree": "J'accepte les",
+    "and": "et la",
+    "logging": "Connexion...",
+    "registering": "Inscription...",
+    "note": "Note :",
+    "registrationNote": "L'inscription est gratuite pour les femmes. Les hommes reçoivent 1 jeton gratuit lors de l'inscription."
+  },
   "legal": {
     "lastUpdate": "Dernière mise à jour",
     "terms": {
