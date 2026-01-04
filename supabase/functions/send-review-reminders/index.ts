@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -61,18 +62,22 @@ const handler = async (req: Request): Promise<Response> => {
 
           const { data: femaleProfile } = await supabase
             .from("profiles")
-            .select("full_name")
+            .select("full_name, preferred_language")
             .eq("id", appointment.female_user_id)
             .single();
 
           const { data: maleProfile } = await supabase
             .from("profiles")
-            .select("full_name")
+            .select("full_name, preferred_language")
             .eq("id", appointment.male_user_id)
             .single();
 
-          const femaleName = femaleProfile?.full_name || "Utente";
-          const maleName = maleProfile?.full_name || "Utente";
+          const femaleName = femaleProfile?.full_name || "User";
+          const maleName = maleProfile?.full_name || "User";
+          const femaleLang = (femaleProfile?.preferred_language || 'it') as SupportedLanguage;
+          const maleLang = (maleProfile?.preferred_language || 'it') as SupportedLanguage;
+          const femaleT = translations[femaleLang] || translations.it;
+          const maleT = translations[maleLang] || translations.it;
 
           // Check which users already left reviews
           const { data: existingReviews } = await supabase
@@ -85,17 +90,40 @@ const handler = async (req: Request): Promise<Response> => {
 
           // Format deadline for display
           const deadlineDate = new Date(appointment.review_deadline);
-          const formattedDeadline = deadlineDate.toLocaleTimeString('it-IT', {
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-          const formattedDeadlineDate = deadlineDate.toLocaleDateString('it-IT', {
-            day: 'numeric',
-            month: 'long',
-          });
+
+          const getDeadlineLabel = (lang: SupportedLanguage) => {
+            return lang === 'it' ? 'Scadenza' : lang === 'en' ? 'Deadline' : lang === 'fr' ? 'Date limite' : lang === 'de' ? 'Frist' : lang === 'es' ? 'Fecha límite' : lang === 'pt' ? 'Prazo' : lang === 'nl' ? 'Deadline' : 'Termin';
+          };
 
           // Send email to female user if they haven't reviewed yet
           if (!femaleReviewed && femaleUser?.email) {
+            const formattedDeadline = deadlineDate.toLocaleTimeString(femaleLang === 'en' ? 'en-US' : `${femaleLang}-${femaleLang.toUpperCase()}`, {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+            const formattedDeadlineDate = deadlineDate.toLocaleDateString(femaleLang === 'en' ? 'en-US' : `${femaleLang}-${femaleLang.toUpperCase()}`, {
+              day: 'numeric',
+              month: 'long',
+            });
+
+            const emailHtml = getEmailWrapper(`
+              <h2 style="color: #333; margin-bottom: 20px;">${femaleT.reviewReminder.title}</h2>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                ${femaleT.common.greeting} ${femaleName}!
+              </p>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                ${femaleT.reviewReminder.message.replace('48', '6')} - <strong>${maleName}</strong>
+              </p>
+              <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffc107;">
+                <p style="margin: 5px 0;"><strong>⏰ ${getDeadlineLabel(femaleLang)}:</strong> ${formattedDeadlineDate} - ${formattedDeadline}</p>
+              </div>
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                  ${femaleT.reviewReminder.cta}
+                </a>
+              </div>
+            `, femaleT);
+
             const emailResponse = await fetch("https://api.resend.com/emails", {
               method: "POST",
               headers: {
@@ -103,31 +131,49 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "Match App <noreply@scopami.online>",
+                from: "SCOPAMI <noreply@scopami.online>",
                 to: [femaleUser.email],
-                subject: "⏰ Scadenza recensione: mancano 6 ore!",
-                html: `
-                  <h1>Non dimenticare di lasciare la tua recensione! ⏰</h1>
-                  <p>Ciao ${femaleName}!</p>
-                  <p>Ti ricordiamo che hai ancora <strong>6 ore</strong> per lasciare una recensione sul tuo appuntamento con <strong>${maleName}</strong>.</p>
-                  <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffc107;">
-                    <p style="margin: 5px 0;"><strong>⏰ Scadenza:</strong> ${formattedDeadlineDate} alle ${formattedDeadline}</p>
-                  </div>
-                  <p>Dopo la scadenza, non potrai più lasciare una recensione e la chat verrà chiusa definitivamente.</p>
-                  <p><a href="https://scopami.online/appointments" style="display: inline-block; background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Lascia la tua recensione</a></p>
-                `,
+                subject: `⏰ ${femaleT.reviewReminder.subject}`,
+                html: emailHtml,
               }),
             });
 
             if (!emailResponse.ok) {
               console.error(`Failed to send review reminder to female user:`, await emailResponse.text());
             } else {
-              console.log(`Review reminder sent to female user for appointment ${appointment.id}`);
+              console.log(`Review reminder sent to female user for appointment ${appointment.id} in ${femaleLang}`);
             }
           }
 
           // Send email to male user if they haven't reviewed yet
           if (!maleReviewed && maleUser?.email) {
+            const formattedDeadline = deadlineDate.toLocaleTimeString(maleLang === 'en' ? 'en-US' : `${maleLang}-${maleLang.toUpperCase()}`, {
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+            const formattedDeadlineDate = deadlineDate.toLocaleDateString(maleLang === 'en' ? 'en-US' : `${maleLang}-${maleLang.toUpperCase()}`, {
+              day: 'numeric',
+              month: 'long',
+            });
+
+            const emailHtml = getEmailWrapper(`
+              <h2 style="color: #333; margin-bottom: 20px;">${maleT.reviewReminder.title}</h2>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                ${maleT.common.greeting} ${maleName}!
+              </p>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">
+                ${maleT.reviewReminder.message.replace('48', '6')} - <strong>${femaleName}</strong>
+              </p>
+              <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffc107;">
+                <p style="margin: 5px 0;"><strong>⏰ ${getDeadlineLabel(maleLang)}:</strong> ${formattedDeadlineDate} - ${formattedDeadline}</p>
+              </div>
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                  ${maleT.reviewReminder.cta}
+                </a>
+              </div>
+            `, maleT);
+
             const emailResponse = await fetch("https://api.resend.com/emails", {
               method: "POST",
               headers: {
@@ -135,26 +181,17 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "Match App <noreply@scopami.online>",
+                from: "SCOPAMI <noreply@scopami.online>",
                 to: [maleUser.email],
-                subject: "⏰ Scadenza recensione: mancano 6 ore!",
-                html: `
-                  <h1>Non dimenticare di lasciare la tua recensione! ⏰</h1>
-                  <p>Ciao ${maleName}!</p>
-                  <p>Ti ricordiamo che hai ancora <strong>6 ore</strong> per lasciare una recensione sul tuo appuntamento con <strong>${femaleName}</strong>.</p>
-                  <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffc107;">
-                    <p style="margin: 5px 0;"><strong>⏰ Scadenza:</strong> ${formattedDeadlineDate} alle ${formattedDeadline}</p>
-                  </div>
-                  <p>Dopo la scadenza, non potrai più lasciare una recensione e la chat verrà chiusa definitivamente.</p>
-                  <p><a href="https://scopami.online/appointments" style="display: inline-block; background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">Lascia la tua recensione</a></p>
-                `,
+                subject: `⏰ ${maleT.reviewReminder.subject}`,
+                html: emailHtml,
               }),
             });
 
             if (!emailResponse.ok) {
               console.error(`Failed to send review reminder to male user:`, await emailResponse.text());
             } else {
-              console.log(`Review reminder sent to male user for appointment ${appointment.id}`);
+              console.log(`Review reminder sent to male user for appointment ${appointment.id} in ${maleLang}`);
             }
           }
 
@@ -176,11 +213,8 @@ const handler = async (req: Request): Promise<Response> => {
                     app_id: oneSignalAppId,
                     include_aliases: { external_id: [appointment.female_user_id] },
                     target_channel: "push",
-                    headings: { en: "⏰ Scadenza recensione!", it: "⏰ Scadenza recensione!" },
-                    contents: { 
-                      en: `Hai 6 ore per lasciare la recensione su ${maleName}`, 
-                      it: `Hai 6 ore per lasciare la recensione su ${maleName}` 
-                    },
+                    headings: { en: `⏰ ${femaleT.reviewReminder.title}` },
+                    contents: { en: `${femaleT.reviewReminder.notification} - ${maleName}` },
                     url: "https://scopami.online/appointments",
                   }),
                 });
@@ -203,11 +237,8 @@ const handler = async (req: Request): Promise<Response> => {
                     app_id: oneSignalAppId,
                     include_aliases: { external_id: [appointment.male_user_id] },
                     target_channel: "push",
-                    headings: { en: "⏰ Scadenza recensione!", it: "⏰ Scadenza recensione!" },
-                    contents: { 
-                      en: `Hai 6 ore per lasciare la recensione su ${femaleName}`, 
-                      it: `Hai 6 ore per lasciare la recensione su ${femaleName}` 
-                    },
+                    headings: { en: `⏰ ${maleT.reviewReminder.title}` },
+                    contents: { en: `${maleT.reviewReminder.notification} - ${femaleName}` },
                     url: "https://scopami.online/appointments",
                   }),
                 });
