@@ -27,7 +27,7 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo - larghezza fissa a sinistra */}
+            {/* Logo - a sinistra */}
             <div className="flex items-center gap-2 shrink-0">
               <Heart className="w-8 h-8 text-primary fill-primary" />
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
@@ -35,21 +35,21 @@ const Index = () => {
               </h1>
             </div>
             
-            {/* Navigazione e Language Selector - a destra */}
-            <div className="flex items-center gap-2 shrink-0">
+            {/* Language Selector e Navigazione - a destra */}
+            <div className="flex items-center gap-2">
               <LanguageSelector />
               <nav className="hidden md:flex items-center gap-6">
-                <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
                   {t("common.features")}
                 </a>
-                <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
                   {t("home.howItWorks")}
                 </a>
                 <Link to="/auth">
-                  <Button variant="ghost" className="whitespace-nowrap">{t("common.login")}</Button>
+                  <Button variant="ghost">{t("common.login")}</Button>
                 </Link>
                 <Link to="/auth">
-                  <Button variant="hero" className="whitespace-nowrap">{t("common.signup")}</Button>
+                  <Button variant="hero">{t("common.signup")}</Button>
                 </Link>
               </nav>
             </div>
