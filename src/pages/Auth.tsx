@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import SEOHead from "@/components/SEOHead";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Il nome deve avere almeno 2 caratteri").max(100),
@@ -153,8 +154,16 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-hero">
-      <div className="w-full max-w-md">
+    <>
+      <SEOHead
+        title="Accedi o Registrati | SCOPAMI"
+        description="Accedi al tuo account SCOPAMI o registrati gratuitamente. L'app di dating sicura con verifica identità e sistema gettoni."
+        canonicalPath="/auth"
+        keywords="login scopami, registrazione dating, accedi app incontri"
+        noindex={true}
+      />
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-hero">
+        <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 mb-8">
           <Heart className="w-10 h-10 text-primary fill-primary" />
           <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
@@ -331,6 +340,7 @@ const Auth = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

@@ -2,9 +2,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Cookie, Info, Settings } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 const CookiePolicy = () => {
     return (
+        <>
+        <SEOHead
+            title="Cookie Policy | SCOPAMI"
+            description="Informativa sui cookie di SCOPAMI. Scopri quali cookie utilizziamo e come gestire le tue preferenze."
+            canonicalPath="/cookie-policy"
+            keywords="cookie policy, gestione cookie, privacy cookie"
+        />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -75,6 +83,7 @@ const CookiePolicy = () => {
                 </Card>
             </div>
         </div>
+        </>
     );
 };
 

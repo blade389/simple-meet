@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 
 const FAQ = () => {
     const faqs = [
@@ -38,6 +40,14 @@ const FAQ = () => {
     ];
 
     return (
+        <>
+        <SEOHead
+            title="FAQ - Domande Frequenti | SCOPAMI"
+            description="Trova risposte alle domande più comuni su SCOPAMI: come funziona, gettoni, verifica profilo, sicurezza, recensioni e molto altro."
+            canonicalPath="/faq"
+            keywords="faq scopami, domande frequenti dating, come funziona scopami, gettoni dating"
+        />
+        <StructuredData schema={{ type: "FAQPage", faqs }} />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -66,6 +76,7 @@ const FAQ = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

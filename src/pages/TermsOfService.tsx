@@ -2,9 +2,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Shield, Scale } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 const TermsOfService = () => {
     return (
+        <>
+        <SEOHead
+            title="Termini di Servizio | SCOPAMI"
+            description="Leggi i termini e condizioni d'uso di SCOPAMI. Regole di condotta, limitazioni di responsabilità e linee guida della community."
+            canonicalPath="/terms-of-service"
+            keywords="termini servizio, condizioni uso, regolamento dating"
+        />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
@@ -74,6 +82,7 @@ const TermsOfService = () => {
                 </Card>
             </div>
         </div>
+        </>
     );
 };
 
