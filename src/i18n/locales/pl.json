@@ -408,5 +408,22 @@
     "reviewSent": "Recenzja wysłana",
     "thanks": "Dziękujemy za recenzję!",
     "submitError": "Błąd podczas wysyłania recenzji"
+  },
+  "appointmentForm": {
+    "title": "Umów Spotkanie",
+    "date": "Data",
+    "time": "Godzina",
+    "location": "Miejsce",
+    "locationPlaceholder": "Np.: Kawiarnia Centralna, ul. Główna 10",
+    "submit": "Umów Spotkanie",
+    "registering": "Umawianie...",
+    "success": "Spotkanie umówione!",
+    "successDesc": "Spotkanie zostało pomyślnie zapisane.",
+    "error": "Błąd",
+    "errorDesc": "Nie udało się umówić spotkania."
+  },
+  "appointmentInfo": {
+    "scheduled": "Spotkanie Umówione",
+    "dateFormat": "d MMMM yyyy 'o' HH:mm"
   }
 }

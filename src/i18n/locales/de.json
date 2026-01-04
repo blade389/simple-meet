@@ -408,5 +408,22 @@
     "reviewSent": "Bewertung gesendet",
     "thanks": "Vielen Dank für Ihre Bewertung!",
     "submitError": "Fehler beim Senden der Bewertung"
+  },
+  "appointmentForm": {
+    "title": "Termin Vereinbaren",
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "location": "Ort",
+    "locationPlaceholder": "Z.B.: Café Central, Hauptstraße 10",
+    "submit": "Termin Vereinbaren",
+    "registering": "Wird gespeichert...",
+    "success": "Termin vereinbart!",
+    "successDesc": "Der Termin wurde erfolgreich gespeichert.",
+    "error": "Fehler",
+    "errorDesc": "Der Termin konnte nicht gespeichert werden."
+  },
+  "appointmentInfo": {
+    "scheduled": "Termin Vereinbart",
+    "dateFormat": "d. MMMM yyyy 'um' HH:mm"
   }
 }

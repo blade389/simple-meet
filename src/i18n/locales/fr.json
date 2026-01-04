@@ -408,5 +408,22 @@
     "reviewSent": "Avis envoyé",
     "thanks": "Merci pour votre avis !",
     "submitError": "Erreur lors de l'envoi de l'avis"
+  },
+  "appointmentForm": {
+    "title": "Planifier un Rendez-vous",
+    "date": "Date",
+    "time": "Heure",
+    "location": "Lieu",
+    "locationPlaceholder": "Ex: Café Central, 10 Rue Principale",
+    "submit": "Planifier le Rendez-vous",
+    "registering": "Planification...",
+    "success": "Rendez-vous planifié !",
+    "successDesc": "Le rendez-vous a été enregistré avec succès.",
+    "error": "Erreur",
+    "errorDesc": "Impossible de planifier le rendez-vous."
+  },
+  "appointmentInfo": {
+    "scheduled": "Rendez-vous Prévu",
+    "dateFormat": "d MMMM yyyy 'à' HH:mm"
   }
 }

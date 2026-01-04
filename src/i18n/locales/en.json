@@ -451,5 +451,22 @@
     "reviewSent": "Review sent!",
     "thanks": "Thank you for your feedback.",
     "submitError": "Could not submit the review."
+  },
+  "appointmentForm": {
+    "title": "Schedule Appointment",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "locationPlaceholder": "E.g.: Central Café, 10 Main Street",
+    "submit": "Schedule Appointment",
+    "registering": "Scheduling...",
+    "success": "Appointment scheduled!",
+    "successDesc": "The appointment has been saved successfully.",
+    "error": "Error",
+    "errorDesc": "Could not schedule the appointment."
+  },
+  "appointmentInfo": {
+    "scheduled": "Appointment Scheduled",
+    "dateFormat": "d MMMM yyyy 'at' HH:mm"
   }
 }

@@ -408,5 +408,22 @@
     "reviewSent": "Review verzonden",
     "thanks": "Bedankt voor je review!",
     "submitError": "Fout bij het verzenden van de review"
+  },
+  "appointmentForm": {
+    "title": "Afspraak Plannen",
+    "date": "Datum",
+    "time": "Tijd",
+    "location": "Locatie",
+    "locationPlaceholder": "Bijv.: Café Centraal, Hoofdstraat 10",
+    "submit": "Afspraak Plannen",
+    "registering": "Plannen...",
+    "success": "Afspraak gepland!",
+    "successDesc": "De afspraak is succesvol opgeslagen.",
+    "error": "Fout",
+    "errorDesc": "Kon de afspraak niet plannen."
+  },
+  "appointmentInfo": {
+    "scheduled": "Afspraak Gepland",
+    "dateFormat": "d MMMM yyyy 'om' HH:mm"
   }
 }

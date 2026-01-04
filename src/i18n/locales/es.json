@@ -408,5 +408,22 @@
     "reviewSent": "Reseña enviada",
     "thanks": "¡Gracias por tu reseña!",
     "submitError": "Error al enviar la reseña"
+  },
+  "appointmentForm": {
+    "title": "Programar Cita",
+    "date": "Fecha",
+    "time": "Hora",
+    "location": "Lugar",
+    "locationPlaceholder": "Ej: Café Central, Calle Mayor 10",
+    "submit": "Programar Cita",
+    "registering": "Programando...",
+    "success": "¡Cita programada!",
+    "successDesc": "La cita se ha guardado correctamente.",
+    "error": "Error",
+    "errorDesc": "No se pudo programar la cita."
+  },
+  "appointmentInfo": {
+    "scheduled": "Cita Programada",
+    "dateFormat": "d 'de' MMMM yyyy 'a las' HH:mm"
   }
 }

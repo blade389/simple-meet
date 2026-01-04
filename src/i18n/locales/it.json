@@ -474,5 +474,22 @@
     "reviewSent": "Recensione inviata!",
     "thanks": "Grazie per il tuo feedback.",
     "submitError": "Non è stato possibile inviare la recensione."
+  },
+  "appointmentForm": {
+    "title": "Registra Appuntamento",
+    "date": "Data",
+    "time": "Ora",
+    "location": "Luogo",
+    "locationPlaceholder": "Es: Caffè Centrale, Via Roma 10",
+    "submit": "Registra Appuntamento",
+    "registering": "Registrazione...",
+    "success": "Appuntamento registrato!",
+    "successDesc": "L'appuntamento è stato salvato con successo.",
+    "error": "Errore",
+    "errorDesc": "Non è stato possibile registrare l'appuntamento."
+  },
+  "appointmentInfo": {
+    "scheduled": "Appuntamento Fissato",
+    "dateFormat": "d MMMM yyyy 'alle' HH:mm"
   }
 }

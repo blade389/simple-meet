@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface AppointmentFormProps {
   matchRequestId: string;
@@ -15,6 +16,7 @@ interface AppointmentFormProps {
 }
 
 export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, onSuccess }: AppointmentFormProps) => {
+  const { t } = useTranslation();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
@@ -70,16 +72,16 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, on
       }).catch(err => console.log('Appointment notification error (non-blocking):', err));
 
       toast({
-        title: 'Appuntamento registrato!',
-        description: 'L\'appuntamento è stato salvato con successo.',
+        title: t('appointmentForm.success'),
+        description: t('appointmentForm.successDesc'),
       });
 
       onSuccess();
     } catch (error) {
       console.error('Error creating appointment:', error);
       toast({
-        title: 'Errore',
-        description: 'Non è stato possibile registrare l\'appuntamento.',
+        title: t('appointmentForm.error'),
+        description: t('appointmentForm.errorDesc'),
         variant: 'destructive',
       });
     } finally {
@@ -91,11 +93,11 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, on
     <Card className="p-6 mt-4">
       <div className="flex items-center gap-2 mb-4">
         <Calendar className="w-5 h-5 text-primary" />
-        <h3 className="text-lg font-semibold">Registra Appuntamento</h3>
+        <h3 className="text-lg font-semibold">{t('appointmentForm.title')}</h3>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="date">Data</Label>
+          <Label htmlFor="date">{t('appointmentForm.date')}</Label>
           <Input
             id="date"
             type="date"
@@ -106,7 +108,7 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, on
           />
         </div>
         <div>
-          <Label htmlFor="time">Ora</Label>
+          <Label htmlFor="time">{t('appointmentForm.time')}</Label>
           <Input
             id="time"
             type="time"
@@ -116,18 +118,18 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, on
           />
         </div>
         <div>
-          <Label htmlFor="location">Luogo</Label>
+          <Label htmlFor="location">{t('appointmentForm.location')}</Label>
           <Input
             id="location"
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Es: Caffè Centrale, Via Roma 10"
+            placeholder={t('appointmentForm.locationPlaceholder')}
             required
           />
         </div>
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Registrazione...' : 'Registra Appuntamento'}
+          {loading ? t('appointmentForm.registering') : t('appointmentForm.submit')}
         </Button>
       </form>
     </Card>
