@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
 import { showOneSignalPrompt, loginOneSignal, isPushEnabled } from '@/lib/onesignal';
+import LanguageSelector from '@/components/LanguageSelector';
 
 interface Profile {
   full_name: string;
@@ -279,10 +280,13 @@ const Dashboard = () => {
                   SCOPAMI
                 </h1>
               </div>
-              <Button variant="ghost" onClick={handleLogout}>
-                <LogOut className="w-4 h-4 mr-2" />
-                Esci
-              </Button>
+              <div className="flex items-center gap-2">
+                <LanguageSelector />
+                <Button variant="ghost" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Esci
+                </Button>
+              </div>
             </div>
           </div>
         </header>
@@ -326,10 +330,13 @@ const Dashboard = () => {
                 SCOPAMI
               </h1>
             </div>
-            <Button variant="ghost" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Esci
-            </Button>
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
+              <Button variant="ghost" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Esci
+              </Button>
+            </div>
           </div>
           <Button
             onClick={() => updateLocation()}

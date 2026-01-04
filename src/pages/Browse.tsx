@@ -11,6 +11,7 @@ import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
 import { toast as sonnerToast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SwipeView from '@/components/SwipeView';
+import LanguageSelector from '@/components/LanguageSelector';
 
 interface Profile {
   id: string;
@@ -573,7 +574,7 @@ const Browse = () => {
                 SCOPAMI
               </h1>
             </div>
-            <div className="w-20"></div>
+            <LanguageSelector />
           </div>
         </header>
 
@@ -698,7 +699,7 @@ const Browse = () => {
               SCOPAMI
             </h1>
           </div>
-          <div className="w-20"></div>
+          <LanguageSelector />
         </div>
       </header>
 
