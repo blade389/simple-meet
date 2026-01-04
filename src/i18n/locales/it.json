@@ -148,7 +148,9 @@
     "a6": "Dopo un incontro confermato tramite l'app, entrambi gli utenti possono lasciare una recensione. Solo gli incontri reali possono essere recensiti.",
     "q7": "Posso cancellare il mio account?",
     "a7": "Certamente. Puoi cancellare il tuo account in qualsiasi momento dalle impostazioni del profilo.",
-    "noAnswer": "Non hai trovato la risposta che cercavi?"
+    "noAnswer": "Non hai trovato la risposta che cercavi?",
+    "notFound": "Non hai trovato la risposta che cercavi?",
+    "contactSupport": "Contatta il Supporto"
   },
   "auth": {
     "login": "Accedi",

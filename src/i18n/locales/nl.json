@@ -125,6 +125,8 @@
     "a6": "Na een bevestigde ontmoeting via de app kunnen beide gebruikers een review achterlaten. Dit helpt om hoge communitykwaliteit te behouden en beloont correcte en respectvolle gebruikers. Alleen echte ontmoetingen kunnen worden beoordeeld.",
     "q7": "Kan ik mijn account verwijderen?",
     "a7": "Zeker. Je kunt je account op elk moment verwijderen via je profielinstellingen. Houd er rekening mee dat deze actie onomkeerbaar is en al je gegevens, inclusief ongebruikte tokens, verloren gaan.",
-    "noAnswer": "Heb je het antwoord dat je zocht niet gevonden?"
+    "noAnswer": "Heb je het antwoord dat je zocht niet gevonden?",
+    "notFound": "Heb je het antwoord dat je zocht niet gevonden?",
+    "contactSupport": "Neem contact op met Support"
   }
 }

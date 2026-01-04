@@ -125,6 +125,8 @@
     "a6": "Después de un encuentro confirmado a través de la app, ambos usuarios pueden dejar una reseña. Esto ayuda a mantener alta la calidad de la comunidad y premia a los usuarios correctos y respetuosos. Solo los encuentros reales pueden ser reseñados.",
     "q7": "¿Puedo eliminar mi cuenta?",
     "a7": "Por supuesto. Puedes eliminar tu cuenta en cualquier momento desde la configuración de tu perfil. Ten en cuenta que esta acción es irreversible y todos tus datos, incluidas las fichas no utilizadas, se perderán.",
-    "noAnswer": "¿No encontraste la respuesta que buscabas?"
+    "noAnswer": "¿No encontraste la respuesta que buscabas?",
+    "notFound": "¿No encontraste la respuesta que buscabas?",
+    "contactSupport": "Contactar Soporte"
   }
 }

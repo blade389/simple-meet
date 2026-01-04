@@ -125,6 +125,8 @@
     "a6": "Após um encontro confirmado através da app, ambos os utilizadores podem deixar uma avaliação. Isto ajuda a manter alta a qualidade da comunidade e recompensa os utilizadores corretos e respeitosos. Apenas encontros reais podem ser avaliados.",
     "q7": "Posso eliminar a minha conta?",
     "a7": "Certamente. Pode eliminar a sua conta a qualquer momento nas definições do seu perfil. Tenha em atenção que esta ação é irreversível e todos os seus dados, incluindo fichas não utilizadas, serão perdidos.",
-    "noAnswer": "Não encontrou a resposta que procurava?"
+    "noAnswer": "Não encontrou a resposta que procurava?",
+    "notFound": "Não encontrou a resposta que procurava?",
+    "contactSupport": "Contactar Suporte"
   }
 }
