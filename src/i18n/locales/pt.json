@@ -274,6 +274,37 @@
     "verificationRequired": "Verificação Necessária",
     "premiumProfilesVerifyDesc": "Complete a verificação da sua conta para aceder aos perfis premium"
   },
+  "howItWorks": {
+    "step1Title": "1. Verifique a sua conta",
+    "step1Desc": "Para começar, precisa verificar a sua identidade enviando um documento válido e depois uma foto de perfil. Isto garante a segurança de todos os utilizadores.",
+    "male": {
+      "receivingTitle": "Receber Pedidos",
+      "receiveRequests": "Receba pedidos de encontro diretamente das mulheres.",
+      "accept": "Aceitar",
+      "acceptDesc": "Organize o encontro gratuitamente.",
+      "reject": "Rejeitar",
+      "rejectDesc": "1 token será deduzido da sua conta.",
+      "tokenWarning": "Para receber pedidos, o seu saldo de tokens deve ser superior a 0.",
+      "premiumTitle": "Pedidos Premium",
+      "premiumDesc": "Pode enviar pedidos para encontros profissionais a perfis Premium.",
+      "premiumCost": "Cada pedido custa 1 token para a organização.",
+      "premiumPayment": "A taxa do encontro é paga diretamente em pessoa.",
+      "premiumRefund": "Se o pedido não for aceite, o token é reembolsado."
+    },
+    "female": {
+      "freeTitle": "Encontros Gratuitos",
+      "discover": "Descobrir Perfis",
+      "discoverDesc": "Encontre utilizadores que lhe agradem na secção Explorar.",
+      "sendRequest": "Envie um pedido de encontro gratuitamente.",
+      "ifAccepted": "Se aceite, será posta em contacto para marcar o encontro.",
+      "allFree": "Tudo completamente grátis.",
+      "premiumTitle": "Quer oferecer serviços? (Premium)",
+      "premiumDesc": "Pode subscrever um plano Premium para funcionalidades avançadas:",
+      "manageRates": "Gerencie as suas tarifas personalizadas.",
+      "receiveRequests": "Receba pedidos de encontro pagos.",
+      "fullControl": "Mantenha o controlo total: é sempre você quem decide aceitar ou rejeitar!"
+    }
+  },
   "browse": {
     "title": "Descobrir",
     "nearbyProfiles": "Perfis Próximos",

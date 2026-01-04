@@ -274,6 +274,37 @@
     "verificationRequired": "Verifizierung erforderlich",
     "premiumProfilesVerifyDesc": "Schließe die Verifizierung deines Kontos ab, um auf Premium-Profile zuzugreifen"
   },
+  "howItWorks": {
+    "step1Title": "1. Verifiziere dein Konto",
+    "step1Desc": "Um zu beginnen, musst du deine Identität verifizieren, indem du ein gültiges Dokument und dann ein Profilfoto einreichst. Dies gewährleistet die Sicherheit aller Benutzer.",
+    "male": {
+      "receivingTitle": "Anfragen empfangen",
+      "receiveRequests": "Erhalte Terminanfragen direkt von Frauen.",
+      "accept": "Akzeptieren",
+      "acceptDesc": "Organisiere den Termin kostenlos.",
+      "reject": "Ablehnen",
+      "rejectDesc": "1 Token wird von deinem Konto abgezogen.",
+      "tokenWarning": "Um Anfragen zu erhalten, muss dein Token-Guthaben größer als 0 sein.",
+      "premiumTitle": "Premium-Anfragen",
+      "premiumDesc": "Du kannst Anfragen für professionelle Treffen an Premium-Profile senden.",
+      "premiumCost": "Jede Anfrage kostet 1 Token für die Organisation.",
+      "premiumPayment": "Die Treffengebühr wird direkt vor Ort bezahlt.",
+      "premiumRefund": "Wenn die Anfrage nicht akzeptiert wird, wird der Token erstattet."
+    },
+    "female": {
+      "freeTitle": "Kostenlose Treffen",
+      "discover": "Profile entdecken",
+      "discoverDesc": "Finde Benutzer, die dir gefallen, im Bereich Durchsuchen.",
+      "sendRequest": "Sende eine Terminanfrage kostenlos.",
+      "ifAccepted": "Bei Annahme wirst du kontaktiert, um das Treffen zu vereinbaren.",
+      "allFree": "Alles völlig kostenlos.",
+      "premiumTitle": "Möchtest du Dienste anbieten? (Premium)",
+      "premiumDesc": "Du kannst ein Premium-Abo für erweiterte Funktionen abschließen:",
+      "manageRates": "Verwalte deine individuellen Tarife.",
+      "receiveRequests": "Erhalte kostenpflichtige Terminanfragen.",
+      "fullControl": "Behalte die volle Kontrolle: Du entscheidest immer, ob du annimmst oder ablehnst!"
+    }
+  },
   "browse": {
     "title": "Entdecken",
     "nearbyProfiles": "Profile in der Nähe",

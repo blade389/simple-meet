@@ -274,6 +274,37 @@
     "verificationRequired": "Wymagana Weryfikacja",
     "premiumProfilesVerifyDesc": "Ukończ weryfikację swojego konta, aby uzyskać dostęp do profili premium"
   },
+  "howItWorks": {
+    "step1Title": "1. Zweryfikuj swoje konto",
+    "step1Desc": "Aby rozpocząć, musisz zweryfikować swoją tożsamość, przesyłając ważny dokument, a następnie zdjęcie profilowe. Zapewnia to bezpieczeństwo wszystkich użytkowników.",
+    "male": {
+      "receivingTitle": "Odbieranie Próśb",
+      "receiveRequests": "Otrzymuj prośby o spotkanie bezpośrednio od kobiet.",
+      "accept": "Akceptuj",
+      "acceptDesc": "Zorganizuj spotkanie za darmo.",
+      "reject": "Odrzuć",
+      "rejectDesc": "1 żeton zostanie odjęty z Twojego konta.",
+      "tokenWarning": "Aby otrzymywać prośby, Twoje saldo żetonów musi być większe niż 0.",
+      "premiumTitle": "Prośby Premium",
+      "premiumDesc": "Możesz wysyłać prośby o profesjonalne spotkania do profili Premium.",
+      "premiumCost": "Każda prośba kosztuje 1 żeton za organizację.",
+      "premiumPayment": "Opłata za spotkanie jest płacona bezpośrednio osobiście.",
+      "premiumRefund": "Jeśli prośba nie zostanie zaakceptowana, żeton zostanie zwrócony."
+    },
+    "female": {
+      "freeTitle": "Darmowe Spotkania",
+      "discover": "Odkryj Profile",
+      "discoverDesc": "Znajdź użytkowników, którzy Ci się podobają, w sekcji Przeglądaj.",
+      "sendRequest": "Wyślij prośbę o spotkanie za darmo.",
+      "ifAccepted": "Jeśli zostanie zaakceptowana, zostaniesz skontaktowana, aby umówić spotkanie.",
+      "allFree": "Wszystko całkowicie za darmo.",
+      "premiumTitle": "Chcesz oferować usługi? (Premium)",
+      "premiumDesc": "Możesz subskrybować plan Premium dla zaawansowanych funkcji:",
+      "manageRates": "Zarządzaj swoimi niestandardowymi stawkami.",
+      "receiveRequests": "Otrzymuj płatne prośby o spotkanie.",
+      "fullControl": "Zachowaj pełną kontrolę: to Ty zawsze decydujesz, czy akceptujesz, czy odrzucasz!"
+    }
+  },
   "browse": {
     "title": "Odkryj",
     "nearbyProfiles": "Profile w Pobliżu",

@@ -274,6 +274,37 @@
     "verificationRequired": "Vérification Requise",
     "premiumProfilesVerifyDesc": "Complétez la vérification de votre compte pour accéder aux profils premium"
   },
+  "howItWorks": {
+    "step1Title": "1. Vérifiez votre compte",
+    "step1Desc": "Pour commencer, vous devez vérifier votre identité en soumettant un document valide puis une photo de profil. Cela garantit la sécurité de tous les utilisateurs.",
+    "male": {
+      "receivingTitle": "Réception des demandes",
+      "receiveRequests": "Recevez des demandes de rendez-vous directement des femmes.",
+      "accept": "Accepter",
+      "acceptDesc": "Organisez le rendez-vous gratuitement.",
+      "reject": "Refuser",
+      "rejectDesc": "1 jeton sera déduit de votre compte.",
+      "tokenWarning": "Pour recevoir des demandes, votre solde de jetons doit être supérieur à 0.",
+      "premiumTitle": "Demandes Premium",
+      "premiumDesc": "Vous pouvez envoyer des demandes pour des rencontres professionnelles aux profils Premium.",
+      "premiumCost": "Chaque demande coûte 1 jeton pour l'organisation.",
+      "premiumPayment": "Les frais de la rencontre sont payés directement en personne.",
+      "premiumRefund": "Si la demande n'est pas acceptée, le jeton est remboursé."
+    },
+    "female": {
+      "freeTitle": "Rencontres Gratuites",
+      "discover": "Découvrir des Profils",
+      "discoverDesc": "Trouvez des utilisateurs qui vous plaisent dans la section Parcourir.",
+      "sendRequest": "Envoyez une demande de rendez-vous gratuitement.",
+      "ifAccepted": "Si acceptée, vous serez mise en contact pour organiser la rencontre.",
+      "allFree": "Tout est entièrement gratuit.",
+      "premiumTitle": "Vous voulez offrir des services ? (Premium)",
+      "premiumDesc": "Vous pouvez vous abonner à un plan Premium pour des fonctionnalités avancées :",
+      "manageRates": "Gérez vos tarifs personnalisés.",
+      "receiveRequests": "Recevez des demandes de rendez-vous payantes.",
+      "fullControl": "Gardez le contrôle total : c'est toujours vous qui décidez d'accepter ou de refuser !"
+    }
+  },
   "browse": {
     "title": "Découvrir",
     "nearbyProfiles": "Profils à Proximité",

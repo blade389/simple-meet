@@ -274,6 +274,37 @@
     "verificationRequired": "Verification Required",
     "premiumProfilesVerifyDesc": "Complete your account verification to access premium profiles"
   },
+  "howItWorks": {
+    "step1Title": "1. Verify your account",
+    "step1Desc": "To get started, you need to verify your identity by submitting a valid document and then a profile photo. This ensures the safety of all users.",
+    "male": {
+      "receivingTitle": "Receiving Requests",
+      "receiveRequests": "Receive appointment requests directly from women.",
+      "accept": "Accept",
+      "acceptDesc": "Organize the appointment for free.",
+      "reject": "Reject",
+      "rejectDesc": "1 token will be deducted from your account.",
+      "tokenWarning": "To receive requests, your token balance must be greater than 0.",
+      "premiumTitle": "Premium Requests",
+      "premiumDesc": "You can send requests for professional meetings to Premium profiles.",
+      "premiumCost": "Each request costs 1 token for organization.",
+      "premiumPayment": "The meeting fee is paid directly in person.",
+      "premiumRefund": "If the request is not accepted, the token is refunded."
+    },
+    "female": {
+      "freeTitle": "Free Meetings",
+      "discover": "Discover Profiles",
+      "discoverDesc": "Find users you like in the Browse section.",
+      "sendRequest": "Send an appointment request for free.",
+      "ifAccepted": "If accepted, you will be put in contact to arrange the meeting.",
+      "allFree": "Everything completely free.",
+      "premiumTitle": "Want to offer services? (Premium)",
+      "premiumDesc": "You can subscribe to a Premium plan for advanced features:",
+      "manageRates": "Manage your custom rates.",
+      "receiveRequests": "Receive paid appointment requests.",
+      "fullControl": "Maintain full control: you always decide whether to accept or reject!"
+    }
+  },
   "browse": {
     "title": "Discover",
     "nearbyProfiles": "Nearby Profiles",
