@@ -36,7 +36,7 @@ i18n
       nl: { translation: nl },
       pl: { translation: pl },
     },
-    fallbackLng: 'it',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
