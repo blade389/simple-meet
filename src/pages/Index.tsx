@@ -25,29 +25,34 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-primary fill-primary" />
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              SCOPAMI
-            </h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <LanguageSelector />
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t("common.features")}
-              </a>
-              <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
-                {t("home.howItWorks")}
-              </a>
-              <Link to="/auth">
-                <Button variant="ghost">{t("common.login")}</Button>
-              </Link>
-              <Link to="/auth">
-                <Button variant="hero">{t("common.signup")}</Button>
-              </Link>
-            </nav>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo - larghezza fissa a sinistra */}
+            <div className="flex items-center gap-2 shrink-0">
+              <Heart className="w-8 h-8 text-primary fill-primary" />
+              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                SCOPAMI
+              </h1>
+            </div>
+            
+            {/* Navigazione e Language Selector - a destra */}
+            <div className="flex items-center gap-2 shrink-0">
+              <LanguageSelector />
+              <nav className="hidden md:flex items-center gap-6">
+                <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                  {t("common.features")}
+                </a>
+                <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+                  {t("home.howItWorks")}
+                </a>
+                <Link to="/auth">
+                  <Button variant="ghost" className="whitespace-nowrap">{t("common.login")}</Button>
+                </Link>
+                <Link to="/auth">
+                  <Button variant="hero" className="whitespace-nowrap">{t("common.signup")}</Button>
+                </Link>
+              </nav>
+            </div>
           </div>
         </div>
       </header>
