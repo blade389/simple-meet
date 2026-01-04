@@ -12,6 +12,7 @@ import { toast as sonnerToast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import SwipeView from '@/components/SwipeView';
 import LanguageSelector from '@/components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 interface Profile {
   id: string;

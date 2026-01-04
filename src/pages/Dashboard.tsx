@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
 import { showOneSignalPrompt, loginOneSignal, isPushEnabled } from '@/lib/onesignal';
 import LanguageSelector from '@/components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 interface Profile {
   full_name: string;
@@ -23,6 +24,7 @@ interface TokenBalance {
   amount: number;
 }
 const Dashboard = () => {
+  const { t } = useTranslation();
   const { user, signOut, isPremium } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [tokens, setTokens] = useState<TokenBalance | null>(null);
@@ -286,7 +288,7 @@ const Dashboard = () => {
                 <LanguageSelector />
                 <Button variant="ghost" onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" />
-                  Esci
+                  {t('dashboard.logout')}
                 </Button>
               </div>
             </div>
@@ -296,10 +298,10 @@ const Dashboard = () => {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h2 className="text-3xl font-bold mb-2">
-              Dashboard Admin
+              {t('dashboard.adminDashboard')}
             </h2>
             <p className="text-muted-foreground">
-              Benvenuto nel pannello di amministrazione
+              {t('dashboard.adminWelcome')}
             </p>
           </div>
 
@@ -308,9 +310,9 @@ const Dashboard = () => {
               <div className="flex items-center gap-4">
                 <Shield className="w-12 h-12" />
                 <div>
-                  <h3 className="font-semibold text-lg mb-1">Pannello Admin</h3>
+                  <h3 className="font-semibold text-lg mb-1">{t('dashboard.adminPanel')}</h3>
                   <p className="text-sm opacity-90">
-                    Gestisci le richieste di verifica e le segnalazioni
+                    {t('dashboard.adminPanelDesc')}
                   </p>
                 </div>
               </div>
@@ -336,7 +338,7 @@ const Dashboard = () => {
               <LanguageSelector />
               <Button variant="ghost" onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
-                Esci
+                {t('dashboard.logout')}
               </Button>
             </div>
           </div>
@@ -347,7 +349,7 @@ const Dashboard = () => {
             variant="outline"
           >
             <MapPin className="w-4 h-4 mr-2" />
-            {updatingLocation ? 'Aggiornamento...' : 'Aggiorna Posizione'}
+            {updatingLocation ? t('dashboard.updating') : t('dashboard.updateLocation')}
           </Button>
           {!notificationsEnabled && (
             <Button
@@ -359,7 +361,7 @@ const Dashboard = () => {
               className="w-full mt-2"
             >
               <Bell className="w-4 h-4 mr-2" />
-              Attiva Notifiche
+              {t('dashboard.enableNotifications')}
             </Button>
           )}
         </div>
@@ -369,10 +371,10 @@ const Dashboard = () => {
         <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold mb-2">
-              Ciao, {profile?.full_name || 'Utente'}!
+              {t('dashboard.welcome')}, {profile?.full_name || 'Utente'}!
             </h2>
             <p className="text-muted-foreground">
-              Benvenuto nella tua dashboard
+              {t('dashboard.welcomeSubtitle')}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -387,10 +389,10 @@ const Dashboard = () => {
               <MapPin className="w-8 h-8 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
               <div className="flex-1">
                 <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                  Attiva la Geolocalizzazione
+                  {t('dashboard.enableLocation')}
                 </h3>
                 <p className="text-blue-800 dark:text-blue-200 text-sm mb-4">
-                  Per vedere i profili vicino a te e permettere agli altri di trovarti, attiva la geolocalizzazione cliccando il pulsante qui sotto.
+                  {t('dashboard.enableLocationDesc')}
                 </p>
                 <Button 
                   onClick={() => updateLocation()}
@@ -398,7 +400,7 @@ const Dashboard = () => {
                   variant="default"
                 >
                   <MapPin className="w-4 h-4 mr-2" />
-                  {updatingLocation ? 'Attivazione...' : 'Attiva Posizione'}
+                  {updatingLocation ? t('dashboard.activating') : t('dashboard.activateLocation')}
                 </Button>
               </div>
             </div>
@@ -411,13 +413,13 @@ const Dashboard = () => {
               <Shield className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
               <div className="flex-1">
                 <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                  Verifica Identità Richiesta
+                  {t('dashboard.verifyIdentity')}
                 </h3>
                 <p className="text-yellow-800 dark:text-yellow-200 text-sm mb-4">
-                  Per utilizzare tutte le funzionalità dell'app, completa la verifica della tua identità.
+                  {t('dashboard.verifyIdentityDesc')}
                 </p>
                 <Button variant="default" asChild>
-                  <Link to="/verify">Completa Verifica</Link>
+                  <Link to="/verify">{t('dashboard.completeVerify')}</Link>
                 </Button>
               </div>
             </div>
@@ -428,11 +430,11 @@ const Dashboard = () => {
           <Card className="p-6 mb-6 bg-gradient-primary text-white">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold mb-1">I Tuoi Gettoni</h3>
+                <h3 className="text-lg font-semibold mb-1">{t('dashboard.tokenBalance')}</h3>
                 <p className="text-2xl font-bold">{tokens.amount}</p>
               </div>
               <Button variant="secondary" size="lg" asChild>
-                <Link to="/buy-tokens">Acquista Gettoni</Link>
+                <Link to="/buy-tokens">{t('dashboard.buyTokens')}</Link>
               </Button>
             </div>
           </Card>
@@ -450,12 +452,12 @@ const Dashboard = () => {
                 )}
               </div>
               <h3 className="font-semibold text-lg mb-2">
-                {profile?.gender === 'female' ? 'Scopri Profili' : 'Richieste'}
+                {profile?.gender === 'female' ? t('dashboard.discoverProfiles') : t('dashboard.incomingRequests')}
               </h3>
               <p className="text-sm text-muted-foreground">
                 {profile?.gender === 'female'
-                  ? 'Trova persone interessanti nella tua zona'
-                  : 'Gestisci le richieste ricevute'}
+                  ? t('dashboard.discoverProfilesDesc')
+                  : t('dashboard.incomingRequestsDesc')}
               </p>
             </Link>
           </Card>
@@ -470,9 +472,9 @@ const Dashboard = () => {
                   </Badge>
                 )}
               </div>
-              <h3 className="font-semibold text-lg mb-2">Appuntamenti</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('dashboard.myAppointments')}</h3>
               <p className="text-sm text-muted-foreground">
-                I tuoi incontri programmati
+                {t('dashboard.myAppointmentsDesc')}
               </p>
             </Link>
           </Card>
@@ -480,9 +482,9 @@ const Dashboard = () => {
           <Card className="p-6 hover:shadow-glow transition-shadow">
             <Link to="/profile" className="block">
               <Heart className="w-12 h-12 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Il Mio Profilo</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('dashboard.myProfile')}</h3>
               <p className="text-sm text-muted-foreground">
-                Gestisci le tue informazioni
+                {t('dashboard.myProfileDesc')}
               </p>
             </Link>
           </Card>
@@ -497,9 +499,9 @@ const Dashboard = () => {
                   </Badge>
                 )}
               </div>
-              <h3 className="font-semibold text-lg mb-2">I Miei Preferiti</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('dashboard.favorites')}</h3>
               <p className="text-sm text-muted-foreground">
-                Profili salvati nei preferiti
+                {t('dashboard.favoritesDesc')}
               </p>
             </Link>
           </Card>
