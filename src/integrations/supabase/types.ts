@@ -360,6 +360,7 @@ export type Database = {
           subscription_end: string | null
           subscription_status: string | null
           updated_at: string | null
+          verification_reminder_sent: boolean | null
         }
         Insert: {
           age_preferences_unlocked?: boolean | null
@@ -390,6 +391,7 @@ export type Database = {
           subscription_end?: string | null
           subscription_status?: string | null
           updated_at?: string | null
+          verification_reminder_sent?: boolean | null
         }
         Update: {
           age_preferences_unlocked?: boolean | null
@@ -420,6 +422,7 @@ export type Database = {
           subscription_end?: string | null
           subscription_status?: string | null
           updated_at?: string | null
+          verification_reminder_sent?: boolean | null
         }
         Relationships: []
       }
