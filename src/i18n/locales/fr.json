@@ -372,5 +372,41 @@
     "none": "Aucun",
     "yes": "Oui",
     "no": "Non"
+  },
+  "matchChat": {
+    "chatWith": "Chat avec",
+    "scheduleAppointment": "Planifier un Rendez-vous",
+    "sendMessage": "Envoyer un message...",
+    "sending": "Envoi...",
+    "noMessages": "Pas encore de messages. Commencez la conversation !",
+    "loadingMessages": "Chargement des messages..."
+  },
+  "profileDialog": {
+    "verified": "Vérifié",
+    "premium": "Premium",
+    "years": "ans",
+    "positiveReviews": "avis positifs",
+    "negativeReviews": "avis négatifs",
+    "noReviews": "Pas encore d'avis",
+    "close": "Fermer"
+  },
+  "reviewForm": {
+    "leaveReviewFor": "Laisser un avis pour",
+    "reviewTimeLimit": "Vous avez 48 heures après le rendez-vous pour laisser un avis. Après ce délai, vous ne pourrez plus laisser d'avis.",
+    "howWasIt": "Comment s'est passée l'expérience ?",
+    "commentOptional": "Commentaire (optionnel)",
+    "addComment": "Ajoutez un commentaire sur votre expérience...",
+    "reportBehavior": "Signaler un comportement inapproprié",
+    "reportDescription": "Sélectionnez si vous souhaitez signaler un comportement inapproprié ou une violation de nos règles.",
+    "reportReason": "Motif du signalement",
+    "reportReasonPlaceholder": "Décrivez en détail ce qui s'est passé...",
+    "sending": "Envoi...",
+    "submit": "Envoyer l'avis",
+    "error": "Erreur",
+    "selectRating": "Sélectionnez une évaluation",
+    "enterReportReason": "Entrez le motif du signalement",
+    "reviewSent": "Avis envoyé",
+    "thanks": "Merci pour votre avis !",
+    "submitError": "Erreur lors de l'envoi de l'avis"
   }
 }
