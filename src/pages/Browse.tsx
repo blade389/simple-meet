@@ -42,7 +42,7 @@ interface MatchRequest {
   sender_profile?: Profile;
 }
 
-const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?: string }) => {
+const RequestTimer = ({ createdAt, expiresAt, t }: { createdAt: string; expiresAt?: string; t: (key: string) => string }) => {
   const [timeLeft, setTimeLeft] = useState<string>("");
   const [isExpired, setIsExpired] = useState(false);
 
@@ -53,7 +53,7 @@ const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?:
         expires = new Date(expiresAt).getTime();
       } else {
         const created = new Date(createdAt).getTime();
-        expires = created + 1 * 60 * 60 * 1000; // 1 hour for testing (was 48 hours)
+        expires = created + 1 * 60 * 60 * 1000;
       }
 
       const now = new Date().getTime();
@@ -61,7 +61,7 @@ const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?:
 
       if (difference <= 0) {
         setIsExpired(true);
-        setTimeLeft("Scaduta");
+        setTimeLeft(t('browse.expired'));
         return;
       }
 
@@ -81,11 +81,11 @@ const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?:
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, [createdAt, expiresAt]);
+  }, [createdAt, expiresAt, t]);
 
   return (
     <div className={`text-sm font-medium mb-1 text-center ${isExpired ? 'text-destructive' : 'text-orange-500'}`}>
-      {isExpired ? "Richiesta Scaduta" : `Scade in: ${timeLeft}`}
+      {isExpired ? t('browse.expiredRequest') : `${t('browse.expiresIn')}: ${timeLeft}`}
     </div>
   );
 };
@@ -93,6 +93,7 @@ const RequestTimer = ({ createdAt, expiresAt }: { createdAt: string; expiresAt?:
 const Browse = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [matchRequests, setMatchRequests] = useState<MatchRequest[]>([]);
@@ -170,8 +171,8 @@ const Browse = () => {
       }
     } catch (error: any) {
       toast({
-        title: "Errore",
-        description: "Impossibile caricare il profilo",
+        title: t('common2.error'),
+        description: t('browse.loadProfileError'),
         variant: "destructive"
       });
     } finally {
@@ -182,8 +183,8 @@ const Browse = () => {
   const loadNearbyProfiles = async (myProfile: Profile) => {
     if (!myProfile.location_lat || !myProfile.location_lon) {
       toast({
-        title: "Posizione non disponibile",
-        description: "Aggiorna la tua posizione dal dashboard per vedere i profili vicini",
+        title: t('browse.locationNotAvailable'),
+        description: t('browse.updateLocationMessage'),
         variant: "destructive"
       });
       return;
@@ -256,8 +257,8 @@ const Browse = () => {
       }
     } catch (error: any) {
       toast({
-        title: "Errore",
-        description: "Impossibile caricare i profili",
+        title: t('common2.error'),
+        description: t('browse.loadProfilesError'),
         variant: "destructive"
       });
     }
@@ -324,8 +325,8 @@ const Browse = () => {
       setMatchRequests(requestsWithProfiles);
     } catch (error: any) {
       toast({
-        title: "Errore",
-        description: "Impossibile caricare le richieste",
+        title: t('common2.error'),
+        description: t('browse.loadRequestsError'),
         variant: "destructive"
       });
     }
@@ -344,8 +345,8 @@ const Browse = () => {
 
       if (blockCheck) {
         toast({
-          title: "Impossibile inviare la richiesta",
-          description: "Non puoi inviare richieste a questo utente.",
+          title: t('browse.cannotSendRequest'),
+          description: t('browse.blockedByUser'),
           variant: "destructive"
         });
         // Remove from visible profiles
@@ -367,8 +368,8 @@ const Browse = () => {
 
       if (existingRequest) {
         toast({
-          title: "Richiesta già inviata",
-          description: "Hai già una richiesta in attesa per questo utente.",
+          title: t('favorites.requestAlreadySent'),
+          description: t('favorites.alreadyPendingRequest'),
           variant: "destructive"
         });
         setSendingRequest(null);
@@ -400,13 +401,13 @@ const Browse = () => {
       }
 
       toast({
-        title: "Richiesta inviata",
-        description: "La tua richiesta è stata inviata con successo"
+        title: t('browse.requestSentTitle'),
+        description: t('browse.requestSentDesc')
       });
       setSentRequests(prev => [...prev, receiverId]);
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -489,7 +490,7 @@ const Browse = () => {
         if (tokenFetchError) throw tokenFetchError;
 
         if (tokenData.amount < 1) {
-          throw new Error("Non hai abbastanza gettoni");
+          throw new Error(t('profile.notEnoughTokens'));
         }
 
         const { error: tokenUpdateError } = await supabase
@@ -530,20 +531,20 @@ const Browse = () => {
       }
 
       toast({
-        title: action === 'accepted' ? "Richiesta accettata" : blockUser ? "Utente bloccato" : "Richiesta rifiutata",
+        title: action === 'accepted' ? t('browse.requestAccepted') : blockUser ? t('browse.userBlocked') : t('browse.requestRejected'),
         description: action === 'accepted'
-          ? "Puoi procedere a fissare un appuntamento"
+          ? t('browse.canProceedAppointment')
           : blockUser
-            ? "L'utente è stato bloccato e non potrà più inviarti richieste"
+            ? t('browse.userBlockedDesc')
             : requestData.is_premium && myProfile?.is_premium
-              ? "La richiesta premium è stata rifiutata e il gettone è stato rimborsato"
-              : "La richiesta è stata rifiutata"
+              ? t('browse.premiumRejectedRefunded')
+              : t('browse.requestRejectedDesc')
       });
 
       loadMatchRequests();
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -555,7 +556,7 @@ const Browse = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
-        <p className="text-lg">Caricamento...</p>
+        <p className="text-lg">{t('common2.loading')}</p>
       </div>
     );
   }
@@ -580,12 +581,12 @@ const Browse = () => {
         </header>
 
         <main className="container mx-auto px-4 py-8">
-          <h2 className="text-3xl font-bold mb-6">Richieste Ricevute</h2>
+          <h2 className="text-3xl font-bold mb-6">{t('browse.incomingRequests')}</h2>
 
           {matchRequests.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-muted-foreground">
-                Non hai ancora ricevuto richieste
+                {t('browse.noRequestsFound')}
               </p>
             </Card>
           ) : (
@@ -624,13 +625,13 @@ const Browse = () => {
                     <CardDescription className="text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Calendar className="w-4 h-4" />
-                        {request.sender_profile?.birth_date && calculateAge(request.sender_profile.birth_date)} anni
+                        {request.sender_profile?.birth_date && calculateAge(request.sender_profile.birth_date)} {t('browse.years')}
                       </div>
                       <div className="flex items-center justify-center gap-2">
                         <MapPin className="w-4 h-4" />
                         {request.sender_profile?.distance !== undefined 
-                          ? `${request.sender_profile.distance.toFixed(1)} km`
-                          : 'Distanza non disponibile'}
+                          ? `${request.sender_profile.distance.toFixed(1)} ${t('browse.km')}`
+                          : t('browse.distanceNotAvailable')}
                       </div>
                     </CardDescription>
                   </CardHeader>
@@ -641,7 +642,7 @@ const Browse = () => {
                       </p>
                     )}
                     <div className="flex flex-col gap-2">
-                      <RequestTimer createdAt={request.created_at} expiresAt={request.expires_at} />
+                      <RequestTimer createdAt={request.created_at} expiresAt={request.expires_at} t={t} />
                       <Button
                         onClick={() => respondToRequest(request.id, 'accepted', false)}
                         disabled={respondingToRequest === request.id}
@@ -649,7 +650,7 @@ const Browse = () => {
                         variant="default"
                       >
                         <Heart className="w-4 h-4 mr-2" />
-                        Accetta
+                        {t('browse.accept')}
                       </Button>
                       <div className="flex gap-2">
                         <Button
@@ -658,7 +659,7 @@ const Browse = () => {
                           className="flex-1"
                           variant="outline"
                         >
-                          Rifiuta
+                          {t('browse.reject')}
                         </Button>
                         <Button
                           onClick={() => respondToRequest(request.id, 'rejected', true)}
@@ -666,7 +667,7 @@ const Browse = () => {
                           className="flex-1"
                           variant="destructive"
                         >
-                          Rifiuta e Blocca
+                          {t('browse.rejectAndBlock')}
                         </Button>
                       </div>
                     </div>
@@ -707,19 +708,19 @@ const Browse = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-6">Profili Vicini</h2>
+        <h2 className="text-3xl font-bold mb-6">{t('browse.nearbyProfiles')}</h2>
 
         <Tabs defaultValue="grid" className="w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
-            <TabsTrigger value="grid">Griglia</TabsTrigger>
-            <TabsTrigger value="swipe">Swipe</TabsTrigger>
+            <TabsTrigger value="grid">{t('browse.grid')}</TabsTrigger>
+            <TabsTrigger value="swipe">{t('browse.swipe')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="grid">
             {profiles.length === 0 ? (
               <Card className="p-8 text-center">
                 <p className="text-muted-foreground">
-                  Nessun profilo trovato nel raggio di 20 km
+                  {t('browse.noProfilesFound')}
                 </p>
               </Card>
             ) : (
@@ -764,11 +765,11 @@ const Browse = () => {
                       <CardDescription className="text-center">
                         <div className="flex items-center justify-center gap-2 mb-2">
                           <Calendar className="w-4 h-4" />
-                          {calculateAge(profile.birth_date)} anni
+                          {calculateAge(profile.birth_date)} {t('browse.years')}
                         </div>
                         <div className="flex items-center justify-center gap-2">
                           <MapPin className="w-4 h-4" />
-                          {profile.distance?.toFixed(1)} km
+                          {profile.distance?.toFixed(1)} {t('browse.km')}
                         </div>
                       </CardDescription>
                     </CardHeader>
@@ -784,7 +785,7 @@ const Browse = () => {
                         className="w-full"
                       >
                         <Heart className="w-4 h-4 mr-2" />
-                        {sendingRequest === profile.id ? 'Invio...' : sentRequests.includes(profile.id) ? 'Richiesta Inviata' : 'Invia Richiesta'}
+                        {sendingRequest === profile.id ? t('browse.sending') : sentRequests.includes(profile.id) ? t('browse.requestSent') : t('browse.sendRequest')}
                       </Button>
                     </CardContent>
                   </Card>

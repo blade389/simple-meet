@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from 'react-i18next';
 
 interface Profile {
   id: string;
@@ -43,6 +44,7 @@ const Favorites = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
@@ -127,8 +129,8 @@ const Favorites = () => {
     } catch (error) {
       console.error('Error loading favorites:', error);
       toast({
-        title: 'Errore',
-        description: 'Impossibile caricare i preferiti',
+        title: t('common2.error'),
+        description: t('favorites.loadError'),
         variant: 'destructive',
       });
     } finally {
@@ -149,14 +151,14 @@ const Favorites = () => {
 
       setFavorites(prev => prev.filter(f => f.id !== favoriteId));
       toast({
-        title: 'Rimosso dai preferiti',
-        description: 'Il profilo è stato rimosso dai tuoi preferiti',
+        title: t('favorites.removedFromFavorites'),
+        description: t('favorites.profileRemoved'),
       });
     } catch (error) {
       console.error('Error removing favorite:', error);
       toast({
-        title: 'Errore',
-        description: 'Impossibile rimuovere il preferito',
+        title: t('common2.error'),
+        description: t('favorites.removeError'),
         variant: 'destructive',
       });
     } finally {
@@ -191,8 +193,8 @@ const Favorites = () => {
 
       if (existingRequest) {
         toast({
-          title: "Richiesta già inviata",
-          description: "Hai già una richiesta in attesa per questo utente.",
+          title: t('favorites.requestAlreadySent'),
+          description: t('favorites.alreadyPendingRequest'),
           variant: "destructive"
         });
         return;
@@ -222,13 +224,13 @@ const Favorites = () => {
       }
 
       toast({
-        title: "Richiesta inviata",
-        description: "La tua richiesta è stata inviata con successo"
+        title: t('browse.requestSentTitle'),
+        description: t('browse.requestSentDesc')
       });
       setSentRequests(prev => [...prev, receiverId]);
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -271,8 +273,8 @@ const Favorites = () => {
       if (tokenError) throw tokenError;
       if (!tokenData || tokenData.amount < 1) {
         toast({
-          title: "Gettoni insufficienti",
-          description: "Hai bisogno di almeno 1 gettone per inviare una richiesta premium.",
+          title: t('profile.notEnoughTokensTitle'),
+          description: t('favorites.needOneToken'),
           variant: "destructive"
         });
         return;
@@ -289,8 +291,8 @@ const Favorites = () => {
 
       if (existingRequest) {
         toast({
-          title: "Richiesta già inviata",
-          description: "Hai già una richiesta in attesa per questo utente.",
+          title: t('favorites.requestAlreadySent'),
+          description: t('favorites.alreadyPendingRequest'),
           variant: "destructive"
         });
         return;
@@ -339,8 +341,8 @@ const Favorites = () => {
       }
 
       toast({
-        title: "Richiesta premium inviata",
-        description: "La tua richiesta premium è stata inviata con successo"
+        title: t('favorites.premiumRequestSent'),
+        description: t('favorites.premiumRequestSentDesc')
       });
       setSentRequests(prev => [...prev, selectedPremiumProfile.id]);
       setPremiumDialogOpen(false);
@@ -348,7 +350,7 @@ const Favorites = () => {
       setSelectedRateId('');
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -390,10 +392,10 @@ const Favorites = () => {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <Heart className="h-8 w-8 text-primary fill-primary" />
-              I Miei Preferiti
+              {t('favorites.title')}
             </h1>
             <p className="text-muted-foreground">
-              {favorites.length} {favorites.length === 1 ? 'profilo salvato' : 'profili salvati'}
+              {favorites.length} {favorites.length === 1 ? t('favorites.savedProfile') : t('favorites.savedProfiles')}
             </p>
           </div>
         </div>
@@ -402,9 +404,9 @@ const Favorites = () => {
           <Card>
             <CardContent className="py-12 text-center">
               <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground text-lg mb-4">Non hai ancora aggiunto preferiti</p>
+              <p className="text-muted-foreground text-lg mb-4">{t('favorites.noFavorites')}</p>
               <Button asChild>
-                <Link to="/browse">Scopri Profili</Link>
+                <Link to="/browse">{t('favorites.discoverProfiles')}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -461,12 +463,12 @@ const Favorites = () => {
                       <span className="text-sm font-medium">{favorite.profile.negative_reviews_count || 0}</span>
                     </div>
                   </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {favorite.profile.distance !== undefined 
-                      ? `${favorite.profile.distance.toFixed(1)} km`
-                      : 'Distanza non disponibile'}
-                  </div>
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {favorite.profile.distance !== undefined 
+                        ? `${favorite.profile.distance.toFixed(1)} ${t('browse.km')}`
+                        : t('browse.distanceNotAvailable')}
+                    </div>
                 </CardHeader>
                 <CardContent>
                   {favorite.profile.bio && (
@@ -489,11 +491,11 @@ const Favorites = () => {
                       {sendingRequest === favorite.profile.id ? (
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
                       ) : sentRequests.includes(favorite.profile.id) ? (
-                        "Richiesta inviata"
+                        t('browse.requestSent')
                       ) : (
                         <>
                           <Send className="h-4 w-4 mr-2" />
-                          {myProfile?.gender === 'male' ? 'Invia Richiesta Premium' : 'Invia Richiesta'}
+                          {myProfile?.gender === 'male' ? t('favorites.sendPremiumRequest') : t('favorites.sendRequest')}
                         </>
                       )}
                     </Button>
@@ -526,13 +528,12 @@ const Favorites = () => {
         />
       )}
 
-      {/* Premium Request Dialog for Male Users */}
       <Dialog open={premiumDialogOpen} onOpenChange={setPremiumDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Invia Richiesta Premium</DialogTitle>
+            <DialogTitle>{t('favorites.sendPremiumRequest')}</DialogTitle>
             <DialogDescription>
-              Seleziona una tariffa per inviare la richiesta a {selectedPremiumProfile?.full_name}
+              {t('favorites.selectRateDesc')} {selectedPremiumProfile?.full_name}
             </DialogDescription>
           </DialogHeader>
           
@@ -542,15 +543,15 @@ const Favorites = () => {
             </div>
           ) : premiumRates.length === 0 ? (
             <p className="text-center text-muted-foreground py-4">
-              Questo profilo non ha ancora configurato le tariffe.
+              {t('favorites.noRatesAvailable')}
             </p>
           ) : (
             <div className="space-y-4">
               <div>
-                <Label>Seleziona tariffa</Label>
+                <Label>{t('favorites.selectRate')}</Label>
                 <Select value={selectedRateId} onValueChange={setSelectedRateId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Scegli una tariffa" />
+                    <SelectValue placeholder={t('favorites.selectRate')} />
                   </SelectTrigger>
                   <SelectContent>
                     {premiumRates.map(rate => (
@@ -566,7 +567,7 @@ const Favorites = () => {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setPremiumDialogOpen(false)}>
-              Annulla
+              {t('favorites.cancel')}
             </Button>
             <Button 
               onClick={sendPremiumRequest}
@@ -575,7 +576,7 @@ const Favorites = () => {
               {sendingRequest === selectedPremiumProfile?.id ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
               ) : null}
-              Invia Richiesta (1 gettone)
+              {t('favorites.send')} (1 {t('dashboard.tokens').toLowerCase().slice(0, -1)})
             </Button>
           </DialogFooter>
         </DialogContent>

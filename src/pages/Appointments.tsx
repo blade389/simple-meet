@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { MatchChat } from '@/components/MatchChat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 interface AcceptedMatch {
   id: string;
@@ -26,6 +27,7 @@ interface AcceptedMatch {
 }
 
 const Appointments = () => {
+  const { t } = useTranslation();
   const [acceptedMatches, setAcceptedMatches] = useState<AcceptedMatch[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string>('');
   const [selectedMatch, setSelectedMatch] = useState<string | null>(null);
@@ -125,12 +127,12 @@ const Appointments = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-6">I Miei Appuntamenti</h2>
+        <h2 className="text-3xl font-bold mb-6">{t('appointments.title')}</h2>
 
         {loading ? (
           <div className="max-w-4xl mx-auto">
             <Card className="p-8 text-center">
-              <p className="text-muted-foreground">Caricamento...</p>
+              <p className="text-muted-foreground">{t('common2.loading')}</p>
             </Card>
           </div>
         ) : acceptedMatches.length === 0 ? (
@@ -138,7 +140,7 @@ const Appointments = () => {
             <Card className="p-8 text-center">
               <MessageCircle className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
               <p className="text-muted-foreground">
-                Nessun match accettato. Vai su Browse per trovare persone!
+                {t('appointments.noAppointments')}
               </p>
             </Card>
           </div>
