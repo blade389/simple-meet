@@ -6,6 +6,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const FAQ = () => {
     const faqs = [
@@ -49,6 +50,7 @@ const FAQ = () => {
         />
         <StructuredData schema={{ type: "FAQPage", faqs }} />
         <div className="min-h-screen bg-background p-6 md:p-12">
+            <Breadcrumbs />
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
                     <Link to="/">

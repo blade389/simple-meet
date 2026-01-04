@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Coins, Crown, Check, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const Pricing = () => {
     const tokenPackages = [
@@ -60,6 +61,7 @@ const Pricing = () => {
             keywords="prezzi dating app, costo gettoni, abbonamento premium, scopami prezzi"
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
+            <Breadcrumbs />
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
                     <Link to="/">
