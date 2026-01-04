@@ -35,7 +35,19 @@
     "feature4Title": "Real Reviews",
     "feature4Desc": "After every meeting, leave a review. A transparent feedback system that rewards proper behavior.",
     "ctaTitle": "Ready to Change the Rules of the Game?",
-    "ctaDescription": "Join thousands of people who have already discovered a new way of dating. Authentic, respectful, exciting."
+    "ctaDescription": "Join thousands of people who have already discovered a new way of dating. Authentic, respectful, exciting.",
+    "howItWorksTitle": "How It Works",
+    "howItWorksSubtitle": "Three simple steps to start your adventure",
+    "step1Title": "Sign Up",
+    "step1Desc": "Create your profile, upload a photo and verify your identity",
+    "step2Title": "Connect",
+    "step2Desc": "Browse profiles in your area and send meeting requests",
+    "step3Title": "Meet",
+    "step3Desc": "Organize your meeting and leave a review afterwards",
+    "footerTagline": "The dating app that puts women in command",
+    "activeUsers": "Active Users",
+    "successfulMeetings": "Successful Meetings",
+    "averageRating": "Average Rating"
   },
   "about": {
     "heroTitle": "We Revolutionize the Way of",

@@ -35,7 +35,19 @@
     "feature4Title": "Avaliações Reais",
     "feature4Desc": "Após cada encontro, deixe uma avaliação. Um sistema de feedback transparente que recompensa o comportamento correto.",
     "ctaTitle": "Pronto para Mudar as Regras do Jogo?",
-    "ctaDescription": "Junte-se a milhares de pessoas que já descobriram uma nova forma de encontros. Autêntico, respeitoso, emocionante."
+    "ctaDescription": "Junte-se a milhares de pessoas que já descobriram uma nova forma de encontros. Autêntico, respeitoso, emocionante.",
+    "howItWorksTitle": "Como Funciona",
+    "howItWorksSubtitle": "Três passos simples para começar a sua aventura",
+    "step1Title": "Registe-se",
+    "step1Desc": "Crie o seu perfil, carregue uma foto e verifique a sua identidade",
+    "step2Title": "Conecte-se",
+    "step2Desc": "Explore perfis na sua zona e envie pedidos de encontro",
+    "step3Title": "Encontre-se",
+    "step3Desc": "Organize o seu encontro e deixe uma avaliação depois",
+    "footerTagline": "A app de encontros que coloca as mulheres no comando",
+    "activeUsers": "Utilizadores Ativos",
+    "successfulMeetings": "Encontros Bem-sucedidos",
+    "averageRating": "Avaliação Média"
   },
   "about": {
     "heroTitle": "Revolucionamos a Forma de",

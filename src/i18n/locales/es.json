@@ -35,7 +35,19 @@
     "feature4Title": "Reseñas Reales",
     "feature4Desc": "Después de cada encuentro, deja una reseña. Un sistema de feedback transparente que premia el comportamiento correcto.",
     "ctaTitle": "¿Listo para Cambiar las Reglas del Juego?",
-    "ctaDescription": "Únete a miles de personas que ya han descubierto una nueva forma de tener citas. Auténtico, respetuoso, emocionante."
+    "ctaDescription": "Únete a miles de personas que ya han descubierto una nueva forma de tener citas. Auténtico, respetuoso, emocionante.",
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksSubtitle": "Tres simples pasos para comenzar tu aventura",
+    "step1Title": "Regístrate",
+    "step1Desc": "Crea tu perfil, sube una foto y verifica tu identidad",
+    "step2Title": "Conéctate",
+    "step2Desc": "Explora perfiles en tu zona y envía solicitudes de encuentro",
+    "step3Title": "Encuéntrate",
+    "step3Desc": "Organiza tu encuentro y deja una reseña después",
+    "footerTagline": "La app de citas que pone a las mujeres al mando",
+    "activeUsers": "Usuarios Activos",
+    "successfulMeetings": "Encuentros Exitosos",
+    "averageRating": "Calificación Promedio"
   },
   "about": {
     "heroTitle": "Revolucionamos la Forma de",

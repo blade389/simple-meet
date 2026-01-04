@@ -35,7 +35,19 @@
     "feature4Title": "Avis Réels",
     "feature4Desc": "Après chaque rencontre, laissez un avis. Un système de feedback transparent qui récompense les comportements corrects.",
     "ctaTitle": "Prêt à Changer les Règles du Jeu ?",
-    "ctaDescription": "Rejoignez des milliers de personnes qui ont déjà découvert une nouvelle façon de faire des rencontres. Authentique, respectueux, excitant."
+    "ctaDescription": "Rejoignez des milliers de personnes qui ont déjà découvert une nouvelle façon de faire des rencontres. Authentique, respectueux, excitant.",
+    "howItWorksTitle": "Comment Ça Marche",
+    "howItWorksSubtitle": "Trois étapes simples pour commencer votre aventure",
+    "step1Title": "Inscrivez-vous",
+    "step1Desc": "Créez votre profil, téléchargez une photo et vérifiez votre identité",
+    "step2Title": "Connectez-vous",
+    "step2Desc": "Parcourez les profils de votre région et envoyez des demandes de rencontre",
+    "step3Title": "Rencontrez",
+    "step3Desc": "Organisez votre rencontre et laissez un avis après",
+    "footerTagline": "L'app de rencontres qui met les femmes aux commandes",
+    "activeUsers": "Utilisateurs Actifs",
+    "successfulMeetings": "Rencontres Réussies",
+    "averageRating": "Note Moyenne"
   },
   "about": {
     "heroTitle": "Nous Révolutionnons la Façon de",
