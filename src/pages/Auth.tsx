@@ -121,6 +121,21 @@ const Auth = () => {
         if (tokenError) throw tokenError;
       }
 
+      // Send welcome email
+      try {
+        await supabase.functions.invoke('send-welcome-email', {
+          body: {
+            email: validated.email,
+            name: validated.name,
+            gender: validated.gender
+          }
+        });
+        console.log('Welcome email sent successfully');
+      } catch (emailError) {
+        console.error('Error sending welcome email:', emailError);
+        // Don't fail registration if email fails
+      }
+
       toast.success("Registrazione completata! Accedi per continuare.");
       // Switch to login tab
       const loginTab = document.querySelector('[value="login"]') as HTMLButtonElement;
