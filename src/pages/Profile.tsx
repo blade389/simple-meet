@@ -11,10 +11,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import LanguageSelector from '@/components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
@@ -56,8 +58,8 @@ const Profile = () => {
   const handleUnlockAgePreferences = async () => {
     if (tokens < 2) {
       toast({
-        title: "Gettoni insufficienti",
-        description: "Hai bisogno di 2 gettoni per sbloccare le preferenze età",
+        title: t('profile.notEnoughTokensTitle'),
+        description: t('profile.need2Tokens'),
         variant: "destructive"
       });
       return;
@@ -82,15 +84,15 @@ const Profile = () => {
       if (profileError) throw profileError;
 
       toast({
-        title: "Preferenze sbloccate!",
-        description: "Ora puoi modificare le tue preferenze di età"
+        title: t('profile.preferencesUnlocked'),
+        description: t('profile.preferencesUnlockedDesc')
       });
 
       setTokens(tokens - 2);
       loadProfile();
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -118,8 +120,8 @@ const Profile = () => {
       });
     } catch (error: any) {
       toast({
-        title: "Errore",
-        description: "Impossibile caricare il profilo",
+        title: t('common2.error'),
+        description: t('browse.loadProfileError'),
         variant: "destructive"
       });
     }
@@ -143,13 +145,13 @@ const Profile = () => {
       if (error) throw error;
 
       toast({
-        title: "Profilo aggiornato",
-        description: "Le modifiche sono state salvate con successo"
+        title: t('profile.profileUpdated'),
+        description: t('profile.changesSaved')
       });
       loadProfile();
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -181,8 +183,8 @@ const Profile = () => {
     // Check if account is verified
     if (profile?.is_verified !== 'verified') {
       toast({
-        title: "Account non verificato",
-        description: "Devi prima verificare il tuo account per caricare foto",
+        title: t('profile.accountNotVerified'),
+        description: t('profile.verifyAccountFirst'),
         variant: "destructive"
       });
       return;
@@ -221,13 +223,13 @@ const Profile = () => {
       await Promise.all(uploadPromises);
 
       toast({
-        title: "Foto caricate",
-        description: `${files.length} foto ${files.length === 1 ? 'è stata inviata' : 'sono state inviate'} per la verifica`
+        title: t('profile.photoUploaded'),
+        description: `${files.length} ${files.length === 1 ? t('profile.photoSubmitted') : t('profile.photosSubmitted')}`
       });
       loadPhotos();
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -253,14 +255,14 @@ const Profile = () => {
       if (error) throw error;
 
       toast({
-        title: "Foto principale aggiornata",
-        description: "La foto principale è stata modificata"
+        title: t('profile.primaryPhotoUpdated'),
+        description: t('profile.primaryPhotoChanged')
       });
       loadPhotos();
       loadProfile();
     } catch (error: any) {
       toast({
-        title: "Errore",
+        title: t('common2.error'),
         description: error.message,
         variant: "destructive"
       });
@@ -268,17 +270,17 @@ const Profile = () => {
   };
 
   const getVerificationStatus = () => {
-    if (!profile?.is_verified) return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
-    if (profile.is_verified === 'verified') return { icon: CheckCircle, text: 'Verificato', color: 'text-green-600' };
-    if (profile.is_verified === 'rejected') return { icon: XCircle, text: 'Rifiutato', color: 'text-red-600' };
-    return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
+    if (!profile?.is_verified) return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
+    if (profile.is_verified === 'verified') return { icon: CheckCircle, text: t('profile.verified'), color: 'text-green-600' };
+    if (profile.is_verified === 'rejected') return { icon: XCircle, text: t('profile.rejected'), color: 'text-red-600' };
+    return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
   };
 
   const getPhotoVerificationStatus = () => {
-    if (!profile?.photo_verification_status) return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
-    if (profile.photo_verification_status === 'verified') return { icon: CheckCircle, text: 'Verificata', color: 'text-green-600' };
-    if (profile.photo_verification_status === 'rejected') return { icon: XCircle, text: 'Rifiutata', color: 'text-red-600' };
-    return { icon: Clock, text: 'In attesa', color: 'text-yellow-600' };
+    if (!profile?.photo_verification_status) return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
+    if (profile.photo_verification_status === 'verified') return { icon: CheckCircle, text: t('profile.verified'), color: 'text-green-600' };
+    if (profile.photo_verification_status === 'rejected') return { icon: XCircle, text: t('profile.rejected'), color: 'text-red-600' };
+    return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
   };
 
   const status = getVerificationStatus();
@@ -305,13 +307,13 @@ const Profile = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-6">Il Mio Profilo</h2>
+        <h2 className="text-3xl font-bold mb-6">{t('profile.title')}</h2>
         
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
           <Card className="md:col-span-3">
             <CardHeader>
-              <CardTitle>Foto Profilo</CardTitle>
-              <CardDescription>Carica più foto del tuo profilo (la prima sarà la principale)</CardDescription>
+              <CardTitle>{t('profile.profilePhotos')}</CardTitle>
+              <CardDescription>{t('profile.uploadPhotosDesc')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex flex-col items-center gap-4">
@@ -331,18 +333,18 @@ const Profile = () => {
                   size="lg"
                 >
                   <Camera className="w-4 h-4 mr-2" />
-                  {uploading ? 'Caricamento...' : 'Carica Nuove Foto'}
+                  {uploading ? t('profile.uploading') : t('profile.uploadNewPhotos')}
                 </Button>
                 {profile?.is_verified !== 'verified' && (
                   <p className="text-xs text-muted-foreground text-center">
-                    Completa prima la verifica dell'account
+                    {t('profile.completeVerificationFirst')}
                   </p>
                 )}
               </div>
 
               {photos.length > 0 && (
                 <div>
-                  <h3 className="font-semibold mb-4">Le tue foto</h3>
+                  <h3 className="font-semibold mb-4">{t('profile.yourPhotos')}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {photos.map((photo) => (
                       <div key={photo.id} className="relative group">
@@ -361,14 +363,14 @@ const Profile = () => {
                              photo.status === 'rejected' ? <XCircle className="w-5 h-5" /> : 
                              <Clock className="w-5 h-5" />}
                             <span className="text-sm font-medium">
-                              {photo.status === 'verified' ? 'Verificata' : 
-                               photo.status === 'rejected' ? 'Rifiutata' : 
-                               'In attesa'}
+                              {photo.status === 'verified' ? t('profile.verified') : 
+                               photo.status === 'rejected' ? t('profile.rejected') : 
+                               t('profile.pending')}
                             </span>
                           </div>
                           {photo.is_primary && (
                             <span className="text-white text-xs font-semibold bg-primary px-2 py-1 rounded">
-                              Principale
+                              {t('profile.primary')}
                             </span>
                           )}
                           {!photo.is_primary && photo.status === 'verified' && (
@@ -377,7 +379,7 @@ const Profile = () => {
                               variant="secondary"
                               onClick={() => setPrimaryPhoto(photo.id)}
                             >
-                              Imposta come principale
+                              {t('profile.setAsPrimary')}
                             </Button>
                           )}
                         </div>
@@ -392,7 +394,7 @@ const Profile = () => {
 
               <div className="text-center pt-4 border-t space-y-2">
                 <div>
-                  <p className="text-sm font-medium mb-1">Verifica Account</p>
+                  <p className="text-sm font-medium mb-1">{t('profile.accountVerification')}</p>
                   <div className={`flex items-center gap-2 justify-center ${status.color}`}>
                     <StatusIcon className="w-5 h-5" />
                     <span className="text-sm font-medium">{status.text}</span>
@@ -404,13 +406,13 @@ const Profile = () => {
 
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Informazioni Profilo</CardTitle>
-              <CardDescription>Aggiorna le tue informazioni personali</CardDescription>
+              <CardTitle>{t('profile.profileInfo')}</CardTitle>
+              <CardDescription>{t('profile.updatePersonalInfo')}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleUpdate} className="space-y-4">
                 <div>
-                  <Label htmlFor="full_name">Nome Completo</Label>
+                  <Label htmlFor="full_name">{t('profile.fullName')}</Label>
                   <Input
                     id="full_name"
                     value={formData.full_name}
@@ -420,13 +422,13 @@ const Profile = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="bio">Bio</Label>
+                  <Label htmlFor="bio">{t('profile.bio')}</Label>
                   <Textarea
                     id="bio"
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                     rows={4}
-                    placeholder="Raccontaci qualcosa di te..."
+                    placeholder={t('profile.bioPlaceholder')}
                   />
                 </div>
 
@@ -437,13 +439,12 @@ const Profile = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Lock className="w-5 h-5 text-muted-foreground" />
-                        <span className="font-medium">Preferenze Età Bloccate</span>
+                        <span className="font-medium">{t('profile.agePreferencesLocked')}</span>
                       </div>
-                      <span className="text-sm text-muted-foreground">18 - 100 anni</span>
+                      <span className="text-sm text-muted-foreground">18 - 100 {t('browse.years')}</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Le preferenze di età sono bloccate per impostazione predefinita. 
-                      Sbloccale per filtrare i profili e ricevere solo richieste da donne nella fascia d'età desiderata.
+                      {t('profile.agePreferencesLockedDesc')}
                     </p>
                     <Button
                       type="button"
@@ -453,12 +454,12 @@ const Profile = () => {
                       className="w-full"
                     >
                       <Coins className="w-4 h-4 mr-2" />
-                      {unlocking ? 'Sblocco in corso...' : `Sblocca per 2 Gettoni (hai ${tokens})`}
+                      {unlocking ? t('profile.unlocking') : `${t('profile.unlockFor')} 2 ${t('dashboard.tokens')} (${t('profile.youHave')} ${tokens})`}
                     </Button>
                     {tokens < 2 && (
                       <p className="text-xs text-destructive text-center">
-                        Non hai abbastanza gettoni.{' '}
-                        <Link to="/buy-tokens" className="underline">Acquista gettoni</Link>
+                        {t('profile.notEnoughTokens')}{' '}
+                        <Link to="/buy-tokens" className="underline">{t('profile.buyTokensLink')}</Link>
                       </p>
                     )}
                   </div>
@@ -466,7 +467,7 @@ const Profile = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="min_age" className="flex items-center gap-2">
-                        Età Minima Preferita
+                        {t('profile.minAge')}
                         {profile?.gender === 'male' && profile?.age_preferences_unlocked && (
                           <Unlock className="w-4 h-4 text-green-600" />
                         )}
@@ -482,7 +483,7 @@ const Profile = () => {
                     </div>
                     <div>
                       <Label htmlFor="max_age" className="flex items-center gap-2">
-                        Età Massima Preferita
+                        {t('profile.maxAge')}
                         {profile?.gender === 'male' && profile?.age_preferences_unlocked && (
                           <Unlock className="w-4 h-4 text-green-600" />
                         )}
@@ -500,7 +501,7 @@ const Profile = () => {
                 )}
 
                 <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? 'Salvataggio...' : 'Salva Modifiche'}
+                  {loading ? t('profile.saving') : t('profile.saveChanges')}
                 </Button>
               </form>
             </CardContent>
