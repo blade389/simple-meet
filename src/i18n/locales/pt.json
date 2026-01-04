@@ -408,5 +408,22 @@
     "reviewSent": "Avaliação enviada",
     "thanks": "Obrigado pela sua avaliação!",
     "submitError": "Erro ao enviar a avaliação"
+  },
+  "appointmentForm": {
+    "title": "Marcar Encontro",
+    "date": "Data",
+    "time": "Hora",
+    "location": "Local",
+    "locationPlaceholder": "Ex: Café Central, Rua Principal 10",
+    "submit": "Marcar Encontro",
+    "registering": "Agendando...",
+    "success": "Encontro marcado!",
+    "successDesc": "O encontro foi guardado com sucesso.",
+    "error": "Erro",
+    "errorDesc": "Não foi possível marcar o encontro."
+  },
+  "appointmentInfo": {
+    "scheduled": "Encontro Marcado",
+    "dateFormat": "d 'de' MMMM yyyy 'às' HH:mm"
   }
 }
