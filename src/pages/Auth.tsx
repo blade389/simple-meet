@@ -12,6 +12,7 @@ import { z } from "zod";
 import SEOHead from "@/components/SEOHead";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 const Auth = () => {
   const { t } = useTranslation();
@@ -91,13 +92,17 @@ const Auth = () => {
       if (authError) throw authError;
       if (!authData.user) throw new Error("Registrazione fallita");
 
+      // Get current language for user preferences
+      const currentLanguage = i18n.language?.substring(0, 2) || 'it';
+
       // Create profile - set default age preferences for males
       const profileData: any = {
         id: authData.user.id,
         full_name: validated.name,
         gender: validated.gender,
         birth_date: validated.birthDate,
-        location_city: validated.city
+        location_city: validated.city,
+        preferred_language: currentLanguage
       };
 
       // Males get default locked age preferences
@@ -125,13 +130,14 @@ const Auth = () => {
         if (tokenError) throw tokenError;
       }
 
-      // Send welcome email
+      // Send welcome email with user's language
       try {
         await supabase.functions.invoke('send-welcome-email', {
           body: {
             email: validated.email,
             name: validated.name,
-            gender: validated.gender
+            gender: validated.gender,
+            language: currentLanguage
           }
         });
         console.log('Welcome email sent successfully');

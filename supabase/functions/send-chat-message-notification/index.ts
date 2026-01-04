@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { getTranslation } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,24 +22,17 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const authHeader = req.headers.get('authorization');
     
-    // Verify user is authenticated
     const supabaseAuth = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_ANON_KEY")!,
-      {
-        global: {
-          headers: { Authorization: authHeader || '' },
-        },
-      }
+      { global: { headers: { Authorization: authHeader || '' } } }
     );
     
     const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
     if (!user || authError) {
-      console.error('Unauthorized: Invalid JWT');
       return new Response('Unauthorized', { status: 401, headers: corsHeaders });
     }
 
-    // Use service role for database operations
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -53,37 +47,40 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Get match request to find the other user
+    // Get match request with profiles
     const { data: matchRequest, error: matchError } = await supabase
       .from("match_requests")
       .select(`
         sender_id,
         receiver_id,
-        sender:profiles!fk_match_requests_sender(full_name),
-        receiver:profiles!fk_match_requests_receiver(full_name)
+        sender:profiles!fk_match_requests_sender(full_name, preferred_language),
+        receiver:profiles!fk_match_requests_receiver(full_name, preferred_language)
       `)
       .eq("id", matchRequestId)
       .single();
 
     if (matchError || !matchRequest) {
-      console.error("Error fetching match request:", matchError);
       return new Response(
         JSON.stringify({ error: "Match request not found" }),
         { status: 404, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    // Determine who should receive the notification
+    // Determine recipient
     const recipientId = senderId === matchRequest.sender_id 
       ? matchRequest.receiver_id 
       : matchRequest.sender_id;
 
-    // Get sender name
     const senderName = senderId === matchRequest.sender_id
       ? (matchRequest.sender as any)?.full_name || "Utente"
       : (matchRequest.receiver as any)?.full_name || "Utente";
 
-    // Truncate message for notification
+    const recipientLang = senderId === matchRequest.sender_id
+      ? (matchRequest.receiver as any)?.preferred_language
+      : (matchRequest.sender as any)?.preferred_language;
+
+    const t = getTranslation(recipientLang);
+
     const truncatedMessage = message.length > 50 
       ? message.substring(0, 50) + "..." 
       : message;
@@ -91,39 +88,23 @@ const handler = async (req: Request): Promise<Response> => {
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
-    if (!oneSignalAppId || !oneSignalApiKey) {
-      console.error("OneSignal credentials not configured");
-      return new Response(
-        JSON.stringify({ error: "Push notification service not configured" }),
-        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
-    }
-
-    console.log(`Sending chat notification to user ${recipientId} from ${senderName}`);
-
-    const pushResponse = await fetch("https://onesignal.com/api/v1/notifications", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Basic ${oneSignalApiKey}`,
-      },
-      body: JSON.stringify({
-        app_id: oneSignalAppId,
-        include_external_user_ids: [recipientId],
-        headings: { en: `💬 ${senderName}` },
-        contents: { en: truncatedMessage },
-        url: "/appointments",
-        web_push_topic: `chat-${matchRequestId}`,
-        ttl: 3600, // 1 hour
-      }),
-    });
-
-    const pushResult = await pushResponse.json();
-
-    if (!pushResponse.ok) {
-      console.error("OneSignal error:", pushResult);
-    } else {
-      console.log("Chat notification sent successfully:", pushResult);
+    if (oneSignalAppId && oneSignalApiKey) {
+      await fetch("https://onesignal.com/api/v1/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${oneSignalApiKey}`,
+        },
+        body: JSON.stringify({
+          app_id: oneSignalAppId,
+          include_external_user_ids: [recipientId],
+          headings: { en: `💬 ${senderName}` },
+          contents: { en: truncatedMessage },
+          url: "/appointments",
+          web_push_topic: `chat-${matchRequestId}`,
+          ttl: 3600,
+        }),
+      });
     }
 
     return new Response(

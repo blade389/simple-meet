@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -25,7 +26,6 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Validate input
     const requestBody = await req.json();
     const validationResult = EmailRequestSchema.safeParse(requestBody);
     
@@ -39,10 +39,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { receiverId, senderName, isPremium } = validationResult.data;
 
-    // Get receiver's profile and email
+    // Get receiver's profile with language preference
     const { data: receiverProfile, error: profileError } = await supabase
       .from("profiles")
-      .select("full_name")
+      .select("full_name, preferred_language")
       .eq("id", receiverId)
       .single();
 
@@ -59,28 +59,26 @@ const handler = async (req: Request): Promise<Response> => {
       throw userError || new Error("Receiver email not found");
     }
 
-    // Different email content for premium vs normal requests
-    const emailContent = isPremium 
-      ? `
-        <h1>Ciao ${receiverProfile.full_name}!</h1>
-        <p><strong>${senderName}</strong> ti ha inviato una <strong>richiesta premium</strong>.</p>
-        <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
-        <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata.</p>
-        <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
-        <p>Buona fortuna!</p>
-      `
-      : `
-        <h1>Ciao ${receiverProfile.full_name}!</h1>
-        <p><strong>${senderName}</strong> ti ha inviato una richiesta di match.</p>
-        <p>Hai <strong>48 ore</strong> per accettare o rifiutare questa richiesta.</p>
-        <p>Se non risponderai entro 48 ore, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
-        <p>Accedi all'app per visualizzare la richiesta e decidere.</p>
-        <p>Buona fortuna!</p>
-      `;
+    const t = getTranslation(receiverProfile.preferred_language);
 
-    const emailSubject = isPremium 
-      ? "Hai ricevuto una richiesta premium!"
-      : "Hai ricevuto una nuova richiesta di match!";
+    // Translated email content
+    const emailContent = `
+      <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 24px;">${t.common.greeting} ${receiverProfile.full_name}!</h2>
+      <p style="margin: 0 0 15px 0; color: #4b5563; font-size: 16px;">
+        <strong>${senderName}</strong> ${isPremium ? t.matchRequest.premiumMessage : t.matchRequest.message}
+      </p>
+      <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 14px;">
+        ${isPremium ? 'Hai 48 ore per rispondere.' : 'Hai 48 ore per accettare o rifiutare.'}
+      </p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://scopami.online/${isPremium ? 'premium-requests' : 'dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+          ${t.matchRequest.cta}
+        </a>
+      </div>
+    `;
+
+    const emailSubject = isPremium ? t.matchRequest.premiumSubject : t.matchRequest.subject;
+    const html = getEmailWrapper(emailContent, t);
 
     // Send email using Resend API
     const resendResponse = await fetch("https://api.resend.com/emails", {
@@ -90,10 +88,10 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "Match App <noreply@scopami.online>",
+        from: "SCOPAMI <noreply@scopami.online>",
         to: [user.email],
         subject: emailSubject,
-        html: emailContent,
+        html,
       }),
     });
 
@@ -110,16 +108,10 @@ const handler = async (req: Request): Promise<Response> => {
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
     const oneSignalRestApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
-    console.log("OneSignal App ID configured:", !!oneSignalAppId);
-    console.log("OneSignal REST API Key configured:", !!oneSignalRestApiKey);
-    console.log("Target receiver ID for notification:", receiverId);
-
     if (oneSignalAppId && oneSignalRestApiKey) {
       try {
-        const notificationTitle = isPremium ? "Nuova Richiesta Premium! 👑" : "Nuova Richiesta!";
-        const notificationContent = isPremium 
-          ? `${senderName} ti ha inviato una richiesta premium.`
-          : `${senderName} ti ha inviato una richiesta di match.`;
+        const notificationTitle = isPremium ? t.matchRequest.premiumTitle : t.matchRequest.title;
+        const notificationContent = `${senderName} ${isPremium ? t.matchRequest.premiumNotification : t.matchRequest.notification}`;
         const notificationUrl = isPremium 
           ? "https://scopami.online/premium-requests"
           : "https://scopami.online/dashboard";
@@ -128,12 +120,12 @@ const handler = async (req: Request): Promise<Response> => {
           app_id: oneSignalAppId,
           include_aliases: { external_id: [receiverId] },
           target_channel: "push",
-          headings: { en: notificationTitle, it: notificationTitle },
-          contents: { en: notificationContent, it: notificationContent },
+          headings: { en: notificationTitle },
+          contents: { en: notificationContent },
           url: notificationUrl,
         };
         
-        console.log("Sending OneSignal notification with payload:", JSON.stringify(notificationPayload));
+        console.log("Sending OneSignal notification");
         
         const notificationResponse = await fetch("https://onesignal.com/api/v1/notifications", {
           method: "POST",
@@ -145,17 +137,10 @@ const handler = async (req: Request): Promise<Response> => {
         });
         
         const notificationResult = await notificationResponse.json();
-        console.log("OneSignal API response status:", notificationResponse.status);
-        console.log("OneSignal API response:", JSON.stringify(notificationResult));
-        
-        if (!notificationResponse.ok) {
-          console.error("OneSignal API error:", notificationResult);
-        }
+        console.log("OneSignal API response:", notificationResult);
       } catch (pushError) {
         console.error("Error sending push notification:", pushError);
       }
-    } else {
-      console.log("OneSignal credentials not configured, skipping push notification");
     }
 
     return new Response(JSON.stringify(emailResult), {

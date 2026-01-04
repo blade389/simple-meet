@@ -354,6 +354,7 @@ export type Database = {
             | Database["public"]["Enums"]["verification_status"]
             | null
           positive_reviews_count: number | null
+          preferred_language: string | null
           profile_photo_url: string | null
           stripe_product_id: string | null
           stripe_subscription_id: string | null
@@ -385,6 +386,7 @@ export type Database = {
             | Database["public"]["Enums"]["verification_status"]
             | null
           positive_reviews_count?: number | null
+          preferred_language?: string | null
           profile_photo_url?: string | null
           stripe_product_id?: string | null
           stripe_subscription_id?: string | null
@@ -416,6 +418,7 @@ export type Database = {
             | Database["public"]["Enums"]["verification_status"]
             | null
           positive_reviews_count?: number | null
+          preferred_language?: string | null
           profile_photo_url?: string | null
           stripe_product_id?: string | null
           stripe_subscription_id?: string | null
