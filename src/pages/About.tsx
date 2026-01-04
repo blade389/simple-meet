@@ -4,8 +4,12 @@ import { Heart, Shield, Users, Sparkles, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+    const { t } = useTranslation();
+
     return (
         <>
         <SEOHead
@@ -27,10 +31,11 @@ const About = () => {
                         </Link>
                     </div>
                     <nav className="flex items-center gap-6">
+                        <LanguageSelector />
                         <Link to="/">
                             <Button variant="ghost" className="gap-2">
                                 <ArrowLeft className="w-4 h-4" />
-                                Torna alla Home
+                                {t("common.backToHome")}
                             </Button>
                         </Link>
                     </nav>
@@ -45,13 +50,13 @@ const About = () => {
             <section className="pt-32 pb-20 px-4 bg-gradient-hero">
                 <div className="container mx-auto text-center max-w-4xl">
                     <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                        Rivoluzioniamo il modo di{" "}
+                        {t("about.heroTitle")}{" "}
                         <span className="bg-gradient-primary bg-clip-text text-transparent">
-                            Incontrarsi
+                            {t("about.heroHighlight")}
                         </span>
                     </h1>
                     <p className="text-xl text-muted-foreground mb-8">
-                        SCOPAMI nasce con un obiettivo chiaro: creare uno spazio sicuro, rispettoso ed eccitante dove le connessioni autentiche prendono vita, mettendo il controllo nelle mani giuste.
+                        {t("about.heroDescription")}
                     </p>
                 </div>
             </section>
@@ -64,30 +69,30 @@ const About = () => {
                             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                                 <Heart className="w-6 h-6 text-primary" />
                             </div>
-                            <h2 className="text-3xl font-bold">La Nostra Filosofia</h2>
+                            <h2 className="text-3xl font-bold">{t("about.philosophyTitle")}</h2>
                             <p className="text-lg text-muted-foreground">
-                                Crediamo che il dating online debba essere un'esperienza piacevole e sicura per tutti. Per questo abbiamo ribaltato le regole tradizionali: su SCOPAMI, sono le donne a fare la prima mossa o a decidere chi può contattarle.
+                                {t("about.philosophyText1")}
                             </p>
                             <p className="text-lg text-muted-foreground">
-                                Questo approccio non solo riduce i messaggi indesiderati, ma garantisce che ogni interazione inizi con un reale interesse reciproco, elevando la qualità degli incontri.
+                                {t("about.philosophyText2")}
                             </p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg">
                                 <h3 className="text-4xl font-bold text-primary mb-2">100%</h3>
-                                <p className="text-sm text-muted-foreground">Profili Verificati</p>
+                                <p className="text-sm text-muted-foreground">{t("about.verifiedProfiles")}</p>
                             </Card>
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg mt-8">
                                 <h3 className="text-4xl font-bold text-primary mb-2">24/7</h3>
-                                <p className="text-sm text-muted-foreground">Supporto Dedicato</p>
+                                <p className="text-sm text-muted-foreground">{t("about.dedicatedSupport")}</p>
                             </Card>
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg">
                                 <h3 className="text-4xl font-bold text-primary mb-2">0</h3>
-                                <p className="text-sm text-muted-foreground">Bot o Fake</p>
+                                <p className="text-sm text-muted-foreground">{t("about.noBotsOrFakes")}</p>
                             </Card>
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg mt-8">
                                 <h3 className="text-4xl font-bold text-primary mb-2">Top</h3>
-                                <p className="text-sm text-muted-foreground">Privacy & Sicurezza</p>
+                                <p className="text-sm text-muted-foreground">{t("about.topPrivacy")}</p>
                             </Card>
                         </div>
                     </div>
@@ -98,9 +103,9 @@ const About = () => {
             <section className="py-20 px-4 bg-muted/30">
                 <div className="container mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold mb-4">I Nostri Valori Fondamentali</h2>
+                        <h2 className="text-3xl font-bold mb-4">{t("about.valuesTitle")}</h2>
                         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Ciò che guida ogni nostra decisione e funzionalità
+                            {t("about.valuesSubtitle")}
                         </p>
                     </div>
 
@@ -109,9 +114,9 @@ const About = () => {
                             <div className="w-14 h-14 bg-secondary/20 rounded-full flex items-center justify-center mb-6 mx-auto">
                                 <Shield className="w-7 h-7 text-secondary-foreground" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-center">Sicurezza Prima di Tutto</h3>
+                            <h3 className="text-xl font-bold mb-3 text-center">{t("about.value1Title")}</h3>
                             <p className="text-muted-foreground text-center">
-                                Implementiamo rigorosi controlli di identità e sistemi di moderazione avanzati per garantire che ogni utente sia reale e affidabile.
+                                {t("about.value1Desc")}
                             </p>
                         </Card>
 
@@ -119,9 +124,9 @@ const About = () => {
                             <div className="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center mb-6 mx-auto">
                                 <Users className="w-7 h-7 text-primary" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-center">Rispetto Reciproco</h3>
+                            <h3 className="text-xl font-bold mb-3 text-center">{t("about.value2Title")}</h3>
                             <p className="text-muted-foreground text-center">
-                                Promuoviamo una cultura del rispetto. Il nostro sistema di feedback e rating incentiva comportamenti positivi e cortesi.
+                                {t("about.value2Desc")}
                             </p>
                         </Card>
 
@@ -129,9 +134,9 @@ const About = () => {
                             <div className="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center mb-6 mx-auto">
                                 <Sparkles className="w-7 h-7 text-accent-foreground" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-center">Trasparenza Totale</h3>
+                            <h3 className="text-xl font-bold mb-3 text-center">{t("about.value3Title")}</h3>
                             <p className="text-muted-foreground text-center">
-                                Nessun costo nascosto, regole chiare e un sistema di gettoni semplice. Vogliamo che tu sappia sempre cosa aspettarti.
+                                {t("about.value3Desc")}
                             </p>
                         </Card>
                     </div>
@@ -143,14 +148,14 @@ const About = () => {
                 <div className="container mx-auto text-center">
                     <div className="bg-gradient-primary rounded-3xl p-12 text-primary-foreground shadow-glow">
                         <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Pronto a far parte della rivoluzione?
+                            {t("about.ctaTitle")}
                         </h2>
                         <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-                            Unisciti oggi stesso a SCOPAMI e scopri un nuovo modo di vivere gli incontri online.
+                            {t("about.ctaDescription")}
                         </p>
                         <Link to="/auth">
                             <Button size="xl" variant="secondary" className="font-bold text-lg px-8">
-                                Inizia Ora
+                                {t("common.startNow")}
                             </Button>
                         </Link>
                     </div>
@@ -159,7 +164,7 @@ const About = () => {
 
             {/* Footer Simple */}
             <footer className="py-8 text-center text-muted-foreground text-sm border-t">
-                <p>© 2025 SCOPAMI. Tutti i diritti riservati.</p>
+                <p>© 2025 SCOPAMI. {t("common.allRightsReserved")}.</p>
             </footer>
         </div>
         </>

@@ -5,50 +5,54 @@ import { ArrowLeft, Coins, Crown, Check, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Pricing = () => {
+    const { t } = useTranslation();
+
     const tokenPackages = [
         {
             amount: 1,
             price: "10",
             popular: false,
-            features: ["1 gettone", "Nessuna scadenza", "Pagamento sicuro"]
+            features: [`1 ${t("pricing.token")}`, t("pricing.noExpiry"), t("pricing.securePayment")]
         },
         {
             amount: 5,
             price: "40",
             popular: false,
-            features: ["5 gettoni", "Nessuna scadenza", "Pagamento sicuro", "Risparmia €10"]
+            features: [`5 ${t("pricing.tokens")}`, t("pricing.noExpiry"), t("pricing.securePayment"), `${t("pricing.save")} €10`]
         },
         {
             amount: 10,
             price: "65",
             popular: true,
-            features: ["10 gettoni", "Nessuna scadenza", "Pagamento sicuro", "Risparmia €35"]
+            features: [`10 ${t("pricing.tokens")}`, t("pricing.noExpiry"), t("pricing.securePayment"), `${t("pricing.save")} €35`]
         },
         {
             amount: 100,
             price: "500",
             popular: false,
-            features: ["100 gettoni", "Nessuna scadenza", "Pagamento sicuro", "Risparmia €500"]
+            features: [`100 ${t("pricing.tokens")}`, t("pricing.noExpiry"), t("pricing.securePayment"), `${t("pricing.save")} €500`]
         }
     ];
 
     const premiumPackages = [
         {
-            duration: "1 Mese",
+            duration: `1 ${t("pricing.month")}`,
             price: "19.99",
-            features: ["Badge Profilo Premium", "Visibilità aumentata", "Statistiche avanzate"]
+            features: [t("pricing.premiumBadge"), t("pricing.increasedVisibility"), t("pricing.advancedStats")]
         },
         {
-            duration: "3 Mesi",
+            duration: `3 ${t("pricing.months")}`,
             price: "49.99",
-            features: ["Tutto del mensile", "Risparmi il 15%", "Badge in evidenza"]
+            features: [t("pricing.everythingInMonthly"), `${t("pricing.savePercent")} 15%`, t("pricing.featuredBadge")]
         },
         {
-            duration: "12 Mesi",
+            duration: `12 ${t("pricing.months")}`,
             price: "149.99",
-            features: ["Tutto del trimestrale", "Risparmi il 35%", "Supporto VIP dedicato"]
+            features: [t("pricing.everythingInQuarterly"), `${t("pricing.savePercent")} 35%`, t("pricing.vipSupport")]
         }
     ];
 
@@ -71,28 +75,31 @@ const Pricing = () => {
                     </Link>
                     <h1 className="text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent flex items-center gap-3">
                         <Coins className="w-8 h-8 text-primary" />
-                        Piani e Prezzi
+                        {t("pricing.title")}
                     </h1>
+                    <div className="ml-auto">
+                        <LanguageSelector />
+                    </div>
                 </div>
 
                 <p className="text-xl text-muted-foreground text-center max-w-3xl mx-auto">
-                    Scegli la soluzione più adatta alle tue esigenze. Che tu stia cercando l'anima gemella o offrendo servizi professionali, abbiamo il piano giusto per te.
+                    {t("pricing.subtitle")}
                 </p>
 
                 <Tabs defaultValue="men" className="w-full">
                     <div className="flex justify-center mb-8">
                         <TabsList className="grid w-full max-w-md grid-cols-2">
-                            <TabsTrigger value="men">Per Uomini (Gettoni)</TabsTrigger>
-                            <TabsTrigger value="women">Per Donne (Premium)</TabsTrigger>
+                            <TabsTrigger value="men">{t("pricing.forMen")}</TabsTrigger>
+                            <TabsTrigger value="women">{t("pricing.forWomen")}</TabsTrigger>
                         </TabsList>
                     </div>
 
                     <TabsContent value="men" className="space-y-8">
                         <div className="text-center space-y-4 mb-8">
-                            <h2 className="text-2xl font-bold">Pacchetti Gettoni</h2>
+                            <h2 className="text-2xl font-bold">{t("pricing.tokenPackages")}</h2>
                             <p className="text-muted-foreground">
-                                Acquista gettoni per rispondere alle richieste e mettere in evidenza il tuo profilo.
-                                <br />I gettoni vengono scalati quando rifiuti una richiesta.
+                                {t("pricing.tokenDescription")}
+                                <br />{t("pricing.tokenDeductionNote")}
                             </p>
                         </div>
 
@@ -101,12 +108,12 @@ const Pricing = () => {
                                 <Card key={index} className={`p-6 relative flex flex-col ${pkg.popular ? 'border-primary shadow-glow scale-105 z-10' : 'border-muted/20 hover:border-primary/50'} transition-all duration-300 bg-card/50 backdrop-blur-sm`}>
                                     {pkg.popular && (
                                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-bold">
-                                            Più Popolare
+                                            {t("pricing.mostPopular")}
                                         </div>
                                     )}
                                     <div className="text-center mb-6">
                                         <div className="text-4xl font-bold mb-2">{pkg.amount}</div>
-                                        <div className="text-xl text-muted-foreground">Gettoni</div>
+                                        <div className="text-xl text-muted-foreground">{t("pricing.tokens")}</div>
                                     </div>
                                     <div className="text-center mb-8">
                                         <span className="text-3xl font-bold">€{pkg.price}</span>
@@ -120,7 +127,7 @@ const Pricing = () => {
                                         ))}
                                     </ul>
                                     <Button className="w-full" variant={pkg.popular ? "default" : "outline"}>
-                                        Acquista Ora
+                                        {t("pricing.buyNow")}
                                     </Button>
                                 </Card>
                             ))}
@@ -131,11 +138,9 @@ const Pricing = () => {
                         <div className="bg-accent/10 border border-accent/20 rounded-lg p-6 mb-8 flex gap-4 items-start">
                             <Info className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                             <div>
-                                <h3 className="font-bold text-lg text-accent mb-2">Nota Importante</h3>
+                                <h3 className="font-bold text-lg text-accent mb-2">{t("pricing.premiumNote")}</h3>
                                 <p className="text-muted-foreground">
-                                    Il Profilo Premium è <strong>completamente opzionale</strong>. L'utilizzo di base dell'app è gratuito per tutte le donne.
-                                    <br />
-                                    Questo abbonamento è pensato specificamente per le utenti che desiderano offrire servizi professionali o massimizzare la loro visibilità sulla piattaforma.
+                                    {t("pricing.premiumNoteText")}
                                 </p>
                             </div>
                         </div>
@@ -143,10 +148,10 @@ const Pricing = () => {
                         <div className="text-center space-y-4 mb-8">
                             <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
                                 <Crown className="w-6 h-6 text-yellow-500" />
-                                Abbonamenti Premium
+                                {t("pricing.premiumSubscriptions")}
                             </h2>
                             <p className="text-muted-foreground">
-                                Sblocca strumenti professionali per gestire al meglio la tua presenza.
+                                {t("pricing.premiumDescription")}
                             </p>
                         </div>
 
@@ -168,7 +173,7 @@ const Pricing = () => {
                                         ))}
                                     </ul>
                                     <Button className="w-full" variant="outline">
-                                        Scegli Piano
+                                        {t("pricing.choosePlan")}
                                     </Button>
                                 </Card>
                             ))}
@@ -178,9 +183,9 @@ const Pricing = () => {
 
                 <div className="text-center mt-16 pt-8 border-t border-border">
                     <p className="text-sm text-muted-foreground">
-                        Tutti i prezzi sono IVA inclusa. I pagamenti sono sicuri e crittografati.
+                        {t("pricing.pricesIncludeVat")}
                         <br />
-                        Hai domande? <Link to="/faq" className="text-primary hover:underline">Consulta le FAQ</Link> o contattaci.
+                        {t("pricing.haveQuestions")} <Link to="/faq" className="text-primary hover:underline">{t("pricing.checkFaq")}</Link>
                     </p>
                 </div>
             </div>
