@@ -13,7 +13,6 @@ interface Profile {
   full_name: string;
   bio: string | null;
   birth_date: string;
-  location_city: string;
   gender: string;
   profile_photo_url: string | null;
   photo_verification_status: string;
@@ -304,8 +303,7 @@ const SwipeView = ({ profiles, sentRequests, onSendRequest, onSkip }: SwipeViewP
             {currentProfile.full_name}, {calculateAge(currentProfile.birth_date)}
           </h3>
           <p className="text-sm text-white/80 flex items-center gap-1">
-            {currentProfile.location_city}
-            {currentProfile.distance && ` • ${currentProfile.distance.toFixed(1)} km`}
+            {currentProfile.distance !== undefined && `${currentProfile.distance.toFixed(1)} km`}
           </p>
         </div>
       </div>

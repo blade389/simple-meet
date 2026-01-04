@@ -24,7 +24,6 @@ const Auth = () => {
     email: z.string().email(t("auth.email")),
     gender: z.enum(["male", "female"]),
     birthDate: z.string().min(1, t("auth.birthDate")),
-    city: z.string().min(2, t("auth.city")),
     password: z.string().min(6, t("auth.password")),
     confirmPassword: z.string()
   }).refine((data) => data.password === data.confirmPassword, {
@@ -68,7 +67,6 @@ const Auth = () => {
       email: formData.get('email') as string,
       gender: formData.get('gender') as string,
       birthDate: formData.get('birthDate') as string,
-      city: formData.get('city') as string,
       password: formData.get('password') as string,
       confirmPassword: formData.get('confirmPassword') as string
     };
@@ -101,7 +99,6 @@ const Auth = () => {
         full_name: validated.name,
         gender: validated.gender,
         birth_date: validated.birthDate,
-        location_city: validated.city,
         preferred_language: currentLanguage
       };
 
@@ -274,16 +271,6 @@ const Auth = () => {
                     type="date"
                     required
                     max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-city">{t("auth.city")}</Label>
-                  <Input
-                    id="signup-city"
-                    name="city"
-                    type="text"
-                    placeholder={t("auth.yourCity")}
-                    required
                   />
                 </div>
                 <div className="space-y-2">

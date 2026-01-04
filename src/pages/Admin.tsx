@@ -111,7 +111,7 @@ const Admin = () => {
       // Fetch profiles separately
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select('id, full_name, gender, location_city')
+        .select('id, full_name, gender')
         .in('id', userIds);
 
       if (profilesError) throw profilesError;
@@ -155,7 +155,7 @@ const Admin = () => {
       // Fetch profiles separately
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select('id, full_name, gender, location_city')
+        .select('id, full_name, gender')
         .in('id', userIds);
 
       if (profilesError) throw profilesError;
@@ -475,7 +475,7 @@ const Admin = () => {
                       <div>
                         <CardTitle>{request.profiles?.full_name}</CardTitle>
                         <CardDescription>
-                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
+                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'}
                         </CardDescription>
                       </div>
                       {getStatusBadge(request.status)}
@@ -594,7 +594,7 @@ const Admin = () => {
                           )}
                         </CardTitle>
                         <CardDescription>
-                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'} • {request.profiles?.location_city}
+                          {request.profiles?.gender === 'male' ? 'Uomo' : 'Donna'}
                         </CardDescription>
                       </div>
                       {getStatusBadge(request.status)}

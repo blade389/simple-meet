@@ -627,7 +627,9 @@ const Browse = () => {
                       </div>
                       <div className="flex items-center justify-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        {request.sender_profile?.location_city}
+                        {request.sender_profile?.distance !== undefined 
+                          ? `${request.sender_profile.distance.toFixed(1)} km`
+                          : 'Distanza non disponibile'}
                       </div>
                     </CardDescription>
                   </CardHeader>
@@ -765,7 +767,7 @@ const Browse = () => {
                         </div>
                         <div className="flex items-center justify-center gap-2">
                           <MapPin className="w-4 h-4" />
-                          {profile.location_city} • {profile.distance?.toFixed(1)} km
+                          {profile.distance?.toFixed(1)} km
                         </div>
                       </CardDescription>
                     </CardHeader>
