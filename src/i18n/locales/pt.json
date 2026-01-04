@@ -128,5 +128,60 @@
     "noAnswer": "Não encontrou a resposta que procurava?",
     "notFound": "Não encontrou a resposta que procurava?",
     "contactSupport": "Contactar Suporte"
+  },
+  "legal": {
+    "lastUpdate": "Última atualização",
+    "terms": {
+      "seoDescription": "Leia os termos e condições de uso do SCOPAMI. Regras de conduta, limitações de responsabilidade e diretrizes da comunidade.",
+      "seoKeywords": "termos de serviço, condições de uso, regulamento encontros",
+      "introTitle": "Introdução",
+      "introText": "Bem-vindo ao SCOPAMI. Ao utilizar o nosso website e serviços, concorda em cumprir e estar vinculado aos seguintes termos e condições. Por favor, leia-os atentamente.",
+      "liabilityTitle": "Limitação de Responsabilidade",
+      "liabilityText1": "O SCOPAMI atua exclusivamente como intermediário para facilitar a organização de encontros entre utilizadores.",
+      "liabilityText2": "É importante compreender que o SCOPAMI apenas e exclusivamente se encarrega de organizar o encontro. Uma vez que o encontro foi marcado e as partes foram postas em contacto, não temos qualquer responsabilidade, controlo ou obrigação relativamente ao que acontece posteriormente, seja online ou offline.",
+      "liabilityText3": "Não somos responsáveis pelas ações, comportamentos ou conduta de qualquer utilizador, seja online ou offline. O utilizador é o único responsável pelas suas próprias interações com outros membros.",
+      "eligibilityTitle": "Elegibilidade",
+      "eligibilityText": "Deve ter pelo menos 18 anos para utilizar este serviço. Ao usar o SCOPAMI, declara e garante que tem o direito, a autoridade e a capacidade para aceitar estes Termos e cumpri-los.",
+      "conductTitle": "Regras de Conduta",
+      "conductText": "Compromete-se a não utilizar o serviço para fins ilegais ou proibidos. É proibido assediar, intimidar ou difamar outros utilizadores. Reservamo-nos o direito de suspender ou cancelar a sua conta se violar estas regras.",
+      "modificationsTitle": "Alterações aos Termos",
+      "modificationsText": "Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações serão efetivas imediatamente após a publicação no site. O uso continuado do serviço após tais alterações constitui a aceitação dos novos termos."
+    },
+    "privacy": {
+      "seoDescription": "Política de privacidade do SCOPAMI. Descubra como recolhemos, utilizamos e protegemos os seus dados pessoais.",
+      "seoKeywords": "política de privacidade, proteção de dados, RGPD, privacidade encontros",
+      "collectionTitle": "Recolha de Informações",
+      "collectionText": "Recolhemos as informações que nos fornece diretamente quando se regista, cria um perfil ou comunica connosco. Isto pode incluir o seu nome, endereço de email, data de nascimento, género e preferências de encontros.",
+      "useTitle": "Uso das Informações",
+      "useIntro": "Utilizamos as informações recolhidas para:",
+      "useItem1": "Fornecer, manter e melhorar os nossos serviços.",
+      "useItem2": "Facilitar a organização de encontros entre utilizadores.",
+      "useItem3": "Enviar-lhe comunicações técnicas, atualizações de segurança e mensagens administrativas.",
+      "useItem4": "Monitorizar e analisar tendências e uso do serviço.",
+      "sharingTitle": "Partilha de Informações",
+      "sharingText": "Não vendemos as suas informações pessoais a terceiros. Partilhamos as suas informações apenas com outros utilizadores conforme necessário para facilitar os encontros (por exemplo, mostrando o seu perfil a outros utilizadores compatíveis) ou quando exigido por lei.",
+      "securityTitle": "Segurança dos Dados",
+      "securityText": "Tomamos medidas razoáveis para proteger as suas informações de perda, roubo, uso indevido e acesso não autorizado. No entanto, nenhum sistema de segurança é impenetrável e não podemos garantir a segurança absoluta das nossas bases de dados.",
+      "rightsTitle": "Os Seus Direitos",
+      "rightsText": "Tem o direito de aceder, corrigir ou eliminar as suas informações pessoais a qualquer momento acedendo ao seu perfil ou contactando-nos diretamente."
+    },
+    "cookie": {
+      "seoDescription": "Política de cookies do SCOPAMI. Descubra que cookies utilizamos e como gerir as suas preferências.",
+      "seoKeywords": "política de cookies, gestão de cookies, privacidade cookies",
+      "whatAreTitle": "O que são Cookies?",
+      "whatAreText": "Os cookies são pequenos ficheiros de texto que são guardados no seu dispositivo quando visita um website. São amplamente utilizados para fazer os websites funcionar de forma mais eficiente, bem como para fornecer informações aos proprietários do site.",
+      "howWeUseTitle": "Como Utilizamos os Cookies",
+      "howWeUseIntro": "Utilizamos cookies para diversos fins, incluindo:",
+      "essentialTitle": "Cookies Essenciais",
+      "essentialText": "Necessários para o funcionamento do site. Incluem, por exemplo, os cookies que lhe permitem aceder a áreas protegidas do nosso site.",
+      "analyticsTitle": "Cookies de Análise",
+      "analyticsText": "Permitem-nos reconhecer e contar o número de visitantes e ver como os visitantes se movem no site quando o utilizam. Isto ajuda-nos a melhorar o funcionamento do nosso site.",
+      "functionalTitle": "Cookies de Funcionalidade",
+      "functionalText": "Utilizados para o reconhecer quando regressa ao nosso site. Isto permite-nos personalizar os nossos conteúdos para si e lembrar as suas preferências.",
+      "managementTitle": "Gestão de Cookies",
+      "managementText": "A maioria dos navegadores web aceita automaticamente os cookies, mas geralmente pode alterar as definições do seu navegador para recusar cookies se preferir. No entanto, isto pode impedi-lo de tirar o máximo partido do website.",
+      "changesTitle": "Alterações à Política",
+      "changesText": "Podemos atualizar esta Política de Cookies de tempos a tempos. Encorajamo-lo a verificar periodicamente esta página para quaisquer alterações."
+    }
   }
 }

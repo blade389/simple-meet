@@ -128,5 +128,60 @@
     "noAnswer": "Haben Sie die gesuchte Antwort nicht gefunden?",
     "notFound": "Haben Sie die gesuchte Antwort nicht gefunden?",
     "contactSupport": "Support kontaktieren"
+  },
+  "legal": {
+    "lastUpdate": "Letzte Aktualisierung",
+    "terms": {
+      "seoDescription": "Lesen Sie die Allgemeinen Geschäftsbedingungen von SCOPAMI. Verhaltensregeln, Haftungsbeschränkungen und Community-Richtlinien.",
+      "seoKeywords": "Nutzungsbedingungen, AGB, Dating-Regeln",
+      "introTitle": "Einführung",
+      "introText": "Willkommen bei SCOPAMI. Durch die Nutzung unserer Website und Dienste erklären Sie sich damit einverstanden, die folgenden Geschäftsbedingungen einzuhalten und daran gebunden zu sein. Bitte lesen Sie diese sorgfältig durch.",
+      "liabilityTitle": "Haftungsbeschränkung",
+      "liabilityText1": "SCOPAMI handelt ausschließlich als Vermittler, um die Organisation von Treffen zwischen Benutzern zu erleichtern.",
+      "liabilityText2": "Es ist wichtig zu verstehen, dass SCOPAMI sich nur und ausschließlich um die Organisation des Treffens kümmert. Sobald das Treffen vereinbart wurde und die Parteien in Kontakt gebracht wurden, haben wir keine Verantwortung, Kontrolle oder Verpflichtung bezüglich dessen, was danach geschieht, weder online noch offline.",
+      "liabilityText3": "Wir sind nicht verantwortlich für die Handlungen, Verhaltensweisen oder das Verhalten eines Benutzers, weder online noch offline. Der Benutzer ist allein verantwortlich für seine eigenen Interaktionen mit anderen Mitgliedern.",
+      "eligibilityTitle": "Berechtigung",
+      "eligibilityText": "Sie müssen mindestens 18 Jahre alt sein, um diesen Service nutzen zu können. Durch die Nutzung von SCOPAMI erklären und garantieren Sie, dass Sie das Recht, die Befugnis und die Fähigkeit haben, diese Bedingungen zu akzeptieren und einzuhalten.",
+      "conductTitle": "Verhaltensregeln",
+      "conductText": "Sie verpflichten sich, den Service nicht für illegale oder verbotene Zwecke zu nutzen. Es ist verboten, andere Benutzer zu belästigen, einzuschüchtern oder zu verleumden. Wir behalten uns das Recht vor, Ihr Konto zu sperren oder zu kündigen, wenn Sie gegen diese Regeln verstoßen.",
+      "modificationsTitle": "Änderungen der Bedingungen",
+      "modificationsText": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Änderungen werden sofort nach Veröffentlichung auf der Website wirksam. Die fortgesetzte Nutzung des Dienstes nach solchen Änderungen stellt die Akzeptanz der neuen Bedingungen dar."
+    },
+    "privacy": {
+      "seoDescription": "Datenschutzrichtlinie von SCOPAMI. Erfahren Sie, wie wir Ihre personenbezogenen Daten erheben, verwenden und schützen.",
+      "seoKeywords": "Datenschutzrichtlinie, Datenschutz, DSGVO, Dating-Datenschutz",
+      "collectionTitle": "Erfassung von Informationen",
+      "collectionText": "Wir erheben die Informationen, die Sie uns direkt zur Verfügung stellen, wenn Sie sich registrieren, ein Profil erstellen oder mit uns kommunizieren. Dies kann Ihren Namen, Ihre E-Mail-Adresse, Ihr Geburtsdatum, Ihr Geschlecht und Ihre Treffpräferenzen umfassen.",
+      "useTitle": "Verwendung der Informationen",
+      "useIntro": "Wir verwenden die erhobenen Informationen, um:",
+      "useItem1": "Unsere Dienste bereitzustellen, zu warten und zu verbessern.",
+      "useItem2": "Die Organisation von Treffen zwischen Benutzern zu erleichtern.",
+      "useItem3": "Ihnen technische Mitteilungen, Sicherheitsupdates und administrative Nachrichten zu senden.",
+      "useItem4": "Trends und die Nutzung des Dienstes zu überwachen und zu analysieren.",
+      "sharingTitle": "Weitergabe von Informationen",
+      "sharingText": "Wir verkaufen Ihre persönlichen Informationen nicht an Dritte. Wir geben Ihre Informationen nur mit anderen Benutzern weiter, soweit dies zur Erleichterung von Treffen erforderlich ist (z. B. indem wir Ihr Profil anderen kompatiblen Benutzern zeigen) oder wenn dies gesetzlich vorgeschrieben ist.",
+      "securityTitle": "Datensicherheit",
+      "securityText": "Wir ergreifen angemessene Maßnahmen, um Ihre Informationen vor Verlust, Diebstahl, Missbrauch und unbefugtem Zugriff zu schützen. Allerdings ist kein Sicherheitssystem undurchdringlich und wir können die absolute Sicherheit unserer Datenbanken nicht garantieren.",
+      "rightsTitle": "Ihre Rechte",
+      "rightsText": "Sie haben jederzeit das Recht, auf Ihre persönlichen Informationen zuzugreifen, sie zu korrigieren oder zu löschen, indem Sie auf Ihr Profil zugreifen oder uns direkt kontaktieren."
+    },
+    "cookie": {
+      "seoDescription": "Cookie-Richtlinie von SCOPAMI. Erfahren Sie, welche Cookies wir verwenden und wie Sie Ihre Präferenzen verwalten können.",
+      "seoKeywords": "Cookie-Richtlinie, Cookie-Verwaltung, Cookie-Datenschutz",
+      "whatAreTitle": "Was sind Cookies?",
+      "whatAreText": "Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie werden häufig verwendet, um Websites effizienter funktionieren zu lassen und um den Eigentümern der Website Informationen bereitzustellen.",
+      "howWeUseTitle": "Wie wir Cookies verwenden",
+      "howWeUseIntro": "Wir verwenden Cookies für verschiedene Zwecke, darunter:",
+      "essentialTitle": "Essentielle Cookies",
+      "essentialText": "Für den Betrieb der Website erforderlich. Dazu gehören beispielsweise Cookies, die Ihnen den Zugang zu geschützten Bereichen unserer Website ermöglichen.",
+      "analyticsTitle": "Analyse-Cookies",
+      "analyticsText": "Ermöglichen es uns, die Anzahl der Besucher zu erkennen und zu zählen und zu sehen, wie sich Besucher auf der Website bewegen, wenn sie sie nutzen. Dies hilft uns, die Funktionsweise unserer Website zu verbessern.",
+      "functionalTitle": "Funktionale Cookies",
+      "functionalText": "Werden verwendet, um Sie zu erkennen, wenn Sie auf unsere Website zurückkehren. Dies ermöglicht es uns, unsere Inhalte für Sie zu personalisieren und Ihre Präferenzen zu speichern.",
+      "managementTitle": "Cookie-Verwaltung",
+      "managementText": "Die meisten Webbrowser akzeptieren Cookies automatisch, aber Sie können normalerweise die Einstellungen Ihres Browsers ändern, um Cookies abzulehnen, wenn Sie dies bevorzugen. Dies könnte Sie jedoch daran hindern, die Website vollständig zu nutzen.",
+      "changesTitle": "Änderungen der Richtlinie",
+      "changesText": "Wir können diese Cookie-Richtlinie von Zeit zu Zeit aktualisieren. Wir empfehlen Ihnen, diese Seite regelmäßig auf Änderungen zu überprüfen."
+    }
   }
 }

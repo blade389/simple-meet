@@ -175,5 +175,60 @@
     "registering": "Registrazione...",
     "note": "Note:",
     "registrationNote": "La registrazione è gratuita per le donne. Gli uomini ricevono 1 gettone gratuito alla registrazione."
+  },
+  "legal": {
+    "lastUpdate": "Ultimo aggiornamento",
+    "terms": {
+      "seoDescription": "Leggi i termini e condizioni d'uso di SCOPAMI. Regole di condotta, limitazioni di responsabilità e linee guida della community.",
+      "seoKeywords": "termini servizio, condizioni uso, regolamento dating",
+      "introTitle": "Introduzione",
+      "introText": "Benvenuto su SCOPAMI. Utilizzando il nostro sito web e i nostri servizi, accetti di rispettare e di essere vincolato dai seguenti termini e condizioni. Ti preghiamo di leggerli attentamente.",
+      "liabilityTitle": "Limitazione di Responsabilità",
+      "liabilityText1": "SCOPAMI agisce esclusivamente come intermediario per facilitare l'organizzazione di appuntamenti tra gli utenti.",
+      "liabilityText2": "È importante comprendere che SCOPAMI si occupa solo ed esclusivamente di organizzare l'appuntamento. Una volta che l'appuntamento è stato fissato e le parti sono state messe in contatto, non abbiamo alcuna responsabilità, controllo o obbligo riguardo a ciò che accade successivamente, né online né offline.",
+      "liabilityText3": "Non siamo responsabili per le azioni, i comportamenti o la condotta di qualsiasi utente, sia online che offline. L'utente è l'unico responsabile delle proprie interazioni con gli altri membri.",
+      "eligibilityTitle": "Idoneità",
+      "eligibilityText": "Devi avere almeno 18 anni per utilizzare questo servizio. Utilizzando SCOPAMI, dichiari e garantisci di avere il diritto, l'autorità e la capacità di accettare questi Termini e di rispettarli.",
+      "conductTitle": "Regole di Condotta",
+      "conductText": "Ti impegni a non utilizzare il servizio per scopi illegali o proibiti. È vietato molestare, intimidire o diffamare altri utenti. Ci riserviamo il diritto di sospendere o terminare il tuo account se violi queste regole.",
+      "modificationsTitle": "Modifiche ai Termini",
+      "modificationsText": "Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno effettive immediatamente dopo la pubblicazione sul sito. L'uso continuato del servizio dopo tali modifiche costituisce l'accettazione dei nuovi termini."
+    },
+    "privacy": {
+      "seoDescription": "Informativa sulla privacy di SCOPAMI. Scopri come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali.",
+      "seoKeywords": "privacy policy, protezione dati, GDPR, privacy dating",
+      "collectionTitle": "Raccolta delle Informazioni",
+      "collectionText": "Raccogliamo le informazioni che ci fornisci direttamente quando ti registri, crei un profilo o comunichi con noi. Questo può includere il tuo nome, indirizzo email, data di nascita, genere e preferenze di incontro.",
+      "useTitle": "Uso delle Informazioni",
+      "useIntro": "Utilizziamo le informazioni raccolte per:",
+      "useItem1": "Fornire, mantenere e migliorare i nostri servizi.",
+      "useItem2": "Facilitare l'organizzazione degli appuntamenti tra gli utenti.",
+      "useItem3": "Inviarti comunicazioni tecniche, aggiornamenti di sicurezza e messaggi amministrativi.",
+      "useItem4": "Monitorare e analizzare le tendenze e l'utilizzo del servizio.",
+      "sharingTitle": "Condivisione delle Informazioni",
+      "sharingText": "Non vendiamo le tue informazioni personali a terzi. Condividiamo le tue informazioni solo con altri utenti come necessario per facilitare gli appuntamenti (ad esempio, mostrando il tuo profilo ad altri utenti compatibili) o quando richiesto dalla legge.",
+      "securityTitle": "Sicurezza dei Dati",
+      "securityText": "Adottiamo misure ragionevoli per proteggere le tue informazioni da perdita, furto, uso improprio e accesso non autorizzato. Tuttavia, nessun sistema di sicurezza è impenetrabile e non possiamo garantire la sicurezza assoluta dei nostri database.",
+      "rightsTitle": "I Tuoi Diritti",
+      "rightsText": "Hai il diritto di accedere, correggere o cancellare le tue informazioni personali in qualsiasi momento accedendo al tuo profilo o contattandoci direttamente."
+    },
+    "cookie": {
+      "seoDescription": "Informativa sui cookie di SCOPAMI. Scopri quali cookie utilizziamo e come gestire le tue preferenze.",
+      "seoKeywords": "cookie policy, gestione cookie, privacy cookie",
+      "whatAreTitle": "Cosa sono i Cookie?",
+      "whatAreText": "I cookie sono piccoli file di testo che vengono salvati sul tuo dispositivo quando visiti un sito web. Sono ampiamente utilizzati per far funzionare i siti web in modo più efficiente, oltre che per fornire informazioni ai proprietari del sito.",
+      "howWeUseTitle": "Come utilizziamo i Cookie",
+      "howWeUseIntro": "Utilizziamo i cookie per diversi scopi, tra cui:",
+      "essentialTitle": "Cookie Essenziali",
+      "essentialText": "Necessari per il funzionamento del sito. Includono, ad esempio, i cookie che ti permettono di accedere ad aree protette del nostro sito.",
+      "analyticsTitle": "Cookie di Analisi",
+      "analyticsText": "Ci permettono di riconoscere e contare il numero di visitatori e di vedere come i visitatori si muovono nel sito quando lo utilizzano. Questo ci aiuta a migliorare il modo in cui funziona il nostro sito.",
+      "functionalTitle": "Cookie di Funzionalità",
+      "functionalText": "Utilizzati per riconoscerti quando torni sul nostro sito. Questo ci permette di personalizzare i nostri contenuti per te e ricordare le tue preferenze.",
+      "managementTitle": "Gestione dei Cookie",
+      "managementText": "La maggior parte dei browser web accetta automaticamente i cookie, ma di solito puoi modificare le impostazioni del browser per rifiutare i cookie se preferisci. Tuttavia, questo potrebbe impedirti di sfruttare appieno il sito web.",
+      "changesTitle": "Modifiche alla Policy",
+      "changesText": "Potremmo aggiornare questa Cookie Policy di tanto in tanto. Ti invitiamo a controllare periodicamente questa pagina per eventuali modifiche."
+    }
   }
 }

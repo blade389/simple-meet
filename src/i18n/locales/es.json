@@ -128,5 +128,60 @@
     "noAnswer": "¿No encontraste la respuesta que buscabas?",
     "notFound": "¿No encontraste la respuesta que buscabas?",
     "contactSupport": "Contactar Soporte"
+  },
+  "legal": {
+    "lastUpdate": "Última actualización",
+    "terms": {
+      "seoDescription": "Lee los términos y condiciones de uso de SCOPAMI. Reglas de conducta, limitaciones de responsabilidad y directrices de la comunidad.",
+      "seoKeywords": "términos de servicio, condiciones de uso, reglamento citas",
+      "introTitle": "Introducción",
+      "introText": "Bienvenido a SCOPAMI. Al utilizar nuestro sitio web y servicios, aceptas cumplir y estar sujeto a los siguientes términos y condiciones. Por favor, léelos cuidadosamente.",
+      "liabilityTitle": "Limitación de Responsabilidad",
+      "liabilityText1": "SCOPAMI actúa exclusivamente como intermediario para facilitar la organización de citas entre usuarios.",
+      "liabilityText2": "Es importante entender que SCOPAMI solo y exclusivamente se encarga de organizar la cita. Una vez que la cita ha sido fijada y las partes han sido puestas en contacto, no tenemos ninguna responsabilidad, control u obligación respecto a lo que suceda después, ya sea online u offline.",
+      "liabilityText3": "No somos responsables de las acciones, comportamientos o conductas de ningún usuario, ya sea online u offline. El usuario es el único responsable de sus propias interacciones con otros miembros.",
+      "eligibilityTitle": "Elegibilidad",
+      "eligibilityText": "Debes tener al menos 18 años para utilizar este servicio. Al usar SCOPAMI, declaras y garantizas que tienes el derecho, la autoridad y la capacidad para aceptar estos Términos y cumplirlos.",
+      "conductTitle": "Reglas de Conducta",
+      "conductText": "Te comprometes a no utilizar el servicio para fines ilegales o prohibidos. Está prohibido acosar, intimidar o difamar a otros usuarios. Nos reservamos el derecho de suspender o cancelar tu cuenta si violas estas reglas.",
+      "modificationsTitle": "Modificaciones de los Términos",
+      "modificationsText": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán efectivos inmediatamente después de su publicación en el sitio. El uso continuado del servicio después de dichos cambios constituye la aceptación de los nuevos términos."
+    },
+    "privacy": {
+      "seoDescription": "Política de privacidad de SCOPAMI. Descubre cómo recopilamos, utilizamos y protegemos tus datos personales.",
+      "seoKeywords": "política de privacidad, protección de datos, RGPD, privacidad citas",
+      "collectionTitle": "Recopilación de Información",
+      "collectionText": "Recopilamos la información que nos proporcionas directamente cuando te registras, creas un perfil o te comunicas con nosotros. Esto puede incluir tu nombre, dirección de correo electrónico, fecha de nacimiento, género y preferencias de encuentros.",
+      "useTitle": "Uso de la Información",
+      "useIntro": "Utilizamos la información recopilada para:",
+      "useItem1": "Proporcionar, mantener y mejorar nuestros servicios.",
+      "useItem2": "Facilitar la organización de citas entre usuarios.",
+      "useItem3": "Enviarte comunicaciones técnicas, actualizaciones de seguridad y mensajes administrativos.",
+      "useItem4": "Monitorear y analizar tendencias y uso del servicio.",
+      "sharingTitle": "Compartir Información",
+      "sharingText": "No vendemos tu información personal a terceros. Compartimos tu información solo con otros usuarios según sea necesario para facilitar las citas (por ejemplo, mostrando tu perfil a otros usuarios compatibles) o cuando lo exija la ley.",
+      "securityTitle": "Seguridad de los Datos",
+      "securityText": "Tomamos medidas razonables para proteger tu información de pérdida, robo, uso indebido y acceso no autorizado. Sin embargo, ningún sistema de seguridad es impenetrable y no podemos garantizar la seguridad absoluta de nuestras bases de datos.",
+      "rightsTitle": "Tus Derechos",
+      "rightsText": "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento accediendo a tu perfil o contactándonos directamente."
+    },
+    "cookie": {
+      "seoDescription": "Política de cookies de SCOPAMI. Descubre qué cookies utilizamos y cómo gestionar tus preferencias.",
+      "seoKeywords": "política de cookies, gestión de cookies, privacidad cookies",
+      "whatAreTitle": "¿Qué son las Cookies?",
+      "whatAreText": "Las cookies son pequeños archivos de texto que se guardan en tu dispositivo cuando visitas un sitio web. Se utilizan ampliamente para hacer que los sitios web funcionen de manera más eficiente, así como para proporcionar información a los propietarios del sitio.",
+      "howWeUseTitle": "Cómo Utilizamos las Cookies",
+      "howWeUseIntro": "Utilizamos cookies para diversos fines, incluyendo:",
+      "essentialTitle": "Cookies Esenciales",
+      "essentialText": "Necesarias para el funcionamiento del sitio. Incluyen, por ejemplo, las cookies que te permiten acceder a áreas protegidas de nuestro sitio.",
+      "analyticsTitle": "Cookies de Análisis",
+      "analyticsText": "Nos permiten reconocer y contar el número de visitantes y ver cómo los visitantes se mueven por el sitio cuando lo utilizan. Esto nos ayuda a mejorar cómo funciona nuestro sitio.",
+      "functionalTitle": "Cookies de Funcionalidad",
+      "functionalText": "Se utilizan para reconocerte cuando regresas a nuestro sitio. Esto nos permite personalizar nuestro contenido para ti y recordar tus preferencias.",
+      "managementTitle": "Gestión de Cookies",
+      "managementText": "La mayoría de los navegadores web aceptan automáticamente las cookies, pero generalmente puedes modificar la configuración de tu navegador para rechazar las cookies si lo prefieres. Sin embargo, esto podría impedirte aprovechar al máximo el sitio web.",
+      "changesTitle": "Cambios en la Política",
+      "changesText": "Podemos actualizar esta Política de Cookies de vez en cuando. Te animamos a revisar periódicamente esta página para cualquier cambio."
+    }
   }
 }

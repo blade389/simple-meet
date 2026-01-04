@@ -128,5 +128,60 @@
     "noAnswer": "Nie znalazłeś odpowiedzi, której szukałeś?",
     "notFound": "Nie znalazłeś odpowiedzi, której szukałeś?",
     "contactSupport": "Skontaktuj się z pomocą techniczną"
+  },
+  "legal": {
+    "lastUpdate": "Ostatnia aktualizacja",
+    "terms": {
+      "seoDescription": "Przeczytaj regulamin i warunki korzystania z SCOPAMI. Zasady postępowania, ograniczenia odpowiedzialności i wytyczne społeczności.",
+      "seoKeywords": "regulamin, warunki korzystania, zasady randek",
+      "introTitle": "Wprowadzenie",
+      "introText": "Witamy w SCOPAMI. Korzystając z naszej strony internetowej i usług, zgadzasz się przestrzegać i być związanym następującymi warunkami. Prosimy o uważne ich przeczytanie.",
+      "liabilityTitle": "Ograniczenie Odpowiedzialności",
+      "liabilityText1": "SCOPAMI działa wyłącznie jako pośrednik ułatwiający organizację spotkań między użytkownikami.",
+      "liabilityText2": "Ważne jest, aby zrozumieć, że SCOPAMI zajmuje się tylko i wyłącznie organizacją spotkania. Po ustaleniu spotkania i nawiązaniu kontaktu między stronami nie ponosimy żadnej odpowiedzialności, kontroli ani zobowiązań dotyczących tego, co dzieje się później, zarówno online, jak i offline.",
+      "liabilityText3": "Nie ponosimy odpowiedzialności za działania, zachowania lub postępowanie jakiegokolwiek użytkownika, zarówno online, jak i offline. Użytkownik jest wyłącznie odpowiedzialny za własne interakcje z innymi członkami.",
+      "eligibilityTitle": "Kwalifikowalność",
+      "eligibilityText": "Musisz mieć co najmniej 18 lat, aby korzystać z tej usługi. Korzystając z SCOPAMI, oświadczasz i gwarantujesz, że masz prawo, uprawnienia i zdolność do zaakceptowania niniejszych Warunków i ich przestrzegania.",
+      "conductTitle": "Zasady Postępowania",
+      "conductText": "Zobowiązujesz się nie używać usługi do celów nielegalnych lub zabronionych. Zabronione jest nękanie, zastraszanie lub zniesławianie innych użytkowników. Zastrzegamy sobie prawo do zawieszenia lub zamknięcia Twojego konta w przypadku naruszenia tych zasad.",
+      "modificationsTitle": "Zmiany Warunków",
+      "modificationsText": "Zastrzegamy sobie prawo do zmiany niniejszych warunków w dowolnym momencie. Zmiany wchodzą w życie natychmiast po opublikowaniu na stronie. Dalsze korzystanie z usługi po takich zmianach stanowi akceptację nowych warunków."
+    },
+    "privacy": {
+      "seoDescription": "Polityka prywatności SCOPAMI. Dowiedz się, jak zbieramy, wykorzystujemy i chronimy Twoje dane osobowe.",
+      "seoKeywords": "polityka prywatności, ochrona danych, RODO, prywatność randek",
+      "collectionTitle": "Zbieranie Informacji",
+      "collectionText": "Zbieramy informacje, które podajesz nam bezpośrednio podczas rejestracji, tworzenia profilu lub komunikacji z nami. Może to obejmować Twoje imię, adres e-mail, datę urodzenia, płeć i preferencje dotyczące spotkań.",
+      "useTitle": "Wykorzystanie Informacji",
+      "useIntro": "Wykorzystujemy zebrane informacje do:",
+      "useItem1": "Świadczenia, utrzymywania i ulepszania naszych usług.",
+      "useItem2": "Ułatwiania organizacji spotkań między użytkownikami.",
+      "useItem3": "Wysyłania Ci komunikatów technicznych, aktualizacji bezpieczeństwa i wiadomości administracyjnych.",
+      "useItem4": "Monitorowania i analizowania trendów i wykorzystania usługi.",
+      "sharingTitle": "Udostępnianie Informacji",
+      "sharingText": "Nie sprzedajemy Twoich danych osobowych stronom trzecim. Udostępniamy Twoje informacje tylko innym użytkownikom w zakresie niezbędnym do ułatwienia spotkań (na przykład pokazując Twój profil innym kompatybilnym użytkownikom) lub gdy wymaga tego prawo.",
+      "securityTitle": "Bezpieczeństwo Danych",
+      "securityText": "Podejmujemy rozsądne środki w celu ochrony Twoich informacji przed utratą, kradzieżą, niewłaściwym użyciem i nieautoryzowanym dostępem. Jednak żaden system bezpieczeństwa nie jest nieprzenikniony i nie możemy zagwarantować absolutnego bezpieczeństwa naszych baz danych.",
+      "rightsTitle": "Twoje Prawa",
+      "rightsText": "Masz prawo do dostępu, poprawiania lub usuwania swoich danych osobowych w dowolnym momencie, uzyskując dostęp do swojego profilu lub kontaktując się z nami bezpośrednio."
+    },
+    "cookie": {
+      "seoDescription": "Polityka cookies SCOPAMI. Dowiedz się, jakich cookies używamy i jak zarządzać swoimi preferencjami.",
+      "seoKeywords": "polityka cookies, zarządzanie cookies, prywatność cookies",
+      "whatAreTitle": "Czym są Cookies?",
+      "whatAreText": "Cookies to małe pliki tekstowe, które są zapisywane na Twoim urządzeniu podczas odwiedzania strony internetowej. Są szeroko stosowane, aby strony internetowe działały wydajniej, a także aby dostarczać informacje właścicielom stron.",
+      "howWeUseTitle": "Jak Używamy Cookies",
+      "howWeUseIntro": "Używamy cookies do różnych celów, w tym:",
+      "essentialTitle": "Niezbędne Cookies",
+      "essentialText": "Niezbędne do działania strony. Obejmują na przykład cookies, które umożliwiają dostęp do chronionych obszarów naszej strony.",
+      "analyticsTitle": "Cookies Analityczne",
+      "analyticsText": "Pozwalają nam rozpoznawać i liczyć liczbę odwiedzających oraz obserwować, jak odwiedzający poruszają się po stronie, gdy z niej korzystają. Pomaga nam to ulepszać działanie naszej strony.",
+      "functionalTitle": "Cookies Funkcjonalne",
+      "functionalText": "Służą do rozpoznawania Cię, gdy wracasz na naszą stronę. Pozwala nam to personalizować nasze treści dla Ciebie i zapamiętywać Twoje preferencje.",
+      "managementTitle": "Zarządzanie Cookies",
+      "managementText": "Większość przeglądarek internetowych automatycznie akceptuje cookies, ale zazwyczaj możesz zmienić ustawienia przeglądarki, aby odrzucać cookies, jeśli wolisz. Może to jednak uniemożliwić pełne wykorzystanie strony internetowej.",
+      "changesTitle": "Zmiany w Polityce",
+      "changesText": "Możemy od czasu do czasu aktualizować niniejszą Politykę Cookies. Zachęcamy do okresowego sprawdzania tej strony pod kątem wszelkich zmian."
+    }
   }
 }

@@ -128,5 +128,60 @@
     "noAnswer": "Heb je het antwoord dat je zocht niet gevonden?",
     "notFound": "Heb je het antwoord dat je zocht niet gevonden?",
     "contactSupport": "Neem contact op met Support"
+  },
+  "legal": {
+    "lastUpdate": "Laatst bijgewerkt",
+    "terms": {
+      "seoDescription": "Lees de algemene voorwaarden van SCOPAMI. Gedragsregels, aansprakelijkheidsbeperkingen en communityrichtlijnen.",
+      "seoKeywords": "servicevoorwaarden, algemene voorwaarden, datingregels",
+      "introTitle": "Introductie",
+      "introText": "Welkom bij SCOPAMI. Door onze website en diensten te gebruiken, gaat u akkoord met de volgende algemene voorwaarden. Lees deze aandachtig door.",
+      "liabilityTitle": "Beperking van Aansprakelijkheid",
+      "liabilityText1": "SCOPAMI fungeert uitsluitend als bemiddelaar om de organisatie van ontmoetingen tussen gebruikers te faciliteren.",
+      "liabilityText2": "Het is belangrijk te begrijpen dat SCOPAMI zich alleen en uitsluitend bezighoudt met het organiseren van de ontmoeting. Zodra de ontmoeting is gepland en de partijen met elkaar in contact zijn gebracht, hebben wij geen verantwoordelijkheid, controle of verplichting met betrekking tot wat er daarna gebeurt, zowel online als offline.",
+      "liabilityText3": "Wij zijn niet verantwoordelijk voor de acties, gedragingen of het gedrag van enige gebruiker, zowel online als offline. De gebruiker is als enige verantwoordelijk voor zijn eigen interacties met andere leden.",
+      "eligibilityTitle": "Geschiktheid",
+      "eligibilityText": "U moet minimaal 18 jaar oud zijn om deze service te gebruiken. Door SCOPAMI te gebruiken, verklaart en garandeert u dat u het recht, de bevoegdheid en de capaciteit hebt om deze Voorwaarden te accepteren en na te leven.",
+      "conductTitle": "Gedragsregels",
+      "conductText": "U verbindt zich ertoe de service niet te gebruiken voor illegale of verboden doeleinden. Het is verboden andere gebruikers lastig te vallen, te intimideren of te belasteren. Wij behouden ons het recht voor om uw account op te schorten of te beëindigen als u deze regels overtreedt.",
+      "modificationsTitle": "Wijzigingen van de Voorwaarden",
+      "modificationsText": "Wij behouden ons het recht voor om deze voorwaarden op elk moment te wijzigen. Wijzigingen worden onmiddellijk van kracht na publicatie op de site. Voortgezet gebruik van de service na dergelijke wijzigingen vormt aanvaarding van de nieuwe voorwaarden."
+    },
+    "privacy": {
+      "seoDescription": "Privacybeleid van SCOPAMI. Ontdek hoe wij uw persoonlijke gegevens verzamelen, gebruiken en beschermen.",
+      "seoKeywords": "privacybeleid, gegevensbescherming, AVG, dating privacy",
+      "collectionTitle": "Verzameling van Informatie",
+      "collectionText": "Wij verzamelen de informatie die u ons rechtstreeks verstrekt wanneer u zich registreert, een profiel aanmaakt of met ons communiceert. Dit kan uw naam, e-mailadres, geboortedatum, geslacht en ontmoetingsvoorkeuren omvatten.",
+      "useTitle": "Gebruik van Informatie",
+      "useIntro": "Wij gebruiken de verzamelde informatie om:",
+      "useItem1": "Onze diensten te leveren, onderhouden en verbeteren.",
+      "useItem2": "De organisatie van ontmoetingen tussen gebruikers te faciliteren.",
+      "useItem3": "U technische mededelingen, beveiligingsupdates en administratieve berichten te sturen.",
+      "useItem4": "Trends en het gebruik van de service te monitoren en analyseren.",
+      "sharingTitle": "Delen van Informatie",
+      "sharingText": "Wij verkopen uw persoonlijke informatie niet aan derden. Wij delen uw informatie alleen met andere gebruikers voor zover nodig om ontmoetingen te faciliteren (bijvoorbeeld door uw profiel te tonen aan andere compatibele gebruikers) of wanneer wettelijk vereist.",
+      "securityTitle": "Gegevensbeveiliging",
+      "securityText": "Wij nemen redelijke maatregelen om uw informatie te beschermen tegen verlies, diefstal, misbruik en ongeoorloofde toegang. Geen enkel beveiligingssysteem is echter ondoordringbaar en wij kunnen de absolute veiligheid van onze databases niet garanderen.",
+      "rightsTitle": "Uw Rechten",
+      "rightsText": "U hebt het recht om op elk moment uw persoonlijke informatie in te zien, te corrigeren of te verwijderen door toegang te krijgen tot uw profiel of door rechtstreeks contact met ons op te nemen."
+    },
+    "cookie": {
+      "seoDescription": "Cookiebeleid van SCOPAMI. Ontdek welke cookies wij gebruiken en hoe u uw voorkeuren kunt beheren.",
+      "seoKeywords": "cookiebeleid, cookiebeheer, cookie privacy",
+      "whatAreTitle": "Wat zijn Cookies?",
+      "whatAreText": "Cookies zijn kleine tekstbestanden die op uw apparaat worden opgeslagen wanneer u een website bezoekt. Ze worden veel gebruikt om websites efficiënter te laten werken en om informatie te verstrekken aan site-eigenaren.",
+      "howWeUseTitle": "Hoe Wij Cookies Gebruiken",
+      "howWeUseIntro": "Wij gebruiken cookies voor verschillende doeleinden, waaronder:",
+      "essentialTitle": "Essentiële Cookies",
+      "essentialText": "Noodzakelijk voor de werking van de site. Dit omvat bijvoorbeeld cookies waarmee u toegang krijgt tot beveiligde delen van onze site.",
+      "analyticsTitle": "Analytische Cookies",
+      "analyticsText": "Stellen ons in staat om het aantal bezoekers te herkennen en te tellen en te zien hoe bezoekers zich door de site bewegen wanneer ze deze gebruiken. Dit helpt ons om de werking van onze site te verbeteren.",
+      "functionalTitle": "Functionele Cookies",
+      "functionalText": "Worden gebruikt om u te herkennen wanneer u terugkeert naar onze site. Dit stelt ons in staat om onze inhoud voor u te personaliseren en uw voorkeuren te onthouden.",
+      "managementTitle": "Cookiebeheer",
+      "managementText": "De meeste webbrowsers accepteren automatisch cookies, maar u kunt meestal de instellingen van uw browser wijzigen om cookies te weigeren als u dat verkiest. Dit kan echter verhinderen dat u volledig gebruik kunt maken van de website.",
+      "changesTitle": "Wijzigingen in het Beleid",
+      "changesText": "Wij kunnen dit Cookiebeleid van tijd tot tijd bijwerken. Wij raden u aan deze pagina regelmatig te controleren op eventuele wijzigingen."
+    }
   }
 }

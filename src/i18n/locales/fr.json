@@ -128,5 +128,60 @@
     "noAnswer": "Vous n'avez pas trouvé la réponse que vous cherchiez ?",
     "notFound": "Vous n'avez pas trouvé la réponse que vous cherchiez ?",
     "contactSupport": "Contacter le Support"
+  },
+  "legal": {
+    "lastUpdate": "Dernière mise à jour",
+    "terms": {
+      "seoDescription": "Lisez les conditions générales d'utilisation de SCOPAMI. Règles de conduite, limitations de responsabilité et directives de la communauté.",
+      "seoKeywords": "conditions utilisation, termes service, règlement rencontres",
+      "introTitle": "Introduction",
+      "introText": "Bienvenue sur SCOPAMI. En utilisant notre site web et nos services, vous acceptez de respecter et d'être lié par les termes et conditions suivants. Veuillez les lire attentivement.",
+      "liabilityTitle": "Limitation de Responsabilité",
+      "liabilityText1": "SCOPAMI agit exclusivement comme intermédiaire pour faciliter l'organisation de rendez-vous entre les utilisateurs.",
+      "liabilityText2": "Il est important de comprendre que SCOPAMI s'occupe uniquement et exclusivement de l'organisation du rendez-vous. Une fois le rendez-vous fixé et les parties mises en contact, nous n'avons aucune responsabilité, contrôle ou obligation concernant ce qui se passe par la suite, en ligne ou hors ligne.",
+      "liabilityText3": "Nous ne sommes pas responsables des actions, comportements ou conduites de tout utilisateur, en ligne ou hors ligne. L'utilisateur est seul responsable de ses propres interactions avec les autres membres.",
+      "eligibilityTitle": "Éligibilité",
+      "eligibilityText": "Vous devez avoir au moins 18 ans pour utiliser ce service. En utilisant SCOPAMI, vous déclarez et garantissez que vous avez le droit, l'autorité et la capacité d'accepter ces Conditions et de vous y conformer.",
+      "conductTitle": "Règles de Conduite",
+      "conductText": "Vous vous engagez à ne pas utiliser le service à des fins illégales ou interdites. Il est interdit de harceler, d'intimider ou de diffamer d'autres utilisateurs. Nous nous réservons le droit de suspendre ou de résilier votre compte si vous enfreignez ces règles.",
+      "modificationsTitle": "Modifications des Conditions",
+      "modificationsText": "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications prendront effet immédiatement après leur publication sur le site. L'utilisation continue du service après de telles modifications constitue l'acceptation des nouvelles conditions."
+    },
+    "privacy": {
+      "seoDescription": "Politique de confidentialité de SCOPAMI. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles.",
+      "seoKeywords": "politique confidentialité, protection données, RGPD, confidentialité rencontres",
+      "collectionTitle": "Collecte des Informations",
+      "collectionText": "Nous collectons les informations que vous nous fournissez directement lorsque vous vous inscrivez, créez un profil ou communiquez avec nous. Cela peut inclure votre nom, adresse e-mail, date de naissance, genre et préférences de rencontre.",
+      "useTitle": "Utilisation des Informations",
+      "useIntro": "Nous utilisons les informations collectées pour :",
+      "useItem1": "Fournir, maintenir et améliorer nos services.",
+      "useItem2": "Faciliter l'organisation des rendez-vous entre les utilisateurs.",
+      "useItem3": "Vous envoyer des communications techniques, des mises à jour de sécurité et des messages administratifs.",
+      "useItem4": "Surveiller et analyser les tendances et l'utilisation du service.",
+      "sharingTitle": "Partage des Informations",
+      "sharingText": "Nous ne vendons pas vos informations personnelles à des tiers. Nous partageons vos informations uniquement avec d'autres utilisateurs selon les besoins pour faciliter les rendez-vous (par exemple, en montrant votre profil à d'autres utilisateurs compatibles) ou lorsque la loi l'exige.",
+      "securityTitle": "Sécurité des Données",
+      "securityText": "Nous prenons des mesures raisonnables pour protéger vos informations contre la perte, le vol, l'utilisation abusive et l'accès non autorisé. Cependant, aucun système de sécurité n'est impénétrable et nous ne pouvons pas garantir la sécurité absolue de nos bases de données.",
+      "rightsTitle": "Vos Droits",
+      "rightsText": "Vous avez le droit d'accéder, de corriger ou de supprimer vos informations personnelles à tout moment en accédant à votre profil ou en nous contactant directement."
+    },
+    "cookie": {
+      "seoDescription": "Politique de cookies de SCOPAMI. Découvrez quels cookies nous utilisons et comment gérer vos préférences.",
+      "seoKeywords": "politique cookies, gestion cookies, confidentialité cookies",
+      "whatAreTitle": "Que sont les Cookies ?",
+      "whatAreText": "Les cookies sont de petits fichiers texte qui sont enregistrés sur votre appareil lorsque vous visitez un site web. Ils sont largement utilisés pour faire fonctionner les sites web plus efficacement, ainsi que pour fournir des informations aux propriétaires du site.",
+      "howWeUseTitle": "Comment nous utilisons les Cookies",
+      "howWeUseIntro": "Nous utilisons des cookies à diverses fins, notamment :",
+      "essentialTitle": "Cookies Essentiels",
+      "essentialText": "Nécessaires au fonctionnement du site. Ils incluent, par exemple, les cookies qui vous permettent d'accéder aux zones protégées de notre site.",
+      "analyticsTitle": "Cookies d'Analyse",
+      "analyticsText": "Nous permettent de reconnaître et de compter le nombre de visiteurs et de voir comment les visiteurs se déplacent sur le site lorsqu'ils l'utilisent. Cela nous aide à améliorer le fonctionnement de notre site.",
+      "functionalTitle": "Cookies de Fonctionnalité",
+      "functionalText": "Utilisés pour vous reconnaître lorsque vous revenez sur notre site. Cela nous permet de personnaliser notre contenu pour vous et de nous souvenir de vos préférences.",
+      "managementTitle": "Gestion des Cookies",
+      "managementText": "La plupart des navigateurs web acceptent automatiquement les cookies, mais vous pouvez généralement modifier les paramètres de votre navigateur pour refuser les cookies si vous préférez. Cependant, cela pourrait vous empêcher de profiter pleinement du site web.",
+      "changesTitle": "Modifications de la Politique",
+      "changesText": "Nous pouvons mettre à jour cette Politique de Cookies de temps en temps. Nous vous encourageons à vérifier périodiquement cette page pour tout changement."
+    }
   }
 }
