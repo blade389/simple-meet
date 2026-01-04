@@ -274,6 +274,37 @@
     "verificationRequired": "Verificación Requerida",
     "premiumProfilesVerifyDesc": "Completa la verificación de tu cuenta para acceder a los perfiles premium"
   },
+  "howItWorks": {
+    "step1Title": "1. Verifica tu cuenta",
+    "step1Desc": "Para comenzar, necesitas verificar tu identidad enviando un documento válido y luego una foto de perfil. Esto garantiza la seguridad de todos los usuarios.",
+    "male": {
+      "receivingTitle": "Recepción de Solicitudes",
+      "receiveRequests": "Recibe solicitudes de cita directamente de las mujeres.",
+      "accept": "Aceptar",
+      "acceptDesc": "Organiza la cita gratuitamente.",
+      "reject": "Rechazar",
+      "rejectDesc": "Se deducirá 1 token de tu cuenta.",
+      "tokenWarning": "Para recibir solicitudes, tu saldo de tokens debe ser mayor que 0.",
+      "premiumTitle": "Solicitudes Premium",
+      "premiumDesc": "Puedes enviar solicitudes para encuentros profesionales a perfiles Premium.",
+      "premiumCost": "Cada solicitud cuesta 1 token para la organización.",
+      "premiumPayment": "La tarifa del encuentro se paga directamente en persona.",
+      "premiumRefund": "Si la solicitud no es aceptada, el token se reembolsa."
+    },
+    "female": {
+      "freeTitle": "Encuentros Gratuitos",
+      "discover": "Descubre Perfiles",
+      "discoverDesc": "Encuentra usuarios que te gusten en la sección Explorar.",
+      "sendRequest": "Envía una solicitud de cita gratuitamente.",
+      "ifAccepted": "Si es aceptada, serás puesta en contacto para organizar el encuentro.",
+      "allFree": "Todo completamente gratis.",
+      "premiumTitle": "¿Quieres ofrecer servicios? (Premium)",
+      "premiumDesc": "Puedes suscribirte a un plan Premium para funciones avanzadas:",
+      "manageRates": "Gestiona tus tarifas personalizadas.",
+      "receiveRequests": "Recibe solicitudes de cita de pago.",
+      "fullControl": "¡Mantén el control total: siempre decides si aceptar o rechazar!"
+    }
+  },
   "browse": {
     "title": "Descubrir",
     "nearbyProfiles": "Perfiles Cercanos",

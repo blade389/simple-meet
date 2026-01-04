@@ -274,6 +274,37 @@
     "verificationRequired": "Verificatie Vereist",
     "premiumProfilesVerifyDesc": "Voltooi de verificatie van je account om toegang te krijgen tot premium profielen"
   },
+  "howItWorks": {
+    "step1Title": "1. Verifieer je account",
+    "step1Desc": "Om te beginnen moet je je identiteit verifiëren door een geldig document en vervolgens een profielfoto in te dienen. Dit garandeert de veiligheid van alle gebruikers.",
+    "male": {
+      "receivingTitle": "Verzoeken Ontvangen",
+      "receiveRequests": "Ontvang afspraakverzoeken rechtstreeks van vrouwen.",
+      "accept": "Accepteren",
+      "acceptDesc": "Organiseer de afspraak gratis.",
+      "reject": "Afwijzen",
+      "rejectDesc": "1 token wordt van je account afgetrokken.",
+      "tokenWarning": "Om verzoeken te ontvangen, moet je tokensaldo groter zijn dan 0.",
+      "premiumTitle": "Premium Verzoeken",
+      "premiumDesc": "Je kunt verzoeken voor professionele ontmoetingen sturen naar Premium profielen.",
+      "premiumCost": "Elk verzoek kost 1 token voor de organisatie.",
+      "premiumPayment": "De ontmoetingskosten worden direct persoonlijk betaald.",
+      "premiumRefund": "Als het verzoek niet wordt geaccepteerd, wordt de token terugbetaald."
+    },
+    "female": {
+      "freeTitle": "Gratis Ontmoetingen",
+      "discover": "Profielen Ontdekken",
+      "discoverDesc": "Vind gebruikers die je leuk vindt in de sectie Bladeren.",
+      "sendRequest": "Stuur gratis een afspraakverzoek.",
+      "ifAccepted": "Als geaccepteerd, word je in contact gebracht om de ontmoeting te regelen.",
+      "allFree": "Alles volledig gratis.",
+      "premiumTitle": "Wil je diensten aanbieden? (Premium)",
+      "premiumDesc": "Je kunt je abonneren op een Premium-plan voor geavanceerde functies:",
+      "manageRates": "Beheer je aangepaste tarieven.",
+      "receiveRequests": "Ontvang betaalde afspraakverzoeken.",
+      "fullControl": "Behoud volledige controle: jij beslist altijd of je accepteert of afwijst!"
+    }
+  },
   "browse": {
     "title": "Ontdekken",
     "nearbyProfiles": "Profielen in de Buurt",

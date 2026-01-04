@@ -285,6 +285,37 @@
     "verificationRequired": "Verifica Richiesta",
     "premiumProfilesVerifyDesc": "Completa la verifica del tuo account per accedere ai profili premium"
   },
+  "howItWorks": {
+    "step1Title": "1. Verifica il tuo account",
+    "step1Desc": "Per iniziare, è necessario verificare la tua identità inviando un documento valido e successivamente una foto profilo. Questo garantisce la sicurezza di tutti gli utenti.",
+    "male": {
+      "receivingTitle": "Ricezione Richieste",
+      "receiveRequests": "Ricevi richieste di appuntamento direttamente dalle donne.",
+      "accept": "Accetta",
+      "acceptDesc": "Organizzi l'appuntamento gratuitamente.",
+      "reject": "Rifiuta",
+      "rejectDesc": "Viene scalato 1 gettone dal tuo account.",
+      "tokenWarning": "Per ricevere richieste, il tuo saldo gettoni deve essere maggiore di 0.",
+      "premiumTitle": "Richieste Premium",
+      "premiumDesc": "Puoi inviare richieste per incontri professionali a profili Premium.",
+      "premiumCost": "Ogni richiesta costa 1 gettone per l'organizzazione.",
+      "premiumPayment": "La tariffa dell'incontro viene pagata direttamente di persona.",
+      "premiumRefund": "Se la richiesta non viene accettata, il gettone viene rimborsato."
+    },
+    "female": {
+      "freeTitle": "Incontri Gratuiti",
+      "discover": "Scopri Profili",
+      "discoverDesc": "Trova utenti di tuo gradimento nella sezione Browse.",
+      "sendRequest": "Invia una richiesta di appuntamento gratuitamente.",
+      "ifAccepted": "Se accettata, verrai messa in contatto per fissare l'incontro.",
+      "allFree": "Tutto completamente gratuito.",
+      "premiumTitle": "Vuoi offrire servizi? (Premium)",
+      "premiumDesc": "Puoi sottoscrivere un abbonamento Premium per funzionalità avanzate:",
+      "manageRates": "Gestisci le tue tariffe personalizzate.",
+      "receiveRequests": "Ricevi richieste di appuntamento a pagamento.",
+      "fullControl": "Mantieni il controllo totale: sei sempre tu a decidere se accettare o rifiutare!"
+    }
+  },
   "browse": {
     "title": "Scopri",
     "nearbyProfiles": "Profili Vicini",
