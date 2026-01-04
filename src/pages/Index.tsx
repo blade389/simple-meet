@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const Index = () => {
   return (
@@ -35,6 +36,7 @@ const Index = () => {
             <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
               Come Funziona
             </a>
+            <LanguageSelector />
             <Link to="/auth">
               <Button variant="ghost">Accedi</Button>
             </Link>
