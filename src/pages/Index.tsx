@@ -22,23 +22,20 @@ const Index = () => {
       <StructuredData schema={{ type: "Organization" }} />
       <StructuredData schema={{ type: "WebSite" }} />
       <StructuredData schema={{ type: "WebApplication" }} />
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo - a sinistra */}
-            <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center justify-between min-w-0">
+            <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 SCOPAMI
               </h1>
             </div>
-            
-            {/* Language Selector e Navigazione - a destra */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 min-w-0">
               <LanguageSelector />
-              <nav className="hidden md:flex items-center gap-6">
+              <nav className="hidden md:flex items-center gap-6 min-w-0">
                 <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
                   {t("common.features")}
                 </a>
@@ -60,15 +57,15 @@ const Index = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 bg-gradient-hero">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight">
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-w-0">
+            <div className="space-y-6 min-w-0">
+              <h2 className="text-5xl md:text-6xl font-bold leading-tight break-words">
                 {t("home.heroTitle")}{" "}
                 <span className="bg-gradient-primary bg-clip-text text-transparent">
                   {t("home.heroHighlight")}
                 </span>
               </h2>
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl text-muted-foreground break-words">
                 {t("home.heroDescription")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -83,7 +80,7 @@ const Index = () => {
                   </Button>
                 </Link>
               </div>
-              <div className="flex gap-8 pt-4">
+              <div className="flex flex-wrap gap-8 pt-4">
                 <div>
                   <div className="text-3xl font-bold text-primary">10K+</div>
                   <div className="text-sm text-muted-foreground">{t("home.activeUsers")}</div>
@@ -98,7 +95,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative min-w-0">
               <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl"></div>
               <img
                 src={heroImage}
