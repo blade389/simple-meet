@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -34,7 +35,7 @@ const handler = async (req: Request): Promise<Response> => {
         sender_id,
         is_premium,
         sender:profiles!match_requests_sender_id_fkey(full_name),
-        receiver:profiles!match_requests_receiver_id_fkey(full_name)
+        receiver:profiles!match_requests_receiver_id_fkey(full_name, preferred_language)
       `)
       .eq("status", "pending")
       .gte("expires_at", now.toISOString())
@@ -55,28 +56,30 @@ const handler = async (req: Request): Promise<Response> => {
             continue;
           }
 
-          const senderName = (request.sender as any)?.full_name || "Un utente";
-          const receiverName = (request.receiver as any)?.full_name || "Utente";
+          const senderName = (request.sender as any)?.full_name || "User";
+          const receiverName = (request.receiver as any)?.full_name || "User";
+          const receiverLang = ((request.receiver as any)?.preferred_language || 'it') as SupportedLanguage;
           const isPremium = (request as any).is_premium === true;
+          const t = translations[receiverLang] || translations.it;
 
-          // Different email content for premium vs normal requests
           const emailSubject = isPremium 
-            ? "Promemoria: richiesta premium in scadenza!"
-            : "Promemoria: richiesta di match in scadenza!";
+            ? t.matchRequest.premiumSubject
+            : t.requestExpiringReminder.subject;
           
-          const emailHtml = isPremium
-            ? `
-              <h1>Ciao ${receiverName}!</h1>
-              <p>Ti ricordiamo che hai una <strong>richiesta premium</strong> da <strong>${senderName}</strong> che scadrà tra circa 1 ora.</p>
-              <p>Se non risponderai in tempo, la richiesta sarà automaticamente rifiutata.</p>
-              <p>Accedi all'app per accettare o rifiutare la richiesta.</p>
-            `
-            : `
-              <h1>Ciao ${receiverName}!</h1>
-              <p>Ti ricordiamo che hai una richiesta di match da <strong>${senderName}</strong> che scadrà tra circa 1 ora.</p>
-              <p>Se non risponderai in tempo, la richiesta sarà automaticamente rifiutata e ti verrà scalato 1 gettone.</p>
-              <p>Accedi all'app per accettare o rifiutare la richiesta.</p>
-            `;
+          const emailHtml = getEmailWrapper(`
+            <h2 style="color: #333; margin-bottom: 20px;">${isPremium ? t.matchRequest.premiumTitle : t.requestExpiringReminder.title}</h2>
+            <p style="color: #555; font-size: 16px; line-height: 1.6;">
+              ${t.common.greeting} ${receiverName}!
+            </p>
+            <p style="color: #555; font-size: 16px; line-height: 1.6;">
+              <strong>${senderName}</strong> ${isPremium ? t.matchRequest.premiumMessage : t.requestExpiringReminder.message}
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="https://scopami.online${isPremium ? '/premium-requests' : '/dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                ${t.requestExpiringReminder.cta}
+              </a>
+            </div>
+          `, t);
 
           // Send reminder email
           const resendResponse = await fetch("https://api.resend.com/emails", {
@@ -86,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
               "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
             },
             body: JSON.stringify({
-              from: "Match App <noreply@scopami.online>",
+              from: "SCOPAMI <noreply@scopami.online>",
               to: [user.email],
               subject: emailSubject,
               html: emailHtml,
@@ -97,18 +100,17 @@ const handler = async (req: Request): Promise<Response> => {
             const error = await resendResponse.text();
             console.error(`Failed to send reminder for request ${request.id}:`, error);
           } else {
-            console.log(`Reminder sent for request ${request.id}`);
+            console.log(`Reminder sent for request ${request.id} in language ${receiverLang}`);
             
             // Send push notification
             const pushUrl = isPremium ? "/premium-requests" : "/dashboard";
-            const pushTitle = isPremium ? "⏰ Richiesta premium in scadenza" : "⏰ Richiesta in scadenza";
             
             try {
               await supabase.functions.invoke("send-push-notification", {
                 body: {
                   userId: request.receiver_id,
-                  title: pushTitle,
-                  body: `La richiesta di ${senderName} scade tra 1 ora`,
+                  title: isPremium ? `⏰ ${t.matchRequest.premiumTitle}` : `⏰ ${t.requestExpiringReminder.title}`,
+                  body: `${senderName} - ${t.requestExpiringReminder.notification}`,
                   url: pushUrl,
                   tag: "request-expiring",
                   requireInteraction: true,
@@ -135,8 +137,8 @@ const handler = async (req: Request): Promise<Response> => {
         appointment_deadline,
         sender_id,
         receiver_id,
-        sender:profiles!match_requests_sender_id_fkey(full_name),
-        receiver:profiles!match_requests_receiver_id_fkey(full_name)
+        sender:profiles!match_requests_sender_id_fkey(full_name, preferred_language),
+        receiver:profiles!match_requests_receiver_id_fkey(full_name, preferred_language)
       `)
       .eq("status", "accepted")
       .eq("chat_status", "active")
@@ -166,56 +168,84 @@ const handler = async (req: Request): Promise<Response> => {
           const { data: { user: senderUser } } = await supabase.auth.admin.getUserById(match.sender_id);
           const { data: { user: receiverUser } } = await supabase.auth.admin.getUserById(match.receiver_id);
 
-          // Send reminder to both users
-          const emails = [];
-          if (senderUser?.email) emails.push(senderUser.email);
-          if (receiverUser?.email) emails.push(receiverUser.email);
+          const senderLang = ((match.sender as any)?.preferred_language || 'it') as SupportedLanguage;
+          const receiverLang = ((match.receiver as any)?.preferred_language || 'it') as SupportedLanguage;
+          const senderT = translations[senderLang] || translations.it;
+          const receiverT = translations[receiverLang] || translations.it;
 
-          if (emails.length > 0) {
-            const resendResponse = await fetch("https://api.resend.com/emails", {
+          // Send email to sender
+          if (senderUser?.email) {
+            const emailHtml = getEmailWrapper(`
+              <h2 style="color: #333; margin-bottom: 20px;">${senderT.appointmentDeadlineReminder.title}</h2>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">${senderT.appointmentDeadlineReminder.message}</p>
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                  ${senderT.appointmentDeadlineReminder.cta}
+                </a>
+              </div>
+            `, senderT);
+
+            await fetch("https://api.resend.com/emails", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "Match App <noreply@scopami.online>",
-                to: emails,
-                subject: "Promemoria: fissa l'appuntamento entro 1 ora!",
-                html: `
-                  <h1>Promemoria importante!</h1>
-                  <p>Il tempo per fissare l'appuntamento sta per scadere (circa 1 ora rimanente).</p>
-                  <p>Se non fisserete un appuntamento in tempo, la conversazione verrà chiusa e sottoposta a revisione.</p>
-                  <p>Accedi all'app e fissa l'appuntamento ora!</p>
-                `,
+                from: "SCOPAMI <noreply@scopami.online>",
+                to: [senderUser.email],
+                subject: senderT.appointmentDeadlineReminder.subject,
+                html: emailHtml,
               }),
             });
+          }
 
-            if (!resendResponse.ok) {
-              const error = await resendResponse.text();
-              console.error(`Failed to send appointment reminder for match ${match.id}:`, error);
-            } else {
-              console.log(`Appointment reminder sent for match ${match.id}`);
-              
-              // Send push notification only to receiver (female user who needs to schedule)
-              try {
-                await supabase.functions.invoke("send-push-notification", {
-                  body: {
-                    userId: match.receiver_id,
-                    title: "📅 Fissa l'appuntamento",
-                    body: "Il tempo sta per scadere! Hai ancora 1 ora per fissare l'appuntamento",
-                    url: "/appointments",
-                    tag: "appointment-deadline",
-                    requireInteraction: true,
-                  },
-                  headers: {
-                    'x-internal-secret': pushSecret,
-                  },
-                });
-              } catch (pushError) {
-                console.error("Failed to send push notification:", pushError);
-              }
-            }
+          // Send email to receiver
+          if (receiverUser?.email) {
+            const emailHtml = getEmailWrapper(`
+              <h2 style="color: #333; margin-bottom: 20px;">${receiverT.appointmentDeadlineReminder.title}</h2>
+              <p style="color: #555; font-size: 16px; line-height: 1.6;">${receiverT.appointmentDeadlineReminder.message}</p>
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                  ${receiverT.appointmentDeadlineReminder.cta}
+                </a>
+              </div>
+            `, receiverT);
+
+            await fetch("https://api.resend.com/emails", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+              },
+              body: JSON.stringify({
+                from: "SCOPAMI <noreply@scopami.online>",
+                to: [receiverUser.email],
+                subject: receiverT.appointmentDeadlineReminder.subject,
+                html: emailHtml,
+              }),
+            });
+          }
+
+          console.log(`Appointment deadline reminder sent for match ${match.id}`);
+          
+          // Send push notification only to receiver (female user who needs to schedule)
+          try {
+            await supabase.functions.invoke("send-push-notification", {
+              body: {
+                userId: match.receiver_id,
+                title: `📅 ${receiverT.appointmentDeadlineReminder.title}`,
+                body: receiverT.appointmentDeadlineReminder.notification,
+                url: "/appointments",
+                tag: "appointment-deadline",
+                requireInteraction: true,
+              },
+              headers: {
+                'x-internal-secret': pushSecret,
+              },
+            });
+          } catch (pushError) {
+            console.error("Failed to send push notification:", pushError);
           }
         } catch (error) {
           console.error(`Error processing appointment deadline ${match.id}:`, error);
