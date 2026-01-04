@@ -50,7 +50,7 @@ const Favorites = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [removingId, setRemovingId] = useState<string | null>(null);
-  const [myProfile, setMyProfile] = useState<{ gender: string; full_name: string } | null>(null);
+  const [myProfile, setMyProfile] = useState<{ gender: string; full_name: string; location_lat: number | null; location_lon: number | null } | null>(null);
   const [sendingRequest, setSendingRequest] = useState<string | null>(null);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
   
@@ -73,10 +73,24 @@ const Favorites = () => {
   const loadMyProfile = async () => {
     const { data } = await supabase
       .from('profiles')
-      .select('gender, full_name')
+      .select('gender, full_name, location_lat, location_lon')
       .eq('id', user?.id)
       .single();
     if (data) setMyProfile(data);
+  };
+
+  const toRad = (deg: number) => deg * (Math.PI / 180);
+
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const R = 6371;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
   };
 
   const loadSentRequests = async (profileIds: string[]) => {
@@ -94,6 +108,13 @@ const Favorites = () => {
 
   const loadFavorites = async () => {
     try {
+      // First load my profile to get coordinates
+      const { data: myProfileData } = await supabase
+        .from('profiles')
+        .select('location_lat, location_lon')
+        .eq('id', user?.id)
+        .single();
+
       const { data: favoritesData, error: favoritesError } = await supabase
         .from('favorites')
         .select('id, favorite_user_id, created_at')
@@ -117,10 +138,27 @@ const Favorites = () => {
 
       if (profilesError) throw profilesError;
 
-      const favoritesWithProfiles = favoritesData.map(fav => ({
-        ...fav,
-        profile: profilesData?.find(p => p.id === fav.favorite_user_id)
-      })).filter(f => f.profile) as Favorite[];
+      const favoritesWithProfiles = favoritesData.map(fav => {
+        const profile = profilesData?.find(p => p.id === fav.favorite_user_id);
+        if (!profile) return null;
+        
+        // Calculate distance if both profiles have coordinates
+        let distance: number | undefined = undefined;
+        if (myProfileData?.location_lat && myProfileData?.location_lon && 
+            profile.location_lat && profile.location_lon) {
+          distance = calculateDistance(
+            myProfileData.location_lat,
+            myProfileData.location_lon,
+            profile.location_lat,
+            profile.location_lon
+          );
+        }
+        
+        return {
+          ...fav,
+          profile: { ...profile, distance }
+        };
+      }).filter(f => f !== null) as Favorite[];
 
       setFavorites(favoritesWithProfiles);
       
