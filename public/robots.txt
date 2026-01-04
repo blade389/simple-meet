@@ -1,14 +1,49 @@
+# Robots.txt per scopami.online
+# Ottimizzato per SEO e crawler
+
+# Regole generali per tutti i crawler
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /browse
+Disallow: /favorites
+Disallow: /appointments
+Disallow: /blocked
+Disallow: /buy-tokens
+Disallow: /premium-subscription
+Disallow: /verify
+
+# Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+# Bing
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+# Social media crawlers (per OG tags)
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# Sitemap
+Sitemap: https://scopami.online/sitemap.xml
+
+# Host
+Host: https://scopami.online
