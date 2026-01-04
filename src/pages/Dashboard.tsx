@@ -515,15 +515,15 @@ const Dashboard = () => {
                 <Crown className="w-12 h-12 text-yellow-500" />
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
-                    Diventa Premium
-                    <Badge className="bg-yellow-500 text-black">Nuovo!</Badge>
+                    {t('dashboard.becomePremium')}
+                    <Badge className="bg-yellow-500 text-black">{t('dashboard.new')}</Badge>
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Aumenta la tua visibilità e imposta le tue tariffe personalizzate
+                    {t('dashboard.becomePremiumDesc')}
                   </p>
                 </div>
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black">
-                  Scopri di più
+                  {t('common.learnMore')}
                 </Button>
               </div>
             </Link>
@@ -537,19 +537,19 @@ const Dashboard = () => {
               <Crown className="w-12 h-12 text-yellow-500" />
               <div className="flex-1">
                 <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
-                  Account Premium Attivo
+                  {t('dashboard.premiumAccountActive')}
                   <Badge className="bg-yellow-500 text-black">Premium</Badge>
                 </h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Gestisci le tue tariffe e richieste premium
+                  {t('dashboard.managePremiumDesc')}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" asChild>
-                    <Link to="/premium-rates">Gestisci Tariffe</Link>
+                    <Link to="/premium-rates">{t('dashboard.manageRates')}</Link>
                   </Button>
                   <Button variant="outline" size="sm" asChild className="relative">
                     <Link to="/premium-requests">
-                      Richieste Premium
+                      {t('dashboard.premiumRequests')}
                       {premiumRequestsCount > 0 && (
                         <Badge className="ml-2 bg-destructive text-destructive-foreground">
                           {premiumRequestsCount}
@@ -558,7 +558,7 @@ const Dashboard = () => {
                     </Link>
                   </Button>
                   <Button variant="outline" size="sm" asChild>
-                    <Link to="/premium-subscription">Gestisci Abbonamento</Link>
+                    <Link to="/premium-subscription">{t('dashboard.manageSubscription')}</Link>
                   </Button>
                 </div>
               </div>
