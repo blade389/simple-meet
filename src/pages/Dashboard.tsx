@@ -4,13 +4,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell, Bookmark } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell, Bookmark, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
 import { showOneSignalPrompt, loginOneSignal, isPushEnabled } from '@/lib/onesignal';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { getReferralCode, clearReferralCode } from '@/lib/referral';
 
 interface Profile {
   full_name: string;
@@ -48,10 +49,61 @@ const Dashboard = () => {
       loadFavoritesCount();
       loginOneSignal(user.id);
       checkNotificationStatus();
-      // Aggiorna automaticamente la posizione ad ogni accesso (silenzioso)
       updateLocationSilent();
+      processReferral();
     }
   }, [user]);
+
+  const processReferral = async () => {
+    if (!user) return;
+    const refCode = getReferralCode();
+    if (!refCode) return;
+
+    try {
+      // Check if user is verified
+      const { data: myProfile } = await supabase
+        .from('profiles')
+        .select('is_verified')
+        .eq('id', user.id)
+        .single();
+
+      if (myProfile?.is_verified !== 'verified') return;
+
+      // Check if already referred
+      const { data: existingRef } = await supabase
+        .from('referrals')
+        .select('id')
+        .eq('referred_user_id', user.id)
+        .maybeSingle();
+
+      if (existingRef) {
+        clearReferralCode();
+        return;
+      }
+
+      // Find referrer by code
+      const { data: referrer } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('referral_code', refCode)
+        .maybeSingle();
+
+      if (!referrer || referrer.id === user.id) {
+        clearReferralCode();
+        return;
+      }
+
+      // Create referral
+      await supabase.from('referrals').insert({
+        referrer_user_id: referrer.id,
+        referred_user_id: user.id,
+      });
+
+      clearReferralCode();
+    } catch (err) {
+      console.error('Error processing referral:', err);
+    }
+  };
 
   const checkNotificationStatus = async () => {
     const enabled = await isPushEnabled();
@@ -502,6 +554,16 @@ const Dashboard = () => {
               <h3 className="font-semibold text-lg mb-2">{t('dashboard.favorites')}</h3>
               <p className="text-sm text-muted-foreground">
                 {t('dashboard.favoritesDesc')}
+              </p>
+            </Link>
+          </Card>
+
+          <Card className="p-6 hover:shadow-glow transition-shadow">
+            <Link to="/invite" className="block">
+              <Share2 className="w-12 h-12 text-primary mb-4" />
+              <h3 className="font-semibold text-lg mb-2">{t('dashboard.inviteFriends', 'Invita Amici')}</h3>
+              <p className="text-sm text-muted-foreground">
+                {t('dashboard.inviteFriendsDesc', 'Invita amici e scala la classifica!')}
               </p>
             </Link>
           </Card>

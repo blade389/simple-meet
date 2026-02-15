@@ -7,8 +7,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
+import PreLaunchGuard from "./components/PreLaunchGuard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import PreLaunch from "./pages/PreLaunch";
+import Leaderboard from "./pages/Leaderboard";
+import InviteFriends from "./pages/InviteFriends";
+import LandingUomini from "./pages/LandingUomini";
+import LandingDonne from "./pages/LandingDonne";
+import ReferralRedirect from "./pages/ReferralRedirect";
 import Dashboard from "./pages/Dashboard";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
@@ -48,9 +55,16 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <PreLaunchGuard />
           <AuthProvider>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/prelaunch" element={<PreLaunch />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/invite" element={<InviteFriends />} />
+              <Route path="/uomini" element={<LandingUomini />} />
+              <Route path="/donne" element={<LandingDonne />} />
+              <Route path="/r/:code" element={<ReferralRedirect />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/blocked" element={<Blocked />} />
               <Route path="/dashboard" element={<Dashboard />} />
