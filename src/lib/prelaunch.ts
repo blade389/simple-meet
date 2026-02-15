@@ -7,9 +7,11 @@ export const isPreLaunch = () => Date.now() < LAUNCH_AT.getTime();
 const ALLOWED_ROUTES = [
   '/',
   '/auth',
+  '/dashboard',
   '/profile',
   '/buy-tokens',
   '/premium-subscription',
+  '/premium-rates',
   '/verify',
   '/privacy-policy',
   '/terms-of-service',
