@@ -25,6 +25,7 @@ const ALLOWED_ROUTES = [
   '/leaderboard',
   '/uomini',
   '/donne',
+  '/influencer',
   '/invite',
   '/r',
 ];
