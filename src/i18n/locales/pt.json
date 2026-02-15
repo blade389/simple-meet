@@ -635,6 +635,21 @@
     "noEntries": "Ainda não há participantes. Seja o primeiro!"
   },
   "invite": {
+    "title": "Convidar Amigos",
+    "subtitle": "Partilhe o seu link e ganhe 1 ponto por cada amigo que se registar e verificar o perfil.",
+    "pointsEarned": "pontos ganhos",
+    "yourLink": "O seu link de referência",
+    "share": "Partilhar",
+    "linkCopied": "Link copiado!",
+    "copyError": "Não foi possível copiar",
+    "howItWorks": "Como funciona",
+    "rule1": "Partilhe o seu link com amigos",
+    "rule2": "O seu amigo regista-se usando o seu link",
+    "rule3": "Quando verifica o perfil (identidade + foto), ganha 1 ponto",
+    "rule4": "Mais pontos = posição mais alta na classificação = melhores prémios!",
+    "viewLeaderboard": "Ver Classificação",
+    "loginRequired": "Inicie sessão para convidar amigos",
+    "loginRequiredDesc": "Registe-se ou inicie sessão para obter o seu link de referência.",
     "shareText": "Regista-te no SCOPAMI e prepara-te para o lançamento de 1 de maio de 2026! Usa o meu link:"
   }
 }

@@ -635,6 +635,21 @@
     "noEntries": "Noch keine Teilnehmer. Sei der Erste!"
   },
   "invite": {
+    "title": "Freunde Einladen",
+    "subtitle": "Teile deinen Link und verdiene 1 Punkt für jeden Freund, der sich registriert und sein Profil verifiziert.",
+    "pointsEarned": "verdiente Punkte",
+    "yourLink": "Dein Empfehlungslink",
+    "share": "Teilen",
+    "linkCopied": "Link kopiert!",
+    "copyError": "Kopieren nicht möglich",
+    "howItWorks": "So funktioniert's",
+    "rule1": "Teile deinen Link mit Freunden",
+    "rule2": "Dein Freund registriert sich über deinen Link",
+    "rule3": "Wenn er sein Profil verifiziert (Identität + Foto), erhältst du 1 Punkt",
+    "rule4": "Mehr Punkte = höhere Rangliste = bessere Preise!",
+    "viewLeaderboard": "Rangliste Ansehen",
+    "loginRequired": "Anmelden um Freunde einzuladen",
+    "loginRequiredDesc": "Registriere dich oder melde dich an, um deinen Empfehlungslink zu erhalten.",
     "shareText": "Registriere dich bei SCOPAMI und mach dich bereit für den Launch am 1. Mai 2026! Nutze meinen Link:"
   }
 }

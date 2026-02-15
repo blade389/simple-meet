@@ -635,6 +635,21 @@
     "noEntries": "Nog geen deelnemers. Wees de eerste!"
   },
   "invite": {
+    "title": "Vrienden Uitnodigen",
+    "subtitle": "Deel je link en verdien 1 punt voor elke vriend die zich registreert en zijn profiel verifieert.",
+    "pointsEarned": "verdiende punten",
+    "yourLink": "Jouw verwijzingslink",
+    "share": "Delen",
+    "linkCopied": "Link gekopieerd!",
+    "copyError": "Kan niet kopiëren",
+    "howItWorks": "Hoe het werkt",
+    "rule1": "Deel je link met vrienden",
+    "rule2": "Je vriend registreert zich via jouw link",
+    "rule3": "Wanneer ze hun profiel verifiëren (identiteit + foto), verdien je 1 punt",
+    "rule4": "Meer punten = hogere positie op de ranglijst = betere prijzen!",
+    "viewLeaderboard": "Ranglijst Bekijken",
+    "loginRequired": "Log in om vrienden uit te nodigen",
+    "loginRequiredDesc": "Registreer je of log in om je verwijzingslink te krijgen.",
     "shareText": "Registreer je bij SCOPAMI en bereid je voor op de lancering op 1 mei 2026! Gebruik mijn link:"
   }
 }

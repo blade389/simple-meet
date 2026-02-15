@@ -635,6 +635,21 @@
     "noEntries": "Aún no hay participantes. ¡Sé el primero!"
   },
   "invite": {
+    "title": "Invitar Amigos",
+    "subtitle": "Comparte tu enlace y gana 1 punto por cada amigo que se registre y verifique su perfil.",
+    "pointsEarned": "puntos ganados",
+    "yourLink": "Tu enlace de referido",
+    "share": "Compartir",
+    "linkCopied": "¡Enlace copiado!",
+    "copyError": "No se pudo copiar",
+    "howItWorks": "Cómo funciona",
+    "rule1": "Comparte tu enlace con amigos",
+    "rule2": "Tu amigo se registra usando tu enlace",
+    "rule3": "Cuando verifica su perfil (identidad + foto), ganas 1 punto",
+    "rule4": "¡Más puntos = mejor posición en la clasificación = mejores premios!",
+    "viewLeaderboard": "Ver Clasificación",
+    "loginRequired": "Inicia sesión para invitar amigos",
+    "loginRequiredDesc": "Regístrate o inicia sesión para obtener tu enlace de referido.",
     "shareText": "¡Regístrate en SCOPAMI y prepárate para el lanzamiento del 1 de mayo de 2026! Usa mi enlace:"
   }
 }
