@@ -115,7 +115,7 @@ const LandingUomini = () => {
         <section className="py-16 px-4 bg-gradient-primary text-primary-foreground">
           <div className="container mx-auto max-w-3xl text-center">
             <Trophy className="w-12 h-12 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-4">Lancio: 1 Aprile 2026</h2>
+            <h2 className="text-3xl font-bold mb-4">Lancio: 1 Maggio 2026</h2>
             <p className="text-lg mb-6 opacity-90">
               Registrati ora, verifica il profilo e invita amici. I top referrer vincono premi fino a 1.000€!
             </p>
