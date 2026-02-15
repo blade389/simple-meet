@@ -571,25 +571,43 @@ const Dashboard = () => {
 
         {/* Premium Section - Female Non-Premium */}
         {profile?.gender === 'female' && !isPremium && (
-          <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
-            <Link to="/premium-subscription" className="block">
-              <div className="flex items-center gap-4">
-                <Crown className="w-12 h-12 text-yellow-500" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
-                    {t('dashboard.becomePremium')}
-                    <Badge className="bg-yellow-500 text-black">{t('dashboard.new')}</Badge>
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {t('dashboard.becomePremiumDesc')}
-                  </p>
+          <div className="space-y-4 mb-8">
+            <Card className="p-6 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
+              <Link to="/premium-subscription" className="block">
+                <div className="flex items-center gap-4">
+                  <Crown className="w-12 h-12 text-yellow-500" />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                      {t('dashboard.becomePremium')}
+                      <Badge className="bg-yellow-500 text-black">{t('dashboard.new')}</Badge>
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {t('dashboard.becomePremiumDesc')}
+                    </p>
+                  </div>
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-black">
+                    {t('common.learnMore')}
+                  </Button>
                 </div>
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black">
-                  {t('common.learnMore')}
-                </Button>
-              </div>
-            </Link>
-          </Card>
+              </Link>
+            </Card>
+            <Card className="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-500/20">
+              <Link to="/free-premium-request" className="block">
+                <div className="flex items-center gap-4">
+                  <Crown className="w-12 h-12 text-purple-500" />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                      Premium Gratuito per Influencer
+                      <Badge className="bg-purple-500 text-white">Gratis</Badge>
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Hai 200k+ follower su Instagram o 1k+ ❤️? Ottieni Premium a vita gratis!
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </Card>
+          </div>
         )}
 
         {/* Premium Section - Female Premium */}
