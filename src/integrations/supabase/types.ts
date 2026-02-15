@@ -192,6 +192,45 @@ export type Database = {
         }
         Relationships: []
       }
+      free_premium_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          share_screenshot_url: string
+          social_platform: string
+          social_screenshot_url: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          share_screenshot_url: string
+          social_platform: string
+          social_screenshot_url: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          share_screenshot_url?: string
+          social_platform?: string
+          social_screenshot_url?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       match_requests: {
         Row: {
           appointment_deadline: string | null
