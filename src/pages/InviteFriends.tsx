@@ -51,7 +51,7 @@ const InviteFriends = () => {
     }
   };
 
-  const referralLink = `${window.location.origin}/?ref=${referralCode}`;
+  const referralLink = `https://scopami.online/?ref=${referralCode}`;
 
   const copyLink = async () => {
     try {
