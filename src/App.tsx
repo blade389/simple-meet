@@ -32,6 +32,7 @@ import AdminUserReviews from './pages/AdminUserReviews';
 import BlockedUsers from './pages/BlockedUsers';
 import FreePremiumRequest from './pages/FreePremiumRequest';
 import AdminFreePremium from './pages/AdminFreePremium';
+import LandingInfluencer from './pages/LandingInfluencer';
 import Favorites from './pages/Favorites';
 import NotFound from "./pages/NotFound";
 import Blocked from "./pages/Blocked";
@@ -67,6 +68,7 @@ const App = () => {
               <Route path="/uomini" element={<LandingUomini />} />
               <Route path="/donne" element={<LandingDonne />} />
               <Route path="/r/:code" element={<ReferralRedirect />} />
+              <Route path="/influencer" element={<LandingInfluencer />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/blocked" element={<Blocked />} />
               <Route path="/dashboard" element={<Dashboard />} />
