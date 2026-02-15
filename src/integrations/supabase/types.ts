@@ -356,6 +356,7 @@ export type Database = {
           positive_reviews_count: number | null
           preferred_language: string | null
           profile_photo_url: string | null
+          referral_code: string | null
           stripe_product_id: string | null
           stripe_subscription_id: string | null
           subscription_end: string | null
@@ -388,6 +389,7 @@ export type Database = {
           positive_reviews_count?: number | null
           preferred_language?: string | null
           profile_photo_url?: string | null
+          referral_code?: string | null
           stripe_product_id?: string | null
           stripe_subscription_id?: string | null
           subscription_end?: string | null
@@ -420,6 +422,7 @@ export type Database = {
           positive_reviews_count?: number | null
           preferred_language?: string | null
           profile_photo_url?: string | null
+          referral_code?: string | null
           stripe_product_id?: string | null
           stripe_subscription_id?: string | null
           subscription_end?: string | null
@@ -456,6 +459,27 @@ export type Database = {
           p256dh?: string
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          created_at: string
+          id: string
+          referred_user_id: string
+          referrer_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referred_user_id: string
+          referrer_user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referred_user_id?: string
+          referrer_user_id?: string
         }
         Relationships: []
       }
