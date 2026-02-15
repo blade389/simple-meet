@@ -23,6 +23,7 @@ const Admin = () => {
   const [rejectionReason, setRejectionReason] = useState('');
   const [pendingReportsCount, setPendingReportsCount] = useState(0);
   const [pendingConversationReviewsCount, setPendingConversationReviewsCount] = useState(0);
+  const [pendingFreePremiumCount, setPendingFreePremiumCount] = useState(0);
 
   useEffect(() => {
     checkAdminAccess();
@@ -85,6 +86,15 @@ const Admin = () => {
 
       if (conversationError) throw conversationError;
       setPendingConversationReviewsCount(conversationCount || 0);
+
+      // Count pending free premium requests
+      const { count: freePremiumCount, error: freePremiumError } = await supabase
+        .from('free_premium_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending');
+
+      if (freePremiumError) throw freePremiumError;
+      setPendingFreePremiumCount(freePremiumCount || 0);
     } catch (error) {
       console.error('Error loading pending counts:', error);
     }
@@ -452,12 +462,17 @@ const Admin = () => {
           </Link>
 
           <Link to="/admin/free-premium">
-            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer relative">
               <Crown className="w-12 h-12 text-purple-500 mb-4" />
               <h3 className="font-semibold text-lg mb-2">Verifica Premium</h3>
               <p className="text-muted-foreground text-sm">
                 Richieste premium gratuito influencer
               </p>
+              {pendingFreePremiumCount > 0 && (
+                <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground">
+                  {pendingFreePremiumCount}
+                </Badge>
+              )}
             </Card>
           </Link>
         </div>
