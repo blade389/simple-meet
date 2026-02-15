@@ -635,6 +635,21 @@
     "noEntries": "Brak uczestników. Bądź pierwszy!"
   },
   "invite": {
+    "title": "Zaproś Znajomych",
+    "subtitle": "Udostępnij swój link i zdobądź 1 punkt za każdego znajomego, który się zarejestruje i zweryfikuje profil.",
+    "pointsEarned": "zdobyte punkty",
+    "yourLink": "Twój link polecający",
+    "share": "Udostępnij",
+    "linkCopied": "Link skopiowany!",
+    "copyError": "Nie można skopiować",
+    "howItWorks": "Jak to działa",
+    "rule1": "Udostępnij swój link znajomym",
+    "rule2": "Twój znajomy rejestruje się za pomocą Twojego linku",
+    "rule3": "Gdy zweryfikuje profil (tożsamość + zdjęcie), zdobywasz 1 punkt",
+    "rule4": "Więcej punktów = wyższa pozycja w rankingu = lepsze nagrody!",
+    "viewLeaderboard": "Zobacz Ranking",
+    "loginRequired": "Zaloguj się, aby zaprosić znajomych",
+    "loginRequiredDesc": "Zarejestruj się lub zaloguj, aby uzyskać swój link polecający.",
     "shareText": "Zarejestruj się na SCOPAMI i przygotuj się na start 1 maja 2026! Użyj mojego linku:"
   }
 }

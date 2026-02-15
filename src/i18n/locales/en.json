@@ -678,6 +678,21 @@
     "noEntries": "No participants yet. Be the first!"
   },
   "invite": {
+    "title": "Invite Friends",
+    "subtitle": "Share your link and earn 1 point for every friend who signs up and verifies their profile.",
+    "pointsEarned": "points earned",
+    "yourLink": "Your referral link",
+    "share": "Share",
+    "linkCopied": "Link copied!",
+    "copyError": "Unable to copy",
+    "howItWorks": "How it works",
+    "rule1": "Share your link with friends",
+    "rule2": "Your friend signs up using your link",
+    "rule3": "When they verify their profile (identity + photo), you earn 1 point",
+    "rule4": "More points = higher leaderboard position = better prizes!",
+    "viewLeaderboard": "View Leaderboard",
+    "loginRequired": "Log in to invite friends",
+    "loginRequiredDesc": "Sign up or log in to get your referral link.",
     "shareText": "Sign up on SCOPAMI and get ready for the launch on 1 May 2026! Use my link:"
   }
 }
