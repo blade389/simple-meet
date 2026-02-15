@@ -28,6 +28,8 @@ const ALLOWED_ROUTES = [
   '/influencer',
   '/invite',
   '/r',
+  '/admin',
+  '/free-premium-request',
 ];
 
 export const isRouteAllowed = (pathname: string) => {
