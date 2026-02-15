@@ -159,7 +159,7 @@ const LandingDonne = () => {
                 </Button>
               </Link>
               <Link to="/leaderboard">
-                <Button size="xl" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+                <Button size="xl" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
                   Vedi Premi
                 </Button>
               </Link>
