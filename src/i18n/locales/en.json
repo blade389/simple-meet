@@ -643,5 +643,41 @@
     "requestRejected": "Request rejected",
     "tokenRefunded": "The request has been rejected and the token has been refunded.",
     "rejectError": "Unable to reject request."
+  },
+  "prelaunch": {
+    "title": "Launch is almost here!",
+    "subtitle": "Set up your profile, invite friends and win prizes!",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "launchDate": "1 May 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Complete your profile",
+    "verifyProfileDesc": "Verify your identity and photos to be ready for launch",
+    "verified": "Verified",
+    "inviteFriends": "Invite friends",
+    "inviteFriendsDesc": "Earn points for every friend who signs up and verifies",
+    "inviteNow": "Invite now",
+    "leaderboard": "Leaderboard",
+    "leaderboardDesc": "Discover top referrers and prizes up for grabs",
+    "viewLeaderboard": "View leaderboard",
+    "prizes": "Prizes up for grabs",
+    "prize1320": "10 tokens / 2 months premium",
+    "prize2150": "5 tokens / 1 month premium",
+    "prizeNote": "Women's premium applicable only to female accounts. For men: equivalent in tokens."
+  },
+  "leaderboard": {
+    "title": "Referral Leaderboard",
+    "subtitle": "Invite friends to climb the leaderboard and win prizes!",
+    "endsIn": "Ends in",
+    "yourPosition": "Your position",
+    "points": "Points",
+    "prize": "Prize",
+    "user": "User",
+    "prizeTable": "Prize Table",
+    "noEntries": "No participants yet. Be the first!"
+  },
+  "invite": {
+    "shareText": "Sign up on SCOPAMI and get ready for the launch on 1 May 2026! Use my link:"
   }
 }

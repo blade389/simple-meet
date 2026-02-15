@@ -600,5 +600,41 @@
     "requestRejected": "Pedido rejeitado",
     "tokenRefunded": "O pedido foi rejeitado e a ficha foi reembolsada.",
     "rejectError": "Não foi possível rejeitar o pedido."
+  },
+  "prelaunch": {
+    "title": "O lançamento está quase aí!",
+    "subtitle": "Prepare o seu perfil, convide amigos e ganhe prémios!",
+    "days": "Dias",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "seconds": "Segundos",
+    "launchDate": "1 de Maio de 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Complete o seu perfil",
+    "verifyProfileDesc": "Verifique a sua identidade e fotos para estar pronto no lançamento",
+    "verified": "Verificado",
+    "inviteFriends": "Convidar amigos",
+    "inviteFriendsDesc": "Ganhe pontos por cada amigo que se registar e verificar",
+    "inviteNow": "Convidar agora",
+    "leaderboard": "Classificação",
+    "leaderboardDesc": "Descubra os melhores referenciadores e os prémios em jogo",
+    "viewLeaderboard": "Ver classificação",
+    "prizes": "Prémios em jogo",
+    "prize1320": "10 fichas / 2 meses premium",
+    "prize2150": "5 fichas / 1 mês premium",
+    "prizeNote": "Premium feminino aplicável apenas a contas femininas. Para homens: equivalente em fichas."
+  },
+  "leaderboard": {
+    "title": "Classificação de Referências",
+    "subtitle": "Convide amigos para subir na classificação e ganhar prémios!",
+    "endsIn": "Termina em",
+    "yourPosition": "A sua posição",
+    "points": "Pontos",
+    "prize": "Prémio",
+    "user": "Utilizador",
+    "prizeTable": "Tabela de Prémios",
+    "noEntries": "Ainda não há participantes. Seja o primeiro!"
+  },
+  "invite": {
+    "shareText": "Regista-te no SCOPAMI e prepara-te para o lançamento de 1 de maio de 2026! Usa o meu link:"
   }
 }

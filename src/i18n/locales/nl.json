@@ -600,5 +600,41 @@
     "requestRejected": "Verzoek afgewezen",
     "tokenRefunded": "Het verzoek is afgewezen en de token is terugbetaald.",
     "rejectError": "Verzoek kon niet worden afgewezen."
+  },
+  "prelaunch": {
+    "title": "De lancering is bijna hier!",
+    "subtitle": "Bereid je profiel voor, nodig vrienden uit en win prijzen!",
+    "days": "Dagen",
+    "hours": "Uren",
+    "minutes": "Minuten",
+    "seconds": "Seconden",
+    "launchDate": "1 mei 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Voltooi je profiel",
+    "verifyProfileDesc": "Verifieer je identiteit en foto's om klaar te zijn voor de lancering",
+    "verified": "Geverifieerd",
+    "inviteFriends": "Vrienden uitnodigen",
+    "inviteFriendsDesc": "Verdien punten voor elke vriend die zich registreert en verifieert",
+    "inviteNow": "Nu uitnodigen",
+    "leaderboard": "Ranglijst",
+    "leaderboardDesc": "Ontdek de topverwijzers en de prijzen",
+    "viewLeaderboard": "Ranglijst bekijken",
+    "prizes": "Te winnen prijzen",
+    "prize1320": "10 tokens / 2 maanden premium",
+    "prize2150": "5 tokens / 1 maand premium",
+    "prizeNote": "Vrouwen-premium alleen van toepassing op vrouwelijke accounts. Voor mannen: equivalent in tokens."
+  },
+  "leaderboard": {
+    "title": "Verwijzings-Ranglijst",
+    "subtitle": "Nodig vrienden uit om te stijgen in de ranglijst en prijzen te winnen!",
+    "endsIn": "Eindigt over",
+    "yourPosition": "Jouw positie",
+    "points": "Punten",
+    "prize": "Prijs",
+    "user": "Gebruiker",
+    "prizeTable": "Prijzentabel",
+    "noEntries": "Nog geen deelnemers. Wees de eerste!"
+  },
+  "invite": {
+    "shareText": "Registreer je bij SCOPAMI en bereid je voor op de lancering op 1 mei 2026! Gebruik mijn link:"
   }
 }

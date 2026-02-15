@@ -654,5 +654,41 @@
     "requestRejected": "Richiesta rifiutata",
     "tokenRefunded": "La richiesta è stata rifiutata e il gettone è stato rimborsato.",
     "rejectError": "Impossibile rifiutare la richiesta."
+  },
+  "prelaunch": {
+    "title": "Il lancio è quasi qui!",
+    "subtitle": "Prepara il tuo profilo, invita amici e vinci premi!",
+    "days": "Giorni",
+    "hours": "Ore",
+    "minutes": "Minuti",
+    "seconds": "Secondi",
+    "launchDate": "1 Maggio 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Completa il profilo",
+    "verifyProfileDesc": "Verifica la tua identità e foto per essere pronto al lancio",
+    "verified": "Verificato",
+    "inviteFriends": "Invita amici",
+    "inviteFriendsDesc": "Guadagna punti per ogni amico che si registra e verifica",
+    "inviteNow": "Invita ora",
+    "leaderboard": "Classifica",
+    "leaderboardDesc": "Scopri i top referrer e i premi in palio",
+    "viewLeaderboard": "Vedi classifica",
+    "prizes": "Premi in palio",
+    "prize1320": "10 gettoni / 2 mesi premium",
+    "prize2150": "5 gettoni / 1 mese premium",
+    "prizeNote": "Premium donne applicabile solo agli account femminili. Per uomini: equivalente in gettoni."
+  },
+  "leaderboard": {
+    "title": "Classifica Referral",
+    "subtitle": "Invita amici per scalare la classifica e vincere premi!",
+    "endsIn": "Termina tra",
+    "yourPosition": "La tua posizione",
+    "points": "Punti",
+    "prize": "Premio",
+    "user": "Utente",
+    "prizeTable": "Tabella Premi",
+    "noEntries": "Nessun partecipante ancora. Sii il primo!"
+  },
+  "invite": {
+    "shareText": "Registrati su SCOPAMI e preparati al lancio del 1 maggio 2026! Usa il mio link:"
   }
 }

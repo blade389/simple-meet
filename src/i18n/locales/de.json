@@ -600,5 +600,41 @@
     "requestRejected": "Anfrage abgelehnt",
     "tokenRefunded": "Die Anfrage wurde abgelehnt und der Token wurde erstattet.",
     "rejectError": "Anfrage konnte nicht abgelehnt werden."
+  },
+  "prelaunch": {
+    "title": "Der Launch steht bevor!",
+    "subtitle": "Bereite dein Profil vor, lade Freunde ein und gewinne Preise!",
+    "days": "Tage",
+    "hours": "Stunden",
+    "minutes": "Minuten",
+    "seconds": "Sekunden",
+    "launchDate": "1. Mai 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Profil vervollständigen",
+    "verifyProfileDesc": "Verifiziere deine Identität und Fotos, um beim Launch bereit zu sein",
+    "verified": "Verifiziert",
+    "inviteFriends": "Freunde einladen",
+    "inviteFriendsDesc": "Sammle Punkte für jeden Freund, der sich registriert und verifiziert",
+    "inviteNow": "Jetzt einladen",
+    "leaderboard": "Rangliste",
+    "leaderboardDesc": "Entdecke die Top-Werber und die Preise",
+    "viewLeaderboard": "Rangliste ansehen",
+    "prizes": "Preise zu gewinnen",
+    "prize1320": "10 Token / 2 Monate Premium",
+    "prize2150": "5 Token / 1 Monat Premium",
+    "prizeNote": "Frauen-Premium gilt nur für weibliche Konten. Für Männer: Äquivalent in Token."
+  },
+  "leaderboard": {
+    "title": "Empfehlungs-Rangliste",
+    "subtitle": "Lade Freunde ein, um in der Rangliste aufzusteigen und Preise zu gewinnen!",
+    "endsIn": "Endet in",
+    "yourPosition": "Deine Position",
+    "points": "Punkte",
+    "prize": "Preis",
+    "user": "Benutzer",
+    "prizeTable": "Preistabelle",
+    "noEntries": "Noch keine Teilnehmer. Sei der Erste!"
+  },
+  "invite": {
+    "shareText": "Registriere dich bei SCOPAMI und mach dich bereit für den Launch am 1. Mai 2026! Nutze meinen Link:"
   }
 }
