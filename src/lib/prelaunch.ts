@@ -1,5 +1,5 @@
 // Pre-launch configuration
-export const LAUNCH_AT = new Date('2026-04-01T00:00:00+02:00'); // Europe/Rome (CEST)
+export const LAUNCH_AT = new Date('2026-05-01T00:00:00+02:00'); // Europe/Rome (CEST)
 
 export const isPreLaunch = () => Date.now() < LAUNCH_AT.getTime();
 
