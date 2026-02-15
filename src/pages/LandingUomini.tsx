@@ -20,10 +20,10 @@ const LandingUomini = () => {
   return (
     <>
       <SEOHead
-        title="SCOPAMI per Uomini | Registrazione Gratuita"
-        description="Registrati gratuitamente su SCOPAMI. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali."
+        title={t('landingMen.seoTitle', 'SCOPAMI per Uomini | Registrazione Gratuita')}
+        description={t('landingMen.seoDescription', 'Registrati gratuitamente su SCOPAMI. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali.')}
         canonicalPath="/uomini"
-        keywords="dating uomini, app incontri gratuita uomini, SCOPAMI uomini"
+        keywords={t('landingMen.seoKeywords', 'dating uomini, app incontri gratuita uomini, SCOPAMI uomini')}
       />
       <div className="min-h-screen">
         {/* Header */}
@@ -34,7 +34,7 @@ const LandingUomini = () => {
               <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">SCOPAMI</span>
             </Link>
             <div className="flex gap-2">
-              <Link to="/donne"><Button variant="ghost" size="sm">Per Donne</Button></Link>
+              <Link to="/donne"><Button variant="ghost" size="sm">{t('landingMen.forWomen', 'Per Donne')}</Button></Link>
               <Link to="/auth"><Button variant="hero">{t('common.signup')}</Button></Link>
             </div>
           </div>
@@ -44,23 +44,23 @@ const LandingUomini = () => {
         <section className="pt-32 pb-20 px-4 bg-gradient-hero">
           <div className="container mx-auto max-w-4xl text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              <Zap className="w-4 h-4" /> Registrazione 100% Gratuita
+              <Zap className="w-4 h-4" /> {t('landingMen.badge', 'Registrazione 100% Gratuita')}
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Incontri veri.{' '}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">Paghi solo se rifiuti.</span>
+              {t('landingMen.heroTitle', 'Incontri veri.')}{' '}
+              <span className="bg-gradient-primary bg-clip-text text-transparent">{t('landingMen.heroHighlight', 'Paghi solo se rifiuti.')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Su SCOPAMI ricevi richieste da donne verificate. Accettare è gratuito. Solo se rifiuti una richiesta ti viene scalato 1 gettone.
+              {t('landingMen.heroDescription', 'Su SCOPAMI ricevi richieste da donne verificate. Accettare è gratuito. Solo se rifiuti una richiesta ti viene scalato 1 gettone.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button variant="hero" size="xl">Registrati Gratis</Button>
+                <Button variant="hero" size="xl">{t('landingMen.signupFree', 'Registrati Gratis')}</Button>
               </Link>
               <Link to="/leaderboard">
                 <Button variant="outline" size="xl">
                   <Trophy className="w-5 h-5 mr-2" />
-                  Classifica & Premi
+                  {t('landingMen.leaderboardPrizes', 'Classifica & Premi')}
                 </Button>
               </Link>
             </div>
@@ -70,12 +70,12 @@ const LandingUomini = () => {
         {/* How it works */}
         <section className="py-20 px-4">
           <div className="container mx-auto max-w-4xl">
-            <h2 className="text-3xl font-bold text-center mb-12">Come funziona per gli uomini</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">{t('landingMen.howItWorksTitle', 'Come funziona per gli uomini')}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { icon: Shield, title: 'Registrati e Verifica', desc: 'Crea il profilo, carica una foto e verifica la tua identità. Ricevi 1 gettone gratuito.' },
-                { icon: Users, title: 'Ricevi Richieste', desc: 'Le donne sfogliano i profili e inviano richieste di appuntamento. Tu decidi se accettare.' },
-                { icon: Star, title: 'Incontra', desc: 'Accettare è gratuito! Solo rifiutare costa 1 gettone. Dopo l\'incontro lasciate una recensione.' },
+                { icon: Shield, title: t('landingMen.step1Title', 'Registrati e Verifica'), desc: t('landingMen.step1Desc', 'Crea il profilo, carica una foto e verifica la tua identità. Ricevi 1 gettone gratuito.') },
+                { icon: Users, title: t('landingMen.step2Title', 'Ricevi Richieste'), desc: t('landingMen.step2Desc', 'Le donne sfogliano i profili e inviano richieste di appuntamento. Tu decidi se accettare.') },
+                { icon: Star, title: t('landingMen.step3Title', 'Incontra'), desc: t('landingMen.step3Desc', "Accettare è gratuito! Solo rifiutare costa 1 gettone. Dopo l'incontro lasciate una recensione.") },
               ].map(({ icon: Icon, title, desc }, i) => (
                 <Card key={i} className="p-6 text-center hover:shadow-glow transition-shadow">
                   <div className="w-14 h-14 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
@@ -92,15 +92,15 @@ const LandingUomini = () => {
         {/* Key points */}
         <section className="py-16 px-4 bg-muted/30">
           <div className="container mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold mb-8 text-center">Perché SCOPAMI è diverso</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">{t('landingMen.whyDifferentTitle', 'Perché SCOPAMI è diverso')}</h2>
             <div className="space-y-4">
               {[
-                'Registrazione e profilo completamente gratuiti',
-                'Accettare appuntamenti non costa nulla',
-                'Paghi solo 1 gettone se rifiuti una richiesta',
-                'Tutte le donne sono verificate con documento',
-                'Sistema recensioni per massima trasparenza',
-                'Richieste Premium: invia tu richieste a profili premium (1 gettone)',
+                t('landingMen.point1', 'Registrazione e profilo completamente gratuiti'),
+                t('landingMen.point2', 'Accettare appuntamenti non costa nulla'),
+                t('landingMen.point3', 'Paghi solo 1 gettone se rifiuti una richiesta'),
+                t('landingMen.point4', 'Tutte le donne sono verificate con documento'),
+                t('landingMen.point5', 'Sistema recensioni per massima trasparenza'),
+                t('landingMen.point6', 'Richieste Premium: invia tu richieste a profili premium (1 gettone)'),
               ].map((text, i) => (
                 <div key={i} className="flex items-start gap-3 p-3 bg-card rounded-lg">
                   <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -115,19 +115,19 @@ const LandingUomini = () => {
         <section className="py-16 px-4 bg-gradient-primary text-primary-foreground">
           <div className="container mx-auto max-w-3xl text-center">
             <Trophy className="w-12 h-12 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-4">Lancio: 1 Maggio 2026</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('landingMen.launchTitle', 'Lancio: 1 Maggio 2026')}</h2>
             <p className="text-lg mb-6 opacity-90">
-              Registrati ora, verifica il profilo e invita amici. I top referrer vincono premi fino a 1.000€!
+              {t('landingMen.launchDesc', 'Registrati ora, verifica il profilo e invita amici. I top referrer vincono premi fino a 1.000€!')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="xl" className="bg-background text-foreground hover:bg-background/90">
-                  Registrati Gratis
+                  {t('landingMen.signupFree', 'Registrati Gratis')}
                 </Button>
               </Link>
               <Link to="/leaderboard">
                 <Button size="xl" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                  Vedi Premi
+                  {t('landingMen.viewPrizes', 'Vedi Premi')}
                 </Button>
               </Link>
             </div>
