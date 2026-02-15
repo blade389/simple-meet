@@ -600,5 +600,41 @@
     "requestRejected": "Prośba odrzucona",
     "tokenRefunded": "Prośba została odrzucona, a żeton został zwrócony.",
     "rejectError": "Nie można odrzucić prośby."
+  },
+  "prelaunch": {
+    "title": "Start jest już blisko!",
+    "subtitle": "Przygotuj swój profil, zaproś znajomych i wygraj nagrody!",
+    "days": "Dni",
+    "hours": "Godziny",
+    "minutes": "Minuty",
+    "seconds": "Sekundy",
+    "launchDate": "1 maja 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Uzupełnij profil",
+    "verifyProfileDesc": "Zweryfikuj swoją tożsamość i zdjęcia, aby być gotowym na start",
+    "verified": "Zweryfikowany",
+    "inviteFriends": "Zaproś znajomych",
+    "inviteFriendsDesc": "Zdobywaj punkty za każdego znajomego, który się zarejestruje i zweryfikuje",
+    "inviteNow": "Zaproś teraz",
+    "leaderboard": "Ranking",
+    "leaderboardDesc": "Odkryj najlepszych polecających i nagrody do wygrania",
+    "viewLeaderboard": "Zobacz ranking",
+    "prizes": "Nagrody do wygrania",
+    "prize1320": "10 żetonów / 2 miesiące premium",
+    "prize2150": "5 żetonów / 1 miesiąc premium",
+    "prizeNote": "Premium dla kobiet dotyczy wyłącznie kont kobiecych. Dla mężczyzn: równowartość w żetonach."
+  },
+  "leaderboard": {
+    "title": "Ranking Poleceń",
+    "subtitle": "Zapraszaj znajomych, aby wspinać się w rankingu i wygrywać nagrody!",
+    "endsIn": "Kończy się za",
+    "yourPosition": "Twoja pozycja",
+    "points": "Punkty",
+    "prize": "Nagroda",
+    "user": "Użytkownik",
+    "prizeTable": "Tabela Nagród",
+    "noEntries": "Brak uczestników. Bądź pierwszy!"
+  },
+  "invite": {
+    "shareText": "Zarejestruj się na SCOPAMI i przygotuj się na start 1 maja 2026! Użyj mojego linku:"
   }
 }

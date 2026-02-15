@@ -600,5 +600,41 @@
     "requestRejected": "Demande refusée",
     "tokenRefunded": "La demande a été refusée et le jeton a été remboursé.",
     "rejectError": "Impossible de refuser la demande."
+  },
+  "prelaunch": {
+    "title": "Le lancement approche !",
+    "subtitle": "Préparez votre profil, invitez des amis et gagnez des prix !",
+    "days": "Jours",
+    "hours": "Heures",
+    "minutes": "Minutes",
+    "seconds": "Secondes",
+    "launchDate": "1er Mai 2026 - 00:00 (Europe/Rome)",
+    "verifyProfile": "Complétez votre profil",
+    "verifyProfileDesc": "Vérifiez votre identité et vos photos pour être prêt au lancement",
+    "verified": "Vérifié",
+    "inviteFriends": "Inviter des amis",
+    "inviteFriendsDesc": "Gagnez des points pour chaque ami qui s'inscrit et se vérifie",
+    "inviteNow": "Inviter maintenant",
+    "leaderboard": "Classement",
+    "leaderboardDesc": "Découvrez les meilleurs parrains et les prix à gagner",
+    "viewLeaderboard": "Voir le classement",
+    "prizes": "Prix à gagner",
+    "prize1320": "10 jetons / 2 mois premium",
+    "prize2150": "5 jetons / 1 mois premium",
+    "prizeNote": "Premium femmes applicable uniquement aux comptes féminins. Pour les hommes : équivalent en jetons."
+  },
+  "leaderboard": {
+    "title": "Classement Parrainage",
+    "subtitle": "Invitez des amis pour grimper au classement et gagner des prix !",
+    "endsIn": "Se termine dans",
+    "yourPosition": "Votre position",
+    "points": "Points",
+    "prize": "Prix",
+    "user": "Utilisateur",
+    "prizeTable": "Tableau des Prix",
+    "noEntries": "Aucun participant pour le moment. Soyez le premier !"
+  },
+  "invite": {
+    "shareText": "Inscris-toi sur SCOPAMI et prépare-toi pour le lancement du 1er mai 2026 ! Utilise mon lien :"
   }
 }
