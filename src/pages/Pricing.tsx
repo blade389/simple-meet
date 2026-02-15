@@ -59,10 +59,10 @@ const Pricing = () => {
     return (
         <>
         <SEOHead
-            title="Prezzi e Piani | SCOPAMI - Gettoni e Premium"
-            description="Scopri i prezzi di SCOPAMI: pacchetti gettoni per uomini e abbonamenti premium per donne. Pagamenti sicuri, nessun costo nascosto."
+            title={t("pricing.seoTitle")}
+            description={t("pricing.seoDescription")}
             canonicalPath="/pricing"
-            keywords="prezzi dating app, costo gettoni, abbonamento premium, scopami prezzi"
+            keywords={t("pricing.seoKeywords")}
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <Breadcrumbs />
