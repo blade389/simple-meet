@@ -381,6 +381,7 @@ export type Database = {
           gender: Database["public"]["Enums"]["gender"]
           id: string
           is_blocked: boolean | null
+          is_paused: boolean | null
           is_premium: boolean | null
           is_verified: Database["public"]["Enums"]["verification_status"] | null
           location_city: string | null
@@ -412,6 +413,7 @@ export type Database = {
           gender: Database["public"]["Enums"]["gender"]
           id: string
           is_blocked?: boolean | null
+          is_paused?: boolean | null
           is_premium?: boolean | null
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]
@@ -445,6 +447,7 @@ export type Database = {
           gender?: Database["public"]["Enums"]["gender"]
           id?: string
           is_blocked?: boolean | null
+          is_paused?: boolean | null
           is_premium?: boolean | null
           is_verified?:
             | Database["public"]["Enums"]["verification_status"]

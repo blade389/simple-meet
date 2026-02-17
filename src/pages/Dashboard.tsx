@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell, Bookmark, Share2 } from 'lucide-react';
+import { Heart, Users, Calendar, Star, LogOut, Shield, MapPin, Crown, Bell, Bookmark, Share2, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { HowItWorksDialog } from '@/components/HowItWorksDialog';
@@ -19,6 +19,7 @@ interface Profile {
   is_verified: string;
   location_lat: number | null;
   location_lon: number | null;
+  is_paused: boolean;
 }
 
 interface TokenBalance {
@@ -37,6 +38,7 @@ const Dashboard = () => {
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [favoritesCount, setFavoritesCount] = useState(0);
+  const [togglingPause, setTogglingPause] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -156,7 +158,7 @@ const Dashboard = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, gender, is_verified, location_lat, location_lon')
+        .select('full_name, gender, is_verified, location_lat, location_lon, is_paused')
         .eq('id', user?.id)
         .single();
 
@@ -315,6 +317,26 @@ const Dashboard = () => {
 
   const updateLocationSilent = () => updateLocation(true);
 
+  const togglePause = async () => {
+    if (!user || !profile) return;
+    setTogglingPause(true);
+    try {
+      const newPaused = !profile.is_paused;
+      const { error } = await supabase
+        .from('profiles')
+        .update({ is_paused: newPaused })
+        .eq('id', user.id);
+      if (error) throw error;
+      setProfile({ ...profile, is_paused: newPaused });
+      toast.success(newPaused ? t('dashboard.pauseEnabled', 'Profilo in pausa - non riceverai nuove richieste') : t('dashboard.pauseDisabled', 'Profilo riattivato - sei di nuovo visibile'));
+    } catch (error) {
+      console.error('Error toggling pause:', error);
+      toast.error('Errore nell\'aggiornamento');
+    } finally {
+      setTogglingPause(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -387,6 +409,17 @@ const Dashboard = () => {
               </h1>
             </div>
             <div className="flex items-center gap-2">
+              {profile?.gender === 'male' && (
+                <Button
+                  variant={profile?.is_paused ? "destructive" : "outline"}
+                  size="icon"
+                  onClick={togglePause}
+                  disabled={togglingPause}
+                  title={profile?.is_paused ? t('dashboard.resumeProfile', 'Riattiva profilo') : t('dashboard.pauseProfile', 'Metti in pausa')}
+                >
+                  {profile?.is_paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                </Button>
+              )}
               <LanguageSelector />
               <Button variant="ghost" onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
@@ -394,6 +427,11 @@ const Dashboard = () => {
               </Button>
             </div>
           </div>
+          {profile?.gender === 'male' && profile?.is_paused && (
+            <div className="mb-2 px-3 py-2 rounded-md bg-destructive/10 text-destructive text-sm text-center font-medium">
+              ⏸️ {t('dashboard.pauseBanner', 'Profilo in pausa - Il tuo profilo non è visibile e non riceverai nuove richieste')}
+            </div>
+          )}
           <Button
             onClick={() => updateLocation()}
             disabled={updatingLocation}
