@@ -635,7 +635,8 @@
     "prizes": "Preise zu gewinnen",
     "prize1320": "10 Token / 2 Monate Premium",
     "prize2150": "5 Token / 1 Monat Premium",
-    "prizeNote": "Frauen-Premium gilt nur für weibliche Konten. Für Männer: Äquivalent in Token."
+    "prizeNote": "Frauen-Premium gilt nur für weibliche Konten. Für Männer: Äquivalent in Token.",
+    "contestDeadline": "🏆 Preiswettbewerb: bis 30. August 2026"
   },
   "leaderboard": {
     "title": "Empfehlungs-Rangliste",
@@ -735,6 +736,7 @@
     "point5": "Bewertungssystem für maximale Transparenz",
     "point6": "Premium-Anfragen: Sende selbst Anfragen an Premium-Profile (1 Token)",
     "launchTitle": "Launch: 1. Mai 2026",
+    "contestDeadline": "🏆 Empfehlungs-Preiswettbewerb: bis 30. August 2026",
     "launchDesc": "Registriere dich jetzt, verifiziere dein Profil und lade Freunde ein. Die besten Werber gewinnen Preise bis zu 1.000€!",
     "viewPrizes": "Preise Ansehen"
   },
@@ -771,6 +773,7 @@
     "premiumPoint4": "Behalte immer die volle Kontrolle",
     "discoverPremium": "Premium Entdecken",
     "launchTitle": "Launch: 1. Mai 2026",
+    "contestDeadline": "🏆 Empfehlungs-Preiswettbewerb: bis 30. August 2026",
     "launchDesc": "Registriere dich jetzt, verifiziere dein Profil und lade Freundinnen ein. Die besten Werberinnen gewinnen Preise bis zu 1.000€ oder kostenlose Premium-Monate!",
     "viewPrizes": "Preise Ansehen"
   }

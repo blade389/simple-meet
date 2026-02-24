@@ -635,7 +635,8 @@
     "prizes": "Nagrody do wygrania",
     "prize1320": "10 żetonów / 2 miesiące premium",
     "prize2150": "5 żetonów / 1 miesiąc premium",
-    "prizeNote": "Premium dla kobiet dotyczy wyłącznie kont kobiecych. Dla mężczyzn: równowartość w żetonach."
+    "prizeNote": "Premium dla kobiet dotyczy wyłącznie kont kobiecych. Dla mężczyzn: równowartość w żetonach.",
+    "contestDeadline": "🏆 Konkurs nagród: do 30 sierpnia 2026"
   },
   "leaderboard": {
     "title": "Ranking Poleceń",
@@ -735,6 +736,7 @@
     "point5": "System recenzji dla maksymalnej przejrzystości",
     "point6": "Prośby Premium: sam wysyłaj prośby do profili premium (1 żeton)",
     "launchTitle": "Start: 1 maja 2026",
+    "contestDeadline": "🏆 Konkurs poleceń: do 30 sierpnia 2026",
     "launchDesc": "Zarejestruj się teraz, zweryfikuj profil i zaproś znajomych. Najlepsi polecający wygrywają nagrody do 1.000€!",
     "viewPrizes": "Zobacz Nagrody"
   },
@@ -771,6 +773,7 @@
     "premiumPoint4": "Zachowaj zawsze pełną kontrolę",
     "discoverPremium": "Odkryj Premium",
     "launchTitle": "Start: 1 maja 2026",
+    "contestDeadline": "🏆 Konkurs poleceń: do 30 sierpnia 2026",
     "launchDesc": "Zarejestruj się teraz, zweryfikuj profil i zaproś znajome. Najlepsze polecające wygrywają nagrody do 1.000€ lub darmowe miesiące Premium!",
     "viewPrizes": "Zobacz Nagrody"
   }

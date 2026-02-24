@@ -635,7 +635,8 @@
     "prizes": "Premios en juego",
     "prize1320": "10 fichas / 2 meses premium",
     "prize2150": "5 fichas / 1 mes premium",
-    "prizeNote": "Premium mujeres aplicable solo a cuentas femeninas. Para hombres: equivalente en fichas."
+    "prizeNote": "Premium mujeres aplicable solo a cuentas femeninas. Para hombres: equivalente en fichas.",
+    "contestDeadline": "🏆 Concurso de premios: hasta el 30 de agosto de 2026"
   },
   "leaderboard": {
     "title": "Clasificación de Referidos",
@@ -735,6 +736,7 @@
     "point5": "Sistema de reseñas para máxima transparencia",
     "point6": "Solicitudes Premium: envía tú solicitudes a perfiles premium (1 ficha)",
     "launchTitle": "Lanzamiento: 1 de Mayo de 2026",
+    "contestDeadline": "🏆 Concurso de referidos: hasta el 30 de agosto de 2026",
     "launchDesc": "¡Regístrate ahora, verifica tu perfil e invita amigos. Los mejores referidores ganan premios hasta 1.000€!",
     "viewPrizes": "Ver Premios"
   },
@@ -771,6 +773,7 @@
     "premiumPoint4": "Mantén siempre el control total",
     "discoverPremium": "Descubrir Premium",
     "launchTitle": "Lanzamiento: 1 de Mayo de 2026",
+    "contestDeadline": "🏆 Concurso de referidas: hasta el 30 de agosto de 2026",
     "launchDesc": "¡Regístrate ahora, verifica tu perfil e invita a tus amigas. Las mejores referidoras ganan premios hasta 1.000€ o meses de Premium gratis!",
     "viewPrizes": "Ver Premios"
   }
