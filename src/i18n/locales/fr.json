@@ -635,7 +635,8 @@
     "prizes": "Prix à gagner",
     "prize1320": "10 jetons / 2 mois premium",
     "prize2150": "5 jetons / 1 mois premium",
-    "prizeNote": "Premium femmes applicable uniquement aux comptes féminins. Pour les hommes : équivalent en jetons."
+    "prizeNote": "Premium femmes applicable uniquement aux comptes féminins. Pour les hommes : équivalent en jetons.",
+    "contestDeadline": "🏆 Concours de prix : jusqu'au 30 août 2026"
   },
   "leaderboard": {
     "title": "Classement Parrainage",
@@ -735,6 +736,7 @@
     "point5": "Système d'avis pour une transparence maximale",
     "point6": "Demandes Premium : envoyez des demandes aux profils premium (1 jeton)",
     "launchTitle": "Lancement : 1er Mai 2026",
+    "contestDeadline": "🏆 Concours de parrainage : jusqu'au 30 août 2026",
     "launchDesc": "Inscrivez-vous maintenant, vérifiez votre profil et invitez des amis. Les meilleurs parrains gagnent des prix jusqu'à 1 000€ !",
     "viewPrizes": "Voir les Prix"
   },
@@ -771,6 +773,7 @@
     "premiumPoint4": "Gardez toujours le contrôle total",
     "discoverPremium": "Découvrir Premium",
     "launchTitle": "Lancement : 1er Mai 2026",
+    "contestDeadline": "🏆 Concours de parrainage : jusqu'au 30 août 2026",
     "launchDesc": "Inscrivez-vous maintenant, vérifiez votre profil et invitez vos amies. Les meilleures parraineuses gagnent des prix jusqu'à 1 000€ ou des mois de Premium gratuit !",
     "viewPrizes": "Voir les Prix"
   }

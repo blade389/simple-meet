@@ -678,7 +678,8 @@
     "prizes": "Prizes up for grabs",
     "prize1320": "10 tokens / 2 months premium",
     "prize2150": "5 tokens / 1 month premium",
-    "prizeNote": "Women's premium applicable only to female accounts. For men: equivalent in tokens."
+    "prizeNote": "Women's premium applicable only to female accounts. For men: equivalent in tokens.",
+    "contestDeadline": "🏆 Prize contest: until 30 August 2026"
   },
   "leaderboard": {
     "title": "Referral Leaderboard",
@@ -778,6 +779,7 @@
     "point5": "Review system for maximum transparency",
     "point6": "Premium Requests: send requests to premium profiles (1 token)",
     "launchTitle": "Launch: 1 May 2026",
+    "contestDeadline": "🏆 Referral prize contest: until 30 August 2026",
     "launchDesc": "Sign up now, verify your profile and invite friends. Top referrers win prizes up to €1,000!",
     "viewPrizes": "View Prizes"
   },
@@ -814,6 +816,7 @@
     "premiumPoint4": "Always keep total control",
     "discoverPremium": "Discover Premium",
     "launchTitle": "Launch: 1 May 2026",
+    "contestDeadline": "🏆 Referral prize contest: until 30 August 2026",
     "launchDesc": "Sign up now, verify your profile and invite friends. Top referrers win prizes up to €1,000 or free Premium months!",
     "viewPrizes": "View Prizes"
   }

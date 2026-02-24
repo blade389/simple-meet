@@ -683,7 +683,8 @@
     "prizes": "Premi in palio",
     "prize1320": "10 gettoni / 2 mesi premium",
     "prize2150": "5 gettoni / 1 mese premium",
-    "prizeNote": "Premium donne applicabile solo agli account femminili. Per uomini: equivalente in gettoni."
+    "prizeNote": "Premium donne applicabile solo agli account femminili. Per uomini: equivalente in gettoni.",
+    "contestDeadline": "🏆 Concorso premi: fino al 30 Agosto 2026"
   },
   "leaderboard": {
     "title": "Classifica Referral",
@@ -783,6 +784,7 @@
     "point5": "Sistema recensioni per massima trasparenza",
     "point6": "Richieste Premium: invia tu richieste a profili premium (1 gettone)",
     "launchTitle": "Lancio: 1 Maggio 2026",
+    "contestDeadline": "🏆 Concorso premi referral: fino al 30 Agosto 2026",
     "launchDesc": "Registrati ora, verifica il profilo e invita amici. I top referrer vincono premi fino a 1.000€!",
     "viewPrizes": "Vedi Premi"
   },
@@ -819,6 +821,7 @@
     "premiumPoint4": "Mantieni sempre il controllo totale",
     "discoverPremium": "Scopri Premium",
     "launchTitle": "Lancio: 1 Maggio 2026",
+    "contestDeadline": "🏆 Concorso premi referral: fino al 30 Agosto 2026",
     "launchDesc": "Registrati ora, verifica il profilo e invita le amiche. Le top referrer vincono premi fino a 1.000€ o mesi di Premium gratuito!",
     "viewPrizes": "Vedi Premi"
   }

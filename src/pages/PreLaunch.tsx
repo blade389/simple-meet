@@ -160,6 +160,9 @@ const PreLaunch = () => {
             <p className="text-xs text-muted-foreground text-center mt-4">
               {t('prelaunch.prizeNote', 'Premium donne applicabile solo agli account femminili. Per uomini: equivalente in gettoni.')}
             </p>
+            <p className="text-xs text-primary font-semibold text-center mt-2">
+              {t('prelaunch.contestDeadline', '🏆 Concorso premi: fino al 30 Agosto 2026')}
+            </p>
           </Card>
         </main>
       </div>

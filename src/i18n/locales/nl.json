@@ -635,7 +635,8 @@
     "prizes": "Te winnen prijzen",
     "prize1320": "10 tokens / 2 maanden premium",
     "prize2150": "5 tokens / 1 maand premium",
-    "prizeNote": "Vrouwen-premium alleen van toepassing op vrouwelijke accounts. Voor mannen: equivalent in tokens."
+    "prizeNote": "Vrouwen-premium alleen van toepassing op vrouwelijke accounts. Voor mannen: equivalent in tokens.",
+    "contestDeadline": "🏆 Prijzenwedstrijd: tot 30 augustus 2026"
   },
   "leaderboard": {
     "title": "Verwijzings-Ranglijst",
@@ -735,6 +736,7 @@
     "point5": "Beoordelingssysteem voor maximale transparantie",
     "point6": "Premium Verzoeken: stuur zelf verzoeken naar premium profielen (1 token)",
     "launchTitle": "Lancering: 1 mei 2026",
+    "contestDeadline": "🏆 Verwijzingswedstrijd: tot 30 augustus 2026",
     "launchDesc": "Registreer je nu, verifieer je profiel en nodig vrienden uit. De beste verwijzers winnen prijzen tot €1.000!",
     "viewPrizes": "Prijzen Bekijken"
   },
@@ -771,6 +773,7 @@
     "premiumPoint4": "Behoud altijd de volledige controle",
     "discoverPremium": "Premium Ontdekken",
     "launchTitle": "Lancering: 1 mei 2026",
+    "contestDeadline": "🏆 Verwijzingswedstrijd: tot 30 augustus 2026",
     "launchDesc": "Registreer je nu, verifieer je profiel en nodig vriendinnen uit. De beste verwijzers winnen prijzen tot €1.000 of gratis Premium maanden!",
     "viewPrizes": "Prijzen Bekijken"
   }
