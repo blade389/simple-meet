@@ -1,5 +1,6 @@
 // Pre-launch configuration
 export const LAUNCH_AT = new Date('2026-05-01T00:00:00+02:00'); // Europe/Rome (CEST)
+export const CONTEST_DEADLINE = new Date('2026-08-30T23:59:59+02:00'); // Contest end date
 
 export const isPreLaunch = () => Date.now() < LAUNCH_AT.getTime();
 
