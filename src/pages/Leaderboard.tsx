@@ -5,7 +5,7 @@ import { Heart, Trophy, Medal, Crown, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { LAUNCH_AT } from '@/lib/prelaunch';
+import { CONTEST_DEADLINE } from '@/lib/prelaunch';
 import SEOHead from '@/components/SEOHead';
 import { useTranslation } from 'react-i18next';
 
@@ -49,7 +49,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     const tick = () => {
-      const diff = Math.max(0, LAUNCH_AT.getTime() - Date.now());
+      const diff = Math.max(0, CONTEST_DEADLINE.getTime() - Date.now());
       setCountdown({
         days: Math.floor(diff / 86400000),
         hours: Math.floor((diff % 86400000) / 3600000),
