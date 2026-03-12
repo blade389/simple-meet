@@ -33,9 +33,14 @@ const ALLOWED_ROUTES = [
   '/free-premium-request',
 ];
 
-export const isRouteAllowed = (pathname: string) => {
+const BYPASS_EMAILS = [
+  'panarisiandrea@gmail.com',
+  'panarisiandrea.trade@gmail.com',
+];
+
+export const isRouteAllowed = (pathname: string, userEmail?: string | null) => {
   if (!isPreLaunch()) return true;
-  // Check exact match or starts with for dynamic routes
+  if (userEmail && BYPASS_EMAILS.includes(userEmail)) return true;
   return ALLOWED_ROUTES.some(route => 
     pathname === route || pathname.startsWith(route + '/')
   );
