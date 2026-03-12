@@ -58,8 +58,8 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <PreLaunchGuard />
           <AuthProvider>
+            <PreLaunchGuard />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/prelaunch" element={<PreLaunch />} />
