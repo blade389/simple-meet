@@ -46,6 +46,7 @@
     "step2Desc": "Explora perfiles en tu zona y envía solicitudes de encuentro",
     "step3Title": "Encuéntrate",
     "step3Desc": "Organiza tu encuentro y deja una reseña después",
+    "appointmentDisclaimer": "Una cita programada no es vinculante de ninguna manera. No hay ninguna obligación más que presentarse e intentar divertirse y pasar tiempo de calidad juntos. Lo que pase, pasa — siempre respetando la voluntad de la otra persona.",
     "footerTagline": "La app de citas que pone a las mujeres al mando",
     "activeUsers": "Usuarios Activos",
     "successfulMeetings": "Encuentros Exitosos",
@@ -149,6 +150,8 @@
     "a6": "Después de un encuentro confirmado a través de la app, ambos usuarios pueden dejar una reseña. Esto ayuda a mantener alta la calidad de la comunidad y premia a los usuarios correctos y respetuosos. Solo los encuentros reales pueden ser reseñados.",
     "q7": "¿Puedo eliminar mi cuenta?",
     "a7": "Por supuesto. Puedes eliminar tu cuenta en cualquier momento desde la configuración de tu perfil. Ten en cuenta que esta acción es irreversible y todos tus datos, incluidas las fichas no utilizadas, se perderán.",
+    "q8": "¿La cita me obliga a algo?",
+    "a8": "Absolutamente no. Una cita programada no es vinculante de ninguna manera y no da derecho a nadie a exigir nada de la otra persona. La única obligación es presentarse e intentar divertirse y pasar tiempo de calidad juntos. Lo que pase, pasa — pero siempre respetando la voluntad de la otra persona.",
     "noAnswer": "¿No encontraste la respuesta que buscabas?",
     "notFound": "¿No encontraste la respuesta que buscabas?",
     "contactSupport": "Contactar Soporte"

@@ -206,6 +206,11 @@ const Index = () => {
               </p>
             </div>
           </div>
+          <div className="mt-12 max-w-3xl mx-auto text-center">
+            <p className="text-muted-foreground text-sm italic leading-relaxed">
+              {t("home.appointmentDisclaimer")}
+            </p>
+          </div>
         </div>
       </section>
 

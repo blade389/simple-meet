@@ -46,6 +46,7 @@
     "step2Desc": "Durchsuche Profile in deiner Nähe und sende Treffanfragen",
     "step3Title": "Treffen",
     "step3Desc": "Organisiere dein Treffen und hinterlasse danach eine Bewertung",
+    "appointmentDisclaimer": "Ein vereinbartes Treffen ist in keiner Weise verbindlich. Es gibt keine Verpflichtung, außer zu erscheinen und zu versuchen, Spaß zu haben und eine gute Zeit miteinander zu verbringen. Was passiert, passiert — immer im Respekt vor den Wünschen der anderen Person.",
     "footerTagline": "Die Dating-App, die Frauen das Kommando gibt",
     "activeUsers": "Aktive Nutzer",
     "successfulMeetings": "Erfolgreiche Treffen",
@@ -149,6 +150,8 @@
     "a6": "Nach einem bestätigten Treffen über die App können beide Benutzer eine Bewertung hinterlassen. Dies hilft, eine hohe Community-Qualität aufrechtzuerhalten und belohnt korrekte und respektvolle Benutzer. Nur echte Treffen können bewertet werden.",
     "q7": "Kann ich mein Konto löschen?",
     "a7": "Selbstverständlich. Sie können Ihr Konto jederzeit in Ihren Profileinstellungen löschen. Bitte beachten Sie, dass diese Aktion irreversibel ist und alle Ihre Daten, einschließlich nicht verwendeter Token, verloren gehen.",
+    "q8": "Verpflichtet mich das Treffen zu irgendetwas?",
+    "a8": "Absolut nicht. Ein vereinbartes Treffen ist in keiner Weise verbindlich und berechtigt niemanden, etwas von der anderen Person zu verlangen. Die einzige Verpflichtung besteht darin, zu erscheinen und zu versuchen, Spaß zu haben und eine gute Zeit miteinander zu verbringen. Was passiert, passiert — aber immer im Respekt vor den Wünschen der anderen Person.",
     "noAnswer": "Haben Sie die gesuchte Antwort nicht gefunden?",
     "notFound": "Haben Sie die gesuchte Antwort nicht gefunden?",
     "contactSupport": "Support kontaktieren"

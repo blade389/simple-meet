@@ -46,6 +46,7 @@
     "step2Desc": "Browse profiles in your area and send meeting requests",
     "step3Title": "Meet",
     "step3Desc": "Organize your meeting and leave a review afterwards",
+    "appointmentDisclaimer": "A scheduled meeting is in no way binding. There is no obligation other than to show up and try to have fun and spend quality time together. Whatever happens, happens — always respecting the other person's wishes.",
     "footerTagline": "The dating app that puts women in command",
     "activeUsers": "Active Users",
     "successfulMeetings": "Successful Meetings",
@@ -149,6 +150,8 @@
     "a6": "After a confirmed meeting through the app, both users can leave a review. This helps maintain high community quality and rewards correct and respectful users. Only real meetings can be reviewed.",
     "q7": "Can I delete my account?",
     "a7": "Certainly. You can delete your account at any time from your profile settings. Please note that this action is irreversible and all your data, including unused tokens, will be lost.",
+    "q8": "Does the appointment obligate me to anything?",
+    "a8": "Absolutely not. A scheduled meeting is in no way binding and does not entitle anyone to demand anything from the other person. The only obligation is to show up and try to have fun and spend quality time together. Whatever happens, happens — but always respecting the other person's wishes.",
     "noAnswer": "Didn't find the answer you were looking for?",
     "notFound": "Didn't find the answer you were looking for?",
     "contactSupport": "Contact Support"

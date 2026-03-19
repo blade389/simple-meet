@@ -46,6 +46,7 @@
     "step2Desc": "Explore perfis na sua zona e envie pedidos de encontro",
     "step3Title": "Encontre-se",
     "step3Desc": "Organize o seu encontro e deixe uma avaliação depois",
+    "appointmentDisclaimer": "Um encontro marcado não é de forma alguma vinculativo. Não há qualquer obrigação além de comparecer e tentar divertir-se e passar tempo de qualidade juntos. O que acontecer, acontece — sempre respeitando a vontade da outra pessoa.",
     "footerTagline": "A app de encontros que coloca as mulheres no comando",
     "activeUsers": "Utilizadores Ativos",
     "successfulMeetings": "Encontros Bem-sucedidos",
@@ -149,6 +150,8 @@
     "a6": "Após um encontro confirmado através da app, ambos os utilizadores podem deixar uma avaliação. Isto ajuda a manter alta a qualidade da comunidade e recompensa os utilizadores corretos e respeitosos. Apenas encontros reais podem ser avaliados.",
     "q7": "Posso eliminar a minha conta?",
     "a7": "Certamente. Pode eliminar a sua conta a qualquer momento nas definições do seu perfil. Tenha em atenção que esta ação é irreversível e todos os seus dados, incluindo fichas não utilizadas, serão perdidos.",
+    "q8": "O encontro obriga-me a alguma coisa?",
+    "a8": "Absolutamente não. Um encontro marcado não é de forma alguma vinculativo e não dá direito a ninguém de exigir qualquer coisa da outra pessoa. A única obrigação é comparecer e tentar divertir-se e passar tempo de qualidade juntos. O que acontecer, acontece — mas sempre respeitando a vontade da outra pessoa.",
     "noAnswer": "Não encontrou a resposta que procurava?",
     "notFound": "Não encontrou a resposta que procurava?",
     "contactSupport": "Contactar Suporte"
