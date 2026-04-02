@@ -80,7 +80,7 @@ const InviteFriends = () => {
 
   const shareWhatsApp = () => {
     const text = encodeURIComponent(
-      t('invite.shareText', 'Registrati su SCOPAMI e preparati al lancio del 1 maggio 2026! Usa il mio link:') + ' ' + referralLink
+      t('invite.shareText', 'Registrati su SCOPAMI e preparati al lancio del 1 giugno 2026! Usa il mio link:') + ' ' + referralLink
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
