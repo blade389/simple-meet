@@ -79,7 +79,7 @@ const PreLaunch = () => {
             </div>
             <p className="text-sm text-muted-foreground">
               <Clock className="inline w-4 h-4 mr-1" />
-              {t('prelaunch.launchDate', '1 Maggio 2026 - 00:00 (Europe/Rome)')}
+              {t('prelaunch.launchDate', '1 Giugno 2026 - 00:00 (Europe/Rome)')}
             </p>
           </div>
 
