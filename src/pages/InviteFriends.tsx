@@ -69,7 +69,7 @@ const InviteFriends = () => {
       try {
         await navigator.share({
           title: 'SCOPAMI - Unisciti a me!',
-          text: t('invite.shareText', 'Registrati su SCOPAMI e preparati al lancio del 1 maggio 2026! Usa il mio link:'),
+          text: t('invite.shareText', 'Registrati su SCOPAMI e preparati al lancio del 1 giugno 2026! Usa il mio link:'),
           url: referralLink,
         });
       } catch {}
