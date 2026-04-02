@@ -39,7 +39,7 @@ const PreLaunch = () => {
 
   return (
     <>
-      <SEOHead title="SCOPAMI - Lancio 1 Maggio 2026" description="Prepara il tuo profilo e invita amici per vincere premi!" canonicalPath="/prelaunch" noindex />
+      <SEOHead <SEOHead title="SCOPAMI - Lancio 1 Giugno 2026" description="Prepara il tuo profilo e invita amici per vincere premi!" canonicalPath="/prelaunch" noindex /> description="Prepara il tuo profilo e invita amici per vincere premi!" canonicalPath="/prelaunch" noindex />
       <div className="min-h-screen bg-gradient-hero">
         <header className="border-b bg-background/80 backdrop-blur-lg">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
