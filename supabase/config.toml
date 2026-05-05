@@ -80,3 +80,6 @@ verify_jwt = false
 
 [functions.list-drive-photos]
 verify_jwt = false
+
+[functions.seed-demo-profiles]
+verify_jwt = false
