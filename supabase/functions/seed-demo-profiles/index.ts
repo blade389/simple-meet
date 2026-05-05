@@ -136,8 +136,8 @@ Deno.serve(async (req) => {
       if (vErr) throw vErr;
 
       created.push({ userId, name, age, city: city.name, photo: f.name });
-    } catch (e) {
-      errors.push({ file: f.name, error: String(e) });
+    } catch (e: any) {
+      errors.push({ file: f.name, error: e?.message ?? JSON.stringify(e) });
     }
   }
 
