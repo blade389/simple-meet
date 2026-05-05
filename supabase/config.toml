@@ -77,3 +77,6 @@ verify_jwt = false
 
 [functions.send-verification-reminders]
 verify_jwt = false
+
+[functions.list-drive-photos]
+verify_jwt = false
