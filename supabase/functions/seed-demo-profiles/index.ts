@@ -91,11 +91,22 @@ Deno.serve(async (req) => {
   for (let i = 0; i < files.length; i++) {
     const f = files[i];
     try {
+      // Create auth user first (profiles.id has FK to auth.users)
+      const fakeEmail = `demo+${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}@scopami.demo`;
+      const fakePass = crypto.randomUUID() + "Aa1!";
+      const { data: authData, error: authErr } = await admin.auth.admin.createUser({
+        email: fakeEmail,
+        password: fakePass,
+        email_confirm: true,
+        user_metadata: { demo: true },
+      });
+      if (authErr || !authData?.user) throw new Error(`auth: ${authErr?.message ?? "no user"}`);
+      const userId = authData.user.id;
+
       const dr = await fetch(`${GATEWAY}/files/${f.id}?alt=media`, { headers: gdHeaders });
       if (!dr.ok) throw new Error(`drive download ${dr.status}: ${await dr.text()}`);
       const bytes = new Uint8Array(await dr.arrayBuffer());
       const ext = f.mimeType === "image/png" ? "png" : f.mimeType === "image/jpeg" ? "jpg" : "img";
-      const userId = uuid();
       const path = `${userId}/profile-${Date.now()}.${ext}`;
 
       const up = await admin.storage.from("profile-photos").upload(path, bytes, { contentType: f.mimeType, upsert: true });
@@ -107,7 +118,7 @@ Deno.serve(async (req) => {
       const name = rnd(FEMALE_NAMES);
       const bio = rnd(BIOS);
 
-      const { error: pErr } = await admin.from("profiles").insert({
+      const { error: pErr } = await admin.from("profiles").upsert({
         id: userId,
         full_name: name,
         gender: "female",
