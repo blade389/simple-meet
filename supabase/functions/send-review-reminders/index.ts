@@ -118,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <p style="margin: 5px 0;"><strong>⏰ ${getDeadlineLabel(femaleLang)}:</strong> ${formattedDeadlineDate} - ${formattedDeadline}</p>
               </div>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                <a href="https://matchly.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
                   ${femaleT.reviewReminder.cta}
                 </a>
               </div>
@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "SCOPAMI <noreply@scopami.online>",
+                from: "Matchly <noreply@matchly.online>",
                 to: [femaleUser.email],
                 subject: `⏰ ${femaleT.reviewReminder.subject}`,
                 html: emailHtml,
@@ -168,7 +168,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <p style="margin: 5px 0;"><strong>⏰ ${getDeadlineLabel(maleLang)}:</strong> ${formattedDeadlineDate} - ${formattedDeadline}</p>
               </div>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                <a href="https://matchly.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
                   ${maleT.reviewReminder.cta}
                 </a>
               </div>
@@ -181,7 +181,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "SCOPAMI <noreply@scopami.online>",
+                from: "Matchly <noreply@matchly.online>",
                 to: [maleUser.email],
                 subject: `⏰ ${maleT.reviewReminder.subject}`,
                 html: emailHtml,
@@ -215,7 +215,7 @@ const handler = async (req: Request): Promise<Response> => {
                     target_channel: "push",
                     headings: { en: `⏰ ${femaleT.reviewReminder.title}` },
                     contents: { en: `${femaleT.reviewReminder.notification} - ${maleName}` },
-                    url: "https://scopami.online/appointments",
+                    url: "https://matchly.online/appointments",
                   }),
                 });
                 console.log(`Push sent to female user for review reminder ${appointment.id}`);
@@ -239,7 +239,7 @@ const handler = async (req: Request): Promise<Response> => {
                     target_channel: "push",
                     headings: { en: `⏰ ${maleT.reviewReminder.title}` },
                     contents: { en: `${maleT.reviewReminder.notification} - ${femaleName}` },
-                    url: "https://scopami.online/appointments",
+                    url: "https://matchly.online/appointments",
                   }),
                 });
                 console.log(`Push sent to male user for review reminder ${appointment.id}`);

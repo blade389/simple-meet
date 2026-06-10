@@ -51,10 +51,10 @@ const FAQ = () => {
     return (
         <>
         <SEOHead
-            title={`${t('faq.title')} | SCOPAMI`}
+            title={`${t('faq.title')} | Matchly`}
             description={t('faq.q1')}
             canonicalPath="/faq"
-            keywords="faq scopami, dating faq, how scopami works, tokens dating"
+            keywords="faq matchly, dating faq, how matchly works, tokens dating"
         />
         <StructuredData schema={{ type: "FAQPage", faqs }} />
         <div className="min-h-screen bg-background p-6 md:p-12">
@@ -84,7 +84,7 @@ const FAQ = () => {
                 <div className="text-center mt-12">
                     <p className="text-muted-foreground mb-4">{t('faq.notFound')}</p>
                     <Button variant="outline" asChild>
-                        <a href="mailto:support@scopami.online">{t('faq.contactSupport')}</a>
+                        <a href="mailto:support@matchly.online">{t('faq.contactSupport')}</a>
                     </Button>
                 </div>
             </div>

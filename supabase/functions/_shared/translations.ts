@@ -140,13 +140,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Ciao',
       regards: 'Cordiali saluti',
-      team: 'Il Team SCOPAMI',
+      team: 'Il Team Matchly',
       viewProfile: 'Visualizza Profilo',
       goToApp: 'Vai all\'App',
     },
     welcome: {
-      subject: 'Benvenuto su SCOPAMI!',
-      title: 'Benvenuto su SCOPAMI!',
+      subject: 'Benvenuto su Matchly!',
+      title: 'Benvenuto su Matchly!',
       intro: 'Grazie per esserti registrato! Siamo entusiasti di averti con noi.',
       steps: {
         verify: 'Completa la verifica del tuo profilo',
@@ -259,13 +259,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hello',
       regards: 'Best regards',
-      team: 'The SCOPAMI Team',
+      team: 'The Matchly Team',
       viewProfile: 'View Profile',
       goToApp: 'Go to App',
     },
     welcome: {
-      subject: 'Welcome to SCOPAMI!',
-      title: 'Welcome to SCOPAMI!',
+      subject: 'Welcome to Matchly!',
+      title: 'Welcome to Matchly!',
       intro: 'Thank you for signing up! We\'re excited to have you with us.',
       steps: {
         verify: 'Complete your profile verification',
@@ -378,13 +378,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Bonjour',
       regards: 'Cordialement',
-      team: 'L\'équipe SCOPAMI',
+      team: 'L\'équipe Matchly',
       viewProfile: 'Voir le Profil',
       goToApp: 'Aller à l\'App',
     },
     welcome: {
-      subject: 'Bienvenue sur SCOPAMI!',
-      title: 'Bienvenue sur SCOPAMI!',
+      subject: 'Bienvenue sur Matchly!',
+      title: 'Bienvenue sur Matchly!',
       intro: 'Merci de vous être inscrit! Nous sommes ravis de vous accueillir.',
       steps: {
         verify: 'Complétez la vérification de votre profil',
@@ -497,13 +497,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hallo',
       regards: 'Mit freundlichen Grüßen',
-      team: 'Das SCOPAMI Team',
+      team: 'Das Matchly Team',
       viewProfile: 'Profil Ansehen',
       goToApp: 'Zur App',
     },
     welcome: {
-      subject: 'Willkommen bei SCOPAMI!',
-      title: 'Willkommen bei SCOPAMI!',
+      subject: 'Willkommen bei Matchly!',
+      title: 'Willkommen bei Matchly!',
       intro: 'Danke für deine Registrierung! Wir freuen uns, dich bei uns zu haben.',
       steps: {
         verify: 'Vervollständige deine Profilverifizierung',
@@ -616,13 +616,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hola',
       regards: 'Saludos cordiales',
-      team: 'El Equipo SCOPAMI',
+      team: 'El Equipo Matchly',
       viewProfile: 'Ver Perfil',
       goToApp: 'Ir a la App',
     },
     welcome: {
-      subject: '¡Bienvenido a SCOPAMI!',
-      title: '¡Bienvenido a SCOPAMI!',
+      subject: '¡Bienvenido a Matchly!',
+      title: '¡Bienvenido a Matchly!',
       intro: '¡Gracias por registrarte! Estamos encantados de tenerte con nosotros.',
       steps: {
         verify: 'Completa la verificación de tu perfil',
@@ -735,13 +735,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Olá',
       regards: 'Atenciosamente',
-      team: 'A Equipe SCOPAMI',
+      team: 'A Equipe Matchly',
       viewProfile: 'Ver Perfil',
       goToApp: 'Ir para o App',
     },
     welcome: {
-      subject: 'Bem-vindo ao SCOPAMI!',
-      title: 'Bem-vindo ao SCOPAMI!',
+      subject: 'Bem-vindo ao Matchly!',
+      title: 'Bem-vindo ao Matchly!',
       intro: 'Obrigado por se registrar! Estamos animados em tê-lo conosco.',
       steps: {
         verify: 'Complete a verificação do seu perfil',
@@ -854,13 +854,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hallo',
       regards: 'Met vriendelijke groet',
-      team: 'Het SCOPAMI Team',
+      team: 'Het Matchly Team',
       viewProfile: 'Profiel Bekijken',
       goToApp: 'Naar de App',
     },
     welcome: {
-      subject: 'Welkom bij SCOPAMI!',
-      title: 'Welkom bij SCOPAMI!',
+      subject: 'Welkom bij Matchly!',
+      title: 'Welkom bij Matchly!',
       intro: 'Bedankt voor je registratie! We zijn blij je te verwelkomen.',
       steps: {
         verify: 'Voltooi je profielverificatie',
@@ -973,13 +973,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Cześć',
       regards: 'Z poważaniem',
-      team: 'Zespół SCOPAMI',
+      team: 'Zespół Matchly',
       viewProfile: 'Zobacz Profil',
       goToApp: 'Przejdź do Aplikacji',
     },
     welcome: {
-      subject: 'Witaj w SCOPAMI!',
-      title: 'Witaj w SCOPAMI!',
+      subject: 'Witaj w Matchly!',
+      title: 'Witaj w Matchly!',
       intro: 'Dziękujemy za rejestrację! Cieszymy się, że jesteś z nami.',
       steps: {
         verify: 'Dokończ weryfikację profilu',
@@ -1102,7 +1102,7 @@ export function getEmailWrapper(content: string, t: typeof translations['it']): 
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>SCOPAMI</title>
+      <title>Matchly</title>
     </head>
     <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f4f4f5;">
       <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 40px 20px;">
@@ -1111,7 +1111,7 @@ export function getEmailWrapper(content: string, t: typeof translations['it']): 
             <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
               <tr>
                 <td style="background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); padding: 30px; text-align: center;">
-                  <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">SCOPAMI</h1>
+                  <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">Matchly</h1>
                 </td>
               </tr>
               <tr>

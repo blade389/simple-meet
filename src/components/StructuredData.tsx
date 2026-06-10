@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const BASE_URL = "https://scopami.online";
+const BASE_URL = "https://matchly.online";
 
 interface OrganizationSchema {
   type: "Organization";
@@ -31,11 +31,11 @@ interface StructuredDataProps {
 const generateOrganizationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "SCOPAMI",
+  "name": "Matchly",
   "url": BASE_URL,
   "logo": `${BASE_URL}/og-image.jpg`,
-  "description": "SCOPAMI è l'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri con sistema gettoni.",
-  "email": "support@scopami.online",
+  "description": "Matchly è l'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri con sistema gettoni.",
+  "email": "support@matchly.online",
   "sameAs": [],
   "foundingDate": "2024",
   "slogan": "L'app di dating che mette le donne al comando"
@@ -44,7 +44,7 @@ const generateOrganizationSchema = () => ({
 const generateWebSiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "SCOPAMI",
+  "name": "Matchly",
   "url": BASE_URL,
   "description": "L'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri.",
   "inLanguage": "it-IT",
@@ -74,7 +74,7 @@ const generateFAQSchema = (faqs: Array<{ question: string; answer: string }>) =>
 const generateWebApplicationSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "SCOPAMI",
+  "name": "Matchly",
   "url": BASE_URL,
   "applicationCategory": "SocialNetworkingApplication",
   "operatingSystem": "Web",

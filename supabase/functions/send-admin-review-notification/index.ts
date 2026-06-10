@@ -81,10 +81,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending notification to admins:", adminEmails);
 
-    const subject = "SCOPAMI - Nuova conversazione da revisionare";
+    const subject = "Matchly - Nuova conversazione da revisionare";
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h1 style="color: #e11d48; text-align: center;">SCOPAMI</h1>
+        <h1 style="color: #e11d48; text-align: center;">Matchly</h1>
         <h2 style="color: #333;">Nuova Revisione Richiesta</h2>
         <p>Una nuova conversazione richiede la tua revisione.</p>
         
@@ -110,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "SCOPAMI <noreply@scopami.online>",
+      from: "Matchly <noreply@matchly.online>",
       to: adminEmails,
       subject: subject,
       html: htmlContent,

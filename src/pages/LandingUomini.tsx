@@ -20,10 +20,10 @@ const LandingUomini = () => {
   return (
     <>
       <SEOHead
-        title={t('landingMen.seoTitle', 'SCOPAMI per Uomini | Registrazione Gratuita')}
-        description={t('landingMen.seoDescription', 'Registrati gratuitamente su SCOPAMI. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali.')}
+        title={t('landingMen.seoTitle', 'Matchly per Uomini | Registrazione Gratuita')}
+        description={t('landingMen.seoDescription', 'Registrati gratuitamente su Matchly. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali.')}
         canonicalPath="/uomini"
-        keywords={t('landingMen.seoKeywords', 'dating uomini, app incontri gratuita uomini, SCOPAMI uomini')}
+        keywords={t('landingMen.seoKeywords', 'dating uomini, app incontri gratuita uomini, Matchly uomini')}
       />
       <div className="min-h-screen">
         {/* Header */}
@@ -31,7 +31,7 @@ const LandingUomini = () => {
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">SCOPAMI</span>
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Matchly</span>
             </Link>
             <div className="flex gap-2">
               <Link to="/donne"><Button variant="ghost" size="sm">{t('landingMen.forWomen', 'Per Donne')}</Button></Link>
@@ -51,7 +51,7 @@ const LandingUomini = () => {
               <span className="bg-gradient-primary bg-clip-text text-transparent">{t('landingMen.heroHighlight', 'Paghi solo se rifiuti.')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              {t('landingMen.heroDescription', 'Su SCOPAMI ricevi richieste da donne verificate. Accettare è gratuito. Solo se rifiuti una richiesta ti viene scalato 1 gettone.')}
+              {t('landingMen.heroDescription', 'Su Matchly ricevi richieste da donne verificate. Accettare è gratuito. Solo se rifiuti una richiesta ti viene scalato 1 gettone.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
@@ -92,7 +92,7 @@ const LandingUomini = () => {
         {/* Key points */}
         <section className="py-16 px-4 bg-muted/30">
           <div className="container mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold mb-8 text-center">{t('landingMen.whyDifferentTitle', 'Perché SCOPAMI è diverso')}</h2>
+            <h2 className="text-2xl font-bold mb-8 text-center">{t('landingMen.whyDifferentTitle', 'Perché Matchly è diverso')}</h2>
             <div className="space-y-4">
               {[
                 t('landingMen.point1', 'Registrazione e profilo completamente gratuiti'),
@@ -137,7 +137,7 @@ const LandingUomini = () => {
 
         {/* Footer */}
         <footer className="py-8 px-4 border-t text-center text-sm text-muted-foreground">
-          <p>© 2025 SCOPAMI. {t('common.allRightsReserved')}.</p>
+          <p>© 2025 Matchly. {t('common.allRightsReserved')}.</p>
           <div className="flex justify-center gap-4 mt-2">
             <Link to="/privacy-policy" className="hover:text-foreground">{t('common.privacyPolicy')}</Link>
             <Link to="/terms-of-service" className="hover:text-foreground">{t('common.termsOfService')}</Link>

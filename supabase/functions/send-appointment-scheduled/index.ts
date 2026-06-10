@@ -82,7 +82,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p style="margin: 5px 0;"><strong>📍 ${t.appointmentScheduled.location}:</strong> ${location}</p>
       </div>
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://scopami.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        <a href="https://matchly.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
           ${t.appointmentScheduled.cta}
         </a>
       </div>
@@ -95,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "SCOPAMI <noreply@scopami.online>",
+        from: "Matchly <noreply@matchly.online>",
         to: [user.email],
         subject: `📅 ${t.appointmentScheduled.subject}`,
         html: getEmailWrapper(emailContent, t),
@@ -119,7 +119,7 @@ const handler = async (req: Request): Promise<Response> => {
           target_channel: "push",
           headings: { en: `📅 ${t.appointmentScheduled.title}` },
           contents: { en: `${schedulerName} ${t.appointmentScheduled.notification}` },
-          url: "https://scopami.online/appointments",
+          url: "https://matchly.online/appointments",
         }),
       });
     }
