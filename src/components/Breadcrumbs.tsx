@@ -30,7 +30,7 @@ const pageNames: Record<string, string> = {
   "admin": "Admin",
 };
 
-const BASE_URL = "https://scopami.online";
+const BASE_URL = "https://matchly.online";
 
 export const Breadcrumbs = () => {
   const location = useLocation();

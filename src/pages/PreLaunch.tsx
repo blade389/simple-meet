@@ -39,13 +39,13 @@ const PreLaunch = () => {
 
   return (
     <>
-      <SEOHead title="SCOPAMI - Lancio 1 Giugno 2026" description="Prepara il tuo profilo e invita amici per vincere premi!" canonicalPath="/prelaunch" noindex />
+      <SEOHead title="Matchly - Lancio 1 Giugno 2026" description="Prepara il tuo profilo e invita amici per vincere premi!" canonicalPath="/prelaunch" noindex />
       <div className="min-h-screen bg-gradient-hero">
         <header className="border-b bg-background/80 backdrop-blur-lg">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">SCOPAMI</span>
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Matchly</span>
             </Link>
             {user ? (
               <Link to="/profile"><Button variant="outline">{t('dashboard.myProfile')}</Button></Link>

@@ -119,7 +119,7 @@ const Appointments = () => {
           <div className="flex items-center gap-2">
             <Heart className="w-8 h-8 text-primary fill-primary" />
             <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              SCOPAMI
+              Matchly
             </h1>
           </div>
           <div className="w-20"></div>

@@ -71,7 +71,7 @@ const handler = async (req: Request): Promise<Response> => {
         ${isPremium ? 'Hai 48 ore per rispondere.' : 'Hai 48 ore per accettare o rifiutare.'}
       </p>
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://scopami.online/${isPremium ? 'premium-requests' : 'dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        <a href="https://matchly.online/${isPremium ? 'premium-requests' : 'dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
           ${t.matchRequest.cta}
         </a>
       </div>
@@ -88,7 +88,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "SCOPAMI <noreply@scopami.online>",
+        from: "Matchly <noreply@matchly.online>",
         to: [user.email],
         subject: emailSubject,
         html,
@@ -113,8 +113,8 @@ const handler = async (req: Request): Promise<Response> => {
         const notificationTitle = isPremium ? t.matchRequest.premiumTitle : t.matchRequest.title;
         const notificationContent = `${senderName} ${isPremium ? t.matchRequest.premiumNotification : t.matchRequest.notification}`;
         const notificationUrl = isPremium 
-          ? "https://scopami.online/premium-requests"
-          : "https://scopami.online/dashboard";
+          ? "https://matchly.online/premium-requests"
+          : "https://matchly.online/dashboard";
 
         const notificationPayload = {
           app_id: oneSignalAppId,

@@ -22,8 +22,8 @@ const Index = () => {
   return (
     <>
       <SEOHead
-        title="SCOPAMI - App di Dating Innovativa | Incontri Sicuri"
-        description="SCOPAMI è l'app di dating che mette le donne al comando. Sistema innovativo con gettoni per incontri autentici, sicuri e verificati. Registrazione gratuita."
+        title="Matchly - App di Dating Innovativa | Incontri Sicuri"
+        description="Matchly è l'app di dating che mette le donne al comando. Sistema innovativo con gettoni per incontri autentici, sicuri e verificati. Registrazione gratuita."
         canonicalPath="/"
         keywords="dating app, incontri online, app incontri Italia, dating sicuro, incontri verificati, app appuntamenti"
       />
@@ -38,7 +38,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                SCOPAMI
+                Matchly
               </h1>
             </div>
             <div className="flex items-center gap-2 min-w-0">
@@ -241,7 +241,7 @@ const Index = () => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Heart className="w-6 h-6 text-primary fill-primary" />
-                <span className="text-xl font-bold">SCOPAMI</span>
+                <span className="text-xl font-bold">Matchly</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 {t("home.footerTagline")}
@@ -277,7 +277,7 @@ const Index = () => {
                 </li>
 
                 <li>
-                  <a href="mailto:support@scopami.online" className="hover:text-foreground transition-colors">
+                  <a href="mailto:support@matchly.online" className="hover:text-foreground transition-colors">
                     {t("common.contactUs")}
                   </a>
                 </li>
@@ -305,7 +305,7 @@ const Index = () => {
             </div>
           </div>
           <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            © 2025 SCOPAMI. {t("common.allRightsReserved")}.
+            © 2025 Matchly. {t("common.allRightsReserved")}.
           </div>
         </div>
       </footer>
