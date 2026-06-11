@@ -1,0 +1,24 @@
+# FlashMatch
+
+> FlashMatch è l'app di dating che mette le donne al comando: incontri autentici, sicuri e verificati grazie a un sistema a gettoni e a profili verificati.
+
+FlashMatch è una piattaforma di dating disponibile in 8 lingue europee con focus su sicurezza, verifica dei profili e rispetto reciproco. Gli uomini usano gettoni per inviare richieste di match alle donne, che decidono liberamente se accettare. Tutti gli appuntamenti sono non vincolanti.
+
+## Pages
+
+- [Home](/): Panoramica di FlashMatch, come funziona e iscrizione gratuita.
+- [About](/about): Chi siamo, missione e valori di FlashMatch.
+- [Funzionalità](/features): Tutte le funzionalità dell'app, sicurezza e verifica profili.
+- [Prezzi](/pricing): Pacchetti gettoni e abbonamento premium.
+- [FAQ](/faq): Risposte alle domande più frequenti su account, gettoni, sicurezza e match.
+- [Leaderboard Referral](/leaderboard): Classifica del contest referral attivo fino al 30 agosto 2026.
+- [Invita amici](/invite): Programma referral per guadagnare punti e premi.
+- [Landing Uomini](/uomini): Pagina dedicata agli utenti uomini.
+- [Landing Donne](/donne): Pagina dedicata alle utenti donne.
+- [Pre-lancio](/prelaunch): Countdown al lancio ufficiale di FlashMatch.
+
+## Optional
+
+- [Privacy Policy](/privacy-policy): Informativa sulla privacy e trattamento dati.
+- [Termini di Servizio](/terms-of-service): Condizioni d'uso della piattaforma.
+- [Cookie Policy](/cookie-policy): Informativa sui cookie.

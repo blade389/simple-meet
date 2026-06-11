@@ -38,7 +38,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                FlashMatch
+                FlashMatch<span className="sr-only"> — App di Dating Sicura</span>
               </h1>
             </div>
             <div className="flex items-center gap-2 min-w-0">
@@ -84,7 +84,7 @@ const Index = () => {
                 </Link>
                 <Link to="/features">
                   <Button variant="outline" size="xl" className="w-full sm:w-auto">
-                    {t("common.learnMore")}
+                    {t("common.discoverFeatures", "Scopri le funzionalità")}
                   </Button>
                 </Link>
               </div>

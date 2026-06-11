@@ -59,7 +59,7 @@ const PreLaunch = () => {
           {/* Countdown */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {t('prelaunch.title', 'Il lancio è quasi qui!')}
+              FlashMatch — {t('prelaunch.title', 'Il lancio è quasi qui!')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               {t('prelaunch.subtitle', 'Prepara il tuo profilo, invita amici e vinci premi!')}

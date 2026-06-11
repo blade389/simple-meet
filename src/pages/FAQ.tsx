@@ -52,7 +52,7 @@ const FAQ = () => {
         <>
         <SEOHead
             title={`${t('faq.title')} | FlashMatch`}
-            description={t('faq.q1')}
+            description="Domande frequenti su FlashMatch: come funziona l'app di dating, sistema gettoni, verifica profili, sicurezza, abbonamento premium e gestione account."
             canonicalPath="/faq"
             keywords="faq flashmatch, dating faq, how flashmatch works, tokens dating"
         />
@@ -65,7 +65,7 @@ const FAQ = () => {
             <div className="max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
                     <Link to="/">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" aria-label="Torna alla home">
                             <ArrowLeft className="w-6 h-6" />
                         </Button>
                     </Link>
