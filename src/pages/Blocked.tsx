@@ -34,7 +34,7 @@ const Blocked = () => {
             className="w-full" 
             asChild
           >
-            <a href="mailto:support@flashmatch.online?subject=Richiesta%20sblocco%20account">
+            <a href="mailto:support@flashmatch.org?subject=Richiesta%20sblocco%20account">
               <Mail className="w-4 h-4 mr-2" />
               Contatta il Supporto
             </a>

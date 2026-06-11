@@ -51,7 +51,7 @@ const InviteFriends = () => {
     }
   };
 
-  const referralLink = `https://flashmatch.online/?ref=${referralCode}`;
+  const referralLink = `https://flashmatch.org/?ref=${referralCode}`;
 
   const copyLink = async () => {
     try {

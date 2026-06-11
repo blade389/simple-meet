@@ -10,7 +10,7 @@ interface SEOHeadProps {
   noindex?: boolean;
 }
 
-const BASE_URL = "https://flashmatch.online";
+const BASE_URL = "https://flashmatch.org";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.jpg`;
 
 export const SEOHead = ({
