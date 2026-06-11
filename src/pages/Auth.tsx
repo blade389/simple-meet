@@ -169,10 +169,10 @@ const Auth = () => {
   return (
     <>
       <SEOHead
-        title="Accedi o Registrati | Matchly"
-        description="Accedi al tuo account Matchly o registrati gratuitamente. L'app di dating sicura con verifica identità e sistema gettoni."
+        title="Accedi o Registrati | FlashMatch"
+        description="Accedi al tuo account FlashMatch o registrati gratuitamente. L'app di dating sicura con verifica identità e sistema gettoni."
         canonicalPath="/auth"
-        keywords="login matchly, registrazione dating, accedi app incontri"
+        keywords="login flashmatch, registrazione dating, accedi app incontri"
         noindex={true}
       />
       <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-hero">
@@ -181,7 +181,7 @@ const Auth = () => {
           <Link to="/" className="flex items-center gap-2">
             <Heart className="w-10 h-10 text-primary fill-primary" />
             <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Matchly
+              FlashMatch
             </h1>
           </Link>
           <LanguageSelector />

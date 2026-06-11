@@ -56,10 +56,10 @@ const Features = () => {
     return (
         <>
         <SEOHead
-            title={`${t('features.title')} | Matchly`}
+            title={`${t('features.title')} | FlashMatch`}
             description={t('features.feature1Desc')}
             canonicalPath="/features"
-            keywords="dating app features, matchly features, identity verification, token system"
+            keywords="dating app features, flashmatch features, identity verification, token system"
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="absolute top-4 right-4 z-50">

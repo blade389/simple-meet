@@ -102,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "Matchly <noreply@matchly.online>",
+                from: "FlashMatch <noreply@flashmatch.online>",
                 to: [femaleUser.email],
                 subject: `⏰ ${femaleT.appointmentReminder.subject}`,
                 html: getEmailWrapper(content, femaleT),
@@ -133,7 +133,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "Matchly <noreply@matchly.online>",
+                from: "FlashMatch <noreply@flashmatch.online>",
                 to: [maleUser.email],
                 subject: `⏰ ${maleT.appointmentReminder.subject}`,
                 html: getEmailWrapper(content, maleT),
@@ -161,7 +161,7 @@ const handler = async (req: Request): Promise<Response> => {
                 target_channel: "push",
                 headings: { en: `⏰ ${femaleT.appointmentReminder.title}` },
                 contents: { en: `${maleName} - ${femaleTime} - ${appointment.location}` },
-                url: "https://matchly.online/appointments",
+                url: "https://flashmatch.online/appointments",
               }),
             });
 
@@ -177,7 +177,7 @@ const handler = async (req: Request): Promise<Response> => {
                 target_channel: "push",
                 headings: { en: `⏰ ${maleT.appointmentReminder.title}` },
                 contents: { en: `${femaleName} - ${maleTime} - ${appointment.location}` },
-                url: "https://matchly.online/appointments",
+                url: "https://flashmatch.online/appointments",
               }),
             });
           }

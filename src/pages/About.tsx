@@ -13,10 +13,10 @@ const About = () => {
     return (
         <>
         <SEOHead
-            title="Chi Siamo - Matchly | La Nostra Missione"
-            description="Scopri la filosofia di Matchly: l'app di dating che rivoluziona gli incontri online mettendo le donne al comando. Sicurezza, rispetto e trasparenza."
+            title="Chi Siamo - FlashMatch | La Nostra Missione"
+            description="Scopri la filosofia di FlashMatch: l'app di dating che rivoluziona gli incontri online mettendo le donne al comando. Sicurezza, rispetto e trasparenza."
             canonicalPath="/about"
-            keywords="chi siamo matchly, app dating italiana, dating sicuro, incontri rispettosi"
+            keywords="chi siamo flashmatch, app dating italiana, dating sicuro, incontri rispettosi"
         />
         <div className="min-h-screen bg-background">
             {/* Header / Nav */}
@@ -26,7 +26,7 @@ const About = () => {
                         <Link to="/" className="flex items-center gap-2">
                             <Heart className="w-8 h-8 text-primary fill-primary" />
                             <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                                Matchly
+                                FlashMatch
                             </span>
                         </Link>
                     </div>
@@ -164,7 +164,7 @@ const About = () => {
 
             {/* Footer Simple */}
             <footer className="py-8 text-center text-muted-foreground text-sm border-t">
-                <p>© 2025 Matchly. {t("common.allRightsReserved")}.</p>
+                <p>© 2025 FlashMatch. {t("common.allRightsReserved")}.</p>
             </footer>
         </div>
         </>

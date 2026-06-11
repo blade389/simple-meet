@@ -20,7 +20,7 @@ async function sendEmail(to: string, subject: string, html: string): Promise<voi
       "Authorization": `Bearer ${resendApiKey}`,
     },
     body: JSON.stringify({
-      from: "Match App <noreply@matchly.online>",
+      from: "Match App <noreply@flashmatch.online>",
       to: [to],
       subject,
       html,

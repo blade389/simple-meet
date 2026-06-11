@@ -12,7 +12,7 @@ const TermsOfService = () => {
     return (
         <>
         <SEOHead
-            title={`${t('common.termsOfService')} | Matchly`}
+            title={`${t('common.termsOfService')} | FlashMatch`}
             description={t('legal.terms.seoDescription')}
             canonicalPath="/terms-of-service"
             keywords={t('legal.terms.seoKeywords')}

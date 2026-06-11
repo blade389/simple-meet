@@ -92,7 +92,7 @@ Deno.serve(async (req) => {
     const f = files[i];
     try {
       // Create auth user first (profiles.id has FK to auth.users)
-      const fakeEmail = `demo+${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}@matchly.demo`;
+      const fakeEmail = `demo+${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}@flashmatch.demo`;
       const fakePass = crypto.randomUUID() + "Aa1!";
       const { data: authData, error: authErr } = await admin.auth.admin.createUser({
         email: fakeEmail,

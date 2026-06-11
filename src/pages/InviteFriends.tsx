@@ -51,7 +51,7 @@ const InviteFriends = () => {
     }
   };
 
-  const referralLink = `https://matchly.online/?ref=${referralCode}`;
+  const referralLink = `https://flashmatch.online/?ref=${referralCode}`;
 
   const copyLink = async () => {
     try {
@@ -68,8 +68,8 @@ const InviteFriends = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Matchly - Unisciti a me!',
-          text: t('invite.shareText', 'Registrati su Matchly e preparati al lancio del 1 giugno 2026! Usa il mio link:'),
+          title: 'FlashMatch - Unisciti a me!',
+          text: t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 1 giugno 2026! Usa il mio link:'),
           url: referralLink,
         });
       } catch {}
@@ -80,7 +80,7 @@ const InviteFriends = () => {
 
   const shareWhatsApp = () => {
     const text = encodeURIComponent(
-      t('invite.shareText', 'Registrati su Matchly e preparati al lancio del 1 giugno 2026! Usa il mio link:') + ' ' + referralLink
+      t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 1 giugno 2026! Usa il mio link:') + ' ' + referralLink
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
@@ -108,13 +108,13 @@ const InviteFriends = () => {
 
   return (
     <>
-      <SEOHead title="Invita Amici | Matchly" description="Invita i tuoi amici su Matchly e guadagna punti per vincere premi!" canonicalPath="/invite" noindex />
+      <SEOHead title="Invita Amici | FlashMatch" description="Invita i tuoi amici su FlashMatch e guadagna punti per vincere premi!" canonicalPath="/invite" noindex />
       <div className="min-h-screen bg-gradient-hero">
         <header className="border-b bg-background/80 backdrop-blur-lg">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Matchly</span>
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">FlashMatch</span>
             </Link>
             <Button variant="ghost" asChild><Link to="/dashboard">← Dashboard</Link></Button>
           </div>

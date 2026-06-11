@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
         ${t.verificationApproved.message}
       </p>
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://matchly.online/profile" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        <a href="https://flashmatch.online/profile" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
           ${t.verificationApproved.cta}
         </a>
       </div>
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "Matchly <noreply@matchly.online>",
+        from: "FlashMatch <noreply@flashmatch.online>",
         to: [user.email],
         subject: `🎉 ${t.verificationApproved.subject}`,
         html: getEmailWrapper(emailContent, t),
@@ -92,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
           target_channel: "push",
           headings: { en: `🎉 ${t.verificationApproved.title}` },
           contents: { en: t.verificationApproved.notification },
-          url: "https://matchly.online/profile",
+          url: "https://flashmatch.online/profile",
         }),
       });
     }
