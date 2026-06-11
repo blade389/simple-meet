@@ -22,7 +22,7 @@ const TermsOfService = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <Link to="/auth">
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" aria-label="Torna indietro">
                                 <ArrowLeft className="w-6 h-6" />
                             </Button>
                         </Link>

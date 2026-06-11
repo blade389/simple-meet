@@ -69,7 +69,7 @@ const Pricing = () => {
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="flex items-center gap-4">
                     <Link to="/">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" aria-label="Torna alla home">
                             <ArrowLeft className="w-6 h-6" />
                         </Button>
                     </Link>

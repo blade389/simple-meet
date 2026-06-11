@@ -69,7 +69,7 @@ const Features = () => {
             <div className="max-w-6xl mx-auto space-y-12">
                 <div className="flex items-center gap-4">
                     <Link to="/">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" aria-label="Torna alla home">
                             <ArrowLeft className="w-6 h-6" />
                         </Button>
                     </Link>
