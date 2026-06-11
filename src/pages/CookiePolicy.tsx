@@ -12,7 +12,7 @@ const CookiePolicy = () => {
     return (
         <>
         <SEOHead
-            title={`${t('common.cookiePolicy')} | Matchly`}
+            title={`${t('common.cookiePolicy')} | FlashMatch`}
             description={t('legal.cookie.seoDescription')}
             canonicalPath="/cookie-policy"
             keywords={t('legal.cookie.seoKeywords')}

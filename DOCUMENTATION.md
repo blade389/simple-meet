@@ -1,4 +1,4 @@
-# Matchly - Documentazione Completa
+# FlashMatch - Documentazione Completa
 
 ## Indice
 1. [Panoramica](#panoramica)
@@ -21,7 +21,7 @@
 
 ## Panoramica
 
-Matchly è una piattaforma di incontri che permette agli utenti di connettersi, chattare e organizzare appuntamenti. Il sistema include verifica dell'identità, recensioni, profili premium e un sistema di moderazione amministrativa.
+FlashMatch è una piattaforma di incontri che permette agli utenti di connettersi, chattare e organizzare appuntamenti. Il sistema include verifica dell'identità, recensioni, profili premium e un sistema di moderazione amministrativa.
 
 ### Stack Tecnologico
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui

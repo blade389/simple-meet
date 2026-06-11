@@ -127,13 +127,13 @@ const Leaderboard = () => {
 
   return (
     <>
-      <SEOHead title="Classifica Referral | Matchly" description="Classifica dei migliori referrer con premi fino a 1000€!" canonicalPath="/leaderboard" />
+      <SEOHead title="Classifica Referral | FlashMatch" description="Classifica dei migliori referrer con premi fino a 1000€!" canonicalPath="/leaderboard" />
       <div className="min-h-screen bg-gradient-hero">
         <header className="border-b bg-background/80 backdrop-blur-lg">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Matchly</span>
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">FlashMatch</span>
             </Link>
             <div className="flex gap-2">
               {user && <Button variant="outline" asChild><Link to="/invite">{t('prelaunch.inviteFriends', 'Invita amici')}</Link></Button>}

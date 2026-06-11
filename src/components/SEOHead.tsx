@@ -10,7 +10,7 @@ interface SEOHeadProps {
   noindex?: boolean;
 }
 
-const BASE_URL = "https://matchly.online";
+const BASE_URL = "https://flashmatch.online";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.jpg`;
 
 export const SEOHead = ({
@@ -22,7 +22,7 @@ export const SEOHead = ({
   keywords,
   noindex = false,
 }: SEOHeadProps) => {
-  const fullTitle = title.includes("Matchly") ? title : `${title} | Matchly`;
+  const fullTitle = title.includes("FlashMatch") ? title : `${title} | FlashMatch`;
   const canonicalUrl = `${BASE_URL}${canonicalPath}`;
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const SEOHead = ({
     updateMetaTag("og:type", ogType, true);
     updateMetaTag("og:url", canonicalUrl, true);
     updateMetaTag("og:image", ogImage, true);
-    updateMetaTag("og:site_name", "Matchly", true);
+    updateMetaTag("og:site_name", "FlashMatch", true);
     updateMetaTag("og:locale", "it_IT", true);
 
     // Update Twitter Card tags

@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
     return (
         <>
         <SEOHead
-            title={`${t('common.privacyPolicy')} | Matchly`}
+            title={`${t('common.privacyPolicy')} | FlashMatch`}
             description={t('legal.privacy.seoDescription')}
             canonicalPath="/privacy-policy"
             keywords={t('legal.privacy.seoKeywords')}

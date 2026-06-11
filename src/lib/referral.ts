@@ -1,5 +1,5 @@
-const REF_KEY = 'matchly_ref';
-const REF_EXPIRY_KEY = 'matchly_ref_expiry';
+const REF_KEY = 'flashmatch_ref';
+const REF_EXPIRY_KEY = 'flashmatch_ref_expiry';
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
 export const saveReferralCode = (code: string) => {

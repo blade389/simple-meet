@@ -19,10 +19,10 @@ const LandingInfluencer = () => {
   return (
     <>
       <SEOHead
-        title={t('influencer.seoTitle', 'Matchly per Influencer | Premium Gratuito a Vita')}
-        description={t('influencer.seoDescription', "Sei un'influencer? Ottieni lo status Premium gratuito a vita su Matchly. Imposta le tue tariffe, accetta o rifiuta richieste, guadagna dai tuoi appuntamenti.")}
+        title={t('influencer.seoTitle', 'FlashMatch per Influencer | Premium Gratuito a Vita')}
+        description={t('influencer.seoDescription', "Sei un'influencer? Ottieni lo status Premium gratuito a vita su FlashMatch. Imposta le tue tariffe, accetta o rifiuta richieste, guadagna dai tuoi appuntamenti.")}
         canonicalPath="/influencer"
-        keywords={t('influencer.seoKeywords', 'dating influencer, premium gratuito, guadagna con appuntamenti, Matchly influencer')}
+        keywords={t('influencer.seoKeywords', 'dating influencer, premium gratuito, guadagna con appuntamenti, FlashMatch influencer')}
       />
       <div className="min-h-screen">
         {/* Header */}
@@ -30,7 +30,7 @@ const LandingInfluencer = () => {
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
-              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Matchly</span>
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">FlashMatch</span>
             </Link>
             <div className="flex gap-2">
               <Link to="/donne"><Button variant="ghost" size="sm">{t('influencer.forWomen', 'Per Donne')}</Button></Link>
@@ -50,7 +50,7 @@ const LandingInfluencer = () => {
               <span className="bg-gradient-primary bg-clip-text text-transparent">{t('influencer.heroHighlight', 'Monetizzalo.')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              {t('influencer.heroDescription', 'Hai un grande seguito social? Su Matchly ottieni lo status Premium a vita, completamente gratis. Imposta le tue tariffe, scegli chi incontrare e mantieni il controllo totale.')}
+              {t('influencer.heroDescription', 'Hai un grande seguito social? Su FlashMatch ottieni lo status Premium a vita, completamente gratis. Imposta le tue tariffe, scegli chi incontrare e mantieni il controllo totale.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
@@ -104,7 +104,7 @@ const LandingInfluencer = () => {
               {[
                 { step: '1', icon: Shield, title: t('influencer.step1Title', 'Registrati'), desc: t('influencer.step1Desc', 'Crea il tuo profilo e verifica la tua identità. Tutto gratuito.') },
                 { step: '2', icon: Camera, title: t('influencer.step2Title', 'Invia Screenshot'), desc: t('influencer.step2Desc', 'Carica uno screen del tuo profilo social con i follower/like visibili.') },
-                { step: '3', icon: Sparkles, title: t('influencer.step3Title', 'Condividi il Link'), desc: t('influencer.step3Desc', 'Condividi il link di Matchly sul tuo profilo e inviaci lo screenshot.') },
+                { step: '3', icon: Sparkles, title: t('influencer.step3Title', 'Condividi il Link'), desc: t('influencer.step3Desc', 'Condividi il link di FlashMatch sul tuo profilo e inviaci lo screenshot.') },
                 { step: '4', icon: Crown, title: t('influencer.step4Title', 'Premium a Vita'), desc: t('influencer.step4Desc', 'Il nostro team verifica e attiva il tuo Premium. Per sempre.') },
               ].map(({ step, icon: Icon, title, desc }) => (
                 <Card key={step} className="p-6 text-center hover:shadow-glow transition-shadow relative">
@@ -198,7 +198,7 @@ const LandingInfluencer = () => {
 
         {/* Footer */}
         <footer className="py-8 px-4 border-t text-center text-sm text-muted-foreground">
-          <p>© 2025 Matchly. {t('common.allRightsReserved')}.</p>
+          <p>© 2025 FlashMatch. {t('common.allRightsReserved')}.</p>
           <div className="flex justify-center gap-4 mt-2">
             <Link to="/privacy-policy" className="hover:text-foreground">{t('common.privacyPolicy')}</Link>
             <Link to="/terms-of-service" className="hover:text-foreground">{t('common.termsOfService')}</Link>

@@ -140,13 +140,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Ciao',
       regards: 'Cordiali saluti',
-      team: 'Il Team Matchly',
+      team: 'Il Team FlashMatch',
       viewProfile: 'Visualizza Profilo',
       goToApp: 'Vai all\'App',
     },
     welcome: {
-      subject: 'Benvenuto su Matchly!',
-      title: 'Benvenuto su Matchly!',
+      subject: 'Benvenuto su FlashMatch!',
+      title: 'Benvenuto su FlashMatch!',
       intro: 'Grazie per esserti registrato! Siamo entusiasti di averti con noi.',
       steps: {
         verify: 'Completa la verifica del tuo profilo',
@@ -259,13 +259,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hello',
       regards: 'Best regards',
-      team: 'The Matchly Team',
+      team: 'The FlashMatch Team',
       viewProfile: 'View Profile',
       goToApp: 'Go to App',
     },
     welcome: {
-      subject: 'Welcome to Matchly!',
-      title: 'Welcome to Matchly!',
+      subject: 'Welcome to FlashMatch!',
+      title: 'Welcome to FlashMatch!',
       intro: 'Thank you for signing up! We\'re excited to have you with us.',
       steps: {
         verify: 'Complete your profile verification',
@@ -378,13 +378,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Bonjour',
       regards: 'Cordialement',
-      team: 'L\'équipe Matchly',
+      team: 'L\'équipe FlashMatch',
       viewProfile: 'Voir le Profil',
       goToApp: 'Aller à l\'App',
     },
     welcome: {
-      subject: 'Bienvenue sur Matchly!',
-      title: 'Bienvenue sur Matchly!',
+      subject: 'Bienvenue sur FlashMatch!',
+      title: 'Bienvenue sur FlashMatch!',
       intro: 'Merci de vous être inscrit! Nous sommes ravis de vous accueillir.',
       steps: {
         verify: 'Complétez la vérification de votre profil',
@@ -497,13 +497,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hallo',
       regards: 'Mit freundlichen Grüßen',
-      team: 'Das Matchly Team',
+      team: 'Das FlashMatch Team',
       viewProfile: 'Profil Ansehen',
       goToApp: 'Zur App',
     },
     welcome: {
-      subject: 'Willkommen bei Matchly!',
-      title: 'Willkommen bei Matchly!',
+      subject: 'Willkommen bei FlashMatch!',
+      title: 'Willkommen bei FlashMatch!',
       intro: 'Danke für deine Registrierung! Wir freuen uns, dich bei uns zu haben.',
       steps: {
         verify: 'Vervollständige deine Profilverifizierung',
@@ -616,13 +616,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hola',
       regards: 'Saludos cordiales',
-      team: 'El Equipo Matchly',
+      team: 'El Equipo FlashMatch',
       viewProfile: 'Ver Perfil',
       goToApp: 'Ir a la App',
     },
     welcome: {
-      subject: '¡Bienvenido a Matchly!',
-      title: '¡Bienvenido a Matchly!',
+      subject: '¡Bienvenido a FlashMatch!',
+      title: '¡Bienvenido a FlashMatch!',
       intro: '¡Gracias por registrarte! Estamos encantados de tenerte con nosotros.',
       steps: {
         verify: 'Completa la verificación de tu perfil',
@@ -735,13 +735,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Olá',
       regards: 'Atenciosamente',
-      team: 'A Equipe Matchly',
+      team: 'A Equipe FlashMatch',
       viewProfile: 'Ver Perfil',
       goToApp: 'Ir para o App',
     },
     welcome: {
-      subject: 'Bem-vindo ao Matchly!',
-      title: 'Bem-vindo ao Matchly!',
+      subject: 'Bem-vindo ao FlashMatch!',
+      title: 'Bem-vindo ao FlashMatch!',
       intro: 'Obrigado por se registrar! Estamos animados em tê-lo conosco.',
       steps: {
         verify: 'Complete a verificação do seu perfil',
@@ -854,13 +854,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Hallo',
       regards: 'Met vriendelijke groet',
-      team: 'Het Matchly Team',
+      team: 'Het FlashMatch Team',
       viewProfile: 'Profiel Bekijken',
       goToApp: 'Naar de App',
     },
     welcome: {
-      subject: 'Welkom bij Matchly!',
-      title: 'Welkom bij Matchly!',
+      subject: 'Welkom bij FlashMatch!',
+      title: 'Welkom bij FlashMatch!',
       intro: 'Bedankt voor je registratie! We zijn blij je te verwelkomen.',
       steps: {
         verify: 'Voltooi je profielverificatie',
@@ -973,13 +973,13 @@ export const translations: Record<SupportedLanguage, {
     common: {
       greeting: 'Cześć',
       regards: 'Z poważaniem',
-      team: 'Zespół Matchly',
+      team: 'Zespół FlashMatch',
       viewProfile: 'Zobacz Profil',
       goToApp: 'Przejdź do Aplikacji',
     },
     welcome: {
-      subject: 'Witaj w Matchly!',
-      title: 'Witaj w Matchly!',
+      subject: 'Witaj w FlashMatch!',
+      title: 'Witaj w FlashMatch!',
       intro: 'Dziękujemy za rejestrację! Cieszymy się, że jesteś z nami.',
       steps: {
         verify: 'Dokończ weryfikację profilu',
@@ -1102,7 +1102,7 @@ export function getEmailWrapper(content: string, t: typeof translations['it']): 
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Matchly</title>
+      <title>FlashMatch</title>
     </head>
     <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f4f4f5;">
       <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 40px 20px;">
@@ -1111,7 +1111,7 @@ export function getEmailWrapper(content: string, t: typeof translations['it']): 
             <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
               <tr>
                 <td style="background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); padding: 30px; text-align: center;">
-                  <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">Matchly</h1>
+                  <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">FlashMatch</h1>
                 </td>
               </tr>
               <tr>

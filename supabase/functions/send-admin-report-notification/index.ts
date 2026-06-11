@@ -81,10 +81,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending notification to admins:", adminEmails);
 
-    const subject = "Matchly - Nuova segnalazione da revisionare";
+    const subject = "FlashMatch - Nuova segnalazione da revisionare";
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h1 style="color: #e11d48; text-align: center;">Matchly</h1>
+        <h1 style="color: #e11d48; text-align: center;">FlashMatch</h1>
         <h2 style="color: #333;">⚠️ Nuova Segnalazione Utente</h2>
         <p>Un utente ha segnalato un comportamento scorretto dopo un appuntamento.</p>
         
@@ -111,7 +111,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "Matchly <noreply@matchly.online>",
+      from: "FlashMatch <noreply@flashmatch.online>",
       to: adminEmails,
       subject: subject,
       html: htmlContent,

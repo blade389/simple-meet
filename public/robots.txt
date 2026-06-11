@@ -1,4 +1,4 @@
-# Robots.txt per matchly.online
+# Robots.txt per flashmatch.online
 # Ottimizzato per SEO e crawler
 
 # Regole generali per tutti i crawler
@@ -43,7 +43,7 @@ User-agent: TelegramBot
 Allow: /
 
 # Sitemap
-Sitemap: https://matchly.online/sitemap.xml
+Sitemap: https://flashmatch.online/sitemap.xml
 
 # Host
-Host: https://matchly.online
+Host: https://flashmatch.online
