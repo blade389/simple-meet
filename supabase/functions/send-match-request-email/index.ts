@@ -71,7 +71,7 @@ const handler = async (req: Request): Promise<Response> => {
         ${isPremium ? 'Hai 48 ore per rispondere.' : 'Hai 48 ore per accettare o rifiutare.'}
       </p>
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://flashmatch.online/${isPremium ? 'premium-requests' : 'dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        <a href="https://flashmatch.org/${isPremium ? 'premium-requests' : 'dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f97316 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
           ${t.matchRequest.cta}
         </a>
       </div>
@@ -88,7 +88,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
-        from: "FlashMatch <noreply@flashmatch.online>",
+        from: "FlashMatch <noreply@flashmatch.org>",
         to: [user.email],
         subject: emailSubject,
         html,
@@ -113,8 +113,8 @@ const handler = async (req: Request): Promise<Response> => {
         const notificationTitle = isPremium ? t.matchRequest.premiumTitle : t.matchRequest.title;
         const notificationContent = `${senderName} ${isPremium ? t.matchRequest.premiumNotification : t.matchRequest.notification}`;
         const notificationUrl = isPremium 
-          ? "https://flashmatch.online/premium-requests"
-          : "https://flashmatch.online/dashboard";
+          ? "https://flashmatch.org/premium-requests"
+          : "https://flashmatch.org/dashboard";
 
         const notificationPayload = {
           app_id: oneSignalAppId,

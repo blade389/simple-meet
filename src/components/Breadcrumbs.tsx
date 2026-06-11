@@ -30,7 +30,7 @@ const pageNames: Record<string, string> = {
   "admin": "Admin",
 };
 
-const BASE_URL = "https://flashmatch.online";
+const BASE_URL = "https://flashmatch.org";
 
 export const Breadcrumbs = () => {
   const location = useLocation();

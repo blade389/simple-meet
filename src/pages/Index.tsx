@@ -277,7 +277,7 @@ const Index = () => {
                 </li>
 
                 <li>
-                  <a href="mailto:support@flashmatch.online" className="hover:text-foreground transition-colors">
+                  <a href="mailto:support@flashmatch.org" className="hover:text-foreground transition-colors">
                     {t("common.contactUs")}
                   </a>
                 </li>

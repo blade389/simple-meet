@@ -106,7 +106,7 @@ const handler = async (req: Request): Promise<Response> => {
             </ol>
           </div>
           <div style="text-align: center; margin: 30px 0;">
-            <a href="https://flashmatch.online/profile" style="display: inline-block; background: linear-gradient(135deg, ${isMale ? '#667eea 0%, #764ba2' : '#ec4899 0%, #f43f5e'} 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+            <a href="https://flashmatch.org/profile" style="display: inline-block; background: linear-gradient(135deg, ${isMale ? '#667eea 0%, #764ba2' : '#ec4899 0%, #f43f5e'} 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
               ${t.verificationReminder.cta}
             </a>
           </div>
@@ -115,7 +115,7 @@ const handler = async (req: Request): Promise<Response> => {
         console.log(`Sending verification reminder to ${email} (${profile.gender}) in ${lang}`);
 
         const emailResponse = await resend.emails.send({
-          from: "FlashMatch <noreply@flashmatch.online>",
+          from: "FlashMatch <noreply@flashmatch.org>",
           to: [email],
           subject,
           html,

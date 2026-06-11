@@ -75,7 +75,7 @@ const handler = async (req: Request): Promise<Response> => {
               <strong>${senderName}</strong> ${isPremium ? t.matchRequest.premiumMessage : t.requestExpiringReminder.message}
             </p>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="https://flashmatch.online${isPremium ? '/premium-requests' : '/dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+              <a href="https://flashmatch.org${isPremium ? '/premium-requests' : '/dashboard'}" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
                 ${t.requestExpiringReminder.cta}
               </a>
             </div>
@@ -89,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
               "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
             },
             body: JSON.stringify({
-              from: "FlashMatch <noreply@flashmatch.online>",
+              from: "FlashMatch <noreply@flashmatch.org>",
               to: [user.email],
               subject: emailSubject,
               html: emailHtml,
@@ -179,7 +179,7 @@ const handler = async (req: Request): Promise<Response> => {
               <h2 style="color: #333; margin-bottom: 20px;">${senderT.appointmentDeadlineReminder.title}</h2>
               <p style="color: #555; font-size: 16px; line-height: 1.6;">${senderT.appointmentDeadlineReminder.message}</p>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="https://flashmatch.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                <a href="https://flashmatch.org/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
                   ${senderT.appointmentDeadlineReminder.cta}
                 </a>
               </div>
@@ -192,7 +192,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.online>",
+                from: "FlashMatch <noreply@flashmatch.org>",
                 to: [senderUser.email],
                 subject: senderT.appointmentDeadlineReminder.subject,
                 html: emailHtml,
@@ -206,7 +206,7 @@ const handler = async (req: Request): Promise<Response> => {
               <h2 style="color: #333; margin-bottom: 20px;">${receiverT.appointmentDeadlineReminder.title}</h2>
               <p style="color: #555; font-size: 16px; line-height: 1.6;">${receiverT.appointmentDeadlineReminder.message}</p>
               <div style="text-align: center; margin: 30px 0;">
-                <a href="https://flashmatch.online/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+                <a href="https://flashmatch.org/appointments" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
                   ${receiverT.appointmentDeadlineReminder.cta}
                 </a>
               </div>
@@ -219,7 +219,7 @@ const handler = async (req: Request): Promise<Response> => {
                 "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
               },
               body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.online>",
+                from: "FlashMatch <noreply@flashmatch.org>",
                 to: [receiverUser.email],
                 subject: receiverT.appointmentDeadlineReminder.subject,
                 html: emailHtml,

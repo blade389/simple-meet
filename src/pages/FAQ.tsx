@@ -84,7 +84,7 @@ const FAQ = () => {
                 <div className="text-center mt-12">
                     <p className="text-muted-foreground mb-4">{t('faq.notFound')}</p>
                     <Button variant="outline" asChild>
-                        <a href="mailto:support@flashmatch.online">{t('faq.contactSupport')}</a>
+                        <a href="mailto:support@flashmatch.org">{t('faq.contactSupport')}</a>
                     </Button>
                 </div>
             </div>

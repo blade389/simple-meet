@@ -114,7 +114,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: "FlashMatch <noreply@flashmatch.online>",
+      from: "FlashMatch <noreply@flashmatch.org>",
       to: [userEmail],
       subject: subject,
       html: htmlContent,

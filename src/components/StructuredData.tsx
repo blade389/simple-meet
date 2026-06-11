@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const BASE_URL = "https://flashmatch.online";
+const BASE_URL = "https://flashmatch.org";
 
 interface OrganizationSchema {
   type: "Organization";
@@ -35,7 +35,7 @@ const generateOrganizationSchema = () => ({
   "url": BASE_URL,
   "logo": `${BASE_URL}/og-image.jpg`,
   "description": "FlashMatch è l'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri con sistema gettoni.",
-  "email": "support@flashmatch.online",
+  "email": "support@flashmatch.org",
   "sameAs": [],
   "foundingDate": "2024",
   "slogan": "L'app di dating che mette le donne al comando"
