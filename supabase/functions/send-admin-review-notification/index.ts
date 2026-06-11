@@ -97,7 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p>Il tempo per fissare un appuntamento è scaduto senza che sia stato programmato un incontro. È necessaria una revisione per decidere l'azione da intraprendere.</p>
         
         <div style="text-align: center; margin-top: 30px;">
-          <a href="https://tdkovomoosffywhajhkj.lovableproject.com/admin/conversation-reviews" 
+          <a href="https://flashmatch.org/admin/conversation-reviews" 
              style="display: inline-block; background-color: #e11d48; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
             Vai alle Revisioni
           </a>
