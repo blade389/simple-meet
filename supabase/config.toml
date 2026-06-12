@@ -83,3 +83,6 @@ verify_jwt = false
 
 [functions.seed-demo-profiles]
 verify_jwt = false
+
+[functions.process-email-queue]
+verify_jwt = true
