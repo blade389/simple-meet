@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -124,22 +125,15 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `, femaleT);
 
-            const emailResponse = await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [femaleUser.email],
-                subject: `⏰ ${femaleT.reviewReminder.subject}`,
-                html: emailHtml,
-              }),
+            const emailResponse = await sendAppEmail(supabase, {
+              to: femaleUser.email,
+              subject: `⏰ ${femaleT.reviewReminder.subject}`,
+              html: emailHtml,
+              label: "review-reminder",
+              idempotencyKey: `review-reminder-${appointment.id}-f`,
             });
-
-            if (!emailResponse.ok) {
-              console.error(`Failed to send review reminder to female user:`, await emailResponse.text());
+            if (!emailResponse.success && emailResponse.reason !== "suppressed") {
+              console.error(`Failed to send review reminder to female user:`, emailResponse.reason);
             } else {
               console.log(`Review reminder sent to female user for appointment ${appointment.id} in ${femaleLang}`);
             }
@@ -174,22 +168,15 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `, maleT);
 
-            const emailResponse = await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [maleUser.email],
-                subject: `⏰ ${maleT.reviewReminder.subject}`,
-                html: emailHtml,
-              }),
+            const emailResponse = await sendAppEmail(supabase, {
+              to: maleUser.email,
+              subject: `⏰ ${maleT.reviewReminder.subject}`,
+              html: emailHtml,
+              label: "review-reminder",
+              idempotencyKey: `review-reminder-${appointment.id}-m`,
             });
-
-            if (!emailResponse.ok) {
-              console.error(`Failed to send review reminder to male user:`, await emailResponse.text());
+            if (!emailResponse.success && emailResponse.reason !== "suppressed") {
+              console.error(`Failed to send review reminder to male user:`, emailResponse.reason);
             } else {
               console.log(`Review reminder sent to male user for appointment ${appointment.id} in ${maleLang}`);
             }

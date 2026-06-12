@@ -1,39 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
-
-async function sendEmail(to: string, subject: string, html: string): Promise<void> {
-  const resendApiKey = Deno.env.get("RESEND_API_KEY");
-  if (!resendApiKey) {
-    console.log("RESEND_API_KEY not configured, skipping email");
-    return;
-  }
-
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${resendApiKey}`,
-    },
-    body: JSON.stringify({
-      from: "Match App <noreply@flashmatch.org>",
-      to: [to],
-      subject,
-      html,
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`Failed to send email: ${response.status} - ${errorText}`);
-  } else {
-    console.log(`Email sent successfully to ${to}`);
-  }
-}
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -138,10 +110,12 @@ const handler = async (req: Request): Promise<Response> => {
         if (userError || !receiverUser?.user?.email) {
           console.error(`Could not get email for user ${request.receiver_id}:`, userError);
         } else {
-          await sendEmail(
-            receiverUser.user.email,
-            "❌ Richiesta scaduta - 1 gettone scalato",
-            `
+          await sendAppEmail(supabase, {
+            to: receiverUser.user.email,
+            subject: "❌ Richiesta scaduta - 1 gettone scalato",
+            label: "request-expired-deduct",
+            idempotencyKey: `req-expired-${request.id}`,
+            html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                 <h2 style="color: #e53e3e;">Richiesta scaduta</h2>
                 <p>Ciao,</p>
@@ -151,8 +125,8 @@ const handler = async (req: Request): Promise<Response> => {
                 <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
                 <p style="color: #666; font-size: 12px;">Match App</p>
               </div>
-            `
-          );
+            `,
+          });
         }
       } catch (emailError) {
         console.error(`Failed to send email to receiver ${request.receiver_id}:`, emailError);
@@ -208,10 +182,12 @@ const handler = async (req: Request): Promise<Response> => {
         if (userError || !senderUser?.user?.email) {
           console.error(`Could not get email for user ${request.sender_id}:`, userError);
         } else {
-          await sendEmail(
-            senderUser.user.email,
-            "❌ Richiesta premium scaduta - Gettone rimborsato",
-            `
+          await sendAppEmail(supabase, {
+            to: senderUser.user.email,
+            subject: "❌ Richiesta premium scaduta - Gettone rimborsato",
+            label: "request-expired-refund",
+            idempotencyKey: `req-expired-premium-${request.id}`,
+            html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                 <h2 style="color: #e53e3e;">Richiesta premium scaduta</h2>
                 <p>Ciao,</p>
@@ -221,8 +197,8 @@ const handler = async (req: Request): Promise<Response> => {
                 <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
                 <p style="color: #666; font-size: 12px;">Match App</p>
               </div>
-            `
-          );
+            `,
+          });
         }
       } catch (emailError) {
         console.error(`Failed to send email to sender ${request.sender_id}:`, emailError);

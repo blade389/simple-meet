@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -95,18 +96,12 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `;
 
-            await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [femaleUser.email],
-                subject: `⏰ ${femaleT.appointmentReminder.subject}`,
-                html: getEmailWrapper(content, femaleT),
-              }),
+            await sendAppEmail(supabase, {
+              to: femaleUser.email,
+              subject: `⏰ ${femaleT.appointmentReminder.subject}`,
+              html: getEmailWrapper(content, femaleT),
+              label: "appointment-reminder",
+              idempotencyKey: `appt-reminder-${appointment.id}-f`,
             });
           }
 
@@ -126,18 +121,12 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `;
 
-            await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [maleUser.email],
-                subject: `⏰ ${maleT.appointmentReminder.subject}`,
-                html: getEmailWrapper(content, maleT),
-              }),
+            await sendAppEmail(supabase, {
+              to: maleUser.email,
+              subject: `⏰ ${maleT.appointmentReminder.subject}`,
+              html: getEmailWrapper(content, maleT),
+              label: "appointment-reminder",
+              idempotencyKey: `appt-reminder-${appointment.id}-m`,
             });
           }
 
