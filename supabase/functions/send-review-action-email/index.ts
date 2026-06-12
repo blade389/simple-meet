@@ -1,9 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -113,11 +111,12 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const emailResponse = await resend.emails.send({
-      from: "FlashMatch <noreply@flashmatch.org>",
-      to: [userEmail],
-      subject: subject,
+    const emailResponse = await sendAppEmail(supabase, {
+      to: userEmail,
+      subject,
       html: htmlContent,
+      label: `review-action-${action}`,
+      idempotencyKey: `review-action-${userId}-${action}`,
     });
 
     console.log("Email sent successfully:", emailResponse);

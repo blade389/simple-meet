@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -84,18 +85,11 @@ const handler = async (req: Request): Promise<Response> => {
       </div>
     `;
 
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-      },
-      body: JSON.stringify({
-        from: "FlashMatch <noreply@flashmatch.org>",
-        to: [senderUser.email],
-        subject: senderT.requestAccepted.subject,
-        html: getEmailWrapper(senderContent, senderT),
-      }),
+    await sendAppEmail(supabase, {
+      to: senderUser.email,
+      subject: senderT.requestAccepted.subject,
+      html: getEmailWrapper(senderContent, senderT),
+      label: "request-accepted-sender",
     });
 
     // Email to RECEIVER (who accepted)
@@ -114,18 +108,11 @@ const handler = async (req: Request): Promise<Response> => {
       </div>
     `;
 
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-      },
-      body: JSON.stringify({
-        from: "FlashMatch <noreply@flashmatch.org>",
-        to: [receiverUser.email],
-        subject: receiverT.requestAccepted.subject,
-        html: getEmailWrapper(receiverContent, receiverT),
-      }),
+    await sendAppEmail(supabase, {
+      to: receiverUser.email,
+      subject: receiverT.requestAccepted.subject,
+      html: getEmailWrapper(receiverContent, receiverT),
+      label: "request-accepted-receiver",
     });
 
     // Push notifications

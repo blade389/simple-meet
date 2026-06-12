@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -81,24 +82,17 @@ const handler = async (req: Request): Promise<Response> => {
             </div>
           `, t);
 
-          // Send reminder email
-          const resendResponse = await fetch("https://api.resend.com/emails", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-            },
-            body: JSON.stringify({
-              from: "FlashMatch <noreply@flashmatch.org>",
-              to: [user.email],
-              subject: emailSubject,
-              html: emailHtml,
-            }),
+          // Send reminder email via Lovable Emails
+          const sendResult = await sendAppEmail(supabase, {
+            to: user.email,
+            subject: emailSubject,
+            html: emailHtml,
+            label: isPremium ? "request-expiring-premium" : "request-expiring",
+            idempotencyKey: `req-expiring-${request.id}`,
           });
 
-          if (!resendResponse.ok) {
-            const error = await resendResponse.text();
-            console.error(`Failed to send reminder for request ${request.id}:`, error);
+          if (!sendResult.success && sendResult.reason !== "suppressed") {
+            console.error(`Failed to send reminder for request ${request.id}:`, sendResult.reason);
           } else {
             console.log(`Reminder sent for request ${request.id} in language ${receiverLang}`);
             
@@ -185,18 +179,12 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `, senderT);
 
-            await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [senderUser.email],
-                subject: senderT.appointmentDeadlineReminder.subject,
-                html: emailHtml,
-              }),
+            await sendAppEmail(supabase, {
+              to: senderUser.email,
+              subject: senderT.appointmentDeadlineReminder.subject,
+              html: emailHtml,
+              label: "appointment-deadline-reminder",
+              idempotencyKey: `appt-deadline-${match.id}-s`,
             });
           }
 
@@ -212,18 +200,12 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `, receiverT);
 
-            await fetch("https://api.resend.com/emails", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-              },
-              body: JSON.stringify({
-                from: "FlashMatch <noreply@flashmatch.org>",
-                to: [receiverUser.email],
-                subject: receiverT.appointmentDeadlineReminder.subject,
-                html: emailHtml,
-              }),
+            await sendAppEmail(supabase, {
+              to: receiverUser.email,
+              subject: receiverT.appointmentDeadlineReminder.subject,
+              html: emailHtml,
+              label: "appointment-deadline-reminder",
+              idempotencyKey: `appt-deadline-${match.id}-r`,
             });
           }
 

@@ -1,9 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
 import { translations, SupportedLanguage, getEmailWrapper } from "../_shared/translations.ts";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -114,11 +112,12 @@ const handler = async (req: Request): Promise<Response> => {
 
         console.log(`Sending verification reminder to ${email} (${profile.gender}) in ${lang}`);
 
-        const emailResponse = await resend.emails.send({
-          from: "FlashMatch <noreply@flashmatch.org>",
-          to: [email],
+        const emailResponse = await sendAppEmail(supabase, {
+          to: email,
           subject,
           html,
+          label: "verification-reminder",
+          idempotencyKey: `verification-reminder-${profile.id}`,
         });
 
         console.log(`Email sent to ${email}:`, emailResponse);

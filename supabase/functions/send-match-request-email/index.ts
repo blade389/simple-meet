@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.75.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { getTranslation, getEmailWrapper } from "../_shared/translations.ts";
+import { sendAppEmail } from "../_shared/sendEmail.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -80,29 +81,19 @@ const handler = async (req: Request): Promise<Response> => {
     const emailSubject = isPremium ? t.matchRequest.premiumSubject : t.matchRequest.subject;
     const html = getEmailWrapper(emailContent, t);
 
-    // Send email using Resend API
-    const resendResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-      },
-      body: JSON.stringify({
-        from: "FlashMatch <noreply@flashmatch.org>",
-        to: [user.email],
-        subject: emailSubject,
-        html,
-      }),
+    // Send email via Lovable Emails queue
+    const emailResult = await sendAppEmail(supabase, {
+      to: user.email,
+      subject: emailSubject,
+      html,
+      label: isPremium ? "match-request-premium" : "match-request",
     });
 
-    if (!resendResponse.ok) {
-      const error = await resendResponse.text();
-      console.error("Resend API error:", error);
-      throw new Error(`Failed to send email: ${error}`);
+    if (!emailResult.success && emailResult.reason !== "suppressed") {
+      throw new Error(`Failed to send email: ${emailResult.reason}`);
     }
 
-    const emailResult = await resendResponse.json();
-    console.log("Email sent successfully:", emailResult);
+    console.log("Email enqueued successfully:", emailResult);
 
     // Send push notification
     const oneSignalAppId = Deno.env.get("ONESIGNAL_APP_ID");
