@@ -23,6 +23,26 @@ const LandingDonne = () => {
         description={t('landingWomen.seoDescription', 'Su FlashMatch le donne comandano. Scegli chi incontrare, dove e quando. Completamente gratuito. Upgrade premium per guadagnare.')}
         canonicalPath="/donne"
         keywords={t('landingWomen.seoKeywords', 'dating donne, app incontri donne gratuita, FlashMatch donne')}
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://flashmatch.org/' },
+              { '@type': 'ListItem', position: 2, name: 'Per Donne', item: 'https://flashmatch.org/donne' },
+            ],
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'FlashMatch per Donne',
+            provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
+            areaServed: 'IT',
+            description:
+              'App di dating gratuita per donne: scegli chi incontrare, dove e quando. Profili maschili verificati, incontri sicuri.',
+            url: 'https://flashmatch.org/donne',
+          },
+        ]}
       />
       <div className="min-h-screen">
         {/* Header */}

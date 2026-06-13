@@ -23,6 +23,26 @@ const LandingInfluencer = () => {
         description={t('influencer.seoDescription', "Sei un'influencer? Ottieni lo status Premium gratuito a vita su FlashMatch. Imposta le tue tariffe, accetta o rifiuta richieste, guadagna dai tuoi appuntamenti.")}
         canonicalPath="/influencer"
         keywords={t('influencer.seoKeywords', 'dating influencer, premium gratuito, guadagna con appuntamenti, FlashMatch influencer')}
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://flashmatch.org/' },
+              { '@type': 'ListItem', position: 2, name: 'Per Influencer', item: 'https://flashmatch.org/influencer' },
+            ],
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'FlashMatch Premium per Influencer',
+            provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
+            areaServed: 'IT',
+            description:
+              'Status Premium gratuito a vita per influencer Instagram e OnlyFans verificati. Imposta tariffe e monetizza gli appuntamenti.',
+            url: 'https://flashmatch.org/influencer',
+          },
+        ]}
       />
       <div className="min-h-screen">
         {/* Header */}

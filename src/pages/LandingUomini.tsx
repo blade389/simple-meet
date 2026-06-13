@@ -24,6 +24,26 @@ const LandingUomini = () => {
         description={t('landingMen.seoDescription', 'Registrati gratuitamente su FlashMatch. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali.')}
         canonicalPath="/uomini"
         keywords={t('landingMen.seoKeywords', 'dating uomini, app incontri gratuita uomini, FlashMatch uomini')}
+        structuredData={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://flashmatch.org/' },
+              { '@type': 'ListItem', position: 2, name: 'Per Uomini', item: 'https://flashmatch.org/uomini' },
+            ],
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'FlashMatch per Uomini',
+            provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
+            areaServed: 'IT',
+            description:
+              'App di dating dove gli uomini ricevono richieste da donne verificate. Registrazione gratuita, paghi solo se rifiuti.',
+            url: 'https://flashmatch.org/uomini',
+          },
+        ]}
       />
       <div className="min-h-screen">
         {/* Header */}
