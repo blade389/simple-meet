@@ -8,6 +8,7 @@ interface SEOHeadProps {
   ogType?: "website" | "article";
   keywords?: string;
   noindex?: boolean;
+  structuredData?: object | object[];
 }
 
 const BASE_URL = "https://flashmatch.org";
@@ -21,6 +22,7 @@ export const SEOHead = ({
   ogType = "website",
   keywords,
   noindex = false,
+  structuredData,
 }: SEOHeadProps) => {
   const fullTitle = title.includes("FlashMatch") ? title : `${title} | FlashMatch`;
   const canonicalUrl = `${BASE_URL}${canonicalPath}`;
@@ -87,11 +89,30 @@ export const SEOHead = ({
     // Update canonical URL
     updateLinkTag("canonical", canonicalUrl);
 
+    // Inject JSON-LD structured data (managed via data-seohead attribute)
+    const existing = document.querySelectorAll(
+      'script[type="application/ld+json"][data-seohead="true"]'
+    );
+    existing.forEach((n) => n.parentNode?.removeChild(n));
+    if (structuredData) {
+      const arr = Array.isArray(structuredData) ? structuredData : [structuredData];
+      arr.forEach((obj) => {
+        const s = document.createElement("script");
+        s.type = "application/ld+json";
+        s.setAttribute("data-seohead", "true");
+        s.text = JSON.stringify(obj);
+        document.head.appendChild(s);
+      });
+    }
+
     // Cleanup function to reset title on unmount (optional)
     return () => {
-      // We don't reset as other pages will set their own
+      const toClean = document.querySelectorAll(
+        'script[type="application/ld+json"][data-seohead="true"]'
+      );
+      toClean.forEach((n) => n.parentNode?.removeChild(n));
     };
-  }, [fullTitle, description, canonicalUrl, ogImage, ogType, keywords, noindex]);
+  }, [fullTitle, description, canonicalUrl, ogImage, ogType, keywords, noindex, structuredData]);
 
   return null;
 };
