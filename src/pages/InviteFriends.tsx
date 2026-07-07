@@ -69,7 +69,7 @@ const InviteFriends = () => {
       try {
         await navigator.share({
           title: 'FlashMatch - Unisciti a me!',
-          text: t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 1 giugno 2026! Usa il mio link:'),
+          text: t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 10 luglio 2026! Usa il mio link:'),
           url: referralLink,
         });
       } catch {}
@@ -80,7 +80,7 @@ const InviteFriends = () => {
 
   const shareWhatsApp = () => {
     const text = encodeURIComponent(
-      t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 1 giugno 2026! Usa il mio link:') + ' ' + referralLink
+      t('invite.shareText', 'Registrati su FlashMatch e preparati al lancio del 10 luglio 2026! Usa il mio link:') + ' ' + referralLink
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
