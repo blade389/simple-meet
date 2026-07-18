@@ -89,7 +89,10 @@ const Auth = () => {
         options: {
           emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
-            full_name: validated.name
+            full_name: validated.name,
+            gender: validated.gender,
+            birth_date: validated.birthDate,
+            preferred_language: i18n.language?.substring(0, 2) || 'it'
           }
         }
       });
@@ -100,39 +103,8 @@ const Auth = () => {
       // Get current language for user preferences
       const currentLanguage = i18n.language?.substring(0, 2) || 'it';
 
-      // Create profile - set default age preferences for males
-      const profileData: any = {
-        id: authData.user.id,
-        full_name: validated.name,
-        gender: validated.gender,
-        birth_date: validated.birthDate,
-        preferred_language: currentLanguage
-      };
-
-      // Males get default locked age preferences
-      if (validated.gender === 'male') {
-        profileData.min_age_preference = 18;
-        profileData.max_age_preference = 100;
-        profileData.age_preferences_unlocked = false;
-      }
-
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert(profileData);
-
-      if (profileError) throw profileError;
-
-      // If male, create token record with 1 free token
-      if (validated.gender === 'male') {
-        const { error: tokenError } = await supabase
-          .from('tokens')
-          .insert({
-            user_id: authData.user.id,
-            amount: 1
-          });
-
-        if (tokenError) throw tokenError;
-      }
+      // Profile and initial tokens are created automatically by the
+      // handle_new_user() database trigger using the metadata above.
 
       // Send welcome email with user's language
       try {
