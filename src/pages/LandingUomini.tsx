@@ -118,7 +118,7 @@ const LandingUomini = () => {
                 t('landingMen.point1', 'Registrazione e profilo completamente gratuiti'),
                 t('landingMen.point2', 'Accettare appuntamenti non costa nulla'),
                 t('landingMen.point3', 'Paghi solo 1 gettone se rifiuti una richiesta'),
-                t('landingMen.point4', 'Tutte le donne sono verificate con documento'),
+                t('landingMen.point4', 'Tutti i profili maschili sono verificati con selfie'),
                 t('landingMen.point5', 'Sistema recensioni per massima trasparenza'),
                 t('landingMen.point6', 'Richieste Premium: invia tu richieste a profili premium (1 gettone)'),
               ].map((text, i) => (

@@ -115,7 +115,7 @@ const LandingDonne = () => {
             <div className="space-y-4">
               {[
                 t('landingWomen.point1', "Registrazione, profilo e uso dell'app 100% gratuiti"),
-                t('landingWomen.point2', 'Solo profili maschili verificati con documento'),
+                t('landingWomen.point2', 'Solo profili maschili verificati con selfie'),
                 t('landingWomen.point3', 'Tu scegli chi incontrare, dove e quando'),
                 t('landingWomen.point4', 'Puoi rifiutare qualsiasi richiesta, sempre'),
                 t('landingWomen.point5', 'Sistema recensioni per la massima trasparenza'),
