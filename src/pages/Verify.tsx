@@ -14,12 +14,23 @@ const Verify = () => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [verificationRequest, setVerificationRequest] = useState<any>(null);
+  const [gender, setGender] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
       loadVerificationRequest();
+      loadGender();
     }
   }, [user]);
+
+  const loadGender = async () => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('gender')
+      .eq('id', user?.id)
+      .maybeSingle();
+    setGender(data?.gender ?? null);
+  };
 
   const loadVerificationRequest = async () => {
     setLoading(true);
@@ -151,6 +162,21 @@ const Verify = () => {
         <h2 className="text-3xl font-bold mb-6">Verifica Identità</h2>
         
         <div className="max-w-2xl mx-auto space-y-6">
+          {gender === 'female' ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Verifica non necessaria</CardTitle>
+                <CardDescription>
+                  Per gli account donna non è richiesta la verifica del documento né l'approvazione delle foto.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild>
+                  <Link to="/dashboard">Torna alla Dashboard</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
           <Card>
             <CardHeader>
               <CardTitle>Stato Verifica</CardTitle>
@@ -210,6 +236,7 @@ const Verify = () => {
               )}
             </CardContent>
           </Card>
+          )}
         </div>
       </main>
     </div>
