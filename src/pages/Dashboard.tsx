@@ -65,11 +65,11 @@ const Dashboard = () => {
       // Check if user is verified
       const { data: myProfile } = await supabase
         .from('profiles')
-        .select('is_verified')
+        .select('is_verified, gender')
         .eq('id', user.id)
         .single();
 
-      if (myProfile?.is_verified !== 'verified') return;
+      if (myProfile?.gender !== 'female' && myProfile?.is_verified !== 'verified') return;
 
       // Check if already referred
       const { data: existingRef } = await supabase
@@ -497,7 +497,7 @@ const Dashboard = () => {
           </Card>
         )}
 
-        {profile?.is_verified !== 'verified' && (
+        {profile?.gender !== 'female' && profile?.is_verified !== 'verified' && (
           <Card className="p-6 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
             <div className="flex items-start gap-4">
               <Shield className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
