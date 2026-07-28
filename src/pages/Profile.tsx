@@ -180,8 +180,10 @@ const Profile = () => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    // Check if account is verified
-    if (profile?.is_verified !== 'verified') {
+    const isFemale = profile?.gender === 'female';
+
+    // Check if account is verified (not required for female accounts)
+    if (!isFemale && profile?.is_verified !== 'verified') {
       toast({
         title: t('profile.accountNotVerified'),
         description: t('profile.verifyAccountFirst'),
@@ -215,7 +217,7 @@ const Profile = () => {
           .insert({
             user_id: user?.id,
             photo_url: publicUrl,
-            status: 'pending',
+            status: isFemale ? 'verified' : 'pending',
             is_primary: isFirstPhoto
           });
       });
@@ -324,18 +326,18 @@ const Profile = () => {
                   accept="image/*"
                   multiple
                   onChange={handlePhotoUpload}
-                  disabled={uploading || profile?.is_verified !== 'verified'}
+                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
                 />
                 <Button
                   variant="outline"
                   onClick={() => document.getElementById('photo-upload')?.click()}
-                  disabled={uploading || profile?.is_verified !== 'verified'}
+                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
                   size="lg"
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   {uploading ? t('profile.uploading') : t('profile.uploadNewPhotos')}
                 </Button>
-                {profile?.is_verified !== 'verified' && (
+                {profile?.gender !== 'female' && profile?.is_verified !== 'verified' && (
                   <p className="text-xs text-muted-foreground text-center">
                     {t('profile.completeVerificationFirst')}
                   </p>
@@ -392,15 +394,17 @@ const Profile = () => {
                 </div>
               )}
 
-              <div className="text-center pt-4 border-t space-y-2">
-                <div>
-                  <p className="text-sm font-medium mb-1">{t('profile.accountVerification')}</p>
-                  <div className={`flex items-center gap-2 justify-center ${status.color}`}>
-                    <StatusIcon className="w-5 h-5" />
-                    <span className="text-sm font-medium">{status.text}</span>
+              {profile?.gender !== 'female' && (
+                <div className="text-center pt-4 border-t space-y-2">
+                  <div>
+                    <p className="text-sm font-medium mb-1">{t('profile.accountVerification')}</p>
+                    <div className={`flex items-center gap-2 justify-center ${status.color}`}>
+                      <StatusIcon className="w-5 h-5" />
+                      <span className="text-sm font-medium">{status.text}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </CardContent>
           </Card>
 
