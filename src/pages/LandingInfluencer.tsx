@@ -181,7 +181,7 @@ const LandingInfluencer = () => {
             <h2 className="text-2xl font-bold mb-8 text-center">{t('influencer.securityTitle', 'Sicurezza e Controllo Totale')}</h2>
             <div className="space-y-4">
               {[
-                t('influencer.security1', 'Solo profili maschili verificati con documento possono inviarti richieste'),
+                t('influencer.security1', 'Solo profili maschili verificati con selfie possono inviarti richieste'),
                 t('influencer.security2', 'Tu scegli chi incontrare, dove e quando — sempre'),
                 t('influencer.security3', 'Puoi rifiutare qualsiasi richiesta senza conseguenze'),
                 t('influencer.security4', 'Sistema di recensioni per la massima trasparenza'),
