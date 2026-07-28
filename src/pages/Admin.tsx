@@ -339,7 +339,7 @@ const Admin = () => {
   };
 
   const handleDelete = async (requestId: string, type: 'identity' | 'photo' = 'identity') => {
-    if (!confirm('Sei sicuro di voler nascondere questo documento dalla vista admin? L\'utente continuerà a vedere i propri dati.')) {
+    if (!confirm('Sei sicuro di voler nascondere questo file dalla vista admin? L\'utente continuerà a vedere i propri dati.')) {
       return;
     }
 
@@ -354,8 +354,8 @@ const Admin = () => {
       if (error) throw error;
 
       toast({
-        title: "Documento archiviato",
-        description: "Il documento è stato nascosto dalla vista admin"
+        title: "File archiviato",
+        description: "Il file è stato nascosto dalla vista admin"
       });
 
       if (type === 'identity') {
@@ -521,7 +521,7 @@ const Admin = () => {
                             console.error('Signed URL error:', error);
                             toast({
                               title: "Errore",
-                              description: "Impossibile caricare il documento",
+                              description: "Impossibile caricare il selfie",
                               variant: "destructive"
                             });
                             return;
@@ -530,7 +530,7 @@ const Admin = () => {
                         }}
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Visualizza Documento
+                        Visualizza Selfie
                       </Button>
                     </div>
 
@@ -586,7 +586,7 @@ const Admin = () => {
                             disabled={processingId !== null}
                             className="mt-2 w-full"
                           >
-                            Archivia Documento (mantieni verifica)
+                            Archivia Selfie (mantieni verifica)
                           </Button>
                         )}
                       </div>
