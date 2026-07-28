@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, FileText } from 'lucide-react';
+import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -73,7 +73,7 @@ const Verify = () => {
     setUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const filePath = `${user?.id}/document-${Date.now()}.${fileExt}`;
+      const filePath = `${user?.id}/selfie-${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('verification-docs')
@@ -95,7 +95,7 @@ const Verify = () => {
       if (insertError) throw insertError;
 
       toast({
-        title: "Documento caricato",
+        title: "Selfie caricato",
         description: "La tua richiesta di verifica è stata inviata"
       });
       loadVerificationRequest();
@@ -159,7 +159,7 @@ const Verify = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-6">Verifica Identità</h2>
+        <h2 className="text-3xl font-bold mb-6">Verifica Identità con selfie</h2>
         
         <div className="max-w-2xl mx-auto space-y-6">
           {gender === 'female' ? (
@@ -167,7 +167,7 @@ const Verify = () => {
               <CardHeader>
                 <CardTitle>Verifica non necessaria</CardTitle>
                 <CardDescription>
-                  Per gli account donna non è richiesta la verifica del documento né l'approvazione delle foto.
+                  Per gli account donna non è richiesta la verifica né l'approvazione delle foto.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -180,7 +180,7 @@ const Verify = () => {
           <Card>
             <CardHeader>
               <CardTitle>Stato Verifica</CardTitle>
-              <CardDescription>Verifica la tua identità per accedere a tutte le funzionalità</CardDescription>
+              <CardDescription>Invia un selfie per verificare la tua identità e accedere a tutte le funzionalità</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className={`flex items-center gap-3 p-4 rounded-lg bg-muted ${getStatusColor()}`}>
@@ -196,7 +196,7 @@ const Verify = () => {
               {verificationRequest?.status === 'rejected' && (
                 <Alert>
                   <AlertDescription>
-                    La tua richiesta è stata rifiutata. Puoi caricare un nuovo documento per una nuova verifica.
+                    La tua richiesta è stata rifiutata. Puoi caricare un nuovo selfie per una nuova verifica.
                   </AlertDescription>
                 </Alert>
               )}
@@ -204,16 +204,17 @@ const Verify = () => {
               {(!verificationRequest || verificationRequest.status === 'rejected') && (
                 <div className="space-y-4">
                   <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                    <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                    <h3 className="text-lg font-semibold mb-2">Carica un documento di identità</h3>
+                    <Camera className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                    <h3 className="text-lg font-semibold mb-2">Carica un selfie</h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Carta d'identità, patente o passaporto (max 5MB)
+                      Scatta un selfie con il volto ben visibile, senza occhiali da sole o cappello (max 5MB)
                     </p>
                     <input
                       type="file"
                       id="document-upload"
                       className="hidden"
-                      accept="image/*,.pdf"
+                      accept="image/*"
+                      capture="user"
                       onChange={handleDocumentUpload}
                       disabled={uploading}
                     />
@@ -222,14 +223,14 @@ const Verify = () => {
                       disabled={uploading}
                     >
                       <Upload className="w-4 h-4 mr-2" />
-                      {uploading ? 'Caricamento...' : 'Seleziona Documento'}
+                      {uploading ? 'Caricamento...' : 'Scatta o carica selfie'}
                     </Button>
                   </div>
 
                   <Alert>
                     <AlertDescription>
-                      <strong>Nota:</strong> Il tuo documento verrà verificato dal nostro team entro 24-48 ore. 
-                      Assicurati che sia leggibile e che i dati siano visibili.
+                      <strong>Nota:</strong> Il tuo selfie verrà verificato dal nostro team entro 24-48 ore.
+                      Assicurati che il volto sia nitido e ben illuminato.
                     </AlertDescription>
                   </Alert>
                 </div>
