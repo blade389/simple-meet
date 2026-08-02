@@ -375,6 +375,15 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
           </div>
         )}
 
+        {chatStatus === 'active' && (
+          <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+              <p className="text-xs text-destructive">{t('matchChat.noContactsWarning')}</p>
+            </div>
+          </div>
+        )}
+
       {appointment && (
           <div className="space-y-3">
             <AppointmentInfo
