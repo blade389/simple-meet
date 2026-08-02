@@ -8,6 +8,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isPremium: boolean;
+  isSubscriber: boolean;
   subscriptionEnd: string | null;
   isBlocked: boolean;
   checkPremiumStatus: () => Promise<void>;
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isPremium, setIsPremium] = useState(false);
+  const [isSubscriber, setIsSubscriber] = useState(false);
   const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
   const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
@@ -52,13 +54,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // First check directly from database for immediate response
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
-        .select('is_premium, subscription_status, subscription_end')
+        .select('is_premium, subscription_status, subscription_end, gender')
         .eq('id', user.id)
         .single();
 
       if (!profileError && profile) {
-        const isActive = profile.is_premium && profile.subscription_status === 'active';
-        setIsPremium(isActive);
+        const isActive = !!profile.is_premium && profile.subscription_status === 'active';
+        // Female accounts get all premium features for free.
+        // A paid subscription only adds the verified badge, featured placement
+        // and worldwide visibility.
+        setIsSubscriber(isActive);
+        setIsPremium(isActive || profile.gender === 'female');
         setSubscriptionEnd(profile.subscription_end);
         return;
       }
@@ -67,6 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.functions.invoke('check-premium-subscription');
       if (error) throw error;
 
+      setIsSubscriber(data.isPremium || false);
       setIsPremium(data.isPremium || false);
       setSubscriptionEnd(data.subscriptionEnd || null);
     } catch (error) {
@@ -141,7 +148,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isPremium, subscriptionEnd, isBlocked, checkPremiumStatus, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isPremium, isSubscriber, subscriptionEnd, isBlocked, checkPremiumStatus, signOut }}>
       {children}
     </AuthContext.Provider>
   );
