@@ -93,6 +93,7 @@ const RequestTimer = ({ createdAt, expiresAt, t }: { createdAt: string; expiresA
 const Browse = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
