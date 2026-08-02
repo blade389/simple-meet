@@ -164,10 +164,14 @@ const Browse = () => {
       if (error) throw error;
       setMyProfile(data);
 
+      // New model: men send (and pay for) appointment requests, women receive them.
       if (data.gender === 'female') {
-        loadNearbyProfiles(data);
-      } else if (data.gender === 'male') {
-        loadMatchRequests();
+        navigate('/premium-requests', { replace: true });
+        return;
+      }
+      if (data.gender === 'male') {
+        navigate('/premium-profiles', { replace: true });
+        return;
       }
     } catch (error: any) {
       toast({
