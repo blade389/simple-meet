@@ -41,6 +41,23 @@ interface Appointment {
   is_premium: boolean;
 }
 
+// Detect attempts to exchange contacts or move the date outside the platform
+const detectForbiddenContact = (text: string): string | null => {
+  const normalized = text
+    .toLowerCase()
+    .replace(/[\s._\-()]/g, ' ')
+    .replace(/zero/g, '0')
+    .replace(/\s+/g, ' ');
+
+  const digitsOnly = normalized.replace(/[^0-9]/g, '');
+  if (digitsOnly.length >= 8) return 'phone';
+  if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(text)) return 'email';
+  if (/(https?:\/\/|www\.|t\.me\/|wa\.me\/)/i.test(text)) return 'link';
+  if (/(whatsapp|whats app|telegram|instagram|\binsta\b|snapchat|\bsnap\b|tiktok|facebook|\bfb\b|messenger|onlyfans|\bskype\b|\bviber\b|signal)/i.test(normalized)) return 'social';
+  if (/@[a-z0-9._]{3,}/i.test(text)) return 'handle';
+  return null;
+};
+
 export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremium, premiumRate }: MatchChatProps) => {
   const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -214,6 +231,29 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
     setLoading(true);
     const messageToSend = newMessage.trim();
 
+    const violation = detectForbiddenContact(messageToSend);
+    if (violation) {
+      supabase
+        .from('chat_contact_violations')
+        .insert({
+          match_request_id: matchRequestId,
+          user_id: currentUserId,
+          message: messageToSend,
+          detected_type: violation,
+        })
+        .then(({ error }) => {
+          if (error) console.log('Violation log error (non-blocking):', error);
+        });
+
+      toast({
+        title: t('matchChat.contactBlockedTitle'),
+        description: t('matchChat.contactBlockedDesc'),
+        variant: 'destructive',
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('chat_messages')
@@ -332,6 +372,15 @@ export const MatchChat = ({ matchRequestId, otherUserName, otherUserId, isPremiu
             <p className="text-sm font-medium text-destructive">
               🚫 {t('matchChat.blocked')}
             </p>
+          </div>
+        )}
+
+        {chatStatus === 'active' && (
+          <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+              <p className="text-xs text-destructive">{t('matchChat.noContactsWarning')}</p>
+            </div>
           </div>
         )}
 

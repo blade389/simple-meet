@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Complete a verificação da sua conta para aceder aos perfis premium",
     "becomePremium": "Torne-se Premium",
     "new": "Novo!",
-    "becomePremiumDesc": "Aumente a sua visibilidade e defina as suas tarifas personalizadas",
-    "premiumAccountActive": "Conta Premium Ativa",
-    "managePremiumDesc": "Gerencie as suas tarifas e pedidos premium",
+    "becomePremiumDesc": "Todas as funções já são gratuitas: a subscrição acrescenta selo verificado, destaque e visibilidade mundial",
+    "premiumAccountActive": "A tua conta inclui todas as funções Premium",
+    "managePremiumDesc": "Gere as tuas tarifas e os pedidos recebidos",
     "manageRates": "Gerir Tarifas"
   },
   "howItWorks": {
@@ -455,7 +455,10 @@
     "sendMessage": "Enviar mensagem...",
     "sending": "Enviando...",
     "noMessages": "Ainda não há mensagens. Inicie a conversa!",
-    "loadingMessages": "Carregando mensagens..."
+    "loadingMessages": "Carregando mensagens...",
+    "contactBlockedTitle": "Mensagem bloqueada",
+    "contactBlockedDesc": "Não é permitido trocar números de telefone, emails, redes sociais ou links. O encontro deve ser organizado aqui no site. A tentativa foi comunicada aos administradores.",
+    "noContactsWarning": "Proibido trocar números, emails, redes sociais ou links: organiza o encontro aqui. As tentativas são comunicadas aos admins."
   },
   "profileDialog": {
     "verified": "Verificado",
@@ -524,7 +527,7 @@
   },
   "premiumSubscription": {
     "title": "Subscrição Premium",
-    "subtitle": "Torne-se um perfil premium e aumente a sua visibilidade",
+    "subtitle": "Obtenha o selo verificado, perfil em destaque e visibilidade mundial",
     "alreadyPremium": "Já é Premium!",
     "activeUntil": "A sua subscrição está ativa até {{date}}",
     "manage": "Gerir Subscrição",
@@ -533,10 +536,10 @@
     "yearly": "Anual",
     "yearlySave": "Anual - Poupe 39€",
     "perYear": "por ano",
-    "feature1": "Perfil visível na secção Premium",
-    "feature2": "Defina as suas tarifas personalizadas",
-    "feature3": "Receba pedidos de utilizadores verificados",
-    "feature4": "Emblema Premium no perfil",
+    "feature1": "Selo de perfil verificado",
+    "feature2": "Perfil em destaque nos resultados",
+    "feature3": "Visível em todo o mundo, sem limite de distância",
+    "feature4": "Prioridade nos pedidos de encontro",
     "allMonthlyFeatures": "Todos os benefícios do plano mensal",
     "savingsPerYear": "Poupança de 39€ por ano",
     "prioritySupport": "Suporte prioritário",
@@ -549,16 +552,16 @@
     "portalError": "Não foi possível abrir o portal de gestão.",
     "faq": "Perguntas Frequentes",
     "faq1Title": "Como funciona a subscrição Premium?",
-    "faq1Desc": "Com a subscrição Premium, o seu perfil torna-se visível na secção dedicada a utilizadores masculinos, que pagarão 1 ficha para lhe enviar um pedido de encontro.",
+    "faq1Desc": "Todas as funções já são gratuitas para as mulheres. A subscrição acrescenta o selo verificado, o destaque e a visibilidade mundial, mesmo além do raio de distância.",
     "faq2Title": "Como defino as minhas tarifas?",
     "faq2Desc": "Uma vez ativada a subscrição, poderá definir as suas tarifas a partir do seu perfil. Os utilizadores verão estas tarifas quando visitarem o seu perfil Premium.",
     "faq3Title": "Posso cancelar a qualquer momento?",
     "faq3Desc": "Sim, pode cancelar a sua subscrição a qualquer momento a partir do portal de gestão. Continuará a ter acesso Premium até ao final do período pago."
   },
   "premiumProfiles": {
-    "title": "Perfis Premium",
-    "subtitle": "Descubra os perfis premium disponíveis",
-    "noProfiles": "Nenhum perfil premium disponível no momento.",
+    "title": "Perfis",
+    "subtitle": "Descobre os perfis disponíveis",
+    "noProfiles": "Nenhum perfil disponível de momento.",
     "distanceNotAvailable": "Distância não disponível",
     "addedToFavorites": "Adicionado aos favoritos",
     "removedFromFavorites": "Removido dos favoritos",
@@ -568,7 +571,8 @@
     "insufficientTokensDesc": "Precisa de pelo menos 1 ficha para enviar um pedido premium.",
     "requestSent": "Pedido enviado!",
     "requestSentDesc": "O seu pedido premium foi enviado com sucesso. 1 ficha deduzida.",
-    "requestError": "Ocorreu um erro ao enviar o pedido."
+    "requestError": "Ocorreu um erro ao enviar o pedido.",
+    "verifiedBadge": "Verificada"
   },
   "premiumRates": {
     "title": "Gestão de Tarifas Premium",

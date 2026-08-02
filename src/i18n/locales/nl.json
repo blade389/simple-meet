@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Voltooi de verificatie van je account om toegang te krijgen tot premium profielen",
     "becomePremium": "Word Premium",
     "new": "Nieuw!",
-    "becomePremiumDesc": "Verhoog je zichtbaarheid en stel je aangepaste tarieven in",
-    "premiumAccountActive": "Premium Account Actief",
-    "managePremiumDesc": "Beheer je tarieven en premium verzoeken",
+    "becomePremiumDesc": "Alle functies zijn al gratis: met het abonnement krijg je een geverifieerd-badge, uitlichting en wereldwijde zichtbaarheid",
+    "premiumAccountActive": "Je account bevat alle Premium-functies",
+    "managePremiumDesc": "Beheer je tarieven en ontvangen verzoeken",
     "manageRates": "Tarieven Beheren"
   },
   "howItWorks": {
@@ -455,7 +455,10 @@
     "sendMessage": "Bericht verzenden...",
     "sending": "Verzenden...",
     "noMessages": "Nog geen berichten. Start het gesprek!",
-    "loadingMessages": "Berichten laden..."
+    "loadingMessages": "Berichten laden...",
+    "contactBlockedTitle": "Bericht geblokkeerd",
+    "contactBlockedDesc": "Telefoonnummers, e-mails, social media of links uitwisselen is niet toegestaan. De afspraak moet hier op de site geregeld worden. De poging is gemeld bij de beheerders.",
+    "noContactsWarning": "Nummers, e-mails, social media of links delen is verboden: regel de afspraak hier. Pogingen worden gemeld aan de beheerders."
   },
   "profileDialog": {
     "verified": "Geverifieerd",
@@ -524,7 +527,7 @@
   },
   "premiumSubscription": {
     "title": "Premium Abonnement",
-    "subtitle": "Word een premium profiel en vergroot je zichtbaarheid",
+    "subtitle": "Krijg de geverifieerd-badge, uitgelicht profiel en wereldwijde zichtbaarheid",
     "alreadyPremium": "Je bent al Premium!",
     "activeUntil": "Je abonnement is actief tot {{date}}",
     "manage": "Abonnement Beheren",
@@ -533,10 +536,10 @@
     "yearly": "Jaarlijks",
     "yearlySave": "Jaarlijks - Bespaar €39",
     "perYear": "per jaar",
-    "feature1": "Profiel zichtbaar in Premium sectie",
-    "feature2": "Stel je aangepaste tarieven in",
-    "feature3": "Ontvang verzoeken van geverifieerde gebruikers",
-    "feature4": "Premium badge op profiel",
+    "feature1": "Geverifieerd-badge op je profiel",
+    "feature2": "Uitgelicht profiel in de resultaten",
+    "feature3": "Wereldwijd zichtbaar, zonder afstandslimiet",
+    "feature4": "Voorrang bij afspraakverzoeken",
     "allMonthlyFeatures": "Alle voordelen van het maandplan",
     "savingsPerYear": "€39 per jaar besparen",
     "prioritySupport": "Prioriteit support",
@@ -549,16 +552,16 @@
     "portalError": "Kon beheerportaal niet openen.",
     "faq": "Veelgestelde Vragen",
     "faq1Title": "Hoe werkt het Premium abonnement?",
-    "faq1Desc": "Met het Premium abonnement wordt je profiel zichtbaar in de sectie voor mannelijke gebruikers, die 1 token betalen om je een afspraakverzoek te sturen.",
+    "faq1Desc": "Alle functies zijn al gratis voor vrouwen. Het abonnement voegt de geverifieerd-badge, uitlichting en wereldwijde zichtbaarheid toe, ook buiten de straal.",
     "faq2Title": "Hoe stel ik mijn tarieven in?",
     "faq2Desc": "Zodra het abonnement is geactiveerd, kun je je tarieven instellen vanuit je profiel. Gebruikers zien deze tarieven wanneer ze je Premium profiel bezoeken.",
     "faq3Title": "Kan ik op elk moment annuleren?",
     "faq3Desc": "Ja, je kunt je abonnement op elk moment annuleren via het beheerportaal. Je behoudt Premium toegang tot het einde van de betaalde periode."
   },
   "premiumProfiles": {
-    "title": "Premium Profielen",
-    "subtitle": "Ontdek beschikbare premium profielen",
-    "noProfiles": "Geen premium profielen beschikbaar op dit moment.",
+    "title": "Profielen",
+    "subtitle": "Ontdek de beschikbare profielen",
+    "noProfiles": "Momenteel geen profielen beschikbaar.",
     "distanceNotAvailable": "Afstand niet beschikbaar",
     "addedToFavorites": "Toegevoegd aan favorieten",
     "removedFromFavorites": "Verwijderd uit favorieten",
@@ -568,7 +571,8 @@
     "insufficientTokensDesc": "Je hebt minstens 1 token nodig om een premium verzoek te sturen.",
     "requestSent": "Verzoek verzonden!",
     "requestSentDesc": "Je premium verzoek is succesvol verzonden. 1 token afgetrokken.",
-    "requestError": "Er is een fout opgetreden bij het verzenden van het verzoek."
+    "requestError": "Er is een fout opgetreden bij het verzenden van het verzoek.",
+    "verifiedBadge": "Geverifieerd"
   },
   "premiumRates": {
     "title": "Premium Tarieven Beheer",

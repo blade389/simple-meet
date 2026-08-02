@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Ukończ weryfikację swojego konta, aby uzyskać dostęp do profili premium",
     "becomePremium": "Zostań Premium",
     "new": "Nowe!",
-    "becomePremiumDesc": "Zwiększ swoją widoczność i ustaw własne stawki",
-    "premiumAccountActive": "Konto Premium Aktywne",
-    "managePremiumDesc": "Zarządzaj swoimi stawkami i prośbami premium",
+    "becomePremiumDesc": "Wszystkie funkcje są już bezpłatne: subskrypcja dodaje odznakę weryfikacji, wyróżnienie i widoczność na całym świecie",
+    "premiumAccountActive": "Twoje konto zawiera wszystkie funkcje Premium",
+    "managePremiumDesc": "Zarządzaj swoimi stawkami i otrzymanymi prośbami",
     "manageRates": "Zarządzaj Stawkami"
   },
   "howItWorks": {
@@ -455,7 +455,10 @@
     "sendMessage": "Wyślij wiadomość...",
     "sending": "Wysyłanie...",
     "noMessages": "Brak wiadomości. Rozpocznij rozmowę!",
-    "loadingMessages": "Ładowanie wiadomości..."
+    "loadingMessages": "Ładowanie wiadomości...",
+    "contactBlockedTitle": "Wiadomość zablokowana",
+    "contactBlockedDesc": "Wymiana numerów telefonu, e-maili, social mediów lub linków jest zabroniona. Spotkanie należy ustalić tutaj, na stronie. Próba została zgłoszona administratorom.",
+    "noContactsWarning": "Zakaz podawania numerów, e-maili, social mediów i linków: spotkanie ustal tutaj. Próby są zgłaszane administratorom."
   },
   "profileDialog": {
     "verified": "Zweryfikowany",
@@ -524,7 +527,7 @@
   },
   "premiumSubscription": {
     "title": "Subskrypcja Premium",
-    "subtitle": "Zostań profilem premium i zwiększ swoją widoczność",
+    "subtitle": "Zdobądź odznakę zweryfikowanego profilu, wyróżnienie i widoczność na całym świecie",
     "alreadyPremium": "Jesteś już Premium!",
     "activeUntil": "Twoja subskrypcja jest aktywna do {{date}}",
     "manage": "Zarządzaj Subskrypcją",
@@ -533,10 +536,10 @@
     "yearly": "Rocznie",
     "yearlySave": "Rocznie - Oszczędź 39€",
     "perYear": "rocznie",
-    "feature1": "Profil widoczny w sekcji Premium",
-    "feature2": "Ustaw swoje niestandardowe stawki",
-    "feature3": "Otrzymuj prośby od zweryfikowanych użytkowników",
-    "feature4": "Odznaka Premium na profilu",
+    "feature1": "Odznaka zweryfikowanego profilu",
+    "feature2": "Wyróżniony profil w wynikach",
+    "feature3": "Widoczność na całym świecie, bez limitu odległości",
+    "feature4": "Priorytet w prośbach o spotkanie",
     "allMonthlyFeatures": "Wszystkie korzyści planu miesięcznego",
     "savingsPerYear": "Oszczędność 39€ rocznie",
     "prioritySupport": "Priorytetowe wsparcie",
@@ -549,16 +552,16 @@
     "portalError": "Nie udało się otworzyć portalu zarządzania.",
     "faq": "Często Zadawane Pytania",
     "faq1Title": "Jak działa subskrypcja Premium?",
-    "faq1Desc": "Z subskrypcją Premium Twój profil staje się widoczny w sekcji dedykowanej męskim użytkownikom, którzy zapłacą 1 żeton, aby wysłać Ci prośbę o spotkanie.",
+    "faq1Desc": "Wszystkie funkcje są już bezpłatne dla kobiet. Subskrypcja dodaje odznakę zweryfikowanego profilu, wyróżnienie i widoczność na całym świecie, także poza promieniem odległości.",
     "faq2Title": "Jak ustawić moje stawki?",
     "faq2Desc": "Po aktywacji subskrypcji możesz ustawić swoje stawki z poziomu swojego profilu. Użytkownicy zobaczą te stawki, gdy odwiedzą Twój profil Premium.",
     "faq3Title": "Czy mogę anulować w dowolnym momencie?",
     "faq3Desc": "Tak, możesz anulować swoją subskrypcję w dowolnym momencie z portalu zarządzania. Będziesz mieć dostęp Premium do końca opłaconego okresu."
   },
   "premiumProfiles": {
-    "title": "Profile Premium",
-    "subtitle": "Odkryj dostępne profile premium",
-    "noProfiles": "Brak dostępnych profili premium w tej chwili.",
+    "title": "Profile",
+    "subtitle": "Odkryj dostępne profile",
+    "noProfiles": "Obecnie brak dostępnych profili.",
     "distanceNotAvailable": "Odległość niedostępna",
     "addedToFavorites": "Dodano do ulubionych",
     "removedFromFavorites": "Usunięto z ulubionych",
@@ -568,7 +571,8 @@
     "insufficientTokensDesc": "Potrzebujesz co najmniej 1 żetonu, aby wysłać prośbę premium.",
     "requestSent": "Prośba wysłana!",
     "requestSentDesc": "Twoja prośba premium została pomyślnie wysłana. 1 żeton odjęty.",
-    "requestError": "Wystąpił błąd podczas wysyłania prośby."
+    "requestError": "Wystąpił błąd podczas wysyłania prośby.",
+    "verifiedBadge": "Zweryfikowana"
   },
   "premiumRates": {
     "title": "Zarządzanie Stawkami Premium",

@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Completa la verificación de tu cuenta para acceder a los perfiles premium",
     "becomePremium": "Hazte Premium",
     "new": "¡Nuevo!",
-    "becomePremiumDesc": "Aumenta tu visibilidad y establece tus tarifas personalizadas",
-    "premiumAccountActive": "Cuenta Premium Activa",
-    "managePremiumDesc": "Gestiona tus tarifas y solicitudes premium",
+    "becomePremiumDesc": "Todas las funciones ya son gratuitas: la suscripción añade insignia verificada, perfil destacado y visibilidad mundial",
+    "premiumAccountActive": "Tu cuenta incluye todas las funciones Premium",
+    "managePremiumDesc": "Gestiona tus tarifas y las solicitudes recibidas",
     "manageRates": "Gestionar Tarifas"
   },
   "howItWorks": {
@@ -455,7 +455,10 @@
     "sendMessage": "Enviar mensaje...",
     "sending": "Enviando...",
     "noMessages": "Aún no hay mensajes. ¡Inicia la conversación!",
-    "loadingMessages": "Cargando mensajes..."
+    "loadingMessages": "Cargando mensajes...",
+    "contactBlockedTitle": "Mensaje bloqueado",
+    "contactBlockedDesc": "No está permitido compartir números de teléfono, correos, redes sociales o enlaces. La cita debe organizarse aquí en el sitio. El intento ha sido notificado a los administradores.",
+    "noContactsWarning": "Prohibido compartir números, correos, redes o enlaces: organiza la cita aquí. Los intentos se notifican a los administradores."
   },
   "profileDialog": {
     "verified": "Verificado",
@@ -524,7 +527,7 @@
   },
   "premiumSubscription": {
     "title": "Suscripción Premium",
-    "subtitle": "Conviértete en un perfil premium y aumenta tu visibilidad",
+    "subtitle": "Consigue la insignia verificada, perfil destacado y visibilidad mundial",
     "alreadyPremium": "¡Ya eres Premium!",
     "activeUntil": "Tu suscripción está activa hasta el {{date}}",
     "manage": "Gestionar Suscripción",
@@ -533,10 +536,10 @@
     "yearly": "Anual",
     "yearlySave": "Anual - Ahorra 39€",
     "perYear": "al año",
-    "feature1": "Perfil visible en la sección Premium",
-    "feature2": "Establece tus tarifas personalizadas",
-    "feature3": "Recibe solicitudes de usuarios verificados",
-    "feature4": "Insignia Premium en el perfil",
+    "feature1": "Insignia de perfil verificado",
+    "feature2": "Perfil destacado en los resultados",
+    "feature3": "Visible en todo el mundo, sin límite de distancia",
+    "feature4": "Prioridad en las solicitudes de cita",
     "allMonthlyFeatures": "Todos los beneficios del plan mensual",
     "savingsPerYear": "Ahorro de 39€ al año",
     "prioritySupport": "Soporte prioritario",
@@ -549,16 +552,16 @@
     "portalError": "No se pudo abrir el portal de gestión.",
     "faq": "Preguntas Frecuentes",
     "faq1Title": "¿Cómo funciona la suscripción Premium?",
-    "faq1Desc": "Con la suscripción Premium, tu perfil se vuelve visible en la sección dedicada a usuarios masculinos, que pagarán 1 ficha para enviarte una solicitud de cita.",
+    "faq1Desc": "Todas las funciones ya son gratuitas para las mujeres. La suscripción añade la insignia verificada, el perfil destacado y la visibilidad mundial, incluso más allá del radio de distancia.",
     "faq2Title": "¿Cómo establezco mis tarifas?",
     "faq2Desc": "Una vez activada la suscripción, podrás establecer tus tarifas desde tu perfil. Los usuarios verán estas tarifas cuando visiten tu perfil Premium.",
     "faq3Title": "¿Puedo cancelar en cualquier momento?",
     "faq3Desc": "Sí, puedes cancelar tu suscripción en cualquier momento desde el portal de gestión. Continuarás teniendo acceso Premium hasta el final del período pagado."
   },
   "premiumProfiles": {
-    "title": "Perfiles Premium",
-    "subtitle": "Descubre los perfiles premium disponibles",
-    "noProfiles": "No hay perfiles premium disponibles en este momento.",
+    "title": "Perfiles",
+    "subtitle": "Descubre los perfiles disponibles",
+    "noProfiles": "No hay perfiles disponibles por ahora.",
     "distanceNotAvailable": "Distancia no disponible",
     "addedToFavorites": "Añadido a favoritos",
     "removedFromFavorites": "Eliminado de favoritos",
@@ -568,7 +571,8 @@
     "insufficientTokensDesc": "Necesitas al menos 1 ficha para enviar una solicitud premium.",
     "requestSent": "¡Solicitud enviada!",
     "requestSentDesc": "Tu solicitud premium ha sido enviada con éxito. 1 ficha descontada.",
-    "requestError": "Se produjo un error al enviar la solicitud."
+    "requestError": "Se produjo un error al enviar la solicitud.",
+    "verifiedBadge": "Verificada"
   },
   "premiumRates": {
     "title": "Gestión de Tarifas Premium",

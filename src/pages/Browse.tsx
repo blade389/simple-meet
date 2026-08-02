@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, ArrowLeft, MapPin, Calendar, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -93,6 +93,7 @@ const RequestTimer = ({ createdAt, expiresAt, t }: { createdAt: string; expiresA
 const Browse = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -164,10 +165,14 @@ const Browse = () => {
       if (error) throw error;
       setMyProfile(data);
 
+      // New model: men send (and pay for) appointment requests, women receive them.
       if (data.gender === 'female') {
-        loadNearbyProfiles(data);
-      } else if (data.gender === 'male') {
-        loadMatchRequests();
+        navigate('/premium-requests', { replace: true });
+        return;
+      }
+      if (data.gender === 'male') {
+        navigate('/premium-profiles', { replace: true });
+        return;
       }
     } catch (error: any) {
       toast({

@@ -18,10 +18,26 @@ interface Profile {
   bio: string | null;
   profile_photo_url: string | null;
   is_premium: boolean;
+  subscription_status?: string | null;
+  location_lat?: number | null;
+  location_lon?: number | null;
+  is_featured?: boolean;
   positive_reviews_count?: number;
   negative_reviews_count?: number;
   distance?: number;
 }
+
+const VISIBILITY_RADIUS_KM = 50;
+
+const distanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+};
 
 interface PremiumRate {
   id: string;
@@ -67,7 +83,6 @@ const PremiumProfiles = () => {
       return;
     }
     loadMyProfile();
-    loadProfiles();
     loadFavorites();
   }, [user, navigate]);
 
@@ -121,22 +136,42 @@ const PremiumProfiles = () => {
 
       if (error) throw error;
       setMyProfile(data);
+      loadProfiles(data);
     } catch (error) {
       console.error('Error loading profile:', error);
+      loadProfiles(null);
     }
   };
 
-  const loadProfiles = async () => {
+  const loadProfiles = async (viewer: any) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('gender', 'female')
-        .eq('is_premium', true)
         .eq('is_blocked', false);
 
       if (error) throw error;
-      setProfiles(data || []);
+
+      const list = (data || []).map((p: any) => {
+        const isSubscriber = !!p.is_premium && p.subscription_status === 'active';
+        const distance =
+          viewer?.location_lat != null &&
+          viewer?.location_lon != null &&
+          p.location_lat != null &&
+          p.location_lon != null
+            ? distanceKm(viewer.location_lat, viewer.location_lon, p.location_lat, p.location_lon)
+            : undefined;
+        return { ...p, distance, is_featured: isSubscriber };
+      })
+        // Subscribers are visible worldwide, everyone else only within the radius
+        .filter((p: any) => p.is_featured || (p.distance !== undefined && p.distance <= VISIBILITY_RADIUS_KM))
+        .sort((a: any, b: any) => {
+          if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
+          return (a.distance ?? Infinity) - (b.distance ?? Infinity);
+        });
+
+      setProfiles(list);
     } catch (error) {
       console.error('Error loading premium profiles:', error);
     } finally {
@@ -246,8 +281,7 @@ const PremiumProfiles = () => {
         description: t('premiumProfiles.requestSentDesc'),
       });
       setIsRequestPending(true);
-
-      loadProfiles();
+      loadProfiles(myProfile);
     } catch (error) {
       console.error('Error sending request:', error);
       toast({
@@ -295,7 +329,7 @@ const PremiumProfiles = () => {
             {profiles.map((profile) => (
               <Card
                 key={profile.id}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer border-2 border-yellow-500/20"
+                className={`overflow-hidden hover:shadow-lg transition-shadow cursor-pointer border-2 ${profile.is_featured ? 'border-yellow-500/60 shadow-md' : 'border-border'}`}
                 onClick={() => {
                   setSelectedProfile(profile);
                   setDialogOpen(true);
@@ -313,10 +347,12 @@ const PremiumProfiles = () => {
                       <span className="text-4xl text-muted-foreground">👤</span>
                     </div>
                   )}
-                  <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
-                    <Crown className="h-3 w-3 mr-1" />
-                    Premium
-                  </Badge>
+                  {profile.is_featured && (
+                    <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
+                      <Crown className="h-3 w-3 mr-1" />
+                      {t('premiumProfiles.verifiedBadge', 'Verificata')}
+                    </Badge>
+                  )}
                   <Button
                     variant="ghost"
                     size="icon"

@@ -27,7 +27,7 @@ interface TokenBalance {
 }
 const Dashboard = () => {
   const { t } = useTranslation();
-  const { user, signOut, isPremium } = useAuth();
+  const { user, signOut, isPremium, isSubscriber } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [tokens, setTokens] = useState<TokenBalance | null>(null);
   const [loading, setLoading] = useState(true);
@@ -608,7 +608,7 @@ const Dashboard = () => {
         </div>
 
         {/* Premium Section - Female Non-Premium */}
-        {profile?.gender === 'female' && !isPremium && (
+        {profile?.gender === 'female' && !isSubscriber && (
           <div className="space-y-4 mb-8">
             <Card className="p-6 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
               <Link to="/premium-subscription" className="block">
@@ -649,7 +649,7 @@ const Dashboard = () => {
         )}
 
         {/* Premium Section - Female Premium */}
-        {profile?.gender === 'female' && isPremium && (
+        {profile?.gender === 'female' && (
           <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
             <div className="flex items-center gap-4">
               <Crown className="w-12 h-12 text-yellow-500" />
