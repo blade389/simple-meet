@@ -297,9 +297,9 @@
     "premiumProfilesVerifyDesc": "Completa la verifica del tuo account per accedere ai profili premium",
     "becomePremium": "Diventa Premium",
     "new": "Nuovo!",
-    "becomePremiumDesc": "Aumenta la tua visibilità e imposta le tue tariffe personalizzate",
-    "premiumAccountActive": "Account Premium Attivo",
-    "managePremiumDesc": "Gestisci le tue tariffe e richieste premium",
+    "becomePremiumDesc": "Tutte le funzioni sono già gratuite: con l'abbonamento ottieni badge verificato, profilo in evidenza e visibilità mondiale",
+    "premiumAccountActive": "Il tuo account donna include tutte le funzioni Premium",
+    "managePremiumDesc": "Gestisci le tue tariffe e le richieste ricevute",
     "manageRates": "Gestisci Tariffe"
   },
   "howItWorks": {
@@ -496,7 +496,10 @@
     "error": "Errore",
     "sendError": "Non è stato possibile inviare il messaggio.",
     "reviewSent": "Recensione inviata",
-    "reviewSuccess": "La tua recensione è stata registrata con successo."
+    "reviewSuccess": "La tua recensione è stata registrata con successo.",
+    "contactBlockedTitle": "Messaggio bloccato",
+    "contactBlockedDesc": "Non è consentito scambiare numeri di telefono, email, social o link. L'appuntamento va organizzato qui sul sito. Il tentativo è stato segnalato agli amministratori.",
+    "noContactsWarning": "Vietato scambiare numeri, email, social o link: organizza l'appuntamento qui. I tentativi vengono segnalati agli admin."
   },
   "profileDialog": {
     "premium": "Premium",
@@ -572,7 +575,7 @@
   },
   "premiumSubscription": {
     "title": "Abbonamento Premium",
-    "subtitle": "Diventa un profilo premium e aumenta la tua visibilità",
+    "subtitle": "Ottieni il badge verificato, il profilo in evidenza e la visibilità in tutto il mondo",
     "alreadyPremium": "Sei già Premium!",
     "activeUntil": "Il tuo abbonamento è attivo fino al {{date}}",
     "manage": "Gestisci Abbonamento",
@@ -581,10 +584,10 @@
     "yearly": "Annuale",
     "yearlySave": "Annuale - Risparmia €39",
     "perYear": "all'anno",
-    "feature1": "Profilo visibile nella sezione Premium",
-    "feature2": "Imposta le tue tariffe personalizzate",
-    "feature3": "Ricevi richieste da utenti verificati",
-    "feature4": "Badge Premium sul profilo",
+    "feature1": "Badge di profilo verificato",
+    "feature2": "Profilo in evidenza nei risultati",
+    "feature3": "Visibile in tutto il mondo, senza limiti di distanza",
+    "feature4": "Priorità nelle richieste di appuntamento",
     "allMonthlyFeatures": "Tutti i vantaggi del piano mensile",
     "savingsPerYear": "Risparmio di €39 all'anno",
     "prioritySupport": "Supporto prioritario",
@@ -597,16 +600,16 @@
     "portalError": "Impossibile aprire il portale di gestione.",
     "faq": "Domande Frequenti",
     "faq1Title": "Come funziona l'abbonamento Premium?",
-    "faq1Desc": "Con l'abbonamento Premium, il tuo profilo diventa visibile nella sezione dedicata agli utenti maschili, che pagheranno 1 gettone per inviarti una richiesta di appuntamento.",
+    "faq1Desc": "Tutte le funzioni per le donne sono già gratuite. L'abbonamento aggiunge il badge verificato, il profilo in evidenza e la visibilità mondiale, anche oltre il raggio di distanza.",
     "faq2Title": "Come imposto le mie tariffe?",
     "faq2Desc": "Una volta attivato l'abbonamento, potrai impostare le tue tariffe dal tuo profilo. Gli utenti vedranno queste tariffe quando visiteranno il tuo profilo Premium.",
     "faq3Title": "Posso cancellare in qualsiasi momento?",
     "faq3Desc": "Sì, puoi cancellare il tuo abbonamento in qualsiasi momento dal portale di gestione. Continuerai ad avere accesso Premium fino alla fine del periodo pagato."
   },
   "premiumProfiles": {
-    "title": "Profili Premium",
-    "subtitle": "Scopri i profili premium disponibili",
-    "noProfiles": "Nessun profilo premium disponibile al momento.",
+    "title": "Profili",
+    "subtitle": "Scopri i profili disponibili",
+    "noProfiles": "Nessun profilo disponibile al momento.",
     "distanceNotAvailable": "Distanza non disponibile",
     "addedToFavorites": "Aggiunto ai preferiti",
     "removedFromFavorites": "Rimosso dai preferiti",
@@ -616,7 +619,8 @@
     "insufficientTokensDesc": "Hai bisogno di almeno 1 gettone per inviare una richiesta premium.",
     "requestSent": "Richiesta inviata!",
     "requestSentDesc": "La tua richiesta premium è stata inviata con successo. 1 gettone scalato.",
-    "requestError": "Si è verificato un errore durante l'invio della richiesta."
+    "requestError": "Si è verificato un errore durante l'invio della richiesta.",
+    "verifiedBadge": "Verificata"
   },
   "premiumRates": {
     "title": "Gestione Tariffe Premium",

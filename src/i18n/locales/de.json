@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Schließe die Verifizierung deines Kontos ab, um auf Premium-Profile zuzugreifen",
     "becomePremium": "Premium werden",
     "new": "Neu!",
-    "becomePremiumDesc": "Erhöhe deine Sichtbarkeit und lege deine eigenen Tarife fest",
-    "premiumAccountActive": "Premium-Konto Aktiv",
-    "managePremiumDesc": "Verwalte deine Tarife und Premium-Anfragen",
+    "becomePremiumDesc": "Alle Funktionen sind bereits kostenlos: Das Abo bringt Verifiziert-Abzeichen, Hervorhebung und weltweite Sichtbarkeit",
+    "premiumAccountActive": "Dein Konto enthält alle Premium-Funktionen",
+    "managePremiumDesc": "Verwalte deine Tarife und eingehenden Anfragen",
     "manageRates": "Tarife Verwalten"
   },
   "howItWorks": {
@@ -455,7 +455,10 @@
     "sendMessage": "Nachricht senden...",
     "sending": "Senden...",
     "noMessages": "Noch keine Nachrichten. Starte das Gespräch!",
-    "loadingMessages": "Nachrichten werden geladen..."
+    "loadingMessages": "Nachrichten werden geladen...",
+    "contactBlockedTitle": "Nachricht blockiert",
+    "contactBlockedDesc": "Der Austausch von Telefonnummern, E-Mails, Social-Media-Profilen oder Links ist nicht erlaubt. Das Date muss hier auf der Seite vereinbart werden. Der Versuch wurde den Admins gemeldet.",
+    "noContactsWarning": "Nummern, E-Mails, Social Media oder Links sind verboten: Vereinbare das Date hier. Versuche werden den Admins gemeldet."
   },
   "profileDialog": {
     "verified": "Verifiziert",
@@ -524,7 +527,7 @@
   },
   "premiumSubscription": {
     "title": "Premium-Abonnement",
-    "subtitle": "Werden Sie ein Premium-Profil und erhöhen Sie Ihre Sichtbarkeit",
+    "subtitle": "Erhalte das Verifiziert-Abzeichen, ein hervorgehobenes Profil und weltweite Sichtbarkeit",
     "alreadyPremium": "Sie sind bereits Premium!",
     "activeUntil": "Ihr Abonnement ist aktiv bis {{date}}",
     "manage": "Abonnement Verwalten",
@@ -533,10 +536,10 @@
     "yearly": "Jährlich",
     "yearlySave": "Jährlich - Sparen Sie 39€",
     "perYear": "pro Jahr",
-    "feature1": "Profil sichtbar im Premium-Bereich",
-    "feature2": "Legen Sie Ihre individuellen Tarife fest",
-    "feature3": "Erhalten Sie Anfragen von verifizierten Nutzern",
-    "feature4": "Premium-Abzeichen auf dem Profil",
+    "feature1": "Verifiziert-Abzeichen im Profil",
+    "feature2": "Hervorgehobenes Profil in den Ergebnissen",
+    "feature3": "Weltweit sichtbar, ohne Entfernungsgrenze",
+    "feature4": "Priorität bei Date-Anfragen",
     "allMonthlyFeatures": "Alle Vorteile des Monatsplans",
     "savingsPerYear": "39€ pro Jahr sparen",
     "prioritySupport": "Prioritäts-Support",
@@ -549,16 +552,16 @@
     "portalError": "Verwaltungsportal konnte nicht geöffnet werden.",
     "faq": "Häufig Gestellte Fragen",
     "faq1Title": "Wie funktioniert das Premium-Abonnement?",
-    "faq1Desc": "Mit dem Premium-Abonnement wird Ihr Profil im Bereich für männliche Nutzer sichtbar, die 1 Token bezahlen, um Ihnen eine Terminanfrage zu senden.",
+    "faq1Desc": "Alle Funktionen sind für Frauen bereits kostenlos. Das Abo ergänzt das Verifiziert-Abzeichen, die Hervorhebung und die weltweite Sichtbarkeit, auch über den Umkreis hinaus.",
     "faq2Title": "Wie lege ich meine Tarife fest?",
     "faq2Desc": "Sobald das Abonnement aktiviert ist, können Sie Ihre Tarife von Ihrem Profil aus festlegen. Nutzer sehen diese Tarife, wenn sie Ihr Premium-Profil besuchen.",
     "faq3Title": "Kann ich jederzeit kündigen?",
     "faq3Desc": "Ja, Sie können Ihr Abonnement jederzeit über das Verwaltungsportal kündigen. Sie haben weiterhin Premium-Zugang bis zum Ende des bezahlten Zeitraums."
   },
   "premiumProfiles": {
-    "title": "Premium-Profile",
-    "subtitle": "Entdecke verfügbare Premium-Profile",
-    "noProfiles": "Momentan keine Premium-Profile verfügbar.",
+    "title": "Profile",
+    "subtitle": "Entdecke die verfügbaren Profile",
+    "noProfiles": "Derzeit keine Profile verfügbar.",
     "distanceNotAvailable": "Entfernung nicht verfügbar",
     "addedToFavorites": "Zu Favoriten hinzugefügt",
     "removedFromFavorites": "Aus Favoriten entfernt",
@@ -568,7 +571,8 @@
     "insufficientTokensDesc": "Du benötigst mindestens 1 Token, um eine Premium-Anfrage zu senden.",
     "requestSent": "Anfrage gesendet!",
     "requestSentDesc": "Deine Premium-Anfrage wurde erfolgreich gesendet. 1 Token abgezogen.",
-    "requestError": "Beim Senden der Anfrage ist ein Fehler aufgetreten."
+    "requestError": "Beim Senden der Anfrage ist ein Fehler aufgetreten.",
+    "verifiedBadge": "Verifiziert"
   },
   "premiumRates": {
     "title": "Premium-Tarife Verwaltung",

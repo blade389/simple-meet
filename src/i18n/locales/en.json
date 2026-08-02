@@ -292,9 +292,9 @@
     "premiumProfilesVerifyDesc": "Complete your account verification to access premium profiles",
     "becomePremium": "Become Premium",
     "new": "New!",
-    "becomePremiumDesc": "Increase your visibility and set your custom rates",
-    "premiumAccountActive": "Premium Account Active",
-    "managePremiumDesc": "Manage your rates and premium requests",
+    "becomePremiumDesc": "All features are already free: the subscription adds a verified badge, featured profile and worldwide visibility",
+    "premiumAccountActive": "Your account includes all Premium features",
+    "managePremiumDesc": "Manage your rates and incoming requests",
     "manageRates": "Manage Rates"
   },
   "howItWorks": {
@@ -491,7 +491,10 @@
     "error": "Error",
     "sendError": "Could not send the message.",
     "reviewSent": "Review sent",
-    "reviewSuccess": "Your review has been successfully recorded."
+    "reviewSuccess": "Your review has been successfully recorded.",
+    "contactBlockedTitle": "Message blocked",
+    "contactBlockedDesc": "Sharing phone numbers, emails, social handles or links is not allowed. The date must be arranged here on the site. The attempt has been reported to the admins.",
+    "noContactsWarning": "Sharing numbers, emails, socials or links is forbidden: arrange the date here. Attempts are reported to admins."
   },
   "profileDialog": {
     "premium": "Premium",
@@ -567,7 +570,7 @@
   },
   "premiumSubscription": {
     "title": "Premium Subscription",
-    "subtitle": "Become a premium profile and increase your visibility",
+    "subtitle": "Get the verified badge, featured profile and worldwide visibility",
     "alreadyPremium": "You're already Premium!",
     "activeUntil": "Your subscription is active until {{date}}",
     "manage": "Manage Subscription",
@@ -576,10 +579,10 @@
     "yearly": "Yearly",
     "yearlySave": "Yearly - Save €39",
     "perYear": "per year",
-    "feature1": "Profile visible in Premium section",
-    "feature2": "Set your custom rates",
-    "feature3": "Receive requests from verified users",
-    "feature4": "Premium badge on profile",
+    "feature1": "Verified profile badge",
+    "feature2": "Featured profile in search results",
+    "feature3": "Visible worldwide, with no distance limit",
+    "feature4": "Priority on appointment requests",
     "allMonthlyFeatures": "All monthly plan benefits",
     "savingsPerYear": "Save €39 per year",
     "prioritySupport": "Priority support",
@@ -592,16 +595,16 @@
     "portalError": "Unable to open management portal.",
     "faq": "Frequently Asked Questions",
     "faq1Title": "How does Premium subscription work?",
-    "faq1Desc": "With Premium subscription, your profile becomes visible in the section dedicated to male users, who will pay 1 token to send you an appointment request.",
+    "faq1Desc": "All features are already free for women. The subscription adds the verified badge, featured placement and worldwide visibility, even beyond the distance radius.",
     "faq2Title": "How do I set my rates?",
     "faq2Desc": "Once the subscription is activated, you can set your rates from your profile. Users will see these rates when they visit your Premium profile.",
     "faq3Title": "Can I cancel anytime?",
     "faq3Desc": "Yes, you can cancel your subscription anytime from the management portal. You'll continue to have Premium access until the end of the paid period."
   },
   "premiumProfiles": {
-    "title": "Premium Profiles",
-    "subtitle": "Discover available premium profiles",
-    "noProfiles": "No premium profiles available at the moment.",
+    "title": "Profiles",
+    "subtitle": "Discover the available profiles",
+    "noProfiles": "No profiles available right now.",
     "distanceNotAvailable": "Distance not available",
     "addedToFavorites": "Added to favorites",
     "removedFromFavorites": "Removed from favorites",
@@ -611,7 +614,8 @@
     "insufficientTokensDesc": "You need at least 1 token to send a premium request.",
     "requestSent": "Request sent!",
     "requestSentDesc": "Your premium request has been sent successfully. 1 token deducted.",
-    "requestError": "An error occurred while sending the request."
+    "requestError": "An error occurred while sending the request.",
+    "verifiedBadge": "Verified"
   },
   "premiumRates": {
     "title": "Premium Rates Management",
