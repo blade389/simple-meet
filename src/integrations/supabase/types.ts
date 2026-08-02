@@ -101,6 +101,33 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_contact_violations: {
+        Row: {
+          created_at: string
+          detected_type: string
+          id: string
+          match_request_id: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          detected_type: string
+          id?: string
+          match_request_id: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          detected_type?: string
+          id?: string
+          match_request_id?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           created_at: string
