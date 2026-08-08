@@ -155,6 +155,7 @@ const PremiumProfiles = () => {
 
       const list = (data || []).map((p: any) => {
         const isSubscriber = !!p.is_premium && p.subscription_status === 'active';
+        const hasBadge = p.verified_badge_status === 'active';
         const distance =
           viewer?.location_lat != null &&
           viewer?.location_lon != null &&
@@ -162,7 +163,7 @@ const PremiumProfiles = () => {
           p.location_lon != null
             ? distanceKm(viewer.location_lat, viewer.location_lon, p.location_lat, p.location_lon)
             : undefined;
-        return { ...p, distance, is_featured: isSubscriber };
+        return { ...p, distance, is_featured: isSubscriber, has_badge: hasBadge };
       })
         // Subscribers are visible worldwide, everyone else only within the radius
         .filter((p: any) => p.is_featured || (p.distance !== undefined && p.distance <= VISIBILITY_RADIUS_KM))
