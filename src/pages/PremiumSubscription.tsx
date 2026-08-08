@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Crown, Check, Sparkles } from 'lucide-react';
+import { ArrowLeft, Crown, Check, Sparkles, BadgeCheck, ShieldOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ const YEARLY_PRICE_ID = "price_1SP51aB786KnA0dnhrvYBz8l";
 const PremiumSubscription = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { user, isPremium, subscriptionEnd, checkPremiumStatus } = useAuth();
+  const { user, isPremium, isSubscriber, badgeStatus, subscriptionEnd, checkPremiumStatus } = useAuth();
   const { toast } = useToast();
   const [loadingMonthly, setLoadingMonthly] = useState(false);
   const [loadingYearly, setLoadingYearly] = useState(false);
@@ -90,6 +90,46 @@ const PremiumSubscription = () => {
             <p className="text-muted-foreground">{t('premiumSubscription.subtitle')}</p>
           </div>
         </div>
+
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BadgeCheck className="h-5 w-5 text-yellow-500" />
+              {t('verifiedBadge.title', 'Badge verificato')}
+            </CardTitle>
+            <CardDescription>
+              {badgeStatus === 'active'
+                ? t('verifiedBadge.active', 'Il tuo badge verificato è attivo: il tuo profilo è in evidenza e visibile in tutto il mondo.')
+                : badgeStatus === 'revoked'
+                ? t('verifiedBadge.revoked', 'Il tuo badge verificato è stato revocato. Riattiva l\u2019abbonamento per riottenerlo.')
+                : t('verifiedBadge.none', 'Non hai ancora il badge verificato. Attivalo con l\u2019abbonamento qui sotto.')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap items-center gap-3">
+            <Badge
+              className={
+                badgeStatus === 'active'
+                  ? 'bg-yellow-500 text-black'
+                  : badgeStatus === 'revoked'
+                  ? 'bg-destructive text-destructive-foreground'
+                  : ''
+              }
+              variant={badgeStatus === 'none' ? 'secondary' : 'default'}
+            >
+              {badgeStatus === 'active'
+                ? t('verifiedBadge.statusActive', 'Attivo')
+                : badgeStatus === 'revoked'
+                ? t('verifiedBadge.statusRevoked', 'Revocato')
+                : t('verifiedBadge.statusNone', 'Non attivo')}
+            </Badge>
+            {badgeStatus === 'active' && isSubscriber && (
+              <Button variant="outline" size="sm" onClick={handleManageSubscription}>
+                <ShieldOff className="h-4 w-4 mr-2" />
+                {t('verifiedBadge.revoke', 'Disattiva badge / annulla abbonamento')}
+              </Button>
+            )}
+          </CardContent>
+        </Card>
 
         {isPremium && (
           <Card className="mb-6 border-2 border-yellow-500/50 bg-yellow-500/5">

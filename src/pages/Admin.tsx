@@ -461,6 +461,16 @@ const Admin = () => {
             </Card>
           </Link>
 
+          <Link to="/admin/verified-badges">
+            <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer">
+              <CheckCircle className="w-12 h-12 text-yellow-500 mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Badge Verificato</h3>
+              <p className="text-muted-foreground text-sm">
+                Assegna o revoca il badge alle utenti
+              </p>
+            </Card>
+          </Link>
+
           <Link to="/admin/free-premium">
             <Card className="p-6 hover:shadow-glow transition-shadow cursor-pointer relative">
               <Crown className="w-12 h-12 text-purple-500 mb-4" />

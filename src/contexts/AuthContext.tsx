@@ -9,6 +9,8 @@ interface AuthContextType {
   loading: boolean;
   isPremium: boolean;
   isSubscriber: boolean;
+  hasVerifiedBadge: boolean;
+  badgeStatus: string;
   subscriptionEnd: string | null;
   isBlocked: boolean;
   checkPremiumStatus: () => Promise<void>;
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [isPremium, setIsPremium] = useState(false);
   const [isSubscriber, setIsSubscriber] = useState(false);
+  const [badgeStatus, setBadgeStatus] = useState<string>('none');
   const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
   const [isBlocked, setIsBlocked] = useState(false);
   const navigate = useNavigate();
@@ -54,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // First check directly from database for immediate response
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
-        .select('is_premium, subscription_status, subscription_end, gender')
+        .select('is_premium, subscription_status, subscription_end, gender, verified_badge_status')
         .eq('id', user.id)
         .single();
 
@@ -65,6 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // and worldwide visibility.
         setIsSubscriber(isActive);
         setIsPremium(isActive || profile.gender === 'female');
+        setBadgeStatus((profile as any).verified_badge_status || 'none');
         setSubscriptionEnd(profile.subscription_end);
         return;
       }
@@ -148,7 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isPremium, isSubscriber, subscriptionEnd, isBlocked, checkPremiumStatus, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, isPremium, isSubscriber, hasVerifiedBadge: badgeStatus === 'active', badgeStatus, subscriptionEnd, isBlocked, checkPremiumStatus, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -19,6 +19,8 @@ interface Profile {
   profile_photo_url: string | null;
   is_premium: boolean;
   subscription_status?: string | null;
+  verified_badge_status?: string | null;
+  has_badge?: boolean;
   location_lat?: number | null;
   location_lon?: number | null;
   is_featured?: boolean;
@@ -155,6 +157,7 @@ const PremiumProfiles = () => {
 
       const list = (data || []).map((p: any) => {
         const isSubscriber = !!p.is_premium && p.subscription_status === 'active';
+        const hasBadge = p.verified_badge_status === 'active';
         const distance =
           viewer?.location_lat != null &&
           viewer?.location_lon != null &&
@@ -162,7 +165,7 @@ const PremiumProfiles = () => {
           p.location_lon != null
             ? distanceKm(viewer.location_lat, viewer.location_lon, p.location_lat, p.location_lon)
             : undefined;
-        return { ...p, distance, is_featured: isSubscriber };
+        return { ...p, distance, is_featured: isSubscriber, has_badge: hasBadge };
       })
         // Subscribers are visible worldwide, everyone else only within the radius
         .filter((p: any) => p.is_featured || (p.distance !== undefined && p.distance <= VISIBILITY_RADIUS_KM))
@@ -347,7 +350,7 @@ const PremiumProfiles = () => {
                       <span className="text-4xl text-muted-foreground">👤</span>
                     </div>
                   )}
-                  {profile.is_featured && (
+                  {(profile as any).has_badge && (
                     <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
                       <Crown className="h-3 w-3 mr-1" />
                       {t('premiumProfiles.verifiedBadge', 'Verificata')}
