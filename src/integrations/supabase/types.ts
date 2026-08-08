@@ -517,6 +517,12 @@ export type Database = {
           subscription_status: string | null
           updated_at: string | null
           verification_reminder_sent: boolean | null
+          verified_badge_activated_at: string | null
+          verified_badge_expires_at: string | null
+          verified_badge_revoke_reason: string | null
+          verified_badge_revoked_at: string | null
+          verified_badge_source: string | null
+          verified_badge_status: string
         }
         Insert: {
           age_preferences_unlocked?: boolean | null
@@ -551,6 +557,12 @@ export type Database = {
           subscription_status?: string | null
           updated_at?: string | null
           verification_reminder_sent?: boolean | null
+          verified_badge_activated_at?: string | null
+          verified_badge_expires_at?: string | null
+          verified_badge_revoke_reason?: string | null
+          verified_badge_revoked_at?: string | null
+          verified_badge_source?: string | null
+          verified_badge_status?: string
         }
         Update: {
           age_preferences_unlocked?: boolean | null
@@ -585,6 +597,12 @@ export type Database = {
           subscription_status?: string | null
           updated_at?: string | null
           verification_reminder_sent?: boolean | null
+          verified_badge_activated_at?: string | null
+          verified_badge_expires_at?: string | null
+          verified_badge_revoke_reason?: string | null
+          verified_badge_revoked_at?: string | null
+          verified_badge_source?: string | null
+          verified_badge_status?: string
         }
         Relationships: []
       }
@@ -832,6 +850,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_set_verified_badge: {
+        Args: { _active: boolean; _reason?: string; _user_id: string }
+        Returns: undefined
+      }
       calculate_distance: {
         Args: { lat1: number; lat2: number; lon1: number; lon2: number }
         Returns: number
