@@ -32,6 +32,7 @@ import AdminUserReviews from './pages/AdminUserReviews';
 import BlockedUsers from './pages/BlockedUsers';
 import FreePremiumRequest from './pages/FreePremiumRequest';
 import AdminFreePremium from './pages/AdminFreePremium';
+import AdminVerifiedBadges from './pages/AdminVerifiedBadges';
 import LandingInfluencer from './pages/LandingInfluencer';
 import Favorites from './pages/Favorites';
 import NotFound from "./pages/NotFound";
@@ -89,6 +90,7 @@ const App = () => {
               <Route path="/admin/user-reviews" element={<AdminUserReviews />} />
               <Route path="/admin/blocked-users" element={<BlockedUsers />} />
               <Route path="/admin/free-premium" element={<AdminFreePremium />} />
+              <Route path="/admin/verified-badges" element={<AdminVerifiedBadges />} />
               <Route path="/free-premium-request" element={<FreePremiumRequest />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
