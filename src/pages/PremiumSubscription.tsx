@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Crown, Check, Sparkles } from 'lucide-react';
+import { ArrowLeft, Crown, Check, Sparkles, BadgeCheck, ShieldOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ const YEARLY_PRICE_ID = "price_1SP51aB786KnA0dnhrvYBz8l";
 const PremiumSubscription = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { user, isPremium, subscriptionEnd, checkPremiumStatus } = useAuth();
+  const { user, isPremium, isSubscriber, badgeStatus, subscriptionEnd, checkPremiumStatus } = useAuth();
   const { toast } = useToast();
   const [loadingMonthly, setLoadingMonthly] = useState(false);
   const [loadingYearly, setLoadingYearly] = useState(false);
