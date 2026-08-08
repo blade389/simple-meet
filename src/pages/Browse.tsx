@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, ArrowLeft, MapPin, Calendar, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import PremiumExplainer from '@/components/PremiumExplainer';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import ProfileDetailsDialog from '@/components/ProfileDetailsDialog';
@@ -588,6 +589,8 @@ const Browse = () => {
         <main className="container mx-auto px-4 py-8">
           <h2 className="text-3xl font-bold mb-6">{t('browse.incomingRequests')}</h2>
 
+          <PremiumExplainer gender={myProfile?.gender} className="mb-6" />
+
           {matchRequests.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-muted-foreground">
@@ -714,6 +717,8 @@ const Browse = () => {
 
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-6">{t('browse.nearbyProfiles')}</h2>
+
+        <PremiumExplainer gender={myProfile?.gender} className="mb-6" />
 
         <Tabs defaultValue="grid" className="w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
