@@ -348,7 +348,7 @@ const PremiumProfiles = () => {
                       <span className="text-4xl text-muted-foreground">👤</span>
                     </div>
                   )}
-                  {profile.is_featured && (
+                  {(profile as any).has_badge && (
                     <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
                       <Crown className="h-3 w-3 mr-1" />
                       {t('premiumProfiles.verifiedBadge', 'Verificata')}
