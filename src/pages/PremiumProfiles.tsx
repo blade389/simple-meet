@@ -19,6 +19,8 @@ interface Profile {
   profile_photo_url: string | null;
   is_premium: boolean;
   subscription_status?: string | null;
+  verified_badge_status?: string | null;
+  has_badge?: boolean;
   location_lat?: number | null;
   location_lon?: number | null;
   is_featured?: boolean;
