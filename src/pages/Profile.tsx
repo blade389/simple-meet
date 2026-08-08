@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera, Lock, Unlock, Coins } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import PremiumExplainer from '@/components/PremiumExplainer';
 import { supabase } from '@/integrations/supabase/client';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -312,6 +313,7 @@ const Profile = () => {
         <h2 className="text-3xl font-bold mb-6">{t('profile.title')}</h2>
         
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
+          <PremiumExplainer gender={profile?.gender} className="md:col-span-3" />
           <Card className="md:col-span-3">
             <CardHeader>
               <CardTitle>{t('profile.profilePhotos')}</CardTitle>
