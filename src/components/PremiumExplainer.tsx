@@ -19,7 +19,7 @@ interface PremiumExplainerProps {
 
 const PremiumExplainer = ({ gender, className }: PremiumExplainerProps) => {
   const { t } = useTranslation();
-  const { user, isSubscriber, badgeStatus, checkPremiumStatus } = useAuth();
+  const { user, isSubscriber, badgeStatus, subscriptionEnd, checkPremiumStatus } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
