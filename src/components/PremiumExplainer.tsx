@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { BadgeCheck, Globe, Sparkles, Info } from 'lucide-react';
+import { BadgeCheck, Globe, Sparkles, Info, Crown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+
+const MONTHLY_PRICE_ID = 'price_1SP4zjB786KnA0dn6gOddSAy';
 
 interface PremiumExplainerProps {
   gender?: string | null;
@@ -13,8 +19,37 @@ interface PremiumExplainerProps {
 
 const PremiumExplainer = ({ gender, className }: PremiumExplainerProps) => {
   const { t } = useTranslation();
-  const { isSubscriber, badgeStatus } = useAuth();
+  const { user, isSubscriber, badgeStatus, checkPremiumStatus } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const isFemale = gender === 'female';
+
+  const handleSubscribe = async () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-premium-checkout', {
+        body: { priceId: MONTHLY_PRICE_ID },
+      });
+      if (error) throw error;
+      if (data?.url) {
+        window.open(data.url, '_blank');
+        setTimeout(() => checkPremiumStatus(), 5000);
+      }
+    } catch (e) {
+      toast({
+        title: t('premiumSubscription.error', 'Errore'),
+        description: t('premiumSubscription.paymentError', 'Impossibile avviare il pagamento. Riprova.'),
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Card className={className}>
@@ -77,11 +112,21 @@ const PremiumExplainer = ({ gender, className }: PremiumExplainerProps) => {
         </div>
 
         {!isSubscriber && (
-          <Button asChild size="sm">
-            <Link to="/premium-subscription">
-              {t('premiumExplainer.cta', 'Scopri l\u2019abbonamento')}
-            </Link>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" onClick={handleSubscribe} disabled={loading}>
+              {loading ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Crown className="h-4 w-4 mr-2" />
+              )}
+              {t('premiumExplainer.subscribeNow', 'Attiva l\u2019abbonamento')}
+            </Button>
+            <Button asChild size="sm" variant="outline">
+              <Link to="/premium-subscription">
+                {t('premiumExplainer.cta', 'Scopri l\u2019abbonamento')}
+              </Link>
+            </Button>
+          </div>
         )}
       </CardContent>
     </Card>
