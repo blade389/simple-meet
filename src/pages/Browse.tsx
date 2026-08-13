@@ -816,6 +816,11 @@ const Browse = () => {
                         <Heart className="w-4 h-4 mr-2" />
                         {sendingRequest === profile.id ? t('browse.sending') : sentRequests.includes(profile.id) ? t('browse.requestSent') : t('browse.sendRequest')}
                       </Button>
+                      {myProfile?.gender === 'male' && !sentRequests.includes(profile.id) && (
+                        <p className="mt-2 text-xs text-muted-foreground text-center">
+                          {t('browse.tokenCostNote')}
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
