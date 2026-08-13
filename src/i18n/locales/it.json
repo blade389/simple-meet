@@ -370,7 +370,8 @@
     "canProceedAppointment": "Puoi procedere a fissare un appuntamento",
     "userBlockedDesc": "L'utente è stato bloccato e non potrà più inviarti richieste",
     "premiumRejectedRefunded": "La richiesta premium è stata rifiutata e il gettone è stato rimborsato",
-    "requestRejectedDesc": "La richiesta è stata rifiutata"
+    "requestRejectedDesc": "La richiesta è stata rifiutata",
+    "tokenCostNote": "Costo: 1 gettone. Ti verrà rimborsato automaticamente se la richiesta viene rifiutata o scade senza risposta."
   },
   "profile": {
     "title": "Il Mio Profilo",
@@ -439,7 +440,8 @@
     "removeError": "Impossibile rimuovere il preferito",
     "needOneToken": "Hai bisogno di almeno 1 gettone per inviare una richiesta premium.",
     "premiumRequestSent": "Richiesta premium inviata",
-    "premiumRequestSentDesc": "La tua richiesta premium è stata inviata con successo"
+    "premiumRequestSentDesc": "La tua richiesta premium è stata inviata con successo",
+    "tokenCostNote": "Costo: 1 gettone. Ti verrà rimborsato automaticamente se la richiesta viene rifiutata o scade senza risposta."
   },
   "appointments": {
     "title": "I Miei Appuntamenti",

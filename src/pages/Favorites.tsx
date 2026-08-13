@@ -579,6 +579,11 @@ const Favorites = () => {
                     </Button>
                   )}
                 </CardContent>
+                {myProfile?.gender === 'male' && canSendRequest(favorite.profile) && (
+                  <div className="px-6 pb-4 -mt-2">
+                    <p className="text-xs text-muted-foreground text-center">{t('favorites.tokenCostNote')}</p>
+                  </div>
+                )}
               </Card>
             ))}
           </div>
@@ -644,6 +649,9 @@ const Favorites = () => {
           )}
           
           <DialogFooter>
+            <p className="text-xs text-muted-foreground sm:mr-auto text-center sm:text-left">
+              {t('favorites.tokenCostNote')}
+            </p>
             <Button variant="outline" onClick={() => setPremiumDialogOpen(false)}>
               {t('favorites.cancel')}
             </Button>

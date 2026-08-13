@@ -349,7 +349,8 @@
     "expired": "Expirée",
     "locationNotAvailable": "Position non disponible",
     "updateLocationMessage": "Mettez à jour votre position depuis le tableau de bord pour voir les profils à proximité",
-    "allProfilesSeen": "Vous avez vu tous les profils disponibles!"
+    "allProfilesSeen": "Vous avez vu tous les profils disponibles!",
+    "tokenCostNote": "Coût : 1 jeton. Il vous sera remboursé automatiquement si la demande est refusée ou expire sans réponse."
   },
   "profile": {
     "title": "Mon Profil",
@@ -412,7 +413,8 @@
     "cancel": "Annuler",
     "send": "Envoyer",
     "requestAlreadySent": "Demande déjà envoyée",
-    "alreadyPendingRequest": "Vous avez déjà une demande en attente pour cet utilisateur."
+    "alreadyPendingRequest": "Vous avez déjà une demande en attente pour cet utilisateur.",
+    "tokenCostNote": "Coût : 1 jeton. Il vous sera remboursé automatiquement si la demande est refusée ou expire sans réponse."
   },
   "appointments": {
     "title": "Mes Rendez-vous",

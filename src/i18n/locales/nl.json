@@ -349,7 +349,8 @@
     "expired": "Verlopen",
     "locationNotAvailable": "Locatie niet beschikbaar",
     "updateLocationMessage": "Werk je locatie bij vanuit het dashboard om profielen in de buurt te zien",
-    "allProfilesSeen": "Je hebt alle beschikbare profielen gezien!"
+    "allProfilesSeen": "Je hebt alle beschikbare profielen gezien!",
+    "tokenCostNote": "Kosten: 1 token. Dit wordt automatisch terugbetaald als het verzoek wordt geweigerd of zonder antwoord verloopt."
   },
   "profile": {
     "title": "Mijn Profiel",
@@ -412,7 +413,8 @@
     "cancel": "Annuleren",
     "send": "Versturen",
     "requestAlreadySent": "Verzoek al verzonden",
-    "alreadyPendingRequest": "Je hebt al een openstaand verzoek voor deze gebruiker."
+    "alreadyPendingRequest": "Je hebt al een openstaand verzoek voor deze gebruiker.",
+    "tokenCostNote": "Kosten: 1 token. Dit wordt automatisch terugbetaald als het verzoek wordt geweigerd of zonder antwoord verloopt."
   },
   "appointments": {
     "title": "Mijn Afspraken",

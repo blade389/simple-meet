@@ -349,7 +349,8 @@
     "expired": "Expirada",
     "locationNotAvailable": "Ubicación no disponible",
     "updateLocationMessage": "Actualiza tu ubicación desde el panel para ver perfiles cercanos",
-    "allProfilesSeen": "¡Has visto todos los perfiles disponibles!"
+    "allProfilesSeen": "¡Has visto todos los perfiles disponibles!",
+    "tokenCostNote": "Coste: 1 ficha. Se te reembolsará automáticamente si la solicitud es rechazada o caduca sin respuesta."
   },
   "profile": {
     "title": "Mi Perfil",
@@ -412,7 +413,8 @@
     "cancel": "Cancelar",
     "send": "Enviar",
     "requestAlreadySent": "Solicitud ya enviada",
-    "alreadyPendingRequest": "Ya tienes una solicitud pendiente para este usuario."
+    "alreadyPendingRequest": "Ya tienes una solicitud pendiente para este usuario.",
+    "tokenCostNote": "Coste: 1 ficha. Se te reembolsará automáticamente si la solicitud es rechazada o caduca sin respuesta."
   },
   "appointments": {
     "title": "Mis Citas",

@@ -349,7 +349,8 @@
     "expired": "Abgelaufen",
     "locationNotAvailable": "Standort nicht verfügbar",
     "updateLocationMessage": "Aktualisiere deinen Standort vom Dashboard, um Profile in der Nähe zu sehen",
-    "allProfilesSeen": "Du hast alle verfügbaren Profile gesehen!"
+    "allProfilesSeen": "Du hast alle verfügbaren Profile gesehen!",
+    "tokenCostNote": "Kosten: 1 Token. Es wird automatisch erstattet, wenn die Anfrage abgelehnt wird oder ohne Antwort abläuft."
   },
   "profile": {
     "title": "Mein Profil",
@@ -412,7 +413,8 @@
     "cancel": "Abbrechen",
     "send": "Senden",
     "requestAlreadySent": "Anfrage bereits gesendet",
-    "alreadyPendingRequest": "Du hast bereits eine ausstehende Anfrage für diesen Benutzer."
+    "alreadyPendingRequest": "Du hast bereits eine ausstehende Anfrage für diesen Benutzer.",
+    "tokenCostNote": "Kosten: 1 Token. Es wird automatisch erstattet, wenn die Anfrage abgelehnt wird oder ohne Antwort abläuft."
   },
   "appointments": {
     "title": "Meine Termine",
