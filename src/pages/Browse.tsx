@@ -382,16 +382,57 @@ const Browse = () => {
         return;
       }
 
+      const isMaleSender = myProfile?.gender === 'male';
+      let previousTokens: number | null = null;
+
+      if (isMaleSender) {
+        const { data: tokenData, error: tokenFetchError } = await supabase
+          .from('tokens')
+          .select('amount')
+          .eq('user_id', user?.id)
+          .maybeSingle();
+
+        if (tokenFetchError) throw tokenFetchError;
+
+        if (!tokenData || tokenData.amount < 1) {
+          toast({
+            title: t('premiumProfiles.insufficientTokens'),
+            description: t('premiumProfiles.insufficientTokensDesc'),
+            variant: "destructive"
+          });
+          setSendingRequest(null);
+          return;
+        }
+
+        previousTokens = tokenData.amount;
+
+        const { error: tokenUpdateError } = await supabase
+          .from('tokens')
+          .update({ amount: tokenData.amount - 1, last_updated: new Date().toISOString() })
+          .eq('user_id', user?.id);
+
+        if (tokenUpdateError) throw tokenUpdateError;
+      }
+
       const { error } = await supabase
         .from('match_requests')
         .insert({
           sender_id: user?.id,
           receiver_id: receiverId,
           status: 'pending',
+          is_premium: isMaleSender,
           expires_at: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString() // 1 hour for testing (was 48 hours)
         });
 
-      if (error) throw error;
+      if (error) {
+        if (isMaleSender && previousTokens !== null) {
+          await supabase
+            .from('tokens')
+            .update({ amount: previousTokens, last_updated: new Date().toISOString() })
+            .eq('user_id', user?.id);
+        }
+        throw error;
+      }
 
       // Send email notification
       try {
@@ -460,30 +501,8 @@ const Browse = () => {
 
       if (updateError) throw updateError;
 
-      // If rejecting a premium request and the current user is premium, refund token to sender
-      if (action === 'rejected' && requestData.is_premium && myProfile?.is_premium) {
-        const { data: senderTokenData, error: senderTokenFetchError } = await supabase
-          .from('tokens')
-          .select('amount')
-          .eq('user_id', requestData.sender_id)
-          .single();
-
-        if (senderTokenFetchError) {
-          console.error("Error fetching sender tokens:", senderTokenFetchError);
-        } else {
-          const { error: tokenRefundError } = await supabase
-            .from('tokens')
-            .update({
-              amount: senderTokenData.amount + 1,
-              last_updated: new Date().toISOString()
-            })
-            .eq('user_id', requestData.sender_id);
-
-          if (tokenRefundError) {
-            console.error("Error refunding token:", tokenRefundError);
-          }
-        }
-      }
+      // Token refund for rejected male (premium) requests is handled automatically
+      // by the database trigger refund_token_on_premium_reject.
 
       // If rejecting (non-premium request), deduct token from receiver
       if (action === 'rejected' && !requestData.is_premium) {
@@ -542,7 +561,7 @@ const Browse = () => {
           ? t('browse.canProceedAppointment')
           : blockUser
             ? t('browse.userBlockedDesc')
-            : requestData.is_premium && myProfile?.is_premium
+            : requestData.is_premium
               ? t('browse.premiumRejectedRefunded')
               : t('browse.requestRejectedDesc')
       });
