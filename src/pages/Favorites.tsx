@@ -649,6 +649,9 @@ const Favorites = () => {
           )}
           
           <DialogFooter>
+            <p className="text-xs text-muted-foreground sm:mr-auto text-center sm:text-left">
+              {t('favorites.tokenCostNote')}
+            </p>
             <Button variant="outline" onClick={() => setPremiumDialogOpen(false)}>
               {t('favorites.cancel')}
             </Button>
