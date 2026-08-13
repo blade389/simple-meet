@@ -238,16 +238,56 @@ const Favorites = () => {
         return;
       }
 
+      const isMaleSender = myProfile?.gender === 'male';
+      let previousTokens: number | null = null;
+
+      if (isMaleSender) {
+        const { data: tokenData, error: tokenFetchError } = await supabase
+          .from('tokens')
+          .select('amount')
+          .eq('user_id', user?.id)
+          .maybeSingle();
+
+        if (tokenFetchError) throw tokenFetchError;
+
+        if (!tokenData || tokenData.amount < 1) {
+          toast({
+            title: t('profile.notEnoughTokensTitle'),
+            description: t('favorites.needOneToken'),
+            variant: "destructive"
+          });
+          return;
+        }
+
+        previousTokens = tokenData.amount;
+
+        const { error: tokenUpdateError } = await supabase
+          .from('tokens')
+          .update({ amount: tokenData.amount - 1, last_updated: new Date().toISOString() })
+          .eq('user_id', user?.id);
+
+        if (tokenUpdateError) throw tokenUpdateError;
+      }
+
       const { error } = await supabase
         .from('match_requests')
         .insert({
           sender_id: user?.id,
           receiver_id: receiverId,
           status: 'pending',
+          is_premium: isMaleSender,
           expires_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
         });
 
-      if (error) throw error;
+      if (error) {
+        if (isMaleSender && previousTokens !== null) {
+          await supabase
+            .from('tokens')
+            .update({ amount: previousTokens, last_updated: new Date().toISOString() })
+            .eq('user_id', user?.id);
+        }
+        throw error;
+      }
 
       // Send email notification
       try {
