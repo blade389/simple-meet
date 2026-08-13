@@ -365,7 +365,8 @@
     "canProceedAppointment": "You can proceed to schedule an appointment",
     "userBlockedDesc": "The user has been blocked and will no longer be able to send you requests",
     "premiumRejectedRefunded": "The premium request was rejected and the token has been refunded",
-    "requestRejectedDesc": "The request has been rejected"
+    "requestRejectedDesc": "The request has been rejected",
+    "tokenCostNote": "Cost: 1 token. It will be automatically refunded if the request is declined or expires without an answer."
   },
   "profile": {
     "title": "My Profile",
@@ -434,7 +435,8 @@
     "removeError": "Unable to remove favorite",
     "needOneToken": "You need at least 1 token to send a premium request.",
     "premiumRequestSent": "Premium request sent",
-    "premiumRequestSentDesc": "Your premium request has been sent successfully"
+    "premiumRequestSentDesc": "Your premium request has been sent successfully",
+    "tokenCostNote": "Cost: 1 token. It will be automatically refunded if the request is declined or expires without an answer."
   },
   "appointments": {
     "title": "My Appointments",

@@ -349,7 +349,8 @@
     "expired": "Wygasła",
     "locationNotAvailable": "Lokalizacja niedostępna",
     "updateLocationMessage": "Zaktualizuj swoją lokalizację z panelu, aby zobaczyć profile w pobliżu",
-    "allProfilesSeen": "Widziałeś już wszystkie dostępne profile!"
+    "allProfilesSeen": "Widziałeś już wszystkie dostępne profile!",
+    "tokenCostNote": "Koszt: 1 żeton. Zostanie automatycznie zwrócony, jeśli prośba zostanie odrzucona lub wygaśnie bez odpowiedzi."
   },
   "profile": {
     "title": "Mój Profil",
@@ -412,7 +413,8 @@
     "cancel": "Anuluj",
     "send": "Wyślij",
     "requestAlreadySent": "Prośba już wysłana",
-    "alreadyPendingRequest": "Masz już oczekującą prośbę dla tego użytkownika."
+    "alreadyPendingRequest": "Masz już oczekującą prośbę dla tego użytkownika.",
+    "tokenCostNote": "Koszt: 1 żeton. Zostanie automatycznie zwrócony, jeśli prośba zostanie odrzucona lub wygaśnie bez odpowiedzi."
   },
   "appointments": {
     "title": "Moje Spotkania",
