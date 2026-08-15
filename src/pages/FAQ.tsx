@@ -45,6 +45,10 @@ const FAQ = () => {
         {
             question: t('faq.q8'),
             answer: t('faq.a8')
+        },
+        {
+            question: t('faq.q9'),
+            answer: t('faq.a9')
         }
     ];
 
