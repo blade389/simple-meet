@@ -40,7 +40,7 @@ const LandingUomini = () => {
             provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
             areaServed: 'IT',
             description:
-              'App di dating dove gli uomini ricevono richieste da donne verificate. Registrazione gratuita, paghi solo se rifiuti.',
+              'Appuntamenti a pagamento per uomini: 1 gettone per inviare una richiesta, rimborsato se rifiutata. Se lei accetta, ci si incontra alle tariffe del suo profilo.',
             url: 'https://flashmatch.org/uomini',
           },
         ]}
