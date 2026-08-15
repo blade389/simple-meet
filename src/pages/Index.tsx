@@ -22,10 +22,10 @@ const Index = () => {
   return (
     <>
       <SEOHead
-        title="FlashMatch - App di Dating Innovativa | Incontri Sicuri"
-        description="FlashMatch è l'app di dating che mette le donne al comando. Sistema innovativo con gettoni per incontri autentici, sicuri e verificati. Registrazione gratuita."
+        title="FlashMatch - Appuntamenti a Pagamento | Tariffe Chiare"
+        description="Appuntamenti a pagamento: le donne fissano le proprie tariffe, gli uomini pagano 1 gettone per inviare la richiesta. Gettone rimborsato se la richiesta viene rifiutata."
         canonicalPath="/"
-        keywords="dating app, incontri online, app incontri Italia, dating sicuro, incontri verificati, app appuntamenti"
+        keywords="appuntamenti a pagamento, incontri a pagamento, dating a pagamento, tariffe appuntamento, gettoni richieste, app appuntamenti Italia"
       />
       <StructuredData schema={{ type: "Organization" }} />
       <StructuredData schema={{ type: "WebSite" }} />
@@ -38,7 +38,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary fill-primary" />
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                FlashMatch<span className="sr-only"> — App di Dating Sicura</span>
+                FlashMatch<span className="sr-only"> — Appuntamenti a Pagamento</span>
               </h1>
             </div>
             <div className="flex items-center gap-2 min-w-0">
