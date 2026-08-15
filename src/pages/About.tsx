@@ -14,9 +14,9 @@ const About = () => {
         <>
         <SEOHead
             title="Chi Siamo - FlashMatch | La Nostra Missione"
-            description="Scopri la filosofia di FlashMatch: l'app di dating che rivoluziona gli incontri online mettendo le donne al comando. Sicurezza, rispetto e trasparenza."
+            description="La filosofia di FlashMatch: appuntamenti a pagamento con regole chiare. Le donne fissano le tariffe, gli uomini pagano 1 gettone per inviare la richiesta."
             canonicalPath="/about"
-            keywords="chi siamo flashmatch, app dating italiana, dating sicuro, incontri rispettosi"
+            keywords="chi siamo flashmatch, appuntamenti a pagamento, incontri con tariffa, dating a pagamento italia"
         />
         <div className="min-h-screen bg-background">
             {/* Header / Nav */}
