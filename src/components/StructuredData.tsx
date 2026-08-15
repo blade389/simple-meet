@@ -34,11 +34,11 @@ const generateOrganizationSchema = () => ({
   "name": "FlashMatch",
   "url": BASE_URL,
   "logo": `${BASE_URL}/og-image.jpg`,
-  "description": "FlashMatch è l'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri con sistema gettoni.",
+  "description": "FlashMatch è la piattaforma di appuntamenti a pagamento: le donne fissano le proprie tariffe, gli uomini pagano 1 gettone per inviare la richiesta di appuntamento.",
   "email": "support@flashmatch.org",
   "sameAs": [],
   "foundingDate": "2024",
-  "slogan": "L'app di dating che mette le donne al comando"
+  "slogan": "Appuntamenti a pagamento, alle condizioni decise da lei"
 });
 
 const generateWebSiteSchema = () => ({
@@ -46,7 +46,7 @@ const generateWebSiteSchema = () => ({
   "@type": "WebSite",
   "name": "FlashMatch",
   "url": BASE_URL,
-  "description": "L'app di dating innovativa che mette le donne al comando. Incontri autentici e sicuri.",
+  "description": "Piattaforma di appuntamenti a pagamento: tariffe decise dalle donne, richieste inviate con gettoni.",
   "inLanguage": "it-IT",
   "potentialAction": {
     "@type": "SearchAction",
@@ -78,7 +78,7 @@ const generateWebApplicationSchema = () => ({
   "url": BASE_URL,
   "applicationCategory": "SocialNetworkingApplication",
   "operatingSystem": "Web",
-  "description": "App di dating innovativa con sistema gettoni. Le donne scelgono, incontri sicuri e verificati.",
+  "description": "Piattaforma di appuntamenti a pagamento con sistema a gettoni: 1 gettone per inviare una richiesta, tariffe decise dalle donne e pagate di persona.",
   "offers": {
     "@type": "Offer",
     "price": "0",
