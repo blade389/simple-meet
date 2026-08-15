@@ -39,7 +39,7 @@ const LandingDonne = () => {
             provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
             areaServed: 'IT',
             description:
-              'App di dating gratuita per donne: scegli chi incontrare, dove e quando. Profili maschili verificati, incontri sicuri.',
+              'Appuntamenti a pagamento per donne: imposti tu le tariffe e scegli chi incontrare. Gli uomini pagano 1 gettone per inviarti una richiesta. Uso gratuito.',
             url: 'https://flashmatch.org/donne',
           },
         ]}

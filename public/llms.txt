@@ -1,16 +1,16 @@
 # FlashMatch
 
-> FlashMatch è l'app di dating che mette le donne al comando: incontri autentici, sicuri e verificati grazie a un sistema a gettoni e a profili verificati.
+> FlashMatch è la piattaforma di appuntamenti a pagamento: le donne pubblicano le proprie tariffe, gli uomini pagano 1 gettone per inviare la richiesta di appuntamento.
 
-FlashMatch è una piattaforma di dating disponibile in 8 lingue europee con focus su sicurezza, verifica dei profili e rispetto reciproco. Gli uomini usano gettoni per inviare richieste di match alle donne, che decidono liberamente se accettare. Tutti gli appuntamenti sono non vincolanti.
+FlashMatch è una piattaforma di appuntamenti a pagamento disponibile in 8 lingue europee. Ogni donna imposta le proprie tariffe (durata, prezzo, descrizione). Gli uomini pagano 1 gettone per inviare una richiesta di appuntamento: il gettone viene rimborsato se la richiesta è rifiutata o scade. Se la richiesta è accettata, l'appuntamento si svolge alle tariffe indicate e il pagamento avviene di persona; FlashMatch non gestisce il pagamento della tariffa. Gli appuntamenti restano non vincolanti e nel rispetto della volontà di entrambi.
 
 ## Pages
 
 - [Home](/): Panoramica di FlashMatch, come funziona e iscrizione gratuita.
 - [About](/about): Chi siamo, missione e valori di FlashMatch.
 - [Funzionalità](/features): Tutte le funzionalità dell'app, sicurezza e verifica profili.
-- [Prezzi](/pricing): Pacchetti gettoni e abbonamento premium.
-- [FAQ](/faq): Risposte alle domande più frequenti su account, gettoni, sicurezza e match.
+- [Prezzi](/pricing): Pacchetti gettoni per inviare richieste e abbonamento premium opzionale per le donne.
+- [FAQ](/faq): Risposte su gettoni, tariffe degli appuntamenti, rimborsi, sicurezza e account.
 - [Leaderboard Referral](/leaderboard): Classifica del contest referral attivo fino al 30 agosto 2026.
 - [Invita amici](/invite): Programma referral per guadagnare punti e premi.
 - [Landing Uomini](/uomini): Pagina dedicata agli utenti uomini.

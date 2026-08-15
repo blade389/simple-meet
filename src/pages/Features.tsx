@@ -59,7 +59,7 @@ const Features = () => {
             title={`${t('features.title')} | FlashMatch`}
             description={t('features.feature1Desc')}
             canonicalPath="/features"
-            keywords="dating app features, flashmatch features, identity verification, token system"
+            keywords="appuntamenti a pagamento, tariffe donne, richieste a gettoni, verifica identità, funzionalità flashmatch"
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="absolute top-4 right-4 z-50">

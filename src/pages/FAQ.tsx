@@ -45,6 +45,10 @@ const FAQ = () => {
         {
             question: t('faq.q8'),
             answer: t('faq.a8')
+        },
+        {
+            question: t('faq.q9'),
+            answer: t('faq.a9')
         }
     ];
 
@@ -52,9 +56,9 @@ const FAQ = () => {
         <>
         <SEOHead
             title={`${t('faq.title')} | FlashMatch`}
-            description="Domande frequenti su FlashMatch: come funziona l'app di dating, sistema gettoni, verifica profili, sicurezza, abbonamento premium e gestione account."
+            description="FAQ FlashMatch: come funzionano gli appuntamenti a pagamento, il costo in gettoni delle richieste, le tariffe fissate dalle donne, i rimborsi e la verifica dei profili."
             canonicalPath="/faq"
-            keywords="faq flashmatch, dating faq, how flashmatch works, tokens dating"
+            keywords="faq flashmatch, appuntamenti a pagamento, costo gettoni richiesta, tariffe appuntamento, rimborso gettone"
         />
         <StructuredData schema={{ type: "FAQPage", faqs }} />
         <div className="min-h-screen bg-background p-6 md:p-12">
