@@ -109,7 +109,7 @@ const AdminVerifiedBadges = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Badge Verificato</h1>
+          <h1 className="text-2xl font-bold">Badge Premium</h1>
         </div>
 
         <Input

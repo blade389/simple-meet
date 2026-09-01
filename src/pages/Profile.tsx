@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera, Lock, Unlock, Coins, Trash2 } from 'lucide-react';
+import { Heart, ArrowLeft, Camera, Lock, Unlock, Coins, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import PremiumExplainer from '@/components/PremiumExplainer';
@@ -181,12 +181,10 @@ const Profile = () => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const isFemale = profile?.gender === 'female';
-
     setUploading(true);
 
     try {
-      const uploadPromises = Array.from(files).map(async (file) => {
+      const uploadPromises = Array.from(files).map(async (file, index) => {
         const fileExt = file.name.split('.').pop();
         const filePath = `${user?.id}/profile-${Date.now()}-${Math.random()}.${fileExt}`;
 
@@ -201,24 +199,34 @@ const Profile = () => {
           .getPublicUrl(filePath);
 
         // Check if this is the first photo
-        const isFirstPhoto = photos.length === 0;
+        const isFirstPhoto = photos.length === 0 && index === 0;
 
-        // Create photo verification request
-        return await supabase
+        const { error: photoError } = await supabase
           .from('profile_photo_verifications')
           .insert({
             user_id: user?.id,
             photo_url: publicUrl,
-            status: isFemale ? 'verified' : 'pending',
+            status: 'verified',
             is_primary: isFirstPhoto
           });
+
+        if (photoError) throw photoError;
+        return { publicUrl, isFirstPhoto };
       });
 
-      await Promise.all(uploadPromises);
+      const uploadedPhotos = await Promise.all(uploadPromises);
+      const primaryPhoto = uploadedPhotos.find((photo) => photo.isFirstPhoto);
+      if (primaryPhoto) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({ profile_photo_url: primaryPhoto.publicUrl, photo_verification_status: 'verified' })
+          .eq('id', user?.id);
+        if (profileError) throw profileError;
+      }
 
       toast({
         title: t('profile.photoUploaded'),
-        description: `${files.length} ${files.length === 1 ? t('profile.photoSubmitted') : t('profile.photosSubmitted')}`
+        description: t('profile.photosAvailable', { count: files.length, defaultValue: files.length === 1 ? 'Foto pubblicata sul profilo' : 'Foto pubblicate sul profilo' })
       });
       loadPhotos();
     } catch (error: any) {
@@ -287,25 +295,6 @@ const Profile = () => {
     }
   };
 
-  const getVerificationStatus = () => {
-    if (!profile?.is_verified) return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
-    if (profile.is_verified === 'verified') return { icon: CheckCircle, text: t('profile.verified'), color: 'text-green-600' };
-    if (profile.is_verified === 'rejected') return { icon: XCircle, text: t('profile.rejected'), color: 'text-red-600' };
-    return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
-  };
-
-  const getPhotoVerificationStatus = () => {
-    if (!profile?.photo_verification_status) return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
-    if (profile.photo_verification_status === 'verified') return { icon: CheckCircle, text: t('profile.verified'), color: 'text-green-600' };
-    if (profile.photo_verification_status === 'rejected') return { icon: XCircle, text: t('profile.rejected'), color: 'text-red-600' };
-    return { icon: Clock, text: t('profile.pending'), color: 'text-yellow-600' };
-  };
-
-  const status = getVerificationStatus();
-  const photoStatus = getPhotoVerificationStatus();
-  const StatusIcon = status.icon;
-  const PhotoStatusIcon = photoStatus.icon;
-
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <header className="bg-card border-b shadow-sm">
@@ -357,7 +346,7 @@ const Profile = () => {
                 <p className="text-xs text-muted-foreground text-center max-w-md">
                   {profile?.gender === 'female'
                     ? t('profile.photoTipsFemale', { defaultValue: 'Add at least 3 clear photos: a face shot, a full-length one and a candid one. Real photos get far more requests.' })
-                    : t('profile.photoTipsMale', { defaultValue: 'Add at least one clear face photo. Photos are checked by our team before they appear publicly.' })}
+                    : t('profile.photoTipsMale', { defaultValue: 'Add at least one clear face photo so your profile feels complete and personal.' })}
                 </p>
               </div>
 
@@ -376,26 +365,12 @@ const Profile = () => {
                           className="w-full aspect-square object-cover rounded-lg"
                         />
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center flex-col gap-2">
-                          <div className={`flex items-center gap-2 ${
-                            photo.status === 'verified' ? 'text-green-400' : 
-                            photo.status === 'rejected' ? 'text-red-400' : 
-                            'text-yellow-400'
-                          }`}>
-                            {photo.status === 'verified' ? <CheckCircle className="w-5 h-5" /> : 
-                             photo.status === 'rejected' ? <XCircle className="w-5 h-5" /> : 
-                             <Clock className="w-5 h-5" />}
-                            <span className="text-sm font-medium">
-                              {photo.status === 'verified' ? t('profile.verified') : 
-                               photo.status === 'rejected' ? t('profile.rejected') : 
-                               t('profile.pending')}
-                            </span>
-                          </div>
                           {photo.is_primary && (
                             <span className="text-white text-xs font-semibold bg-primary px-2 py-1 rounded">
                               {t('profile.primary')}
                             </span>
                           )}
-                          {!photo.is_primary && photo.status !== 'rejected' && (
+                          {!photo.is_primary && (
                             <Button
                               size="sm"
                               variant="secondary"
@@ -414,26 +389,12 @@ const Profile = () => {
                           </Button>
 
                         </div>
-                        {photo.rejection_reason && (
-                          <p className="text-xs text-red-500 mt-1">{photo.rejection_reason}</p>
-                        )}
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {profile?.gender !== 'female' && (
-                <div className="text-center pt-4 border-t space-y-2">
-                  <div>
-                    <p className="text-sm font-medium mb-1">{t('profile.accountVerification')}</p>
-                    <div className={`flex items-center gap-2 justify-center ${status.color}`}>
-                      <StatusIcon className="w-5 h-5" />
-                      <span className="text-sm font-medium">{status.text}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
 

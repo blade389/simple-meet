@@ -160,7 +160,7 @@ const Dashboard = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, gender, is_verified, location_lat, location_lon, is_paused')
+        .select('full_name, gender, location_lat, location_lon, is_paused')
         .eq('id', user?.id)
         .single();
 
