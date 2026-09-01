@@ -588,7 +588,16 @@ const Favorites = () => {
                       )}
                     </Button>
                   )}
+
+                  {myProfile?.gender === 'male' &&
+                    favorite.profile.gender === 'female' &&
+                    !profilesWithRates.includes(favorite.profile.id) && (
+                      <p className="text-xs text-muted-foreground text-center">
+                        {t('rates.profileWithoutRates')}
+                      </p>
+                    )}
                 </CardContent>
+
                 {myProfile?.gender === 'male' && canSendRequest(favorite.profile) && (
                   <div className="px-6 pb-4 -mt-2">
                     <p className="text-xs text-muted-foreground text-center">{t('favorites.tokenCostNote')}</p>
