@@ -20,7 +20,7 @@ interface PremiumRate {
 
 const PremiumRatesManagement = () => {
   const navigate = useNavigate();
-  const { user, isPremium } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
   const [rates, setRates] = useState<PremiumRate[]>([]);
@@ -36,13 +36,8 @@ const PremiumRatesManagement = () => {
       return;
     }
 
-    if (!isPremium) {
-      navigate('/premium-subscription');
-      return;
-    }
-
     loadRates();
-  }, [user, isPremium, navigate]);
+  }, [user, navigate]);
 
   const loadRates = async () => {
     try {

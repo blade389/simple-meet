@@ -199,7 +199,13 @@
       "conductTitle": "Reglas de Conducta",
       "conductText": "Te comprometes a no utilizar el servicio para fines ilegales o prohibidos. Está prohibido acosar, intimidar o difamar a otros usuarios. Nos reservamos el derecho de suspender o cancelar tu cuenta si violas estas reglas.",
       "modificationsTitle": "Modificaciones de los Términos",
-      "modificationsText": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán efectivos inmediatamente después de su publicación en el sitio. El uso continuado del servicio después de dichos cambios constituye la aceptación de los nuevos términos."
+      "modificationsText": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán efectivos inmediatamente después de su publicación en el sitio. El uso continuado del servicio después de dichos cambios constituye la aceptación de los nuevos términos.",
+      "ratesTitle": "Tarifas y Fichas",
+      "ratesText": "Las usuarias establecen libremente sus propias tarifas para las citas. Los usuarios pagan 1 ficha para enviar una solicitud de cita: la ficha se reembolsa automáticamente si la solicitud es rechazada o caduca sin respuesta. Las fichas son créditos de uso de la plataforma y no constituyen el pago de la tarifa.",
+      "paymentTitle": "Pago de la Tarifa",
+      "paymentText": "La tarifa acordada se paga directamente en persona entre las partes, fuera de la plataforma. FlashMatch no cobra, no gestiona ni garantiza dicho pago y no es responsable de impagos, disputas o acuerdos entre usuarios.",
+      "nonBindingTitle": "Carácter No Vinculante de la Cita",
+      "nonBindingText": "La cita concertada no vincula en modo alguno a exigir nada de la otra persona. El único compromiso es acudir a la cita y pasar tiempo de calidad juntos, siempre respetando plenamente la voluntad de la otra persona. Cualquier conducta coercitiva o exigencia de prestaciones conlleva la suspensión inmediata de la cuenta."
     },
     "privacy": {
       "seoDescription": "Política de privacidad de FlashMatch. Descubre cómo recopilamos, utilizamos y protegemos tus datos personales.",

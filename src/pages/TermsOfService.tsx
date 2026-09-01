@@ -58,17 +58,33 @@ const TermsOfService = () => {
                         </section>
 
                         <section>
-                            <h2 className="text-2xl font-semibold text-foreground mb-4">3. {t('legal.terms.eligibilityTitle')}</h2>
-                            <p>{t('legal.terms.eligibilityText')}</p>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">3. {t('legal.terms.ratesTitle')}</h2>
+                            <p>{t('legal.terms.ratesText')}</p>
                         </section>
 
                         <section>
-                            <h2 className="text-2xl font-semibold text-foreground mb-4">4. {t('legal.terms.conductTitle')}</h2>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">4. {t('legal.terms.paymentTitle')}</h2>
+                            <p>{t('legal.terms.paymentText')}</p>
+                        </section>
+
+                        <section className="bg-primary/5 p-6 rounded-lg border border-primary/20">
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">5. {t('legal.terms.nonBindingTitle')}</h2>
+                            <p>{t('legal.terms.nonBindingText')}</p>
+                        </section>
+
+                        <section>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">6. {t('legal.terms.eligibilityTitle')}</h2>
+                            <p>{t('legal.terms.eligibilityText')}</p>
+                        </section>
+
+
+                        <section>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">7. {t('legal.terms.conductTitle')}</h2>
                             <p>{t('legal.terms.conductText')}</p>
                         </section>
 
                         <section>
-                            <h2 className="text-2xl font-semibold text-foreground mb-4">5. {t('legal.terms.modificationsTitle')}</h2>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">8. {t('legal.terms.modificationsTitle')}</h2>
                             <p>{t('legal.terms.modificationsText')}</p>
                         </section>
 
