@@ -53,6 +53,8 @@ const Favorites = () => {
   const [myProfile, setMyProfile] = useState<{ gender: string; full_name: string; location_lat: number | null; location_lon: number | null } | null>(null);
   const [sendingRequest, setSendingRequest] = useState<string | null>(null);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
+  const [profilesWithRates, setProfilesWithRates] = useState<string[]>([]);
+
   
   // Premium request dialog state (for male users)
   const [premiumDialogOpen, setPremiumDialogOpen] = useState(false);
