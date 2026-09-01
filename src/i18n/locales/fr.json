@@ -794,5 +794,11 @@
     "contestDeadline": "🏆 Concours de parrainage : jusqu'au 30 août 2026",
     "launchDesc": "Inscrivez-vous maintenant, vérifiez votre profil et invitez vos amies. Les meilleures parraineuses gagnent des prix jusqu'à 1 000€ ou des mois de Premium gratuit !",
     "viewPrizes": "Voir les Prix"
+  },
+  "rates": {
+    "requiredTitle": "Définissez vos tarifs",
+    "requiredDesc": "Pour recevoir des demandes de rendez-vous, vous devez ajouter au moins un tarif. Sans tarif, votre profil n'est pas visible par les hommes.",
+    "requiredCta": "Définir les tarifs",
+    "profileWithoutRates": "Ce profil n'a pas encore défini de tarifs : il ne peut pas recevoir de demandes."
   }
 }

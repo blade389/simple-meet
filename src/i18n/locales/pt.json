@@ -794,5 +794,11 @@
     "contestDeadline": "🏆 Concurso de referência: até 30 de agosto de 2026",
     "launchDesc": "Registe-se agora, verifique o seu perfil e convide as amigas. As melhores referenciadoras ganham prémios até 1.000€ ou meses de Premium grátis!",
     "viewPrizes": "Ver Prémios"
+  },
+  "rates": {
+    "requiredTitle": "Define as tuas tarifas",
+    "requiredDesc": "Para receber pedidos de encontro tens de adicionar pelo menos uma tarifa. Sem tarifas o teu perfil não é visível para os homens.",
+    "requiredCta": "Definir tarifas",
+    "profileWithoutRates": "Este perfil ainda não definiu tarifas: não pode receber pedidos."
   }
 }

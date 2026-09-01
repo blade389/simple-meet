@@ -415,7 +415,7 @@ const PremiumProfiles = () => {
             bio: selectedProfile.bio,
             birth_date: selectedProfile.birth_date,
             profile_photo_url: selectedProfile.profile_photo_url,
-            is_premium: selectedProfile.is_premium,
+            is_premium: true,
             distance: selectedProfile.distance,
             positive_reviews_count: selectedProfile.positive_reviews_count,
             negative_reviews_count: selectedProfile.negative_reviews_count

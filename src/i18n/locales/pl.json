@@ -794,5 +794,11 @@
     "contestDeadline": "🏆 Konkurs poleceń: do 30 sierpnia 2026",
     "launchDesc": "Zarejestruj się teraz, zweryfikuj profil i zaproś znajome. Najlepsze polecające wygrywają nagrody do 1.000€ lub darmowe miesiące Premium!",
     "viewPrizes": "Zobacz Nagrody"
+  },
+  "rates": {
+    "requiredTitle": "Ustaw swoje stawki",
+    "requiredDesc": "Aby otrzymywać prośby o spotkanie, musisz dodać co najmniej jedną stawkę. Bez stawek Twój profil nie jest widoczny dla mężczyzn.",
+    "requiredCta": "Ustaw stawki",
+    "profileWithoutRates": "Ten profil nie ustawił jeszcze stawek: nie może otrzymywać próśb."
   }
 }
