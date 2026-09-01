@@ -343,23 +343,23 @@ const Profile = () => {
                   accept="image/*"
                   multiple
                   onChange={handlePhotoUpload}
-                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
+                  disabled={uploading}
                 />
                 <Button
                   variant="outline"
                   onClick={() => document.getElementById('photo-upload')?.click()}
-                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
+                  disabled={uploading}
                   size="lg"
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   {uploading ? t('profile.uploading') : t('profile.uploadNewPhotos')}
                 </Button>
-                {profile?.gender !== 'female' && profile?.is_verified !== 'verified' && (
-                  <p className="text-xs text-muted-foreground text-center">
-                    {t('profile.completeVerificationFirst')}
-                  </p>
-                )}
-              </div>
+                <p className="text-xs text-muted-foreground text-center max-w-md">
+                  {profile?.gender === 'female'
+                    ? t('profile.photoTipsFemale', { defaultValue: 'Add at least 3 clear photos: a face shot, a full-length one and a candid one. Real photos get far more requests.' })
+                    : t('profile.photoTipsMale', { defaultValue: 'Add at least one clear face photo. Photos are checked by our team before they appear publicly.' })}
+                </p>
+
 
               {photos.length > 0 && (
                 <div>
