@@ -359,6 +359,9 @@ const Profile = () => {
                     ? t('profile.photoTipsFemale', { defaultValue: 'Add at least 3 clear photos: a face shot, a full-length one and a candid one. Real photos get far more requests.' })
                     : t('profile.photoTipsMale', { defaultValue: 'Add at least one clear face photo. Photos are checked by our team before they appear publicly.' })}
                 </p>
+              </div>
+
+
 
 
               {photos.length > 0 && (
