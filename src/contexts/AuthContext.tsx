@@ -143,8 +143,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       checkBlockedStatus(user.id);
       checkPremiumStatus();
+      // Link the push subscription to this user so requests/chat notifications arrive
+      loginOneSignal(user.id);
     }
   }, [user?.id]);
+
 
   const signOut = async () => {
     await supabase.auth.signOut();
