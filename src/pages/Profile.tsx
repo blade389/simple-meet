@@ -229,8 +229,32 @@ const Profile = () => {
       });
     } finally {
       setUploading(false);
+      e.target.value = '';
     }
   };
+
+  const deletePhoto = async (photoId: string) => {
+    try {
+      const { error } = await supabase
+        .from('profile_photo_verifications')
+        .delete()
+        .eq('id', photoId);
+
+      if (error) throw error;
+
+      toast({ title: t('profile.photoDeleted', { defaultValue: 'Photo deleted' }) });
+      loadPhotos();
+      loadProfile();
+    } catch (error: any) {
+      toast({
+        title: t('common2.error'),
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
+
 
   const setPrimaryPhoto = async (photoId: string) => {
     try {
