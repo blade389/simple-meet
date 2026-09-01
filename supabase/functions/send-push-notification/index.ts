@@ -86,10 +86,13 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         app_id: oneSignalAppId,
-        include_external_user_ids: [userId],
+        include_aliases: { external_id: [userId] },
+        target_channel: "push",
         headings: { en: title },
         contents: { en: body },
-        url: url || undefined,
+        url: url
+          ? (url.startsWith("http") ? url : `https://flashmatch.org${url.startsWith("/") ? "" : "/"}${url}`)
+          : "https://flashmatch.org/dashboard",
         web_push_topic: tag || undefined,
         priority: requireInteraction ? 10 : 5,
         ttl: 86400, // 24 hours
