@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Shield, Crown, Trophy, Users, Star, CheckCircle, Sparkles, DollarSign, ThumbsUp, ThumbsDown, Camera } from 'lucide-react';
+import { Heart, UserPlus, Crown, Star, CheckCircle, Sparkles, DollarSign, ThumbsUp, Camera } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { saveReferralCode } from '@/lib/referral';
@@ -39,7 +39,7 @@ const LandingInfluencer = () => {
             provider: { '@type': 'Organization', name: 'FlashMatch', url: 'https://flashmatch.org' },
             areaServed: 'IT',
             description:
-              'Status Premium gratuito a vita per influencer Instagram e OnlyFans verificati. Imposta tariffe e monetizza gli appuntamenti.',
+               'Status Premium gratuito a vita per influencer Instagram e OnlyFans. Imposta tariffe e gestisci le richieste di appuntamento.',
             url: 'https://flashmatch.org/influencer',
           },
         ]}
@@ -122,10 +122,10 @@ const LandingInfluencer = () => {
             <h2 className="text-3xl font-bold text-center mb-12">{t('influencer.howToGetTitle', 'Come ottenere il Premium gratuito')}</h2>
             <div className="grid md:grid-cols-4 gap-6">
               {[
-                { step: '1', icon: Shield, title: t('influencer.step1Title', 'Registrati'), desc: t('influencer.step1Desc', 'Crea il tuo profilo e verifica la tua identità. Tutto gratuito.') },
+                 { step: '1', icon: UserPlus, title: t('influencer.step1Title', 'Registrati'), desc: t('influencer.step1Desc', 'Crea il tuo profilo con foto e descrizione. Tutto gratuito.') },
                 { step: '2', icon: Camera, title: t('influencer.step2Title', 'Invia Screenshot'), desc: t('influencer.step2Desc', 'Carica uno screen del tuo profilo social con i follower/like visibili.') },
                 { step: '3', icon: Sparkles, title: t('influencer.step3Title', 'Condividi il Link'), desc: t('influencer.step3Desc', 'Condividi il link di FlashMatch sul tuo profilo e inviaci lo screenshot.') },
-                { step: '4', icon: Crown, title: t('influencer.step4Title', 'Premium a Vita'), desc: t('influencer.step4Desc', 'Il nostro team verifica e attiva il tuo Premium. Per sempre.') },
+                 { step: '4', icon: Crown, title: t('influencer.step4Title', 'Premium a Vita'), desc: t('influencer.step4Desc', 'Il nostro team esamina la richiesta e attiva il tuo Premium. Per sempre.') },
               ].map(({ step, icon: Icon, title, desc }) => (
                 <Card key={step} className="p-6 text-center hover:shadow-glow transition-shadow relative">
                   <div className="absolute -top-3 -left-3 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm">
@@ -168,7 +168,7 @@ const LandingInfluencer = () => {
                 <Star className="w-12 h-12 text-primary mb-4" />
                 <h3 className="font-semibold text-lg mb-2">{t('influencer.visibilityTitle', 'Visibilità Premium')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  {t('influencer.visibilityDesc', 'Il badge Premium ti rende più visibile. Gli uomini verificati ti trovano più facilmente e ti inviano richieste di qualità.')}
+                   {t('influencer.visibilityDesc', 'Il Badge Premium ti rende più visibile e aiuta gli utenti interessati a trovarti più facilmente.')}
                 </p>
               </Card>
             </div>
@@ -181,7 +181,7 @@ const LandingInfluencer = () => {
             <h2 className="text-2xl font-bold mb-8 text-center">{t('influencer.securityTitle', 'Sicurezza e Controllo Totale')}</h2>
             <div className="space-y-4">
               {[
-                t('influencer.security1', 'Solo profili maschili verificati con selfie possono inviarti richieste'),
+                 t('influencer.security1', 'Solo gli utenti registrati possono inviarti richieste'),
                 t('influencer.security2', 'Tu scegli chi incontrare, dove e quando — sempre'),
                 t('influencer.security3', 'Puoi rifiutare qualsiasi richiesta senza conseguenze'),
                 t('influencer.security4', 'Sistema di recensioni per la massima trasparenza'),
@@ -203,7 +203,7 @@ const LandingInfluencer = () => {
             <Crown className="w-12 h-12 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-4">{t('influencer.ctaTitle', 'Pronta a diventare Premium?')}</h2>
             <p className="text-lg mb-6 opacity-90">
-              {t('influencer.ctaDescription', 'Registrati, verifica il tuo profilo e richiedi il Premium gratuito. Il nostro team approverà la tua richiesta in poche ore.')}
+               {t('influencer.ctaDescription', 'Registrati, completa il tuo profilo e richiedi il Premium gratuito. Il nostro team esaminerà la richiesta in poche ore.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
