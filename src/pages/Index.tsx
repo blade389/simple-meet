@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -297,11 +297,20 @@ const Index = () => {
               </p>
             </div>
           </div>
-          <div className="mt-12 max-w-3xl mx-auto text-center">
-            <p className="text-muted-foreground text-sm italic leading-relaxed">
-              {t("home.appointmentDisclaimer")}
-            </p>
+          <div className="mt-12 max-w-3xl mx-auto">
+            <Card className="p-6 border-primary/20 bg-card/70 backdrop-blur-sm">
+              <div className="flex gap-4 items-start">
+                <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                <div className="space-y-1 min-w-0">
+                  <div className="font-semibold text-sm">{t("home.disclaimerLabel")}</div>
+                  <p className="text-muted-foreground text-sm leading-relaxed break-words">
+                    {t("home.appointmentDisclaimer")}
+                  </p>
+                </div>
+              </div>
+            </Card>
           </div>
+
         </div>
       </section>
 
