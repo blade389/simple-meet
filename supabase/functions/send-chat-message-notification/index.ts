@@ -89,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
     const oneSignalApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY");
 
     if (oneSignalAppId && oneSignalApiKey) {
-      await fetch("https://onesignal.com/api/v1/notifications", {
+      const pushResponse = await fetch("https://onesignal.com/api/v1/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,15 +97,19 @@ const handler = async (req: Request): Promise<Response> => {
         },
         body: JSON.stringify({
           app_id: oneSignalAppId,
-          include_external_user_ids: [recipientId],
+          include_aliases: { external_id: [recipientId] },
+          target_channel: "push",
           headings: { en: `💬 ${senderName}` },
           contents: { en: truncatedMessage },
-          url: "/appointments",
+          url: "https://flashmatch.org/appointments",
           web_push_topic: `chat-${matchRequestId}`,
           ttl: 3600,
         }),
       });
+      const pushResult = await pushResponse.json().catch(() => ({}));
+      console.log("OneSignal chat push response:", JSON.stringify(pushResult));
     }
+
 
     return new Response(
       JSON.stringify({ success: true }),

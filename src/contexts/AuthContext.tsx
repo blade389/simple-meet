@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { loginOneSignal } from '@/lib/onesignal';
+
 
 interface AuthContextType {
   user: User | null;
@@ -143,8 +145,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       checkBlockedStatus(user.id);
       checkPremiumStatus();
+      // Link the push subscription to this user so requests/chat notifications arrive
+      loginOneSignal(user.id);
     }
   }, [user?.id]);
+
 
   const signOut = async () => {
     await supabase.auth.signOut();
