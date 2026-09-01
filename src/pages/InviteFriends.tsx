@@ -125,7 +125,7 @@ const InviteFriends = () => {
             <Share2 className="w-12 h-12 text-primary mx-auto mb-4" />
             <h1 className="text-3xl font-bold mb-2">{t('invite.title', 'Invita Amici')}</h1>
             <p className="text-muted-foreground">
-              {t('invite.subtitle', 'Condividi il tuo link e guadagna 1 punto per ogni amico che si registra e verifica il profilo.')}
+              {t('invite.subtitle', 'Condividi il tuo link e guadagna 1 punto per ogni amico che si registra.')}
             </p>
           </div>
 
@@ -165,7 +165,7 @@ const InviteFriends = () => {
             <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside">
               <li>{t('invite.rule1', 'Condividi il tuo link con amici')}</li>
               <li>{t('invite.rule2', 'Il tuo amico si registra usando il tuo link')}</li>
-              <li>{t('invite.rule3', 'Quando verifica il profilo (identità + foto), guadagni 1 punto')}</li>
+              <li>{t('invite.rule3', 'Quando completa la registrazione, guadagni 1 punto')}</li>
               <li>{t('invite.rule4', 'Più punti = posizione più alta in classifica = premi migliori!')}</li>
             </ol>
           </Card>

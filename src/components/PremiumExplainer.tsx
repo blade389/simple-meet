@@ -95,8 +95,8 @@ const PremiumExplainer = ({ gender, className }: PremiumExplainerProps) => {
           <li className="flex gap-3">
             <BadgeCheck className="h-5 w-5 text-yellow-500 shrink-0 mt-0.5" />
             <span>
-              <strong>{t('premiumExplainer.badgeTitle', 'Badge verificato')}</strong>{' '}
-              — {t('premiumExplainer.badgeDesc', 'un badge visibile sul tuo profilo che aumenta la fiducia degli altri utenti.')}
+              <strong>{t('premiumExplainer.badgeTitle', 'Badge Premium')}</strong>{' '}
+              — {t('premiumExplainer.badgeDesc', 'un badge che rende subito riconoscibili i vantaggi attivi sul tuo profilo.')}
             </span>
           </li>
           <li className="flex gap-3">
@@ -132,7 +132,7 @@ const PremiumExplainer = ({ gender, className }: PremiumExplainerProps) => {
           </ul>
           {badgeStatus === 'revoked' && (
             <p className="text-destructive">
-              {t('premiumExplainer.revoked', 'Il tuo badge verificato è attualmente revocato.')}
+              {t('premiumExplainer.revoked', 'Il tuo Badge Premium è attualmente disattivato.')}
             </p>
           )}
         </div>

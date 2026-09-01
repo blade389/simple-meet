@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Shield, Crown, Trophy, Users, Star, CheckCircle, Sparkles } from 'lucide-react';
+import { Heart, UserPlus, Crown, Trophy, Users, Star, CheckCircle, Sparkles } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { saveReferralCode } from '@/lib/referral';
@@ -70,7 +70,7 @@ const LandingDonne = () => {
               <span className="bg-gradient-primary bg-clip-text text-transparent">{t('landingWomen.heroHighlight', 'Sempre.')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              {t('landingWomen.heroDescription', 'Su FlashMatch sei tu a decidere chi incontrare. Scegli profili verificati, decidi dove e quando. Puoi rifiutare sempre, senza costi.')}
+               {t('landingWomen.heroDescription', 'Su FlashMatch sei tu a decidere chi incontrare, quando e a quale tariffa. Puoi rifiutare sempre, senza costi.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
@@ -92,8 +92,8 @@ const LandingDonne = () => {
             <h2 className="text-3xl font-bold text-center mb-12">{t('landingWomen.howItWorksTitle', 'Come funziona per le donne')}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { icon: Shield, title: t('landingWomen.step1Title', 'Registrati e Verifica'), desc: t('landingWomen.step1Desc', 'Crea il profilo e verifica la tua identità. Tutto gratuito, sempre.') },
-                { icon: Users, title: t('landingWomen.step2Title', 'Scopri e Scegli'), desc: t('landingWomen.step2Desc', 'Sfoglia i profili verificati nella tua zona. Invia richieste a chi ti piace. Gratis.') },
+                 { icon: UserPlus, title: t('landingWomen.step1Title', 'Crea il profilo'), desc: t('landingWomen.step1Desc', 'Registrati e aggiungi foto, descrizione e tariffe. Tutto gratuito, sempre.') },
+                 { icon: Users, title: t('landingWomen.step2Title', 'Ricevi e scegli'), desc: t('landingWomen.step2Desc', 'Ricevi richieste dagli uomini nella tua zona e accetta solo chi vuoi incontrare.') },
                 { icon: Star, title: t('landingWomen.step3Title', 'Incontra in Sicurezza'), desc: t('landingWomen.step3Desc', "Scegli luogo e ora. Puoi sempre rifiutare. Dopo l'incontro, lascia una recensione.") },
               ].map(({ icon: Icon, title, desc }, i) => (
                 <Card key={i} className="p-6 text-center hover:shadow-glow transition-shadow">
@@ -115,7 +115,7 @@ const LandingDonne = () => {
             <div className="space-y-4">
               {[
                 t('landingWomen.point1', "Registrazione, profilo e uso dell'app 100% gratuiti"),
-                t('landingWomen.point2', 'Solo profili maschili verificati con selfie'),
+                 t('landingWomen.point2', 'Profili completi e recensioni per scegliere meglio'),
                 t('landingWomen.point3', 'Tu scegli chi incontrare, dove e quando'),
                 t('landingWomen.point4', 'Puoi rifiutare qualsiasi richiesta, sempre'),
                 t('landingWomen.point5', 'Sistema recensioni per la massima trasparenza'),
@@ -144,7 +144,7 @@ const LandingDonne = () => {
               <div className="space-y-3 mb-6">
                 {[
                   t('landingWomen.premiumPoint1', 'Imposta le tue tariffe personalizzate'),
-                  t('landingWomen.premiumPoint2', 'Ricevi richieste premium da profili verificati'),
+                   t('landingWomen.premiumPoint2', 'Ricevi richieste da utenti interessati'),
                   t('landingWomen.premiumPoint3', 'Badge Premium per maggiore visibilità'),
                   t('landingWomen.premiumPoint4', 'Mantieni sempre il controllo totale'),
                 ].map((text, i) => (
@@ -168,10 +168,10 @@ const LandingDonne = () => {
         <section className="py-16 px-4 bg-gradient-primary text-primary-foreground">
           <div className="container mx-auto max-w-3xl text-center">
             <Trophy className="w-12 h-12 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold mb-2"><h2 className="text-3xl font-bold mb-2">{t('landingWomen.launchTitle', 'Lancio: 10 Luglio 2026')}</h2></h2>
+             <h2 className="text-3xl font-bold mb-2">{t('landingWomen.launchTitle', 'Lancio: 10 Luglio 2026')}</h2>
             <p className="text-sm opacity-80 mb-4">{t('landingWomen.contestDeadline', '🏆 Concorso premi referral: fino al 30 Agosto 2026')}</p>
             <p className="text-lg mb-6 opacity-90">
-              {t('landingWomen.launchDesc', 'Registrati ora, verifica il profilo e invita le amiche. Le top referrer vincono premi fino a 1.000€ o mesi di Premium gratuito!')}
+               {t('landingWomen.launchDesc', 'Registrati ora, completa il profilo e invita le amiche. Le top referrer vincono premi fino a 1.000€ o mesi di Premium gratuito!')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">

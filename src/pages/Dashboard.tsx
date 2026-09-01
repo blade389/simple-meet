@@ -160,7 +160,7 @@ const Dashboard = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, gender, is_verified, location_lat, location_lon, is_paused')
+        .select('full_name, gender, location_lat, location_lon, is_paused')
         .eq('id', user?.id)
         .single();
 
@@ -511,25 +511,6 @@ const Dashboard = () => {
           </Card>
         )}
 
-        {profile?.gender !== 'female' && profile?.is_verified !== 'verified' && (
-          <Card className="p-6 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
-            <div className="flex items-start gap-4">
-              <Shield className="w-8 h-8 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">
-                  {t('dashboard.verifyIdentity')}
-                </h3>
-                <p className="text-yellow-800 dark:text-yellow-200 text-sm mb-4">
-                  {t('dashboard.verifyIdentityDesc')}
-                </p>
-                <Button variant="default" asChild>
-                  <Link to="/verify">{t('dashboard.completeVerify')}</Link>
-                </Button>
-              </div>
-            </div>
-          </Card>
-        )}
-
         {profile?.gender === 'male' && tokens && (
           <Card className="p-6 mb-6 bg-gradient-primary text-white">
             <div className="flex items-center justify-between">
@@ -708,34 +689,15 @@ const Dashboard = () => {
 
         {profile?.gender === 'male' && (
           <Card className="p-6 mb-8 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-2 border-yellow-500/20">
-            {profile?.is_verified === 'verified' ? (
-              <Link to="/premium-profiles" className="block">
-                <div className="flex items-center gap-4">
-                  <Crown className="w-12 h-12 text-yellow-500" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">{t('dashboard.premiumProfiles')}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {t('dashboard.premiumProfilesDesc')}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ) : (
-              <div className="flex items-center gap-4 opacity-60">
+            <Link to="/premium-profiles" className="block">
+              <div className="flex items-center gap-4">
                 <Crown className="w-12 h-12 text-yellow-500" />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-lg">{t('dashboard.premiumProfiles')}</h3>
-                    <Badge variant="outline" className="border-yellow-500 text-yellow-600 dark:text-yellow-400">
-                      {t('dashboard.verificationRequired')}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {t('dashboard.premiumProfilesVerifyDesc')}
-                  </p>
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">{t('dashboard.premiumProfiles')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('dashboard.premiumProfilesDesc')}</p>
                 </div>
               </div>
-            )}
+            </Link>
           </Card>
         )}
       </main>

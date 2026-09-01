@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Shield, Users, Trophy, Share2, Clock } from 'lucide-react';
+import { Heart, Users, Trophy, Share2, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -32,7 +32,7 @@ const PreLaunch = () => {
 
   useEffect(() => {
     if (user) {
-      supabase.from('profiles').select('is_verified, referral_code').eq('id', user.id).single()
+      supabase.from('profiles').select('referral_code').eq('id', user.id).single()
         .then(({ data }) => setProfile(data));
     }
   }, [user]);
@@ -86,27 +86,10 @@ const PreLaunch = () => {
           {/* Action cards */}
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
             <Card className="p-6 text-center hover:shadow-glow transition-shadow">
-              <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">{t('prelaunch.verifyProfile', 'Completa il profilo')}</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t('prelaunch.verifyProfileDesc', 'Verifica la tua identità e foto per essere pronto al lancio')}
-              </p>
-              {user ? (
-                profile?.is_verified === 'verified' ? (
-                  <Button variant="outline" disabled>✓ {t('prelaunch.verified', 'Verificato')}</Button>
-                ) : (
-                  <Button asChild><Link to="/verify">{t('dashboard.completeVerify')}</Link></Button>
-                )
-              ) : (
-                <Button variant="hero" asChild><Link to="/auth">{t('common.signup')}</Link></Button>
-              )}
-            </Card>
-
-            <Card className="p-6 text-center hover:shadow-glow transition-shadow">
               <Share2 className="w-12 h-12 text-primary mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">{t('prelaunch.inviteFriends', 'Invita amici')}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {t('prelaunch.inviteFriendsDesc', 'Guadagna punti per ogni amico che si registra e verifica')}
+                 {t('prelaunch.inviteFriendsDesc', 'Guadagna punti per ogni amico che si registra')}
               </p>
               {user ? (
                 <Button asChild><Link to="/invite">{t('prelaunch.inviteNow', 'Invita ora')}</Link></Button>

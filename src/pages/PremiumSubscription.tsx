@@ -95,14 +95,14 @@ const PremiumSubscription = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BadgeCheck className="h-5 w-5 text-yellow-500" />
-              {t('verifiedBadge.title', 'Badge verificato')}
+               {t('verifiedBadge.title', 'Badge Premium')}
             </CardTitle>
             <CardDescription>
               {badgeStatus === 'active'
-                ? t('verifiedBadge.active', 'Il tuo badge verificato è attivo: il tuo profilo è in evidenza e visibile in tutto il mondo.')
+                 ? t('verifiedBadge.active', 'Il tuo Badge Premium è attivo: il tuo profilo è in evidenza e visibile in tutto il mondo.')
                 : badgeStatus === 'revoked'
-                ? t('verifiedBadge.revoked', 'Il tuo badge verificato è stato revocato. Riattiva l\u2019abbonamento per riottenerlo.')
-                : t('verifiedBadge.none', 'Non hai ancora il badge verificato. Attivalo con l\u2019abbonamento qui sotto.')}
+                 ? t('verifiedBadge.revoked', 'Il tuo Badge Premium è stato disattivato. Riattiva l\u2019abbonamento per riottenerlo.')
+                 : t('verifiedBadge.none', 'Non hai ancora il Badge Premium. Attivalo con l\u2019abbonamento qui sotto.')}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-wrap items-center gap-3">

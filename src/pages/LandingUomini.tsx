@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Shield, Zap, Trophy, Users, Star, CheckCircle } from 'lucide-react';
+import { Heart, UserPlus, Zap, Trophy, Users, Star, CheckCircle } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { saveReferralCode } from '@/lib/referral';
@@ -21,7 +21,7 @@ const LandingUomini = () => {
     <>
       <SEOHead
         title={t('landingMen.seoTitle', 'FlashMatch per Uomini | Registrazione Gratuita')}
-        description={t('landingMen.seoDescription', 'Registrati gratuitamente su FlashMatch. Paghi solo se rifiuti un appuntamento. Profili verificati, incontri reali.')}
+        description={t('landingMen.seoDescription', 'Registrati gratuitamente su FlashMatch. Invia richieste con 1 gettone, rimborsato se la richiesta viene rifiutata.')}
         canonicalPath="/uomini"
         keywords={t('landingMen.seoKeywords', 'dating uomini, app incontri gratuita uomini, FlashMatch uomini')}
         structuredData={[
@@ -71,7 +71,7 @@ const LandingUomini = () => {
               <span className="bg-gradient-primary bg-clip-text text-transparent">{t('landingMen.heroHighlight', 'Paghi solo se rifiuti.')}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              {t('landingMen.heroDescription', 'Su FlashMatch ricevi richieste da donne verificate. Accettare è gratuito. Solo se rifiuti una richiesta ti viene scalato 1 gettone.')}
+               {t('landingMen.heroDescription', 'Su FlashMatch scopri le tariffe pubblicate dalle donne e invia una richiesta con 1 gettone, rimborsato se viene rifiutata.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
@@ -93,7 +93,7 @@ const LandingUomini = () => {
             <h2 className="text-3xl font-bold text-center mb-12">{t('landingMen.howItWorksTitle', 'Come funziona per gli uomini')}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { icon: Shield, title: t('landingMen.step1Title', 'Registrati e Verifica'), desc: t('landingMen.step1Desc', 'Crea il profilo, carica una foto e verifica la tua identità. Ricevi 1 gettone gratuito.') },
+                 { icon: UserPlus, title: t('landingMen.step1Title', 'Crea il profilo'), desc: t('landingMen.step1Desc', 'Registrati, aggiungi foto e descrizione e ricevi 1 gettone gratuito.') },
                 { icon: Users, title: t('landingMen.step2Title', 'Ricevi Richieste'), desc: t('landingMen.step2Desc', 'Le donne sfogliano i profili e inviano richieste di appuntamento. Tu decidi se accettare.') },
                 { icon: Star, title: t('landingMen.step3Title', 'Incontra'), desc: t('landingMen.step3Desc', "Accettare è gratuito! Solo rifiutare costa 1 gettone. Dopo l'incontro lasciate una recensione.") },
               ].map(({ icon: Icon, title, desc }, i) => (
@@ -118,7 +118,7 @@ const LandingUomini = () => {
                 t('landingMen.point1', 'Registrazione e profilo completamente gratuiti'),
                 t('landingMen.point2', 'Accettare appuntamenti non costa nulla'),
                 t('landingMen.point3', 'Paghi solo 1 gettone se rifiuti una richiesta'),
-                t('landingMen.point4', 'Tutti i profili maschili sono verificati con selfie'),
+                 t('landingMen.point4', 'Foto, descrizioni e recensioni aiutano a scegliere'),
                 t('landingMen.point5', 'Sistema recensioni per massima trasparenza'),
                 t('landingMen.point6', 'Richieste Premium: invia tu richieste a profili premium (1 gettone)'),
               ].map((text, i) => (
@@ -138,7 +138,7 @@ const LandingUomini = () => {
             <h2 className="text-3xl font-bold mb-2">{t('landingMen.launchTitle', 'Lancio: 10 Luglio 2026')}</h2>
             <p className="text-sm opacity-80 mb-4">{t('landingMen.contestDeadline', '🏆 Concorso premi referral: fino al 30 Agosto 2026')}</p>
             <p className="text-lg mb-6 opacity-90">
-              {t('landingMen.launchDesc', 'Registrati ora, verifica il profilo e invita amici. I top referrer vincono premi fino a 1.000€!')}
+               {t('landingMen.launchDesc', 'Registrati ora, completa il profilo e invita amici. I top referrer vincono premi fino a 1.000€!')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">

@@ -80,7 +80,7 @@ const About = () => {
                         <div className="grid grid-cols-2 gap-4">
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg">
                                 <h3 className="text-4xl font-bold text-primary mb-2">100%</h3>
-                                <p className="text-sm text-muted-foreground">{t("about.verifiedProfiles")}</p>
+                                <p className="text-sm text-muted-foreground">{t("about.completeProfiles", "Profili completi")}</p>
                             </Card>
                             <Card className="p-6 bg-gradient-card border-0 shadow-lg mt-8">
                                 <h3 className="text-4xl font-bold text-primary mb-2">24/7</h3>

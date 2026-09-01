@@ -7,7 +7,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { HelpCircle, CheckCircle2, AlertCircle, Crown } from "lucide-react";
+import { HelpCircle, AlertCircle, Crown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface HowItWorksDialogProps {
@@ -37,17 +37,6 @@ export function HowItWorksDialog({ gender }: HowItWorksDialogProps) {
                 </DialogHeader>
 
                 <div className="space-y-6 py-4">
-                    {/* Common Step: Verification */}
-                    <div className="bg-muted/30 p-4 rounded-lg border">
-                        <h3 className="font-semibold flex items-center gap-2 mb-2 text-lg">
-                            <CheckCircle2 className="w-5 h-5 text-green-500" />
-                            {t('howItWorks.step1Title')}
-                        </h3>
-                        <p className="text-muted-foreground">
-                            {t('howItWorks.step1Desc')}
-                        </p>
-                    </div>
-
                     {gender === 'male' ? (
                         <>
                             {/* Male Specifics */}

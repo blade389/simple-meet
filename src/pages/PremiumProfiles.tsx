@@ -360,7 +360,7 @@ const PremiumProfiles = () => {
                   {(profile as any).has_badge && (
                     <Badge className="absolute top-2 right-2 bg-yellow-500 text-black">
                       <Crown className="h-3 w-3 mr-1" />
-                      {t('premiumProfiles.verifiedBadge', 'Verificata')}
+                      {t('premiumProfiles.verifiedBadge', 'Premium')}
                     </Badge>
                   )}
                   <Button

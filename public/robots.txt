@@ -14,7 +14,6 @@ Disallow: /appointments
 Disallow: /blocked
 Disallow: /buy-tokens
 Disallow: /premium-subscription
-Disallow: /verify
 
 # Google
 User-agent: Googlebot
