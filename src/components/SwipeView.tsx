@@ -15,7 +15,6 @@ interface Profile {
   birth_date: string;
   gender: string;
   profile_photo_url: string | null;
-  photo_verification_status: string;
   location_lat: number | null;
   location_lon: number | null;
   is_premium?: boolean;
@@ -57,8 +56,7 @@ const SwipeView = ({ profiles, sentRequests, onSendRequest, onSkip }: SwipeViewP
       const { data } = await supabase
         .from('profile_photo_verifications')
         .select('id, photo_url')
-        .eq('user_id', profileId)
-        .eq('status', 'verified');
+        .eq('user_id', profileId);
       
       if (data && data.length > 0) {
         setPhotos(data);

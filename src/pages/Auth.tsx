@@ -148,7 +148,7 @@ const Auth = () => {
     <>
       <SEOHead
         title="Accedi o Registrati | FlashMatch"
-        description="Accedi al tuo account FlashMatch o registrati gratuitamente. L'app di dating sicura con verifica identità e sistema gettoni."
+        description="Accedi a FlashMatch o registrati gratuitamente per trovare appuntamenti, consultare tariffe chiare e inviare richieste con i gettoni."
         canonicalPath="/auth"
         keywords="login flashmatch, registrazione dating, accedi app incontri"
         noindex={true}

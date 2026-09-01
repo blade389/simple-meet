@@ -23,7 +23,6 @@ interface Profile {
   location_city: string;
   gender: string;
   profile_photo_url: string | null;
-  photo_verification_status: string;
   location_lat: number | null;
   location_lon: number | null;
   is_premium?: boolean;
@@ -209,7 +208,6 @@ const Browse = () => {
         .from('profiles')
         .select('*')
         .eq('gender', 'male')
-        .eq('photo_verification_status', 'verified')
         .not('location_lat', 'is', null)
         .not('location_lon', 'is', null);
 

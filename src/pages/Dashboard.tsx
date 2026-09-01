@@ -16,7 +16,6 @@ import { getReferralCode, clearReferralCode } from '@/lib/referral';
 interface Profile {
   full_name: string;
   gender: string;
-  is_verified: string;
   location_lat: number | null;
   location_lon: number | null;
   is_paused: boolean;
@@ -64,14 +63,11 @@ const Dashboard = () => {
     if (!refCode) return;
 
     try {
-      // Check if user is verified
       const { data: myProfile } = await supabase
         .from('profiles')
-        .select('is_verified, gender')
+        .select('gender')
         .eq('id', user.id)
         .single();
-
-      if (myProfile?.gender !== 'female' && myProfile?.is_verified !== 'verified') return;
 
       // Check if already referred
       const { data: existingRef } = await supabase

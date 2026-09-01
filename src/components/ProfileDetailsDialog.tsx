@@ -75,7 +75,6 @@ const ProfileDetailsDialog = ({
         .from('profile_photo_verifications')
         .select('id, photo_url, is_primary')
         .eq('user_id', profile.id)
-        .eq('status', 'verified')
         .order('is_primary', { ascending: false })
         .order('created_at', { ascending: false });
 
