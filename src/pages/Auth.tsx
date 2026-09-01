@@ -58,7 +58,13 @@ const Auth = () => {
       navigate('/dashboard');
     } catch (error: any) {
       console.error('Login error:', error);
-      toast.error(error.message || "Errore durante il login");
+      const msg = String(error?.message || '');
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Load failed')) {
+        toast.error("Connessione non riuscita. Controlla la rete o disattiva blocker/VPN e riprova.");
+      } else {
+        toast.error(msg || "Errore durante il login");
+      }
+
     } finally {
       setIsLoading(false);
     }
