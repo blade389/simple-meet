@@ -203,7 +203,13 @@
       "conductTitle": "Regole di Condotta",
       "conductText": "Ti impegni a non utilizzare il servizio per scopi illegali o proibiti. È vietato molestare, intimidire o diffamare altri utenti. Ci riserviamo il diritto di sospendere o terminare il tuo account se violi queste regole.",
       "modificationsTitle": "Modifiche ai Termini",
-      "modificationsText": "Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno effettive immediatamente dopo la pubblicazione sul sito. L'uso continuato del servizio dopo tali modifiche costituisce l'accettazione dei nuovi termini."
+      "modificationsText": "Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno effettive immediatamente dopo la pubblicazione sul sito. L'uso continuato del servizio dopo tali modifiche costituisce l'accettazione dei nuovi termini.",
+      "ratesTitle": "Tariffe e Gettoni",
+      "ratesText": "Le utenti donne stabiliscono liberamente le proprie tariffe per gli appuntamenti. Gli utenti uomini pagano 1 gettone per inviare una richiesta di appuntamento: il gettone viene rimborsato automaticamente se la richiesta viene rifiutata o scade senza risposta. I gettoni sono crediti d'uso della piattaforma e non costituiscono un pagamento della tariffa.",
+      "paymentTitle": "Pagamento della Tariffa",
+      "paymentText": "La tariffa concordata viene pagata direttamente di persona tra le parti, al di fuori della piattaforma. FlashMatch non incassa, non gestisce e non garantisce in alcun modo tale pagamento e non è responsabile di mancati pagamenti, contestazioni o accordi presi tra gli utenti.",
+      "nonBindingTitle": "Natura Non Vincolante dell'Appuntamento",
+      "nonBindingText": "L'appuntamento fissato non è in alcun modo vincolante a pretendere qualunque cosa dall'altra persona. L'unico impegno è presentarsi all'appuntamento e trascorrere del tempo di qualità insieme, sempre nel pieno rispetto del volere dell'altra persona. Qualsiasi comportamento coercitivo o richiesta di prestazioni comporta la sospensione immediata dell'account."
     },
     "privacy": {
       "seoDescription": "Informativa sulla privacy di FlashMatch. Scopri come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali.",

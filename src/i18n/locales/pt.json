@@ -199,7 +199,13 @@
       "conductTitle": "Regras de Conduta",
       "conductText": "Compromete-se a não utilizar o serviço para fins ilegais ou proibidos. É proibido assediar, intimidar ou difamar outros utilizadores. Reservamo-nos o direito de suspender ou cancelar a sua conta se violar estas regras.",
       "modificationsTitle": "Alterações aos Termos",
-      "modificationsText": "Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações serão efetivas imediatamente após a publicação no site. O uso continuado do serviço após tais alterações constitui a aceitação dos novos termos."
+      "modificationsText": "Reservamo-nos o direito de alterar estes termos a qualquer momento. As alterações serão efetivas imediatamente após a publicação no site. O uso continuado do serviço após tais alterações constitui a aceitação dos novos termos.",
+      "ratesTitle": "Tarifas e Fichas",
+      "ratesText": "As utilizadoras definem livremente as suas tarifas para os encontros. Os utilizadores pagam 1 ficha para enviar um pedido de encontro: a ficha é automaticamente reembolsada se o pedido for recusado ou expirar sem resposta. As fichas são créditos de utilização da plataforma e não constituem o pagamento da tarifa.",
+      "paymentTitle": "Pagamento da Tarifa",
+      "paymentText": "A tarifa acordada é paga diretamente em pessoa entre as partes, fora da plataforma. A FlashMatch não cobra, não gere nem garante esse pagamento e não é responsável por falta de pagamento, disputas ou acordos entre utilizadores.",
+      "nonBindingTitle": "Natureza Não Vinculativa do Encontro",
+      "nonBindingText": "O encontro marcado não vincula de forma alguma a exigir o que quer que seja da outra pessoa. O único compromisso é comparecer e passar tempo de qualidade juntos, sempre respeitando plenamente a vontade da outra pessoa. Qualquer comportamento coercivo ou exigência de serviços implica a suspensão imediata da conta."
     },
     "privacy": {
       "seoDescription": "Política de privacidade do FlashMatch. Descubra como recolhemos, utilizamos e protegemos os seus dados pessoais.",

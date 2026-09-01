@@ -199,7 +199,13 @@
       "conductTitle": "Règles de Conduite",
       "conductText": "Vous vous engagez à ne pas utiliser le service à des fins illégales ou interdites. Il est interdit de harceler, d'intimider ou de diffamer d'autres utilisateurs. Nous nous réservons le droit de suspendre ou de résilier votre compte si vous enfreignez ces règles.",
       "modificationsTitle": "Modifications des Conditions",
-      "modificationsText": "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications prendront effet immédiatement après leur publication sur le site. L'utilisation continue du service après de telles modifications constitue l'acceptation des nouvelles conditions."
+      "modificationsText": "Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications prendront effet immédiatement après leur publication sur le site. L'utilisation continue du service après de telles modifications constitue l'acceptation des nouvelles conditions.",
+      "ratesTitle": "Tarifs et Jetons",
+      "ratesText": "Les utilisatrices fixent librement leurs propres tarifs pour les rendez-vous. Les utilisateurs paient 1 jeton pour envoyer une demande de rendez-vous : le jeton est automatiquement remboursé si la demande est refusée ou expire sans réponse. Les jetons sont des crédits d'utilisation de la plateforme et ne constituent pas le paiement du tarif.",
+      "paymentTitle": "Paiement du Tarif",
+      "paymentText": "Le tarif convenu est payé directement en personne entre les parties, en dehors de la plateforme. FlashMatch n'encaisse pas, ne gère pas et ne garantit en aucun cas ce paiement et n'est pas responsable des impayés, litiges ou accords conclus entre utilisateurs.",
+      "nonBindingTitle": "Caractère Non Contraignant du Rendez-vous",
+      "nonBindingText": "Le rendez-vous fixé n'oblige en aucun cas à exiger quoi que ce soit de l'autre personne. Le seul engagement est de se présenter au rendez-vous et de passer un bon moment ensemble, toujours dans le respect total de la volonté de l'autre. Tout comportement coercitif ou exigence de prestations entraîne la suspension immédiate du compte."
     },
     "privacy": {
       "seoDescription": "Politique de confidentialité de FlashMatch. Découvrez comment nous collectons, utilisons et protégeons vos données personnelles.",

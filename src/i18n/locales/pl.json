@@ -199,7 +199,13 @@
       "conductTitle": "Zasady Postępowania",
       "conductText": "Zobowiązujesz się nie używać usługi do celów nielegalnych lub zabronionych. Zabronione jest nękanie, zastraszanie lub zniesławianie innych użytkowników. Zastrzegamy sobie prawo do zawieszenia lub zamknięcia Twojego konta w przypadku naruszenia tych zasad.",
       "modificationsTitle": "Zmiany Warunków",
-      "modificationsText": "Zastrzegamy sobie prawo do zmiany niniejszych warunków w dowolnym momencie. Zmiany wchodzą w życie natychmiast po opublikowaniu na stronie. Dalsze korzystanie z usługi po takich zmianach stanowi akceptację nowych warunków."
+      "modificationsText": "Zastrzegamy sobie prawo do zmiany niniejszych warunków w dowolnym momencie. Zmiany wchodzą w życie natychmiast po opublikowaniu na stronie. Dalsze korzystanie z usługi po takich zmianach stanowi akceptację nowych warunków.",
+      "ratesTitle": "Stawki i Żetony",
+      "ratesText": "Użytkowniczki samodzielnie ustalają własne stawki za randki. Użytkownicy płacą 1 żeton za wysłanie prośby o randkę: żeton jest automatycznie zwracany, jeśli prośba zostanie odrzucona lub wygaśnie bez odpowiedzi. Żetony są kredytami użytkowania platformy i nie stanowią zapłaty stawki.",
+      "paymentTitle": "Zapłata Stawki",
+      "paymentText": "Uzgodniona stawka jest płacona bezpośrednio osobiście pomiędzy stronami, poza platformą. FlashMatch nie pobiera, nie zarządza ani nie gwarantuje tej płatności i nie ponosi odpowiedzialności za brak zapłaty, spory ani ustalenia między użytkownikami.",
+      "nonBindingTitle": "Niewiążący Charakter Randki",
+      "nonBindingText": "Umówiona randka w żaden sposób nie zobowiązuje do żądania czegokolwiek od drugiej osoby. Jedynym zobowiązaniem jest przyjście na spotkanie i spędzenie wspólnie dobrego czasu, zawsze z pełnym poszanowaniem woli drugiej osoby. Wszelkie zachowania przymuszające lub żądanie usług skutkują natychmiastowym zawieszeniem konta."
     },
     "privacy": {
       "seoDescription": "Polityka prywatności FlashMatch. Dowiedz się, jak zbieramy, wykorzystujemy i chronimy Twoje dane osobowe.",
