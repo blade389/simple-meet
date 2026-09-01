@@ -268,24 +268,23 @@ const Index = () => {
                 {t("home.howItWorksSubtitle")}
               </p>
 
-              <ol className="grid grid-cols-1 gap-16 md:grid-cols-3">
+              <ol className="grid grid-cols-1 gap-12 md:grid-cols-3">
                 {steps.map((step, i) => (
-                  <li key={step.title} className="relative">
+                  <li key={step.title} className="border-t border-border pt-6">
                     <span
                       aria-hidden="true"
-                      className="absolute -left-2 -top-10 font-serif text-8xl leading-none text-border opacity-40"
+                      className="mb-4 block font-serif text-6xl leading-none text-border"
                     >
                       {i + 1}
                     </span>
-                    <div className="relative z-10">
-                      <h4 className="mb-4 break-words font-serif text-2xl">{step.title}</h4>
-                      <p className="break-words leading-relaxed text-muted-foreground">
-                        {step.desc}
-                      </p>
-                    </div>
+                    <h4 className="mb-3 break-words font-serif text-2xl">{step.title}</h4>
+                    <p className="break-words leading-relaxed text-muted-foreground">
+                      {step.desc}
+                    </p>
                   </li>
                 ))}
               </ol>
+
             </div>
           </section>
 
