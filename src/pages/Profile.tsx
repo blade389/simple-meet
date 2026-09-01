@@ -459,11 +459,21 @@ const Profile = () => {
                   <Textarea
                     id="bio"
                     value={formData.bio}
-                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    rows={4}
+                    onChange={(e) => setFormData({ ...formData, bio: e.target.value.slice(0, 500) })}
+                    rows={5}
+                    maxLength={500}
                     placeholder={t('profile.bioPlaceholder')}
                   />
+                  <div className="flex items-start justify-between gap-4 mt-1">
+                    <p className="text-xs text-muted-foreground">
+                      {t('profile.bioHint', { defaultValue: 'Write 2-3 real sentences: what you enjoy, how you spend your free time, what a good date looks like for you.' })}
+                    </p>
+                    <span className={`text-xs shrink-0 ${formData.bio.length < 40 ? 'text-muted-foreground' : 'text-primary'}`}>
+                      {formData.bio.length}/500
+                    </span>
+                  </div>
                 </div>
+
 
 
                 {/* Age preferences section - locked for males until unlocked */}
