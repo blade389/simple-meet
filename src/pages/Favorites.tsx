@@ -440,15 +440,15 @@ const Favorites = () => {
   const canSendRequest = (profile: Profile): boolean => {
     // Can't send to profiles that already have pending requests
     if (sentRequests.includes(profile.id)) return false;
-    
-    // Female users can send to male profiles
-    if (myProfile?.gender === 'female' && profile.gender === 'male') return true;
-    
-    // Male users can send premium requests to premium female profiles
-    if (myProfile?.gender === 'male' && profile.gender === 'female' && profile.is_premium) return true;
-    
+
+    // Only men can send appointment requests, and only to women who published rates
+    if (myProfile?.gender === 'male' && profile.gender === 'female' && profilesWithRates.includes(profile.id)) {
+      return true;
+    }
+
     return false;
   };
+
 
   if (loading) {
     return (
