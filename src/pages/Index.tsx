@@ -1,14 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart, Shield, Star, Zap } from "lucide-react";
+import {
+  Heart,
+  Shield,
+  Star,
+  Zap,
+  Menu,
+  Tag,
+  RotateCcw,
+  HandCoins,
+  Info,
+} from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 import heroImage from "@/assets/hero-image.jpg";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { saveReferralCode } from "@/lib/referral";
+
 
 const Index = () => {
   const { t } = useTranslation();
