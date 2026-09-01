@@ -395,7 +395,7 @@ const Profile = () => {
                               {t('profile.primary')}
                             </span>
                           )}
-                          {!photo.is_primary && photo.status === 'verified' && (
+                          {!photo.is_primary && photo.status !== 'rejected' && (
                             <Button
                               size="sm"
                               variant="secondary"
@@ -404,6 +404,16 @@ const Profile = () => {
                               {t('profile.setAsPrimary')}
                             </Button>
                           )}
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => deletePhoto(photo.id)}
+                          >
+                            <Trash2 className="w-4 h-4 mr-1" />
+                            {t('profile.deletePhoto', { defaultValue: 'Delete' })}
+                          </Button>
+                          )}
+
                         </div>
                         {photo.rejection_reason && (
                           <p className="text-xs text-red-500 mt-1">{photo.rejection_reason}</p>
