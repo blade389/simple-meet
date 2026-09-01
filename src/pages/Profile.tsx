@@ -412,7 +412,6 @@ const Profile = () => {
                             <Trash2 className="w-4 h-4 mr-1" />
                             {t('profile.deletePhoto', { defaultValue: 'Delete' })}
                           </Button>
-                          )}
 
                         </div>
                         {photo.rejection_reason && (
