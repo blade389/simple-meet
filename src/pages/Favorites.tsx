@@ -106,7 +106,15 @@ const Favorites = () => {
     if (data) {
       setSentRequests(data.map(r => r.receiver_id));
     }
+
+    // Women can receive requests only if they published at least one rate
+    const { data: ratesData } = await supabase
+      .from('premium_rates')
+      .select('user_id')
+      .in('user_id', profileIds);
+    setProfilesWithRates([...new Set((ratesData || []).map((r: any) => r.user_id))] as string[]);
   };
+
 
   const loadFavorites = async () => {
     try {
