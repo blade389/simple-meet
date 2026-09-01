@@ -288,19 +288,6 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Disclaimer */}
-          <section className="px-6 py-24 lg:px-12">
-            <div className="relative mx-auto max-w-4xl overflow-hidden border border-primary/30 bg-card p-8 md:p-12">
-              <div
-                aria-hidden="true"
-                className="absolute right-0 top-0 -mr-16 -mt-16 h-32 w-32 rotate-45 bg-primary opacity-10"
-              />
-              <h4 className="eyebrow mb-6">{t("home.disclaimerLabel")}</h4>
-              <p className="break-words font-serif text-xl italic leading-relaxed md:text-2xl">
-                {t("home.appointmentDisclaimer")}
-              </p>
-            </div>
-          </section>
 
           {/* Closing CTA */}
           <section className="border-y border-border bg-card px-6 py-24 lg:px-12">
