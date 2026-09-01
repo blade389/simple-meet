@@ -22,8 +22,8 @@ const getMaleEmailHtml = (name: string, t: ReturnType<typeof getTranslation>): s
     <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">${t.welcome.intro}</p>
     
     <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #667eea;">
-      <h3 style="margin: 0 0 10px 0; color: #667eea;">✅ ${t.welcome.steps.verify}</h3>
-      <p style="margin: 0; color: #555;">Vai nella sezione Profilo e completa la verifica.</p>
+      <h3 style="margin: 0 0 10px 0; color: #667eea;">✅ ${t.welcome.steps.completeProfile}</h3>
+      <p style="margin: 0; color: #555;">Aggiungi foto e descrizione nella sezione Profilo.</p>
     </div>
     
     <div style="background: #fff8e6; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
@@ -46,8 +46,8 @@ const getFemaleEmailHtml = (name: string, t: ReturnType<typeof getTranslation>):
     <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">${t.welcome.intro}</p>
     
     <div style="background: #fdf2f8; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ec4899;">
-      <h3 style="margin: 0 0 10px 0; color: #db2777;">✅ ${t.welcome.steps.verify}</h3>
-      <p style="margin: 0; color: #555;">Vai nella sezione Profilo e completa la verifica.</p>
+      <h3 style="margin: 0 0 10px 0; color: #db2777;">✅ ${t.welcome.steps.completeProfile}</h3>
+      <p style="margin: 0; color: #555;">Aggiungi foto, descrizione e tariffe nella sezione Profilo.</p>
     </div>
     
     <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #4caf50;">

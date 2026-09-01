@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!profileError && profile) {
         const isActive = !!profile.is_premium && profile.subscription_status === 'active';
         // Female accounts get all premium features for free.
-        // A paid subscription only adds the verified badge, featured placement
+        // A paid subscription only adds the Premium badge, featured placement
         // and worldwide visibility.
         setIsSubscriber(isActive);
         setIsPremium(isActive || profile.gender === 'female');
