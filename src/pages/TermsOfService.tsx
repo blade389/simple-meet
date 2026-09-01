@@ -79,12 +79,12 @@ const TermsOfService = () => {
 
 
                         <section>
-                            <h2 className="text-2xl font-semibold text-foreground mb-4">4. {t('legal.terms.conductTitle')}</h2>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">7. {t('legal.terms.conductTitle')}</h2>
                             <p>{t('legal.terms.conductText')}</p>
                         </section>
 
                         <section>
-                            <h2 className="text-2xl font-semibold text-foreground mb-4">5. {t('legal.terms.modificationsTitle')}</h2>
+                            <h2 className="text-2xl font-semibold text-foreground mb-4">8. {t('legal.terms.modificationsTitle')}</h2>
                             <p>{t('legal.terms.modificationsText')}</p>
                         </section>
 
