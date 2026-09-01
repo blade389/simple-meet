@@ -545,26 +545,19 @@ const Dashboard = () => {
         )}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="p-6 hover:shadow-glow transition-shadow">
-            <Link to="/browse" className="block">
-              <div className="flex items-center justify-between mb-4">
-                <Users className="w-12 h-12 text-primary" />
-                {profile?.gender === 'male' && receivedRequestsCount > 0 && (
-                  <Badge className="bg-destructive text-destructive-foreground">
-                    {receivedRequestsCount}
-                  </Badge>
-                )}
-              </div>
-              <h3 className="font-semibold text-lg mb-2">
-                {profile?.gender === 'female' ? t('dashboard.discoverProfiles') : t('dashboard.incomingRequests')}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {profile?.gender === 'female'
-                  ? t('dashboard.discoverProfilesDesc')
-                  : t('dashboard.incomingRequestsDesc')}
-              </p>
-            </Link>
-          </Card>
+          {profile?.gender === 'male' && (
+            <Card className="p-6 hover:shadow-glow transition-shadow">
+              <Link to="/premium-profiles" className="block">
+                <Users className="w-12 h-12 text-primary mb-4" />
+                <h3 className="font-semibold text-lg mb-2">
+                  {t('dashboard.discoverProfiles')}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {t('dashboard.discoverProfilesDesc')}
+                </p>
+              </Link>
+            </Card>
+          )}
 
           <Card className="p-6 hover:shadow-glow transition-shadow">
             <Link to="/appointments" className="block">
