@@ -53,6 +53,8 @@ const Favorites = () => {
   const [myProfile, setMyProfile] = useState<{ gender: string; full_name: string; location_lat: number | null; location_lon: number | null } | null>(null);
   const [sendingRequest, setSendingRequest] = useState<string | null>(null);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
+  const [profilesWithRates, setProfilesWithRates] = useState<string[]>([]);
+
   
   // Premium request dialog state (for male users)
   const [premiumDialogOpen, setPremiumDialogOpen] = useState(false);
@@ -104,7 +106,15 @@ const Favorites = () => {
     if (data) {
       setSentRequests(data.map(r => r.receiver_id));
     }
+
+    // Women can receive requests only if they published at least one rate
+    const { data: ratesData } = await supabase
+      .from('premium_rates')
+      .select('user_id')
+      .in('user_id', profileIds);
+    setProfilesWithRates([...new Set((ratesData || []).map((r: any) => r.user_id))] as string[]);
   };
+
 
   const loadFavorites = async () => {
     try {
@@ -440,15 +450,15 @@ const Favorites = () => {
   const canSendRequest = (profile: Profile): boolean => {
     // Can't send to profiles that already have pending requests
     if (sentRequests.includes(profile.id)) return false;
-    
-    // Female users can send to male profiles
-    if (myProfile?.gender === 'female' && profile.gender === 'male') return true;
-    
-    // Male users can send premium requests to premium female profiles
-    if (myProfile?.gender === 'male' && profile.gender === 'female' && profile.is_premium) return true;
-    
+
+    // Only men can send appointment requests, and only to women who published rates
+    if (myProfile?.gender === 'male' && profile.gender === 'female' && profilesWithRates.includes(profile.id)) {
+      return true;
+    }
+
     return false;
   };
+
 
   if (loading) {
     return (
@@ -578,7 +588,16 @@ const Favorites = () => {
                       )}
                     </Button>
                   )}
+
+                  {myProfile?.gender === 'male' &&
+                    favorite.profile.gender === 'female' &&
+                    !profilesWithRates.includes(favorite.profile.id) && (
+                      <p className="text-xs text-muted-foreground text-center">
+                        {t('rates.profileWithoutRates')}
+                      </p>
+                    )}
                 </CardContent>
+
                 {myProfile?.gender === 'male' && canSendRequest(favorite.profile) && (
                   <div className="px-6 pb-4 -mt-2">
                     <p className="text-xs text-muted-foreground text-center">{t('favorites.tokenCostNote')}</p>

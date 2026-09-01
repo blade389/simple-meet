@@ -155,7 +155,14 @@ const PremiumProfiles = () => {
 
       if (error) throw error;
 
-      const list = (data || []).map((p: any) => {
+      // Only women who published at least one rate can receive requests
+      const { data: ratesData } = await supabase
+        .from('premium_rates')
+        .select('user_id');
+      const usersWithRates = new Set((ratesData || []).map((r: any) => r.user_id));
+
+      const list = (data || []).filter((p: any) => usersWithRates.has(p.id)).map((p: any) => {
+
         const isSubscriber = !!p.is_premium && p.subscription_status === 'active';
         const hasBadge = p.verified_badge_status === 'active';
         const distance =

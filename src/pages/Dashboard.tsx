@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [updatingLocation, setUpdatingLocation] = useState(false);
   const [premiumRequestsCount, setPremiumRequestsCount] = useState(0);
+  const [hasRates, setHasRates] = useState(true);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
   const [receivedRequestsCount, setReceivedRequestsCount] = useState(0);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -49,6 +50,7 @@ const Dashboard = () => {
       loadUnreadMessagesCount();
       loadReceivedRequestsCount();
       loadFavoritesCount();
+      loadHasRates();
       loginOneSignal(user.id);
       checkNotificationStatus();
       updateLocationSilent();
@@ -184,6 +186,18 @@ const Dashboard = () => {
       setTokens(data);
     } catch (error) {
       console.error('Error loading tokens:', error);
+    }
+  };
+
+  const loadHasRates = async () => {
+    try {
+      const { count } = await supabase
+        .from('premium_rates')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user?.id);
+      setHasRates((count || 0) > 0);
+    } catch (error) {
+      console.error('Error loading rates:', error);
     }
   };
 
@@ -646,6 +660,21 @@ const Dashboard = () => {
               </Link>
             </Card>
           </div>
+        )}
+
+        {profile?.gender === 'female' && !hasRates && (
+          <Card className="p-6 mb-8 border-2 border-destructive/30 bg-destructive/5">
+            <div className="flex items-center gap-4">
+              <Crown className="w-10 h-10 text-destructive" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg mb-1">{t('rates.requiredTitle')}</h3>
+                <p className="text-sm text-muted-foreground mb-3">{t('rates.requiredDesc')}</p>
+                <Button size="sm" asChild>
+                  <Link to="/premium-rates">{t('rates.requiredCta')}</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
         )}
 
         {/* Premium Section - Female Premium */}
