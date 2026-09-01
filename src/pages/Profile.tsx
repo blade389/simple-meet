@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera, Lock, Unlock, Coins } from 'lucide-react';
+import { Heart, ArrowLeft, Upload, CheckCircle, Clock, XCircle, Camera, Lock, Unlock, Coins, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import PremiumExplainer from '@/components/PremiumExplainer';
@@ -183,17 +183,8 @@ const Profile = () => {
 
     const isFemale = profile?.gender === 'female';
 
-    // Check if account is verified (not required for female accounts)
-    if (!isFemale && profile?.is_verified !== 'verified') {
-      toast({
-        title: t('profile.accountNotVerified'),
-        description: t('profile.verifyAccountFirst'),
-        variant: "destructive"
-      });
-      return;
-    }
-
     setUploading(true);
+
     try {
       const uploadPromises = Array.from(files).map(async (file) => {
         const fileExt = file.name.split('.').pop();
@@ -238,8 +229,32 @@ const Profile = () => {
       });
     } finally {
       setUploading(false);
+      e.target.value = '';
     }
   };
+
+  const deletePhoto = async (photoId: string) => {
+    try {
+      const { error } = await supabase
+        .from('profile_photo_verifications')
+        .delete()
+        .eq('id', photoId);
+
+      if (error) throw error;
+
+      toast({ title: t('profile.photoDeleted', { defaultValue: 'Photo deleted' }) });
+      loadPhotos();
+      loadProfile();
+    } catch (error: any) {
+      toast({
+        title: t('common2.error'),
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
+
 
   const setPrimaryPhoto = async (photoId: string) => {
     try {
@@ -328,23 +343,26 @@ const Profile = () => {
                   accept="image/*"
                   multiple
                   onChange={handlePhotoUpload}
-                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
+                  disabled={uploading}
                 />
                 <Button
                   variant="outline"
                   onClick={() => document.getElementById('photo-upload')?.click()}
-                  disabled={uploading || (profile?.gender !== 'female' && profile?.is_verified !== 'verified')}
+                  disabled={uploading}
                   size="lg"
                 >
                   <Camera className="w-4 h-4 mr-2" />
                   {uploading ? t('profile.uploading') : t('profile.uploadNewPhotos')}
                 </Button>
-                {profile?.gender !== 'female' && profile?.is_verified !== 'verified' && (
-                  <p className="text-xs text-muted-foreground text-center">
-                    {t('profile.completeVerificationFirst')}
-                  </p>
-                )}
+                <p className="text-xs text-muted-foreground text-center max-w-md">
+                  {profile?.gender === 'female'
+                    ? t('profile.photoTipsFemale', { defaultValue: 'Add at least 3 clear photos: a face shot, a full-length one and a candid one. Real photos get far more requests.' })
+                    : t('profile.photoTipsMale', { defaultValue: 'Add at least one clear face photo. Photos are checked by our team before they appear publicly.' })}
+                </p>
               </div>
+
+
+
 
               {photos.length > 0 && (
                 <div>
@@ -377,7 +395,7 @@ const Profile = () => {
                               {t('profile.primary')}
                             </span>
                           )}
-                          {!photo.is_primary && photo.status === 'verified' && (
+                          {!photo.is_primary && photo.status !== 'rejected' && (
                             <Button
                               size="sm"
                               variant="secondary"
@@ -386,6 +404,15 @@ const Profile = () => {
                               {t('profile.setAsPrimary')}
                             </Button>
                           )}
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => deletePhoto(photo.id)}
+                          >
+                            <Trash2 className="w-4 h-4 mr-1" />
+                            {t('profile.deletePhoto', { defaultValue: 'Delete' })}
+                          </Button>
+
                         </div>
                         {photo.rejection_reason && (
                           <p className="text-xs text-red-500 mt-1">{photo.rejection_reason}</p>
@@ -432,11 +459,21 @@ const Profile = () => {
                   <Textarea
                     id="bio"
                     value={formData.bio}
-                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    rows={4}
+                    onChange={(e) => setFormData({ ...formData, bio: e.target.value.slice(0, 500) })}
+                    rows={5}
+                    maxLength={500}
                     placeholder={t('profile.bioPlaceholder')}
                   />
+                  <div className="flex items-start justify-between gap-4 mt-1">
+                    <p className="text-xs text-muted-foreground">
+                      {t('profile.bioHint', { defaultValue: 'Write 2-3 real sentences: what you enjoy, how you spend your free time, what a good date looks like for you.' })}
+                    </p>
+                    <span className={`text-xs shrink-0 ${formData.bio.length < 40 ? 'text-muted-foreground' : 'text-primary'}`}>
+                      {formData.bio.length}/500
+                    </span>
+                  </div>
                 </div>
+
 
 
                 {/* Age preferences section - locked for males until unlocked */}
