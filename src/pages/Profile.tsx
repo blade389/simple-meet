@@ -183,17 +183,8 @@ const Profile = () => {
 
     const isFemale = profile?.gender === 'female';
 
-    // Check if account is verified (not required for female accounts)
-    if (!isFemale && profile?.is_verified !== 'verified') {
-      toast({
-        title: t('profile.accountNotVerified'),
-        description: t('profile.verifyAccountFirst'),
-        variant: "destructive"
-      });
-      return;
-    }
-
     setUploading(true);
+
     try {
       const uploadPromises = Array.from(files).map(async (file) => {
         const fileExt = file.name.split('.').pop();
