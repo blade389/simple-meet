@@ -147,7 +147,11 @@
     "seoKeywords": "prezzi dating app, costo gettoni, abbonamento premium, flashmatch prezzi",
     "pricesIncludeVat": "Tutti i prezzi sono IVA inclusa. I pagamenti sono sicuri e crittografati.",
     "haveQuestions": "Hai domande?",
-    "checkFaq": "Consulta le FAQ"
+    "checkFaq": "Consulta le FAQ",
+    "howPaymentTitle": "Come funziona il pagamento",
+    "howPaymentStep1": "Compri i gettoni sulla piattaforma",
+    "howPaymentStep2": "Spendi 1 gettone per inviare la richiesta",
+    "howPaymentStep3": "La tariffa dell'appuntamento si paga di persona, mai online"
   },
   "faq": {
     "title": "Domande Frequenti (FAQ)",

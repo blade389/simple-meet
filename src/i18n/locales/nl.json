@@ -143,7 +143,11 @@
     "seoKeywords": "dating app prijzen, token kosten, premium abonnement, flashmatch prijzen",
     "pricesIncludeVat": "Alle prijzen zijn inclusief BTW. Betalingen zijn veilig en versleuteld.",
     "haveQuestions": "Heb je vragen?",
-    "checkFaq": "Bekijk de FAQ"
+    "checkFaq": "Bekijk de FAQ",
+    "howPaymentTitle": "Hoe de betaling werkt",
+    "howPaymentStep1": "Je koopt tokens op het platform",
+    "howPaymentStep2": "Je geeft 1 token uit om een verzoek te sturen",
+    "howPaymentStep3": "Het datetarief wordt in persoon betaald, nooit online"
   },
   "faq": {
     "title": "Veelgestelde Vragen (FAQ)",

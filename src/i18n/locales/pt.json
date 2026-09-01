@@ -143,7 +143,11 @@
     "seoKeywords": "preços app encontros, custo fichas, subscrição premium, flashmatch preços",
     "pricesIncludeVat": "Todos os preços incluem IVA. Os pagamentos são seguros e encriptados.",
     "haveQuestions": "Tem perguntas?",
-    "checkFaq": "Consulte as FAQ"
+    "checkFaq": "Consulte as FAQ",
+    "howPaymentTitle": "Como funciona o pagamento",
+    "howPaymentStep1": "Compras fichas na plataforma",
+    "howPaymentStep2": "Gastas 1 ficha para enviar o pedido",
+    "howPaymentStep3": "A tarifa do encontro é paga presencialmente, nunca online"
   },
   "faq": {
     "title": "Perguntas Frequentes (FAQ)",

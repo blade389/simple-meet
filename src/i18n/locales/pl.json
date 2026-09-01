@@ -143,7 +143,11 @@
     "seoKeywords": "cennik app randkowa, koszt żetonów, subskrypcja premium, flashmatch cennik",
     "pricesIncludeVat": "Wszystkie ceny zawierają VAT. Płatności są bezpieczne i szyfrowane.",
     "haveQuestions": "Masz pytania?",
-    "checkFaq": "Sprawdź FAQ"
+    "checkFaq": "Sprawdź FAQ",
+    "howPaymentTitle": "Jak działa płatność",
+    "howPaymentStep1": "Kupujesz żetony na platformie",
+    "howPaymentStep2": "Wydajesz 1 żeton, aby wysłać prośbę",
+    "howPaymentStep3": "Stawka za randkę jest płacona osobiście, nigdy online"
   },
   "faq": {
     "title": "Często Zadawane Pytania (FAQ)",

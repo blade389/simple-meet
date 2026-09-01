@@ -143,7 +143,11 @@
     "seoKeywords": "dating app pricing, token cost, premium subscription, flashmatch pricing",
     "pricesIncludeVat": "All prices include VAT. Payments are secure and encrypted.",
     "haveQuestions": "Have questions?",
-    "checkFaq": "Check the FAQ"
+    "checkFaq": "Check the FAQ",
+    "howPaymentTitle": "How payment works",
+    "howPaymentStep1": "You buy tokens on the platform",
+    "howPaymentStep2": "You spend 1 token to send a request",
+    "howPaymentStep3": "The date rate is paid in person, never online"
   },
   "faq": {
     "title": "Frequently Asked Questions (FAQ)",

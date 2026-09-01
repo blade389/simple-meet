@@ -143,7 +143,11 @@
     "seoKeywords": "tarifs app rencontres, coût jetons, abonnement premium, flashmatch tarifs",
     "pricesIncludeVat": "Tous les prix incluent la TVA. Les paiements sont sécurisés et cryptés.",
     "haveQuestions": "Vous avez des questions ?",
-    "checkFaq": "Consultez la FAQ"
+    "checkFaq": "Consultez la FAQ",
+    "howPaymentTitle": "Comment fonctionne le paiement",
+    "howPaymentStep1": "Vous achetez des jetons sur la plateforme",
+    "howPaymentStep2": "Vous dépensez 1 jeton pour envoyer la demande",
+    "howPaymentStep3": "Le tarif du rendez-vous se paie en personne, jamais en ligne"
   },
   "faq": {
     "title": "Questions Fréquentes (FAQ)",

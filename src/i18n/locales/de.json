@@ -143,7 +143,11 @@
     "seoKeywords": "dating app preise, token kosten, premium abonnement, flashmatch preise",
     "pricesIncludeVat": "Alle Preise inkl. MwSt. Zahlungen sind sicher und verschlüsselt.",
     "haveQuestions": "Haben Sie Fragen?",
-    "checkFaq": "FAQ ansehen"
+    "checkFaq": "FAQ ansehen",
+    "howPaymentTitle": "So funktioniert die Zahlung",
+    "howPaymentStep1": "Du kaufst Token auf der Plattform",
+    "howPaymentStep2": "Du gibst 1 Token aus, um eine Anfrage zu senden",
+    "howPaymentStep3": "Der Date-Tarif wird vor Ort bezahlt, nie online"
   },
   "faq": {
     "title": "Häufig Gestellte Fragen (FAQ)",

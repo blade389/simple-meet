@@ -143,7 +143,11 @@
     "seoKeywords": "precios app citas, coste fichas, suscripción premium, flashmatch precios",
     "pricesIncludeVat": "Todos los precios incluyen IVA. Los pagos son seguros y encriptados.",
     "haveQuestions": "¿Tienes preguntas?",
-    "checkFaq": "Consulta las FAQ"
+    "checkFaq": "Consulta las FAQ",
+    "howPaymentTitle": "Cómo funciona el pago",
+    "howPaymentStep1": "Compras fichas en la plataforma",
+    "howPaymentStep2": "Gastas 1 ficha para enviar la solicitud",
+    "howPaymentStep3": "La tarifa de la cita se paga en persona, nunca online"
   },
   "faq": {
     "title": "Preguntas Frecuentes (FAQ)",
