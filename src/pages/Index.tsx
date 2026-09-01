@@ -74,7 +74,74 @@ const Index = () => {
                   <Button variant="hero">{t("common.signup")}</Button>
                 </Link>
               </nav>
+
+              {/* Mobile navigation */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="md:hidden"
+                    aria-label={t("home.menuLabel")}
+                  >
+                    <Menu className="w-6 h-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-72">
+                  <nav className="flex flex-col gap-2 mt-10">
+                    <SheetClose asChild>
+                      <a
+                        href="#features"
+                        className="py-3 px-2 rounded-md text-base text-foreground hover:bg-muted transition-colors"
+                      >
+                        {t("common.features")}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a
+                        href="#how-it-works"
+                        className="py-3 px-2 rounded-md text-base text-foreground hover:bg-muted transition-colors"
+                      >
+                        {t("home.howItWorks")}
+                      </a>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        to="/pricing"
+                        className="py-3 px-2 rounded-md text-base text-foreground hover:bg-muted transition-colors"
+                      >
+                        {t("common.pricing")}
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        to="/faq"
+                        className="py-3 px-2 rounded-md text-base text-foreground hover:bg-muted transition-colors"
+                      >
+                        {t("common.faq")}
+                      </Link>
+                    </SheetClose>
+                    <div className="mt-4 flex flex-col gap-3">
+                      <SheetClose asChild>
+                        <Link to="/auth">
+                          <Button variant="outline" className="w-full">
+                            {t("common.login")}
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link to="/auth">
+                          <Button variant="hero" className="w-full">
+                            {t("common.signup")}
+                          </Button>
+                        </Link>
+                      </SheetClose>
+                    </div>
+                  </nav>
+                </SheetContent>
+              </Sheet>
             </div>
+
           </div>
         </div>
       </header>
@@ -96,29 +163,36 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/auth">
                   <Button variant="hero" size="xl" className="w-full sm:w-auto">
-                    {t("common.startFree")}
+                    {t("home.heroPrimaryCta")}
                   </Button>
                 </Link>
-                <Link to="/features">
+                <a href="#how-it-works" className="w-full sm:w-auto">
                   <Button variant="outline" size="xl" className="w-full sm:w-auto">
-                    {t("common.discoverFeatures", "Scopri le funzionalità")}
+                    {t("home.heroSecondaryCta")}
                   </Button>
-                </Link>
+                </a>
               </div>
-              <div className="flex flex-wrap gap-8 pt-4">
-                <div>
-                  <div className="text-3xl font-bold text-primary">10K+</div>
-                  <div className="text-sm text-muted-foreground">{t("home.activeUsers")}</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-primary">95%</div>
-                  <div className="text-sm text-muted-foreground">{t("home.successfulMeetings")}</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-primary">4.8★</div>
-                  <div className="text-sm text-muted-foreground">{t("home.averageRating")}</div>
-                </div>
+
+              {/* Trust signals */}
+              <div className="grid sm:grid-cols-3 gap-4 pt-4">
+                {[
+                  { icon: Tag, title: t("home.trust1Title"), desc: t("home.trust1Desc") },
+                  { icon: RotateCcw, title: t("home.trust2Title"), desc: t("home.trust2Desc") },
+                  { icon: HandCoins, title: t("home.trust3Title"), desc: t("home.trust3Desc") },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="flex sm:flex-col items-start gap-3 rounded-xl border bg-card/60 backdrop-blur-sm p-4"
+                  >
+                    <item.icon className="w-5 h-5 text-primary shrink-0" />
+                    <div className="min-w-0">
+                      <div className="font-semibold text-sm">{item.title}</div>
+                      <div className="text-xs text-muted-foreground break-words">{item.desc}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
+
             </div>
             <div className="relative min-w-0">
               <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-3xl"></div>
