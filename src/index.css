@@ -1,92 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Karla:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Design system — "Structured minimalism".
+   Palette: Charcoal & Ember (#1a1a1a / #2d2d2d / #4a4a4a / #e85d3a).
+   Type: Cormorant Garamond (headings) + Karla (body).
+   All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 330 20% 15%;
+    /* Charcoal surfaces */
+    --background: 0 0% 10%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 330 20% 15%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 330 20% 15%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 330 85% 55%;
+    /* Ember accent */
+    --primary: 12 79% 57%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 330 85% 65%;
+    --primary-glow: 18 85% 63%;
 
-    --secondary: 280 70% 55%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 330 15% 96%;
-    --muted-foreground: 330 10% 45%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 68%;
 
-    --accent: 340 90% 60%;
+    --accent: 12 79% 57%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 330 20% 90%;
-    --input: 330 20% 90%;
-    --ring: 330 85% 55%;
+    --border: 0 0% 29%;
+    --input: 0 0% 29%;
+    --ring: 12 79% 57%;
 
-    --radius: 1rem;
+    /* Structured minimalism: near-square corners */
+    --radius: 0.125rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(330, 85%, 55%), hsl(280, 70%, 55%));
-    --gradient-hero: linear-gradient(180deg, hsl(330, 85%, 98%), hsl(280, 70%, 98%));
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(330, 85%, 99%));
-    
-    --shadow-soft: 0 4px 20px -2px hsl(330 85% 55% / 0.15);
-    --shadow-glow: 0 0 40px hsl(330 85% 65% / 0.3);
-    --shadow-card: 0 10px 40px -10px hsl(330 50% 50% / 0.2);
-    
+    --gradient-primary: linear-gradient(135deg, hsl(12 79% 57%), hsl(18 85% 63%));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 10%), hsl(0 0% 12%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 18%), hsl(0 0% 15%));
+
+    --shadow-soft: 0 4px 20px -2px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(12 79% 57% / 0.25);
+    --shadow-card: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
+
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* The interface is dark by design; .dark mirrors :root. */
   .dark {
-    --background: 330 25% 8%;
-    --foreground: 330 10% 95%;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 100%;
 
-    --card: 330 20% 12%;
-    --card-foreground: 330 10% 95%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 330 20% 12%;
-    --popover-foreground: 330 10% 95%;
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 330 85% 60%;
+    --primary: 12 79% 57%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 330 85% 70%;
+    --primary-glow: 18 85% 63%;
 
-    --secondary: 280 70% 60%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 330 15% 20%;
-    --muted-foreground: 330 10% 60%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 68%;
 
-    --accent: 340 90% 65%;
+    --accent: 12 79% 57%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 330 20% 20%;
-    --input: 330 20% 20%;
-    --ring: 330 85% 60%;
+    --border: 0 0% 29%;
+    --input: 0 0% 29%;
+    --ring: 12 79% 57%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(330, 85%, 60%), hsl(280, 70%, 60%));
-    --gradient-hero: linear-gradient(180deg, hsl(330, 25%, 10%), hsl(280, 25%, 12%));
-    --gradient-card: linear-gradient(145deg, hsl(330, 20%, 12%), hsl(330, 25%, 15%));
-    
-    --shadow-soft: 0 4px 20px -2px hsl(330 85% 60% / 0.3);
-    --shadow-glow: 0 0 40px hsl(330 85% 70% / 0.5);
-    --shadow-card: 0 10px 40px -10px hsl(330 50% 50% / 0.4);
+    --gradient-primary: linear-gradient(135deg, hsl(12 79% 57%), hsl(18 85% 63%));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 10%), hsl(0 0% 12%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 18%), hsl(0 0% 15%));
+
+    --shadow-soft: 0 4px 20px -2px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(12 79% 57% / 0.25);
+    --shadow-card: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
   }
 }
 
@@ -96,6 +104,29 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+  }
+
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+}
+
+@layer components {
+  /* Small uppercase label used across sections */
+  .eyebrow {
+    @apply font-sans text-xs font-bold uppercase tracking-[0.2em] text-primary;
+  }
+
+  /* Thin ember rule that precedes a statement */
+  .ember-rule {
+    @apply h-px w-8 shrink-0 bg-primary;
   }
 }
