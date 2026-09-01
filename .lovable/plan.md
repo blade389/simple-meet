@@ -1,19 +1,14 @@
-# Riattivazione push OneSignal su flashmatch.org
+# Riattivazione push su flashmatch.org
 
-## Cosa fai tu (2 minuti)
-1. Vai su onesignal.com e recupera l'accesso all'account (login con Google o "Forgot password" sull'email usata ai tempi di Scopami).
-2. Apri l'app con App ID `6c1a6559-422c-4b84-84c7-95574fcc3ae1`.
-3. Settings > Push & In-App > Web configuration:
-   - Site Name: `FlashMatch`
-   - Site URL: `https://flashmatch.org`
-   - Salva.
-4. Facoltativo: rinomina l'app da "Scopami" a "FlashMatch" e aggiorna l'icona con il cuore rosa.
+Site URL OneSignal aggiornato lato dashboard. Ora completo la parte app.
 
-## Cosa faccio io dopo la tua conferma
-- Verifico via API che `chrome_web_origin` sia diventato `https://flashmatch.org`.
-- Controllo in preview che l'SDK si inizializzi senza errori e che compaia il prompt di iscrizione alle push.
-- Test end-to-end: invio una richiesta di appuntamento e un messaggio in chat, e controllo nei log delle funzioni `send-push-notification` e `send-chat-message-notification` che la notifica risulti consegnata.
-- Se il prompt non compare per utenti che avevano gia' negato il permesso sul vecchio dominio, aggiungo in Dashboard un avviso con pulsante "Attiva notifiche".
+## Cosa faccio
+1. Verifica in preview che l'SDK OneSignal si inizializzi senza errori (console pulita, nessun mismatch di origin) e che il service worker si registri.
+2. Prompt di iscrizione: oggi il permesso non viene mai chiesto in modo esplicito. Aggiungo un invito visibile in Dashboard ("Attiva le notifiche") che chiama il prompt OneSignal e sparisce quando il permesso e' gia' concesso, cosi' anche chi aveva negato sul vecchio dominio puo' riattivarle.
+3. Allineo `send-push-notification` all'API v16 usando `include_aliases: { external_id: [...] }` (oggi usa il campo deprecato `include_external_user_ids`) e imposto URL assoluti su https://flashmatch.org.
+4. Test end-to-end: iscrizione push dal browser, invio di una richiesta di appuntamento e di un messaggio in chat, controllo dei log delle funzioni per confermare la consegna.
 
 ## Note tecniche
-Il codice e' gia' pronto: `src/lib/onesignal.ts` (init + login), `AuthContext` collega l'external user id a ogni cambio di sessione, `public/OneSignalSDKWorker.js` e' servito dalla root, e le edge function usano l'API v16 con `include_aliases` e URL assoluti su https://flashmatch.org. Non serve alcuna modifica finche' il Site URL non e' corretto.
+- `src/lib/onesignal.ts` espone gia' `showOneSignalPrompt` e `isPushEnabled`: la nuova card in Dashboard le riusa, nessuna nuova dipendenza.
+- `AuthContext` collega gia' l'external id OneSignal all'utente a ogni login.
+- Nessuna modifica a schema DB o secrets.
