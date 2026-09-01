@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Heart, Shield, Zap, Star, Lock, Users, MessageCircle, CheckCircle } from "lucide-react";
+import { ArrowLeft, Heart, Zap, Star, Lock, Users, MessageCircle, CheckCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { useTranslation } from "react-i18next";
@@ -20,11 +20,6 @@ const Features = () => {
             icon: <Zap className="w-12 h-12 text-yellow-500" />,
             title: t('features.feature2Title'),
             description: t('features.feature2Desc')
-        },
-        {
-            icon: <Shield className="w-12 h-12 text-green-500" />,
-            title: t('features.feature3Title'),
-            description: t('features.feature3Desc')
         },
         {
             icon: <Star className="w-12 h-12 text-purple-500" />,
@@ -59,7 +54,7 @@ const Features = () => {
             title={`${t('features.title')} | FlashMatch`}
             description={t('features.feature1Desc')}
             canonicalPath="/features"
-            keywords="appuntamenti a pagamento, tariffe donne, richieste a gettoni, verifica identità, funzionalità flashmatch"
+            keywords="appuntamenti a pagamento, tariffe donne, richieste a gettoni, sicurezza, funzionalità flashmatch"
         />
         <div className="min-h-screen bg-background p-6 md:p-12">
             <div className="absolute top-4 right-4 z-50">

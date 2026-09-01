@@ -56,7 +56,7 @@ const FAQ = () => {
         <>
         <SEOHead
             title={`${t('faq.title')} | FlashMatch`}
-            description="FAQ FlashMatch: come funzionano gli appuntamenti a pagamento, il costo in gettoni delle richieste, le tariffe fissate dalle donne, i rimborsi e la verifica dei profili."
+            description="FAQ FlashMatch: appuntamenti a pagamento, costo in gettoni delle richieste, tariffe fissate dalle donne, rimborsi e sicurezza."
             canonicalPath="/faq"
             keywords="faq flashmatch, appuntamenti a pagamento, costo gettoni richiesta, tariffe appuntamento, rimborso gettone"
         />

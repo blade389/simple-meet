@@ -20,7 +20,6 @@ import Dashboard from "./pages/Dashboard";
 import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
 import Appointments from "./pages/Appointments";
-import Verify from "./pages/Verify";
 import Admin from "./pages/Admin";
 import BuyTokens from "./pages/BuyTokens";
 import PremiumProfiles from './pages/PremiumProfiles';
@@ -76,15 +75,12 @@ const App = () => {
               <Route path="/browse" element={<Browse />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/appointments" element={<Appointments />} />
-              <Route path="/verify" element={<Verify />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/buy-tokens" element={<BuyTokens />} />
               <Route path="/premium-profiles" element={<PremiumProfiles />} />
               <Route path="/premium-requests" element={<PremiumRequests />} />
               <Route path="/premium-subscription" element={<PremiumSubscription />} />
               <Route path="/premium-rates" element={<PremiumRatesManagement />} />
-              <Route path="/admin/verification-requests" element={<Admin />} />
-              <Route path="/admin/photo-verification" element={<Admin />} />
               <Route path="/admin/premium-rates" element={<PremiumRatesManagement />} />
               <Route path="/admin/conversation-reviews" element={<ConversationReviews />} />
               <Route path="/admin/user-reviews" element={<AdminUserReviews />} />

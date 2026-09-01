@@ -8,7 +8,7 @@ FlashMatch è una piattaforma di appuntamenti a pagamento disponibile in 8 lingu
 
 - [Home](/): Panoramica di FlashMatch, come funziona e iscrizione gratuita.
 - [About](/about): Chi siamo, missione e valori di FlashMatch.
-- [Funzionalità](/features): Tutte le funzionalità dell'app, sicurezza e verifica profili.
+- [Funzionalità](/features): Tutte le funzionalità dell'app, sicurezza e gestione dei profili.
 - [Prezzi](/pricing): Pacchetti gettoni per inviare richieste e abbonamento premium opzionale per le donne.
 - [FAQ](/faq): Risposte su gettoni, tariffe degli appuntamenti, rimborsi, sicurezza e account.
 - [Leaderboard Referral](/leaderboard): Classifica del contest referral attivo fino al 30 agosto 2026.
