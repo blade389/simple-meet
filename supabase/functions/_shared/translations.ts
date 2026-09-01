@@ -17,7 +17,7 @@ export const translations: Record<SupportedLanguage, {
     title: string;
     intro: string;
     steps: {
-      verify: string;
+      completeProfile: string;
       uploadPhoto: string;
       browse: string;
       sendRequest: string;
@@ -62,25 +62,6 @@ export const translations: Record<SupportedLanguage, {
     message: string;
     notification: string;
   };
-  // Verification approved
-  verificationApproved: {
-    subject: string;
-    title: string;
-    message: string;
-    cta: string;
-    notification: string;
-  };
-  // Photo approved
-  photoApproved: {
-    subject: string;
-    primarySubject: string;
-    title: string;
-    primaryTitle: string;
-    message: string;
-    primaryMessage: string;
-    cta: string;
-    notification: string;
-  };
   // Review reminder
   reviewReminder: {
     subject: string;
@@ -113,14 +94,6 @@ export const translations: Record<SupportedLanguage, {
     cta: string;
     notification: string;
   };
-  // Verification reminder
-  verificationReminder: {
-    subject: string;
-    title: string;
-    maleMessage: string;
-    femaleMessage: string;
-    cta: string;
-  };
   // Review action
   reviewAction: {
     tokenDeductedSubject: string;
@@ -149,7 +122,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Benvenuto su FlashMatch!',
       intro: 'Grazie per esserti registrato! Siamo entusiasti di averti con noi.',
       steps: {
-        verify: 'Completa la verifica del tuo profilo',
+        completeProfile: 'Completa il tuo profilo',
         uploadPhoto: 'Carica una foto profilo',
         browse: 'Sfoglia i profili disponibili',
         sendRequest: 'Invia la tua prima richiesta',
@@ -190,23 +163,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Il tuo appuntamento è tra 2 ore.',
       notification: 'Il tuo appuntamento è tra 2 ore',
     },
-    verificationApproved: {
-      subject: 'Il tuo profilo è stato verificato!',
-      title: 'Verifica Completata',
-      message: 'Congratulazioni! Il tuo profilo è stato verificato con successo. Ora puoi accedere a tutte le funzionalità della piattaforma.',
-      cta: 'Inizia a Esplorare',
-      notification: 'Il tuo profilo è stato verificato!',
-    },
-    photoApproved: {
-      subject: 'La tua foto è stata approvata!',
-      primarySubject: 'La tua foto profilo è stata approvata!',
-      title: 'Foto Approvata',
-      primaryTitle: 'Foto Profilo Approvata',
-      message: 'La tua foto è stata approvata ed è ora visibile nel tuo profilo.',
-      primaryMessage: 'La tua foto profilo è stata approvata! Ora il tuo profilo è visibile agli altri utenti.',
-      cta: 'Visualizza Profilo',
-      notification: 'La tua foto è stata approvata!',
-    },
     reviewReminder: {
       subject: 'Non dimenticare di lasciare una recensione!',
       title: 'Promemoria Recensione',
@@ -235,13 +191,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Pianifica Ora',
       notification: 'Pianifica l\'appuntamento prima della scadenza',
     },
-    verificationReminder: {
-      subject: 'Completa la verifica del tuo profilo',
-      title: 'Verifica in Attesa',
-      maleMessage: 'Non hai ancora completato la verifica del tuo profilo. Completa la verifica per poter inviare richieste.',
-      femaleMessage: 'Non hai ancora completato la verifica del tuo profilo. Completa la verifica per iniziare a ricevere richieste.',
-      cta: 'Completa Verifica',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Notifica sull\'account',
       tokenDeductedTitle: 'Token Detratto',
@@ -268,7 +217,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Welcome to FlashMatch!',
       intro: 'Thank you for signing up! We\'re excited to have you with us.',
       steps: {
-        verify: 'Complete your profile verification',
+        completeProfile: 'Complete your profile',
         uploadPhoto: 'Upload a profile photo',
         browse: 'Browse available profiles',
         sendRequest: 'Send your first request',
@@ -309,23 +258,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Your appointment is in 2 hours.',
       notification: 'Your appointment is in 2 hours',
     },
-    verificationApproved: {
-      subject: 'Your profile has been verified!',
-      title: 'Verification Complete',
-      message: 'Congratulations! Your profile has been successfully verified. You can now access all platform features.',
-      cta: 'Start Exploring',
-      notification: 'Your profile has been verified!',
-    },
-    photoApproved: {
-      subject: 'Your photo has been approved!',
-      primarySubject: 'Your profile photo has been approved!',
-      title: 'Photo Approved',
-      primaryTitle: 'Profile Photo Approved',
-      message: 'Your photo has been approved and is now visible on your profile.',
-      primaryMessage: 'Your profile photo has been approved! Your profile is now visible to other users.',
-      cta: 'View Profile',
-      notification: 'Your photo has been approved!',
-    },
     reviewReminder: {
       subject: 'Don\'t forget to leave a review!',
       title: 'Review Reminder',
@@ -354,13 +286,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Schedule Now',
       notification: 'Schedule the appointment before the deadline',
     },
-    verificationReminder: {
-      subject: 'Complete your profile verification',
-      title: 'Verification Pending',
-      maleMessage: 'You haven\'t completed your profile verification yet. Complete verification to send requests.',
-      femaleMessage: 'You haven\'t completed your profile verification yet. Complete verification to start receiving requests.',
-      cta: 'Complete Verification',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Account Notification',
       tokenDeductedTitle: 'Token Deducted',
@@ -387,7 +312,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Bienvenue sur FlashMatch!',
       intro: 'Merci de vous être inscrit! Nous sommes ravis de vous accueillir.',
       steps: {
-        verify: 'Complétez la vérification de votre profil',
+        completeProfile: 'Complétez votre profil',
         uploadPhoto: 'Téléchargez une photo de profil',
         browse: 'Parcourez les profils disponibles',
         sendRequest: 'Envoyez votre première demande',
@@ -428,23 +353,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Votre rendez-vous est dans 2 heures.',
       notification: 'Votre rendez-vous est dans 2 heures',
     },
-    verificationApproved: {
-      subject: 'Votre profil a été vérifié!',
-      title: 'Vérification Terminée',
-      message: 'Félicitations! Votre profil a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.',
-      cta: 'Commencer à Explorer',
-      notification: 'Votre profil a été vérifié!',
-    },
-    photoApproved: {
-      subject: 'Votre photo a été approuvée!',
-      primarySubject: 'Votre photo de profil a été approuvée!',
-      title: 'Photo Approuvée',
-      primaryTitle: 'Photo de Profil Approuvée',
-      message: 'Votre photo a été approuvée et est maintenant visible sur votre profil.',
-      primaryMessage: 'Votre photo de profil a été approuvée! Votre profil est maintenant visible.',
-      cta: 'Voir le Profil',
-      notification: 'Votre photo a été approuvée!',
-    },
     reviewReminder: {
       subject: 'N\'oubliez pas de laisser un avis!',
       title: 'Rappel d\'Avis',
@@ -473,13 +381,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Planifier Maintenant',
       notification: 'Planifiez le rendez-vous avant la date limite',
     },
-    verificationReminder: {
-      subject: 'Complétez la vérification de votre profil',
-      title: 'Vérification en Attente',
-      maleMessage: 'Vous n\'avez pas encore complété la vérification de votre profil. Complétez la vérification pour envoyer des demandes.',
-      femaleMessage: 'Vous n\'avez pas encore complété la vérification de votre profil. Complétez la vérification pour recevoir des demandes.',
-      cta: 'Compléter la Vérification',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Notification de Compte',
       tokenDeductedTitle: 'Token Déduit',
@@ -506,7 +407,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Willkommen bei FlashMatch!',
       intro: 'Danke für deine Registrierung! Wir freuen uns, dich bei uns zu haben.',
       steps: {
-        verify: 'Vervollständige deine Profilverifizierung',
+        completeProfile: 'Vervollständige dein Profil',
         uploadPhoto: 'Lade ein Profilbild hoch',
         browse: 'Durchsuche verfügbare Profile',
         sendRequest: 'Sende deine erste Anfrage',
@@ -547,23 +448,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Dein Termin ist in 2 Stunden.',
       notification: 'Dein Termin ist in 2 Stunden',
     },
-    verificationApproved: {
-      subject: 'Dein Profil wurde verifiziert!',
-      title: 'Verifizierung Abgeschlossen',
-      message: 'Herzlichen Glückwunsch! Dein Profil wurde erfolgreich verifiziert. Du kannst jetzt alle Funktionen nutzen.',
-      cta: 'Jetzt Entdecken',
-      notification: 'Dein Profil wurde verifiziert!',
-    },
-    photoApproved: {
-      subject: 'Dein Foto wurde genehmigt!',
-      primarySubject: 'Dein Profilbild wurde genehmigt!',
-      title: 'Foto Genehmigt',
-      primaryTitle: 'Profilbild Genehmigt',
-      message: 'Dein Foto wurde genehmigt und ist jetzt in deinem Profil sichtbar.',
-      primaryMessage: 'Dein Profilbild wurde genehmigt! Dein Profil ist jetzt für andere Benutzer sichtbar.',
-      cta: 'Profil Ansehen',
-      notification: 'Dein Foto wurde genehmigt!',
-    },
     reviewReminder: {
       subject: 'Vergiss nicht, eine Bewertung abzugeben!',
       title: 'Bewertungserinnerung',
@@ -592,13 +476,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Jetzt Planen',
       notification: 'Plane den Termin vor Ablauf der Frist',
     },
-    verificationReminder: {
-      subject: 'Vervollständige deine Profilverifizierung',
-      title: 'Verifizierung Ausstehend',
-      maleMessage: 'Du hast deine Profilverifizierung noch nicht abgeschlossen. Schließe die Verifizierung ab, um Anfragen zu senden.',
-      femaleMessage: 'Du hast deine Profilverifizierung noch nicht abgeschlossen. Schließe die Verifizierung ab, um Anfragen zu erhalten.',
-      cta: 'Verifizierung Abschließen',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Kontobenachrichtigung',
       tokenDeductedTitle: 'Token Abgezogen',
@@ -625,7 +502,7 @@ export const translations: Record<SupportedLanguage, {
       title: '¡Bienvenido a FlashMatch!',
       intro: '¡Gracias por registrarte! Estamos encantados de tenerte con nosotros.',
       steps: {
-        verify: 'Completa la verificación de tu perfil',
+        completeProfile: 'Completa tu perfil',
         uploadPhoto: 'Sube una foto de perfil',
         browse: 'Explora los perfiles disponibles',
         sendRequest: 'Envía tu primera solicitud',
@@ -666,23 +543,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Tu cita es en 2 horas.',
       notification: 'Tu cita es en 2 horas',
     },
-    verificationApproved: {
-      subject: '¡Tu perfil ha sido verificado!',
-      title: 'Verificación Completada',
-      message: '¡Felicitaciones! Tu perfil ha sido verificado exitosamente. Ahora puedes acceder a todas las funcionalidades.',
-      cta: 'Empezar a Explorar',
-      notification: '¡Tu perfil ha sido verificado!',
-    },
-    photoApproved: {
-      subject: '¡Tu foto ha sido aprobada!',
-      primarySubject: '¡Tu foto de perfil ha sido aprobada!',
-      title: 'Foto Aprobada',
-      primaryTitle: 'Foto de Perfil Aprobada',
-      message: 'Tu foto ha sido aprobada y ahora es visible en tu perfil.',
-      primaryMessage: '¡Tu foto de perfil ha sido aprobada! Tu perfil ahora es visible para otros usuarios.',
-      cta: 'Ver Perfil',
-      notification: '¡Tu foto ha sido aprobada!',
-    },
     reviewReminder: {
       subject: '¡No olvides dejar una reseña!',
       title: 'Recordatorio de Reseña',
@@ -711,13 +571,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Programar Ahora',
       notification: 'Programa la cita antes de la fecha límite',
     },
-    verificationReminder: {
-      subject: 'Completa la verificación de tu perfil',
-      title: 'Verificación Pendiente',
-      maleMessage: 'Aún no has completado la verificación de tu perfil. Completa la verificación para enviar solicitudes.',
-      femaleMessage: 'Aún no has completado la verificación de tu perfil. Completa la verificación para recibir solicitudes.',
-      cta: 'Completar Verificación',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Notificación de Cuenta',
       tokenDeductedTitle: 'Token Deducido',
@@ -744,7 +597,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Bem-vindo ao FlashMatch!',
       intro: 'Obrigado por se registrar! Estamos animados em tê-lo conosco.',
       steps: {
-        verify: 'Complete a verificação do seu perfil',
+        completeProfile: 'Complete seu perfil',
         uploadPhoto: 'Faça upload de uma foto de perfil',
         browse: 'Explore os perfis disponíveis',
         sendRequest: 'Envie sua primeira solicitação',
@@ -785,23 +638,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Seu encontro é em 2 horas.',
       notification: 'Seu encontro é em 2 horas',
     },
-    verificationApproved: {
-      subject: 'Seu perfil foi verificado!',
-      title: 'Verificação Concluída',
-      message: 'Parabéns! Seu perfil foi verificado com sucesso. Agora você pode acessar todas as funcionalidades.',
-      cta: 'Começar a Explorar',
-      notification: 'Seu perfil foi verificado!',
-    },
-    photoApproved: {
-      subject: 'Sua foto foi aprovada!',
-      primarySubject: 'Sua foto de perfil foi aprovada!',
-      title: 'Foto Aprovada',
-      primaryTitle: 'Foto de Perfil Aprovada',
-      message: 'Sua foto foi aprovada e agora está visível no seu perfil.',
-      primaryMessage: 'Sua foto de perfil foi aprovada! Seu perfil agora está visível para outros usuários.',
-      cta: 'Ver Perfil',
-      notification: 'Sua foto foi aprovada!',
-    },
     reviewReminder: {
       subject: 'Não esqueça de deixar uma avaliação!',
       title: 'Lembrete de Avaliação',
@@ -830,13 +666,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Agendar Agora',
       notification: 'Agende o encontro antes do prazo',
     },
-    verificationReminder: {
-      subject: 'Complete a verificação do seu perfil',
-      title: 'Verificação Pendente',
-      maleMessage: 'Você ainda não completou a verificação do seu perfil. Complete a verificação para enviar solicitações.',
-      femaleMessage: 'Você ainda não completou a verificação do seu perfil. Complete a verificação para receber solicitações.',
-      cta: 'Completar Verificação',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Notificação de Conta',
       tokenDeductedTitle: 'Token Deduzido',
@@ -863,7 +692,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Welkom bij FlashMatch!',
       intro: 'Bedankt voor je registratie! We zijn blij je te verwelkomen.',
       steps: {
-        verify: 'Voltooi je profielverificatie',
+        completeProfile: 'Voltooi je profiel',
         uploadPhoto: 'Upload een profielfoto',
         browse: 'Bekijk beschikbare profielen',
         sendRequest: 'Stuur je eerste verzoek',
@@ -904,23 +733,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Je afspraak is over 2 uur.',
       notification: 'Je afspraak is over 2 uur',
     },
-    verificationApproved: {
-      subject: 'Je profiel is geverifieerd!',
-      title: 'Verificatie Voltooid',
-      message: 'Gefeliciteerd! Je profiel is succesvol geverifieerd. Je hebt nu toegang tot alle functies.',
-      cta: 'Begin met Ontdekken',
-      notification: 'Je profiel is geverifieerd!',
-    },
-    photoApproved: {
-      subject: 'Je foto is goedgekeurd!',
-      primarySubject: 'Je profielfoto is goedgekeurd!',
-      title: 'Foto Goedgekeurd',
-      primaryTitle: 'Profielfoto Goedgekeurd',
-      message: 'Je foto is goedgekeurd en is nu zichtbaar op je profiel.',
-      primaryMessage: 'Je profielfoto is goedgekeurd! Je profiel is nu zichtbaar voor andere gebruikers.',
-      cta: 'Profiel Bekijken',
-      notification: 'Je foto is goedgekeurd!',
-    },
     reviewReminder: {
       subject: 'Vergeet niet een beoordeling achter te laten!',
       title: 'Beoordeling Herinnering',
@@ -949,13 +761,6 @@ export const translations: Record<SupportedLanguage, {
       cta: 'Nu Plannen',
       notification: 'Plan de afspraak voor de deadline',
     },
-    verificationReminder: {
-      subject: 'Voltooi je profielverificatie',
-      title: 'Verificatie in Afwachting',
-      maleMessage: 'Je hebt je profielverificatie nog niet voltooid. Voltooi de verificatie om verzoeken te versturen.',
-      femaleMessage: 'Je hebt je profielverificatie nog niet voltooid. Voltooi de verificatie om verzoeken te ontvangen.',
-      cta: 'Verificatie Voltooien',
-    },
     reviewAction: {
       tokenDeductedSubject: 'Account Melding',
       tokenDeductedTitle: 'Token Afgetrokken',
@@ -982,7 +787,7 @@ export const translations: Record<SupportedLanguage, {
       title: 'Witaj w FlashMatch!',
       intro: 'Dziękujemy za rejestrację! Cieszymy się, że jesteś z nami.',
       steps: {
-        verify: 'Dokończ weryfikację profilu',
+        completeProfile: 'Uzupełnij swój profil',
         uploadPhoto: 'Prześlij zdjęcie profilowe',
         browse: 'Przeglądaj dostępne profile',
         sendRequest: 'Wyślij swoją pierwszą prośbę',
@@ -1023,23 +828,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Twoje spotkanie jest za 2 godziny.',
       notification: 'Twoje spotkanie jest za 2 godziny',
     },
-    verificationApproved: {
-      subject: 'Twój profil został zweryfikowany!',
-      title: 'Weryfikacja Zakończona',
-      message: 'Gratulacje! Twój profil został pomyślnie zweryfikowany. Teraz masz dostęp do wszystkich funkcji.',
-      cta: 'Zacznij Odkrywać',
-      notification: 'Twój profil został zweryfikowany!',
-    },
-    photoApproved: {
-      subject: 'Twoje zdjęcie zostało zatwierdzone!',
-      primarySubject: 'Twoje zdjęcie profilowe zostało zatwierdzone!',
-      title: 'Zdjęcie Zatwierdzone',
-      primaryTitle: 'Zdjęcie Profilowe Zatwierdzone',
-      message: 'Twoje zdjęcie zostało zatwierdzone i jest teraz widoczne na Twoim profilu.',
-      primaryMessage: 'Twoje zdjęcie profilowe zostało zatwierdzone! Twój profil jest teraz widoczny dla innych użytkowników.',
-      cta: 'Zobacz Profil',
-      notification: 'Twoje zdjęcie zostało zatwierdzone!',
-    },
     reviewReminder: {
       subject: 'Nie zapomnij zostawić opinii!',
       title: 'Przypomnienie o Opinii',
@@ -1067,13 +855,6 @@ export const translations: Record<SupportedLanguage, {
       message: 'Termin na umówienie spotkania mija za godzinę.',
       cta: 'Umów Teraz',
       notification: 'Umów spotkanie przed terminem',
-    },
-    verificationReminder: {
-      subject: 'Dokończ weryfikację profilu',
-      title: 'Weryfikacja Oczekująca',
-      maleMessage: 'Nie dokończyłeś jeszcze weryfikacji profilu. Dokończ weryfikację, aby wysyłać prośby.',
-      femaleMessage: 'Nie dokończyłaś jeszcze weryfikacji profilu. Dokończ weryfikację, aby otrzymywać prośby.',
-      cta: 'Dokończ Weryfikację',
     },
     reviewAction: {
       tokenDeductedSubject: 'Powiadomienie o Koncie',
