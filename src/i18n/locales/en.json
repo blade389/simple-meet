@@ -837,5 +837,11 @@
     "contestDeadline": "🏆 Referral prize contest: until 30 August 2026",
     "launchDesc": "Sign up now, verify your profile and invite friends. Top referrers win prizes up to €1,000 or free Premium months!",
     "viewPrizes": "View Prizes"
+  },
+  "rates": {
+    "requiredTitle": "Set your rates",
+    "requiredDesc": "To receive date requests you must add at least one rate. Without rates your profile is not visible to men.",
+    "requiredCta": "Set rates",
+    "profileWithoutRates": "This profile hasn't set rates yet: it can't receive requests."
   }
 }

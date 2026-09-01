@@ -794,5 +794,11 @@
     "contestDeadline": "🏆 Empfehlungs-Preiswettbewerb: bis 30. August 2026",
     "launchDesc": "Registriere dich jetzt, verifiziere dein Profil und lade Freundinnen ein. Die besten Werberinnen gewinnen Preise bis zu 1.000€ oder kostenlose Premium-Monate!",
     "viewPrizes": "Preise Ansehen"
+  },
+  "rates": {
+    "requiredTitle": "Lege deine Tarife fest",
+    "requiredDesc": "Um Date-Anfragen zu erhalten, musst du mindestens einen Tarif angeben. Ohne Tarife ist dein Profil für Männer nicht sichtbar.",
+    "requiredCta": "Tarife festlegen",
+    "profileWithoutRates": "Dieses Profil hat noch keine Tarife festgelegt und kann keine Anfragen erhalten."
   }
 }

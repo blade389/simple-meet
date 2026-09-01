@@ -794,5 +794,11 @@
     "contestDeadline": "🏆 Concurso de referidas: hasta el 30 de agosto de 2026",
     "launchDesc": "¡Regístrate ahora, verifica tu perfil e invita a tus amigas. Las mejores referidoras ganan premios hasta 1.000€ o meses de Premium gratis!",
     "viewPrizes": "Ver Premios"
+  },
+  "rates": {
+    "requiredTitle": "Configura tus tarifas",
+    "requiredDesc": "Para recibir solicitudes de cita debes añadir al menos una tarifa. Sin tarifas tu perfil no es visible para los hombres.",
+    "requiredCta": "Configurar tarifas",
+    "profileWithoutRates": "Este perfil aún no ha configurado tarifas: no puede recibir solicitudes."
   }
 }
