@@ -34,13 +34,13 @@
     "feature2Desc": "1 ficha por solicitud: sin perder el tiempo, sin mensajes inútiles.",
     "feature3Title": "Ficha reembolsada",
     "feature3Desc": "Si la solicitud se rechaza o caduca, la ficha vuelve a tu saldo.",
-    "feature4Title": "Perfiles verificados",
-    "feature4Desc": "Verificación con selfie y reseñas después de cada cita real.",
+    "feature4Title": "Reseñas reales",
+    "feature4Desc": "Reseñas después de cada cita: reputación transparente para ambos.",
     "ctaTitle": "¿Listo para concertar tu cita?",
     "ctaDescription": "Únete a FlashMatch: citas de pago, claras y transparentes.",
     "howItWorksTitle": "Cómo Funciona",
     "howItWorksSubtitle": "Tres pasos: solicitud, aceptación, cita.",
-    "step1Title": "Regístrate y verifica",
+    "step1Title": "Regístrate",
     "step1Desc": "Crea tu perfil. Las mujeres fijan sus tarifas.",
     "step2Title": "Envía la solicitud",
     "step2Desc": "El hombre gasta 1 ficha para enviar una solicitud de cita.",
@@ -50,7 +50,17 @@
     "footerTagline": "Citas de pago, en las condiciones que ella decide",
     "activeUsers": "Usuarios Activos",
     "successfulMeetings": "Encuentros Exitosos",
-    "averageRating": "Calificación Promedio"
+    "averageRating": "Calificación Promedio",
+    "heroPrimaryCta": "Crea tu perfil",
+    "heroSecondaryCta": "Descubre cómo funciona",
+    "trust1Title": "Tarifas claras",
+    "trust1Desc": "Consulta las tarifas antes de enviar la solicitud",
+    "trust2Title": "Ficha reembolsada",
+    "trust2Desc": "Si la solicitud se rechaza o caduca",
+    "trust3Title": "Pago en persona",
+    "trust3Desc": "La tarifa nunca se paga en la plataforma",
+    "disclaimerLabel": "Importante",
+    "menuLabel": "Abrir menú"
   },
   "about": {
     "heroTitle": "Revolucionamos la Forma de",
@@ -133,7 +143,11 @@
     "seoKeywords": "precios app citas, coste fichas, suscripción premium, flashmatch precios",
     "pricesIncludeVat": "Todos los precios incluyen IVA. Los pagos son seguros y encriptados.",
     "haveQuestions": "¿Tienes preguntas?",
-    "checkFaq": "Consulta las FAQ"
+    "checkFaq": "Consulta las FAQ",
+    "howPaymentTitle": "Cómo funciona el pago",
+    "howPaymentStep1": "Compras fichas en la plataforma",
+    "howPaymentStep2": "Gastas 1 ficha para enviar la solicitud",
+    "howPaymentStep3": "La tarifa de la cita se paga en persona, nunca online"
   },
   "faq": {
     "title": "Preguntas Frecuentes (FAQ)",

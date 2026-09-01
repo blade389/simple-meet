@@ -229,8 +229,9 @@ const Browse = () => {
           return { ...profile, distance };
         })
         .filter((profile: any) => {
-          // Filter by distance
-          if (profile.distance > 20) return false;
+          // Filter by distance (50 km matching radius)
+          if (profile.distance > 50) return false;
+
 
           // Filter by age preferences: check if my age falls within the profile's age preferences
           if (profile.min_age_preference !== null && myAge < profile.min_age_preference) {

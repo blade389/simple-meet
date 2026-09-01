@@ -38,11 +38,11 @@
     "feature2Desc": "1 gettone per ogni richiesta: niente perditempo, niente messaggi inutili.",
     "feature3Title": "Gettone rimborsato",
     "feature3Desc": "Se la richiesta viene rifiutata o scade, il gettone torna sul tuo saldo.",
-    "feature4Title": "Profili verificati",
-    "feature4Desc": "Verifica con selfie e recensioni dopo ogni appuntamento reale.",
+    "feature4Title": "Recensioni reali",
+    "feature4Desc": "Recensioni dopo ogni appuntamento: reputazione trasparente per entrambi.",
     "howItWorksTitle": "Come Funziona",
     "howItWorksSubtitle": "Tre passi: richiesta, accettazione, appuntamento.",
-    "step1Title": "Registrati e verifica",
+    "step1Title": "Registrati",
     "step1Desc": "Crea il tuo profilo. Le donne impostano le proprie tariffe.",
     "step2Title": "Invia la richiesta",
     "step2Desc": "L'uomo spende 1 gettone per inviare una richiesta di appuntamento.",
@@ -54,7 +54,17 @@
     "footerTagline": "Appuntamenti a pagamento, alle condizioni decise da lei",
     "activeUsers": "Utenti Attivi",
     "successfulMeetings": "Incontri Riusciti",
-    "averageRating": "Rating Medio"
+    "averageRating": "Rating Medio",
+    "heroPrimaryCta": "Crea il tuo profilo",
+    "heroSecondaryCta": "Scopri come funziona",
+    "trust1Title": "Tariffe chiare",
+    "trust1Desc": "Vedi le tariffe prima di inviare la richiesta",
+    "trust2Title": "Gettone rimborsato",
+    "trust2Desc": "Se la richiesta viene rifiutata o scade",
+    "trust3Title": "Pagamento di persona",
+    "trust3Desc": "Nessun pagamento della tariffa sulla piattaforma",
+    "disclaimerLabel": "Importante",
+    "menuLabel": "Apri il menu"
   },
   "about": {
     "heroTitle": "Rivoluzioniamo il modo di",
@@ -137,7 +147,11 @@
     "seoKeywords": "prezzi dating app, costo gettoni, abbonamento premium, flashmatch prezzi",
     "pricesIncludeVat": "Tutti i prezzi sono IVA inclusa. I pagamenti sono sicuri e crittografati.",
     "haveQuestions": "Hai domande?",
-    "checkFaq": "Consulta le FAQ"
+    "checkFaq": "Consulta le FAQ",
+    "howPaymentTitle": "Come funziona il pagamento",
+    "howPaymentStep1": "Compri i gettoni sulla piattaforma",
+    "howPaymentStep2": "Spendi 1 gettone per inviare la richiesta",
+    "howPaymentStep3": "La tariffa dell'appuntamento si paga di persona, mai online"
   },
   "faq": {
     "title": "Domande Frequenti (FAQ)",

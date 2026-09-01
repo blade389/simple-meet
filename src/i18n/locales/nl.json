@@ -34,13 +34,13 @@
     "feature2Desc": "1 token per verzoek: geen tijdverspilling, geen zinloze berichten.",
     "feature3Title": "Token terugbetaald",
     "feature3Desc": "Wordt het verzoek geweigerd of verloopt het, dan komt de token terug op je saldo.",
-    "feature4Title": "Geverifieerde profielen",
-    "feature4Desc": "Selfieverificatie en reviews na elke echte date.",
+    "feature4Title": "Echte reviews",
+    "feature4Desc": "Reviews na elke date: transparante reputatie voor beide kanten.",
     "ctaTitle": "Klaar om je date te plannen?",
     "ctaDescription": "Word lid van FlashMatch: betaalde dates, duidelijk en transparant.",
     "howItWorksTitle": "Hoe Het Werkt",
     "howItWorksSubtitle": "Drie stappen: verzoek, acceptatie, date.",
-    "step1Title": "Meld je aan en verifieer",
+    "step1Title": "Registreren",
     "step1Desc": "Maak je profiel. Vrouwen stellen hun tarieven in.",
     "step2Title": "Stuur het verzoek",
     "step2Desc": "De man geeft 1 token uit om een dateverzoek te sturen.",
@@ -50,7 +50,17 @@
     "footerTagline": "Betaalde dates, op de voorwaarden die zij bepaalt",
     "activeUsers": "Actieve Gebruikers",
     "successfulMeetings": "Succesvolle Ontmoetingen",
-    "averageRating": "Gemiddelde Beoordeling"
+    "averageRating": "Gemiddelde Beoordeling",
+    "heroPrimaryCta": "Maak je profiel aan",
+    "heroSecondaryCta": "Bekijk hoe het werkt",
+    "trust1Title": "Duidelijke tarieven",
+    "trust1Desc": "Bekijk de tarieven voordat je een verzoek stuurt",
+    "trust2Title": "Token terugbetaald",
+    "trust2Desc": "Als het verzoek wordt geweigerd of verloopt",
+    "trust3Title": "Betaling in persoon",
+    "trust3Desc": "Het tarief wordt nooit via het platform betaald",
+    "disclaimerLabel": "Belangrijk",
+    "menuLabel": "Menu openen"
   },
   "about": {
     "heroTitle": "We Revolutioneren de Manier van",
@@ -133,7 +143,11 @@
     "seoKeywords": "dating app prijzen, token kosten, premium abonnement, flashmatch prijzen",
     "pricesIncludeVat": "Alle prijzen zijn inclusief BTW. Betalingen zijn veilig en versleuteld.",
     "haveQuestions": "Heb je vragen?",
-    "checkFaq": "Bekijk de FAQ"
+    "checkFaq": "Bekijk de FAQ",
+    "howPaymentTitle": "Hoe de betaling werkt",
+    "howPaymentStep1": "Je koopt tokens op het platform",
+    "howPaymentStep2": "Je geeft 1 token uit om een verzoek te sturen",
+    "howPaymentStep3": "Het datetarief wordt in persoon betaald, nooit online"
   },
   "faq": {
     "title": "Veelgestelde Vragen (FAQ)",

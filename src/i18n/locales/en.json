@@ -34,13 +34,13 @@
     "feature2Desc": "1 token per request: no time wasters, no pointless messages.",
     "feature3Title": "Token Refunded",
     "feature3Desc": "If the request is declined or expires, the token goes back to your balance.",
-    "feature4Title": "Verified Profiles",
-    "feature4Desc": "Selfie verification and reviews after every real date.",
+    "feature4Title": "Real reviews",
+    "feature4Desc": "Reviews after every date: transparent reputation for both sides.",
     "ctaTitle": "Ready to book your date?",
     "ctaDescription": "Join FlashMatch: paid dates, clear and transparent.",
     "howItWorksTitle": "How It Works",
     "howItWorksSubtitle": "Three steps: request, acceptance, date.",
-    "step1Title": "Sign up and verify",
+    "step1Title": "Sign up",
     "step1Desc": "Create your profile. Women set their own rates.",
     "step2Title": "Send the request",
     "step2Desc": "Men spend 1 token to send a date request.",
@@ -50,7 +50,17 @@
     "footerTagline": "Paid dates, on the terms she sets",
     "activeUsers": "Active Users",
     "successfulMeetings": "Successful Meetings",
-    "averageRating": "Average Rating"
+    "averageRating": "Average Rating",
+    "heroPrimaryCta": "Create your profile",
+    "heroSecondaryCta": "See how it works",
+    "trust1Title": "Clear rates",
+    "trust1Desc": "See the rates before sending a request",
+    "trust2Title": "Token refunded",
+    "trust2Desc": "If the request is declined or expires",
+    "trust3Title": "Paid in person",
+    "trust3Desc": "The rate is never paid through the platform",
+    "disclaimerLabel": "Important",
+    "menuLabel": "Open menu"
   },
   "about": {
     "heroTitle": "We Revolutionize the Way of",
@@ -133,7 +143,11 @@
     "seoKeywords": "dating app pricing, token cost, premium subscription, flashmatch pricing",
     "pricesIncludeVat": "All prices include VAT. Payments are secure and encrypted.",
     "haveQuestions": "Have questions?",
-    "checkFaq": "Check the FAQ"
+    "checkFaq": "Check the FAQ",
+    "howPaymentTitle": "How payment works",
+    "howPaymentStep1": "You buy tokens on the platform",
+    "howPaymentStep2": "You spend 1 token to send a request",
+    "howPaymentStep3": "The date rate is paid in person, never online"
   },
   "faq": {
     "title": "Frequently Asked Questions (FAQ)",
