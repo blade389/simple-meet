@@ -86,6 +86,26 @@ const Pricing = () => {
                     {t("pricing.subtitle")}
                 </p>
 
+                {/* How payment works */}
+                <div className="max-w-4xl mx-auto rounded-2xl border bg-card/50 backdrop-blur-sm p-6 md:p-8">
+                    <h2 className="text-xl font-bold text-center mb-6">{t("pricing.howPaymentTitle")}</h2>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {[
+                            t("pricing.howPaymentStep1"),
+                            t("pricing.howPaymentStep2"),
+                            t("pricing.howPaymentStep3"),
+                        ].map((step, i) => (
+                            <div key={i} className="flex items-start gap-3">
+                                <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
+                                    {i + 1}
+                                </div>
+                                <p className="text-sm text-muted-foreground leading-relaxed">{step}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
                 <Tabs defaultValue="men" className="w-full">
                     <div className="flex justify-center mb-8">
                         <TabsList className="grid w-full max-w-md grid-cols-2">
