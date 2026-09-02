@@ -867,6 +867,17 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      get_showcase_profiles: {
+        Args: { _lat?: number; _limit?: number; _lon?: number }
+        Returns: {
+          age: number
+          bio: string
+          first_name: string
+          is_premium: boolean
+          nearby: boolean
+          photo_url: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
