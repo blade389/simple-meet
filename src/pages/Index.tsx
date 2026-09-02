@@ -232,6 +232,11 @@ const Index = () => {
             </div>
           </section>
 
+          {/* Profili in vetrina */}
+          <ShowcaseProfiles />
+
+
+
           {/* Why choose us */}
           <section id="features" className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
             <div className="mb-16 text-center">
