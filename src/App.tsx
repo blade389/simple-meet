@@ -11,7 +11,6 @@ import PreLaunchGuard from "./components/PreLaunchGuard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import PreLaunch from "./pages/PreLaunch";
-import Leaderboard from "./pages/Leaderboard";
 import InviteFriends from "./pages/InviteFriends";
 import LandingUomini from "./pages/LandingUomini";
 import LandingDonne from "./pages/LandingDonne";
@@ -63,7 +62,6 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/prelaunch" element={<PreLaunch />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/invite" element={<InviteFriends />} />
               <Route path="/uomini" element={<LandingUomini />} />
               <Route path="/donne" element={<LandingDonne />} />
