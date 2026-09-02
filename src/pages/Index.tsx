@@ -14,6 +14,8 @@ import StructuredData from "@/components/StructuredData";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { saveReferralCode } from "@/lib/referral";
+import ShowcaseProfiles from "@/components/ShowcaseProfiles";
+
 
 const Index = () => {
   const { t } = useTranslation();
@@ -231,6 +233,11 @@ const Index = () => {
               ))}
             </div>
           </section>
+
+          {/* Profili in vetrina */}
+          <ShowcaseProfiles />
+
+
 
           {/* Why choose us */}
           <section id="features" className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
