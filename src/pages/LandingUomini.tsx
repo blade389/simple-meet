@@ -77,12 +77,6 @@ const LandingUomini = () => {
               <Link to="/auth">
                 <Button variant="hero" size="xl">{t('landingMen.signupFree', 'Registrati Gratis')}</Button>
               </Link>
-              <Link to="/leaderboard">
-                <Button variant="outline" size="xl">
-                  <Trophy className="w-5 h-5 mr-2" />
-                  {t('landingMen.leaderboardPrizes', 'Classifica & Premi')}
-                </Button>
-              </Link>
             </div>
           </div>
         </section>
@@ -136,19 +130,13 @@ const LandingUomini = () => {
           <div className="container mx-auto max-w-3xl text-center">
             <Trophy className="w-12 h-12 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-2">{t('landingMen.launchTitle', 'Lancio: 10 Luglio 2026')}</h2>
-            <p className="text-sm opacity-80 mb-4">{t('landingMen.contestDeadline', '🏆 Concorso premi referral: fino al 30 Agosto 2026')}</p>
             <p className="text-lg mb-6 opacity-90">
-               {t('landingMen.launchDesc', 'Registrati ora, completa il profilo e invita amici. I top referrer vincono premi fino a 1.000€!')}
+               {t('landingMen.launchDesc', 'Registrati ora e completa il profilo: sarai tra i primi a inviare richieste al lancio.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="xl" className="bg-background text-foreground hover:bg-background/90">
                   {t('landingMen.signupFree', 'Registrati Gratis')}
-                </Button>
-              </Link>
-              <Link to="/leaderboard">
-                <Button size="xl" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                  {t('landingMen.viewPrizes', 'Vedi Premi')}
                 </Button>
               </Link>
             </div>

@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { LAUNCH_AT } from '@/lib/prelaunch';
 import SEOHead from '@/components/SEOHead';
+import FounderOffer from '@/components/FounderOffer';
 import { useTranslation } from 'react-i18next';
 
 const PreLaunch = () => {
