@@ -166,19 +166,10 @@ const InviteFriends = () => {
               <li>{t('invite.rule1', 'Condividi il tuo link con amici')}</li>
               <li>{t('invite.rule2', 'Il tuo amico si registra usando il tuo link')}</li>
               <li>{t('invite.rule3', 'Quando completa la registrazione, guadagni 1 punto')}</li>
-              <li>{t('invite.rule4', 'Più punti = posizione più alta in classifica = premi migliori!')}</li>
+              <li>{t('invite.rule4', 'Le prime 200 donne iscritte ricevono Premium a vita gratuito')}</li>
             </ol>
           </Card>
 
-          {/* Leaderboard link */}
-          <div className="text-center">
-            <Button variant="outline" asChild>
-              <Link to="/leaderboard">
-                <Trophy className="w-4 h-4 mr-2" />
-                {t('invite.viewLeaderboard', 'Vedi Classifica')}
-              </Link>
-            </Button>
-          </div>
         </main>
       </div>
     </>
