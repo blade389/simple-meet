@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { LAUNCH_AT } from '@/lib/prelaunch';
 import SEOHead from '@/components/SEOHead';
+import FounderOffer from '@/components/FounderOffer';
 import { useTranslation } from 'react-i18next';
 
 const PreLaunch = () => {
@@ -100,53 +101,18 @@ const PreLaunch = () => {
 
             <Card className="p-6 text-center hover:shadow-glow transition-shadow">
               <Trophy className="w-12 h-12 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">{t('prelaunch.leaderboard', 'Classifica')}</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('founder.title', 'Premium a vita per le prime 200 iscritte')}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {t('prelaunch.leaderboardDesc', 'Scopri i top referrer e i premi in palio')}
+                {t('founder.shortDesc', 'Le prime 200 donne registrate ottengono Premium gratuito per sempre.')}
               </p>
-              <Button variant="outline" asChild><Link to="/leaderboard">{t('prelaunch.viewLeaderboard', 'Vedi classifica')}</Link></Button>
+              <Button variant="outline" asChild><Link to="/auth">{t('founder.cta', 'Prendi il tuo posto')}</Link></Button>
             </Card>
           </div>
 
-          {/* Prize summary */}
-          <Card className="max-w-2xl mx-auto p-8 bg-gradient-card shadow-card">
-            <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2">
-              <Trophy className="w-6 h-6 text-primary" />
-              {t('prelaunch.prizes', 'Premi in palio')}
-            </h2>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between items-center p-2 rounded bg-primary/10">
-                <span className="font-semibold">🥇 #1</span><span className="font-bold text-primary">1.000€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded bg-primary/5">
-                <span className="font-semibold">🥈 #2</span><span className="font-bold">300€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded bg-primary/5">
-                <span className="font-semibold">🥉 #3</span><span className="font-bold">200€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded">
-                <span>#4</span><span>100€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded">
-                <span>#5-8</span><span>50€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded">
-                <span>#9-12</span><span>25€</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded">
-                <span>#13-20</span><span>{t('prelaunch.prize1320', '10 gettoni / 2 mesi premium')}</span>
-              </div>
-              <div className="flex justify-between items-center p-2 rounded">
-                <span>#21-50</span><span>{t('prelaunch.prize2150', '5 gettoni / 1 mese premium')}</span>
-              </div>
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-4">
-              {t('prelaunch.prizeNote', 'Premium donne applicabile solo agli account femminili. Per uomini: equivalente in gettoni.')}
-            </p>
-            <p className="text-xs text-primary font-semibold text-center mt-2">
-              {t('prelaunch.contestDeadline', '🏆 Concorso premi: fino al 30 Agosto 2026')}
-            </p>
-          </Card>
+          <div className="max-w-3xl mx-auto">
+            <FounderOffer />
+          </div>
+
         </main>
       </div>
     </>

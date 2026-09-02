@@ -1,6 +1,6 @@
 // Pre-launch configuration
 export const LAUNCH_AT = new Date('2026-07-10T00:00:00+02:00'); // Europe/Rome (CEST)
-export const CONTEST_DEADLINE = new Date('2026-08-30T23:59:59+02:00'); // Contest end date
+export const FOUNDER_LIMIT = 200; // Lifetime premium for the first 200 women
 
 export const isPreLaunch = () => Date.now() < LAUNCH_AT.getTime();
 
@@ -23,7 +23,6 @@ const ALLOWED_ROUTES = [
   '/about',
   '/blocked',
   '/prelaunch',
-  '/leaderboard',
   '/uomini',
   '/donne',
   '/influencer',

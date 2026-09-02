@@ -5,6 +5,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { saveReferralCode } from '@/lib/referral';
 import SEOHead from '@/components/SEOHead';
+import FounderOffer from '@/components/FounderOffer';
 import { useTranslation } from 'react-i18next';
 
 const LandingDonne = () => {
@@ -76,12 +77,6 @@ const LandingDonne = () => {
               <Link to="/auth">
                 <Button variant="hero" size="xl">{t('landingWomen.signupFree', 'Registrati Gratis')}</Button>
               </Link>
-              <Link to="/leaderboard">
-                <Button variant="outline" size="xl">
-                  <Trophy className="w-5 h-5 mr-2" />
-                  {t('landingWomen.leaderboardPrizes', 'Classifica & Premi')}
-                </Button>
-              </Link>
             </div>
           </div>
         </section>
@@ -130,6 +125,8 @@ const LandingDonne = () => {
           </div>
         </section>
 
+        <FounderOffer />
+
         {/* Premium upgrade */}
         <section className="py-16 px-4">
           <div className="container mx-auto max-w-3xl">
@@ -169,19 +166,14 @@ const LandingDonne = () => {
           <div className="container mx-auto max-w-3xl text-center">
             <Trophy className="w-12 h-12 mx-auto mb-4" />
              <h2 className="text-3xl font-bold mb-2">{t('landingWomen.launchTitle', 'Lancio: 10 Luglio 2026')}</h2>
-            <p className="text-sm opacity-80 mb-4">{t('landingWomen.contestDeadline', '🏆 Concorso premi referral: fino al 30 Agosto 2026')}</p>
+            <p className="text-sm opacity-80 mb-4">{t('founder.shortDesc', 'Premium a vita gratuito per le prime 200 donne iscritte')}</p>
             <p className="text-lg mb-6 opacity-90">
-               {t('landingWomen.launchDesc', 'Registrati ora, completa il profilo e invita le amiche. Le top referrer vincono premi fino a 1.000€ o mesi di Premium gratuito!')}
+               {t('landingWomen.launchDesc', 'Registrati ora e completa il profilo: se sei tra le prime 200 iscritte, il Premium è tuo per sempre, gratis.')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="xl" className="bg-background text-foreground hover:bg-background/90">
                   {t('landingWomen.signupFree', 'Registrati Gratis')}
-                </Button>
-              </Link>
-              <Link to="/leaderboard">
-                <Button size="xl" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                  {t('landingWomen.viewPrizes', 'Vedi Premi')}
                 </Button>
               </Link>
             </div>

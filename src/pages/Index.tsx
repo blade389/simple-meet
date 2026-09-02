@@ -15,6 +15,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { saveReferralCode } from "@/lib/referral";
 import ShowcaseProfiles from "@/components/ShowcaseProfiles";
+import FounderOffer from "@/components/FounderOffer";
 
 
 const Index = () => {
@@ -233,6 +234,8 @@ const Index = () => {
               ))}
             </div>
           </section>
+
+          <FounderOffer />
 
           {/* Profili in vetrina */}
           <ShowcaseProfiles />

@@ -867,6 +867,7 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      get_founder_spots_left: { Args: never; Returns: number }
       get_showcase_profiles: {
         Args: { _lat?: number; _limit?: number; _lon?: number }
         Returns: {
