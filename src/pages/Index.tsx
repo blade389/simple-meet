@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Menu } from "lucide-react";
+import { Heart, Menu, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   Sheet,
