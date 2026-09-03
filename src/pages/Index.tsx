@@ -151,6 +151,14 @@ const Index = () => {
                           {t("common.faq")}
                         </Link>
                       </SheetClose>
+                      <SheetClose asChild>
+                        <Link
+                          to="/donne"
+                          className="px-2 py-3 text-base uppercase tracking-widest text-foreground transition-colors hover:text-primary"
+                        >
+                          {t("home.forWomen", "Per Donne")}
+                        </Link>
+                      </SheetClose>
                       <div className="mt-6 flex flex-col gap-3">
                         <SheetClose asChild>
                           <Link to="/auth">
