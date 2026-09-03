@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Menu } from "lucide-react";
+import { Heart, Menu, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   Sheet,
@@ -87,6 +87,12 @@ const Index = () => {
                   >
                     {t("home.howItWorks")}
                   </a>
+                  <Link
+                    to="/donne"
+                    className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {t("home.forWomen", "Per Donne")}
+                  </Link>
                   <Link to="/auth">
                     <Button variant="ghost" className="uppercase tracking-widest">
                       {t("common.login")}
@@ -143,6 +149,14 @@ const Index = () => {
                           className="px-2 py-3 text-base uppercase tracking-widest text-foreground transition-colors hover:text-primary"
                         >
                           {t("common.faq")}
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link
+                          to="/donne"
+                          className="px-2 py-3 text-base uppercase tracking-widest text-foreground transition-colors hover:text-primary"
+                        >
+                          {t("home.forWomen", "Per Donne")}
                         </Link>
                       </SheetClose>
                       <div className="mt-6 flex flex-col gap-3">
@@ -236,6 +250,27 @@ const Index = () => {
           </section>
 
           <FounderOffer />
+
+          {/* Per Donne */}
+          <section className="border-b border-border bg-card px-6 py-16 lg:px-12">
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
+              <h2 className="break-words font-serif text-3xl italic md:text-4xl">
+                {t("home.forWomenTitle", "Sei una donna? FlashMatch è gratis per te")}
+              </h2>
+              <p className="max-w-2xl break-words text-muted-foreground">
+                {t(
+                  "home.forWomenDescription",
+                  "Registrati gratuitamente, ricevi richieste dagli uomini e scegli chi incontrare. Puoi anche attivare Premium per il badge di profilo verificato e la visibilità in tutto il mondo."
+                )}
+              </p>
+              <Link to="/donne">
+                <Button size="lg" variant="outline" className="px-10 py-6 text-sm font-bold uppercase tracking-widest">
+                  {t("home.forWomenCta", "Scopri Per Donne")}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </section>
 
           {/* Profili in vetrina */}
           <ShowcaseProfiles />

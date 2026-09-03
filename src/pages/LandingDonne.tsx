@@ -1,27 +1,49 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, UserPlus, Crown, Trophy, Users, Star, CheckCircle, Sparkles } from 'lucide-react';
+import { Heart, UserPlus, Crown, Trophy, Users, Star, CheckCircle, Sparkles, Quote, ArrowRight, Shield, Clock, Gem } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { saveReferralCode } from '@/lib/referral';
 import SEOHead from '@/components/SEOHead';
 import FounderOffer from '@/components/FounderOffer';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
 
 const LandingDonne = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
+  const [spotsLeft, setSpotsLeft] = useState<number | null>(null);
 
   useEffect(() => {
     const ref = searchParams.get('ref');
     if (ref) saveReferralCode(ref);
+
+    supabase.rpc("get_founder_spots_left").then(({ data, error }) => {
+      if (!error && typeof data === "number") setSpotsLeft(data);
+    });
   }, [searchParams]);
+
+  const benefits = [
+    { icon: Gem, title: t('landingWomen.benefit1Title', '100% gratuito'), desc: t('landingWomen.benefit1Desc', 'Registrazione, profilo e uso base senza costi. Solo se vuoi badge e visibilità extra acquisti Premium.') },
+    { icon: Shield, title: t('landingWomen.benefit2Title', 'Sicurezza prima di tutto'), desc: t('landingWomen.benefit3Desc', 'Scegli tu chi incontrare, dove e quando. Puoi rifiutare ogni richiesta senza spiegazioni.') },
+    { icon: Clock, title: t('landingWomen.benefit3Title', 'Tempo rispettato'), desc: t('landingWomen.benefit3Desc', 'Nessun messaggio indesiderato: gli uomini pagano 1 gettone per inviarti una richiesta seria.') },
+    { icon: Star, title: t('landingWomen.benefit4Title', 'Recensioni trasparenti'), desc: t('landingWomen.benefit4Desc', 'Dopo ogni appuntamento lascia e ricevi recensioni per costruire una reputazione affidabile.') },
+  ];
+
+  const planFeatures = [
+    t('landingWomen.planFeature1', 'Profilo gratuito con foto, bio e tariffe'),
+    t('landingWomen.planFeature2', 'Ricevi richieste dagli uomini nella tua zona'),
+    t('landingWomen.planFeature3', 'Accetta o rifiuta senza costi'),
+    t('landingWomen.planFeature4', 'Badge Premium e profilo in evidenza'),
+    t('landingWomen.planFeature5', 'Visibilità mondiale anche oltre i 50 km'),
+    t('landingWomen.planFeature6', 'Supporto prioritario'),
+  ];
 
   return (
     <>
       <SEOHead
         title={t('landingWomen.seoTitle', 'FlashMatch per Donne | 100% Gratuito')}
-        description={t('landingWomen.seoDescription', 'Su FlashMatch le donne comandano. Scegli chi incontrare, dove e quando. Completamente gratuito. Upgrade premium per guadagnare.')}
+        description={t('landingWomen.seoDescription', 'Su FlashMatch le donne comandano. Scegli chi incontrare, dove e quando. Completamente gratuito. Upgrade premium per badge e visibilità.')}
         canonicalPath="/donne"
         keywords={t('landingWomen.seoKeywords', 'dating donne, app incontri donne gratuita, FlashMatch donne')}
         structuredData={[
@@ -77,12 +99,45 @@ const LandingDonne = () => {
               <Link to="/auth">
                 <Button variant="hero" size="xl">{t('landingWomen.signupFree', 'Registrati Gratis')}</Button>
               </Link>
+              <a href="#piano">
+                <Button variant="outline" size="xl">
+                  {t('landingWomen.seePlan', 'Vedi il piano')}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits */}
+        <section className="py-20 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">{t('landingWomen.benefitsTitle', 'Perché registrarsi su FlashMatch')}</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {t('landingWomen.benefitsSubtitle', 'Una piattaforma pensata per le donne: controllo, sicurezza e nessun costo obbligatorio.')}
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {benefits.map(({ icon: Icon, title, desc }, i) => (
+                <Card key={i} className="p-6 hover:shadow-glow transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">{title}</h3>
+                      <p className="text-sm text-muted-foreground">{desc}</p>
+                    </div>
+                  </div>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
 
         {/* How it works */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-muted/30">
           <div className="container mx-auto max-w-4xl">
             <h2 className="text-3xl font-bold text-center mb-12">{t('landingWomen.howItWorksTitle', 'Come funziona per le donne')}</h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -103,61 +158,116 @@ const LandingDonne = () => {
           </div>
         </section>
 
-        {/* Key points */}
-        <section className="py-16 px-4 bg-muted/30">
-          <div className="container mx-auto max-w-3xl">
-            <h2 className="text-2xl font-bold mb-8 text-center">{t('landingWomen.controlTitle', 'Tutto sotto il tuo controllo')}</h2>
-            <div className="space-y-4">
+        <FounderOffer />
+
+        {/* Testimonials */}
+        <section className="py-20 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">{t('landingWomen.testimonialsTitle', 'Cosa dicono le iscritte')}</h2>
+              <p className="text-sm text-muted-foreground">
+                {t('landingWomen.testimonialsPlaceholder', 'Qui verranno inserite testimonianze reali delle utenti. Forniscimi i testi per sostituire gli esempi.')}
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
               {[
-                t('landingWomen.point1', "Registrazione, profilo e uso dell'app 100% gratuiti"),
-                 t('landingWomen.point2', 'Profili completi e recensioni per scegliere meglio'),
-                t('landingWomen.point3', 'Tu scegli chi incontrare, dove e quando'),
-                t('landingWomen.point4', 'Puoi rifiutare qualsiasi richiesta, sempre'),
-                t('landingWomen.point5', 'Sistema recensioni per la massima trasparenza'),
-                t('landingWomen.point6', 'Nessun messaggio indesiderato: sei tu a fare il primo passo'),
-              ].map((text, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 bg-card rounded-lg">
-                  <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <span className="text-sm">{text}</span>
-                </div>
+                { quote: t('landingWomen.testimonial1Quote', 'Esempio di testimonianza: spazio riservato a una recensione reale di un\'utente.'), name: t('landingWomen.testimonial1Name', 'Nome Utente'), role: t('landingWomen.testimonial1Role', 'Iscritta FlashMatch') },
+                { quote: t('landingWomen.testimonial2Quote', 'Esempio di testimonianza: spazio riservato a una recensione reale di un\'utente.'), name: t('landingWomen.testimonial2Name', 'Nome Utente'), role: t('landingWomen.testimonial2Role', 'Iscritta FlashMatch') },
+                { quote: t('landingWomen.testimonial3Quote', 'Esempio di testimonianza: spazio riservato a una recensione reale di un\'utente.'), name: t('landingWomen.testimonial3Name', 'Nome Utente'), role: t('landingWomen.testimonial3Role', 'Iscritta FlashMatch') },
+              ].map((item, i) => (
+                <Card key={i} className="p-6 bg-card/50 border-border/50">
+                  <Quote className="w-8 h-8 text-primary/40 mb-4" />
+                  <p className="text-sm text-muted-foreground mb-6 italic">"{item.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground font-semibold text-sm">
+                      {item.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">{item.name}</p>
+                      <p className="text-xs text-muted-foreground">{item.role}</p>
+                    </div>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>
         </section>
 
-        <FounderOffer />
-
-        {/* Premium upgrade */}
-        <section className="py-16 px-4">
-          <div className="container mx-auto max-w-3xl">
-            <Card className="p-8 bg-gradient-card shadow-card border-2 border-primary/20">
-              <div className="flex items-center gap-3 mb-4">
-                <Crown className="w-8 h-8 text-yellow-500" />
-                <h2 className="text-2xl font-bold">{t('landingWomen.premiumTitle', 'Upgrade Premium (opzionale)')}</h2>
-              </div>
-              <p className="text-muted-foreground mb-6">
-                {t('landingWomen.premiumDesc', 'Vuoi ricevere richieste di appuntamento a pagamento? Con Premium imposti le tue tariffe e ricevi richieste da uomini disposti a pagare per incontrarti.')}
+        {/* Pricing / Purchase plan */}
+        <section id="piano" className="py-20 px-4 bg-muted/30">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">{t('landingWomen.planTitle', 'Il piano per le donne')}</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {t('landingWomen.planSubtitle', 'Gratuito per tutte. Premium solo se vuoi badge e visibilità extra.')}
               </p>
-              <div className="space-y-3 mb-6">
-                {[
-                  t('landingWomen.premiumPoint1', 'Imposta le tue tariffe personalizzate'),
-                   t('landingWomen.premiumPoint2', 'Ricevi richieste da utenti interessati'),
-                  t('landingWomen.premiumPoint3', 'Badge Premium per maggiore visibilità'),
-                  t('landingWomen.premiumPoint4', 'Mantieni sempre il controllo totale'),
-                ].map((text, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-yellow-500 shrink-0" />
-                    <span>{text}</span>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Free plan */}
+              <Card className="p-8 border-border">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold mb-2">{t('landingWomen.freePlanTitle', 'Gratuito')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('landingWomen.freePlanSubtitle', 'Per tutte le donne')}</p>
+                </div>
+                <div className="text-4xl font-bold mb-6">€0</div>
+                <ul className="space-y-3 mb-8">
+                  {[0, 1, 2].map((i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <span>{planFeatures[i]}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/auth" className="block">
+                  <Button variant="outline" className="w-full">{t('landingWomen.signupFree', 'Registrati Gratis')}</Button>
+                </Link>
+              </Card>
+
+              {/* Premium plan */}
+              <Card className="p-8 bg-gradient-card shadow-card border-2 border-primary/20 relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-bl-lg">
+                  {t('landingWomen.recommended', 'CONSIGLIATO')}
+                </div>
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown className="w-6 h-6 text-yellow-500" />
+                    <h3 className="text-2xl font-bold">{t('landingWomen.premiumPlanTitle', 'Premium')}</h3>
                   </div>
-                ))}
+                  <p className="text-sm text-muted-foreground">{t('landingWomen.premiumPlanSubtitle', 'Badge, evidenza e visibilità mondiale')}</p>
+                </div>
+                <div className="text-4xl font-bold mb-2">{t('landingWomen.premiumPlanPrice', 'A pagamento')}</div>
+                <p className="text-sm text-muted-foreground mb-6">{t('landingWomen.premiumPlanPriceNote', 'Abbonamento mensile o annuale')}</p>
+                <ul className="space-y-3 mb-8">
+                  {planFeatures.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-yellow-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/premium-subscription" className="block">
+                  <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black">
+                    <Crown className="w-4 h-4 mr-2" />
+                    {t('landingWomen.activatePremium', 'Attiva Premium')}
+                  </Button>
+                </Link>
+              </Card>
+            </div>
+
+            {spotsLeft !== null && spotsLeft > 0 && (
+              <div className="mt-8 p-6 bg-primary/10 rounded-lg text-center">
+                <p className="text-sm text-primary font-semibold uppercase tracking-widest mb-2">
+                  {t('landingWomen.founderOffer', 'Offerta fondatrice')}
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  {t('landingWomen.founderOfferDesc', 'Prime 200 iscritte: Premium a vita gratis. Posti rimanenti: {{count}}', { count: spotsLeft })}
+                </p>
+                <Link to="/auth">
+                  <Button variant="hero">{t('landingWomen.claimSpot', 'Prendi il tuo posto')}</Button>
+                </Link>
               </div>
-              <Link to="/auth">
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black">
-                  <Crown className="w-4 h-4 mr-2" />
-                  {t('landingWomen.discoverPremium', 'Scopri Premium')}
-                </Button>
-              </Link>
-            </Card>
+            )}
           </div>
         </section>
 
