@@ -87,6 +87,12 @@ const Index = () => {
                   >
                     {t("home.howItWorks")}
                   </a>
+                  <Link
+                    to="/donne"
+                    className="text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {t("home.forWomen", "Per Donne")}
+                  </Link>
                   <Link to="/auth">
                     <Button variant="ghost" className="uppercase tracking-widest">
                       {t("common.login")}
