@@ -64,7 +64,11 @@
     "trust3Title": "Pagamento di persona",
     "trust3Desc": "Nessun pagamento della tariffa sulla piattaforma",
     "disclaimerLabel": "Importante",
-    "menuLabel": "Apri il menu"
+    "menuLabel": "Apri il menu",
+    "forWomen": "Per Donne",
+    "forWomenTitle": "Sei una donna? FlashMatch è gratis per te",
+    "forWomenDescription": "Registrati gratuitamente, ricevi richieste dagli uomini e scegli chi incontrare. Puoi anche attivare Premium per il badge di profilo verificato e la visibilità in tutto il mondo.",
+    "forWomenCta": "Scopri Per Donne"
   },
   "about": {
     "heroTitle": "Rivoluzioniamo il modo di",
