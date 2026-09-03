@@ -60,7 +60,11 @@
     "trust3Title": "Paid in person",
     "trust3Desc": "The rate is never paid through the platform",
     "disclaimerLabel": "Important",
-    "menuLabel": "Open menu"
+    "menuLabel": "Open menu",
+    "forWomen": "For Women",
+    "forWomenTitle": "Are you a woman? FlashMatch is free for you",
+    "forWomenDescription": "Sign up for free, receive requests from men and choose who to meet. You can also activate Premium for the verified profile badge and worldwide visibility.",
+    "forWomenCta": "Discover For Women"
   },
   "about": {
     "heroTitle": "We Revolutionize the Way of",
