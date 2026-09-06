@@ -1,100 +1,71 @@
 project_id = "tdkovomoosffywhajhkj"
 
-[functions.test-email]
-verify_jwt = false
-
-[functions.send-match-request-email]
-verify_jwt = false
-
-[functions.send-request-accepted-email]
-verify_jwt = false
-
-[functions.send-reminder-emails]
-verify_jwt = false
-
-[functions.process-expired-requests]
-verify_jwt = false
-
-[functions.process-completed-appointments]
-verify_jwt = false
-
-[functions.process-appointment-deadlines]
-verify_jwt = false
-
-[functions.process-completed-reviews]
-verify_jwt = false
-
-[functions.create-token-payment]
-verify_jwt = true
-
-[functions.stripe-webhook]
-verify_jwt = false
-
-[functions.create-premium-checkout]
-verify_jwt = true
-
-[functions.check-premium-subscription]
-verify_jwt = true
-
-[functions.customer-portal]
-verify_jwt = true
-
-[functions.send-push-notification]
-verify_jwt = false
-
-[functions.send-chat-message-notification]
-verify_jwt = false
-
-[functions.send-appointment-scheduled]
-verify_jwt = false
-
-[functions.send-appointment-reminders]
-verify_jwt = false
-
-[functions.send-review-action-email]
-verify_jwt = false
-
-[functions.send-admin-review-notification]
-verify_jwt = false
-
-[functions.process-expired-reviews]
-verify_jwt = false
-
-[functions.send-review-reminders]
-verify_jwt = false
-
-[functions.send-admin-report-notification]
-verify_jwt = false
-
-[functions.send-verification-approved]
-verify_jwt = false
-
-[functions.send-photo-approved]
-verify_jwt = false
-
-[functions.send-welcome-email]
-verify_jwt = false
-
-[functions.send-verification-reminders]
-verify_jwt = false
-
-[functions.list-drive-photos]
-verify_jwt = false
-
-[functions.seed-demo-profiles]
-verify_jwt = false
-
-[functions.process-email-queue]
-verify_jwt = true
-
-[functions.send-transactional-email]
-verify_jwt = true
-
-[functions.preview-transactional-email]
-verify_jwt = false
-
-[functions.handle-email-unsubscribe]
-verify_jwt = false
-
-[functions.handle-email-suppression]
-verify_jwt = false
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.check-premium-subscription]
+    verify_jwt = true
+  [functions.create-premium-checkout]
+    verify_jwt = true
+  [functions.create-token-payment]
+    verify_jwt = true
+  [functions.customer-portal]
+    verify_jwt = true
+  [functions.handle-email-suppression]
+    verify_jwt = false
+  [functions.handle-email-unsubscribe]
+    verify_jwt = false
+  [functions.list-drive-photos]
+    verify_jwt = false
+  [functions.preview-transactional-email]
+    verify_jwt = false
+  [functions.process-appointment-deadlines]
+    verify_jwt = false
+  [functions.process-completed-appointments]
+    verify_jwt = false
+  [functions.process-completed-reviews]
+    verify_jwt = false
+  [functions.process-email-queue]
+    verify_jwt = true
+  [functions.process-expired-requests]
+    verify_jwt = false
+  [functions.process-expired-reviews]
+    verify_jwt = false
+  [functions.seed-demo-profiles]
+    verify_jwt = false
+  [functions.send-admin-report-notification]
+    verify_jwt = false
+  [functions.send-admin-review-notification]
+    verify_jwt = false
+  [functions.send-appointment-reminders]
+    verify_jwt = false
+  [functions.send-appointment-scheduled]
+    verify_jwt = false
+  [functions.send-chat-message-notification]
+    verify_jwt = false
+  [functions.send-match-request-email]
+    verify_jwt = false
+  [functions.send-photo-approved]
+    verify_jwt = false
+  [functions.send-push-notification]
+    verify_jwt = false
+  [functions.send-reminder-emails]
+    verify_jwt = false
+  [functions.send-request-accepted-email]
+    verify_jwt = false
+  [functions.send-review-action-email]
+    verify_jwt = false
+  [functions.send-review-reminders]
+    verify_jwt = false
+  [functions.send-transactional-email]
+    verify_jwt = true
+  [functions.send-verification-approved]
+    verify_jwt = false
+  [functions.send-verification-reminders]
+    verify_jwt = false
+  [functions.send-welcome-email]
+    verify_jwt = false
+  [functions.stripe-webhook]
+    verify_jwt = false
+  [functions.test-email]
+    verify_jwt = false
