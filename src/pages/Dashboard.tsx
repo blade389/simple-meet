@@ -419,7 +419,7 @@ const Dashboard = () => {
               </h1>
             </div>
             <div className="flex items-center gap-2">
-              {profile?.gender === 'male' && (
+              {profile?.gender === 'female' && (
                 <Button
                   variant={profile?.is_paused ? "destructive" : "outline"}
                   size="icon"
@@ -437,7 +437,7 @@ const Dashboard = () => {
               </Button>
             </div>
           </div>
-          {profile?.gender === 'male' && profile?.is_paused && (
+          {profile?.gender === 'female' && profile?.is_paused && (
             <div className="mb-2 px-3 py-2 rounded-md bg-destructive/10 text-destructive text-sm text-center font-medium">
               ⏸️ {t('dashboard.pauseBanner', 'Profilo in pausa - Il tuo profilo non è visibile e non riceverai nuove richieste')}
             </div>
