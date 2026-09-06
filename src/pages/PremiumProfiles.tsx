@@ -151,7 +151,8 @@ const PremiumProfiles = () => {
         .from('profiles')
         .select('*')
         .eq('gender', 'female')
-        .eq('is_blocked', false);
+        .eq('is_blocked', false)
+        .or('is_paused.is.null,is_paused.eq.false');
 
       if (error) throw error;
 

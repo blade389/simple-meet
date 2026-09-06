@@ -419,7 +419,7 @@ const Dashboard = () => {
               </h1>
             </div>
             <div className="flex items-center gap-2">
-              {profile?.gender === 'male' && (
+              {profile?.gender === 'female' && (
                 <Button
                   variant={profile?.is_paused ? "destructive" : "outline"}
                   size="icon"
