@@ -192,15 +192,6 @@ const PremiumRequests = () => {
 
   const handleReject = async (requestId: string) => {
     try {
-      // Get request data to refund token to sender
-      const { data: requestData, error: fetchError } = await supabase
-        .from('match_requests')
-        .select('sender_id, is_premium')
-        .eq('id', requestId)
-        .single();
-
-      if (fetchError) throw fetchError;
-
       // Update request status to rejected
       const { error } = await supabase
         .from('match_requests')
