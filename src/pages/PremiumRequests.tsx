@@ -144,9 +144,16 @@ const PremiumRequests = () => {
       // Get request data to send email
       const request = requests.find(r => r.id === requestId);
       
+      const deadline = new Date();
+      deadline.setHours(deadline.getHours() + 72); // 72 hours to schedule the appointment
+
       const { error } = await supabase
         .from('match_requests')
-        .update({ status: 'accepted' })
+        .update({
+          status: 'accepted',
+          appointment_deadline: deadline.toISOString(),
+          chat_status: 'active',
+        })
         .eq('id', requestId);
 
       if (error) throw error;
@@ -202,25 +209,8 @@ const PremiumRequests = () => {
 
       if (error) throw error;
 
-      // Refund token to sender if it was a premium request
-      if (requestData.is_premium) {
-        const { data: tokenData } = await supabase
-          .from('tokens')
-          .select('amount')
-          .eq('user_id', requestData.sender_id)
-          .maybeSingle();
-
-        if (tokenData) {
-          await supabase
-            .from('tokens')
-            .update({ amount: tokenData.amount + 1 })
-            .eq('user_id', requestData.sender_id);
-        } else {
-          await supabase
-            .from('tokens')
-            .insert({ user_id: requestData.sender_id, amount: 1 });
-        }
-      }
+      // Token refund for rejected premium requests is handled automatically
+      // by the database trigger refund_token_on_premium_reject.
 
       toast({
         title: t('premiumRequestsPage.requestRejected'),
