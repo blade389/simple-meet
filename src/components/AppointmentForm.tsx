@@ -52,8 +52,8 @@ export const AppointmentForm = ({ matchRequestId, otherUserId, otherUserName, on
         .from('appointments')
         .insert({
           match_request_id: matchRequestId,
-          female_user_id: matchRequest.sender_id,
-          male_user_id: matchRequest.receiver_id,
+          male_user_id: matchRequest.sender_id,
+          female_user_id: matchRequest.receiver_id,
           appointment_date: appointmentDateTime.toISOString(),
           location,
           status: 'scheduled'
