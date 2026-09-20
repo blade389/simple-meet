@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789908814577,
+      "tag": "0000_add_service_type_to_premium_rates",
+      "breakpoints": true
+    }
+  ]
+}

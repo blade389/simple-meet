@@ -478,7 +478,9 @@
     "positiveReviews": "reseñas positivas",
     "negativeReviews": "reseñas negativas",
     "noReviews": "Aún no hay reseñas",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "incall": "Incall (en mi lugar)",
+    "outcall": "Outcall (me desplazo)"
   },
   "reviewForm": {
     "leaveReviewFor": "Dejar reseña para",
@@ -614,7 +616,11 @@
     "howItWorks1": "Las tarifas que establezcas serán visibles para los usuarios cuando vean tu perfil",
     "howItWorks2": "Los hombres ven tus tarifas y eligen una al enviar la solicitud (coste: 1 ficha)",
     "howItWorks3": "Puedes añadir varias tarifas con diferentes duraciones y precios",
-    "howItWorks4": "Las tarifas se pueden eliminar en cualquier momento"
+    "howItWorks4": "Las tarifas se pueden eliminar en cualquier momento",
+    "serviceType": "Tipo de servicio",
+    "incall": "Incall (en mi lugar)",
+    "outcall": "Outcall (me desplazo)",
+    "serviceTypeRequired": "Selecciona incall u outcall"
   },
   "premiumRequestsPage": {
     "title": "Solicitudes Premium",

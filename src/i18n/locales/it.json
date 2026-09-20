@@ -529,7 +529,9 @@
     "sending": "Invio in corso...",
     "requestSent": "Richiesta Inviata",
     "selectRateError": "Seleziona una tariffa",
-    "selectRateErrorDesc": "Devi selezionare una tariffa per inviare una richiesta premium."
+    "selectRateErrorDesc": "Devi selezionare una tariffa per inviare una richiesta premium.",
+    "incall": "Incall (ricevo io)",
+    "outcall": "Outcall (mi sposto io)"
   },
   "reviewForm": {
     "leaveReviewFor": "Lascia una recensione per",
@@ -665,7 +667,11 @@
     "howItWorks1": "Le tariffe che imposti saranno visibili agli utenti quando visualizzano il tuo profilo",
     "howItWorks2": "Gli uomini vedono le tue tariffe e ne selezionano una quando inviano la richiesta (costo: 1 gettone)",
     "howItWorks3": "Puoi aggiungere più tariffe con diverse durate e prezzi",
-    "howItWorks4": "Le tariffe possono essere eliminate in qualsiasi momento"
+    "howItWorks4": "Le tariffe possono essere eliminate in qualsiasi momento",
+    "serviceType": "Tipo di servizio",
+    "incall": "Incall (ricevo io)",
+    "outcall": "Outcall (mi sposto io)",
+    "serviceTypeRequired": "Seleziona incall o outcall"
   },
   "premiumRequestsPage": {
     "title": "Richieste Premium",

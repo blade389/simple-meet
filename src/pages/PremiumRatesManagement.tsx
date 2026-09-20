@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Plus, Trash2, Euro, Clock, FileText } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 
 interface PremiumRate {
@@ -16,6 +18,7 @@ interface PremiumRate {
   duration_hours: number;
   price_euros: number;
   description?: string;
+  service_type?: string;
 }
 
 const PremiumRatesManagement = () => {
@@ -28,6 +31,7 @@ const PremiumRatesManagement = () => {
   const [newDuration, setNewDuration] = useState('');
   const [newPrice, setNewPrice] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [newServiceType, setNewServiceType] = useState<'incall' | 'outcall'>('outcall');
   const [addingRate, setAddingRate] = useState(false);
 
   useEffect(() => {
@@ -86,6 +90,7 @@ const PremiumRatesManagement = () => {
           duration_hours: duration,
           price_euros: price,
           description: newDescription || null,
+          service_type: newServiceType,
         });
 
       if (error) throw error;
@@ -98,6 +103,7 @@ const PremiumRatesManagement = () => {
       setNewDuration('');
       setNewPrice('');
       setNewDescription('');
+      setNewServiceType('outcall');
       loadRates();
     } catch (error) {
       console.error('Error adding rate:', error);
@@ -201,6 +207,27 @@ const PremiumRatesManagement = () => {
               </div>
             </div>
             <div className="space-y-2">
+              <Label>{t('premiumRates.serviceType')} *</Label>
+              <RadioGroup
+                value={newServiceType}
+                onValueChange={(v) => setNewServiceType(v as 'incall' | 'outcall')}
+                className="flex flex-col gap-2 sm:flex-row sm:gap-6"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="incall" id="incall" />
+                  <Label htmlFor="incall" className="cursor-pointer font-normal">
+                    {t('premiumRates.incall')}
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="outcall" id="outcall" />
+                  <Label htmlFor="outcall" className="cursor-pointer font-normal">
+                    {t('premiumRates.outcall')}
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="description">
                 {t('premiumRates.description')} <span className="text-muted-foreground text-xs">({t('premiumRates.optional')})</span>
               </Label>
@@ -245,6 +272,11 @@ const PremiumRatesManagement = () => {
                           <Euro className="w-5 h-5 text-primary" />
                           <span className="font-medium text-lg">{rate.price_euros}€</span>
                         </div>
+                        <Badge variant="secondary">
+                          {rate.service_type === 'incall'
+                            ? t('premiumRates.incall')
+                            : t('premiumRates.outcall')}
+                        </Badge>
                       </div>
                       {rate.description && (
                         <div className="flex items-start gap-2 text-sm text-muted-foreground">

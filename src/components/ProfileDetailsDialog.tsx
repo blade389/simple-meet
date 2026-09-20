@@ -22,6 +22,7 @@ interface PremiumRate {
   id: string;
   duration_hours: number;
   price_euros: number;
+  service_type?: string;
 }
 
 interface ProfileDetailsDialogProps {
@@ -248,6 +249,11 @@ const ProfileDetailsDialog = ({
                           <Euro className="w-4 h-4" />
                           <span>{rate.price_euros}</span>
                         </div>
+                        <Badge variant="secondary">
+                          {rate.service_type === 'incall'
+                            ? t('profileDialog.incall')
+                            : t('profileDialog.outcall')}
+                        </Badge>
                       </div>
                     </div>
                   ))}
@@ -271,6 +277,11 @@ const ProfileDetailsDialog = ({
                             <Clock className="w-4 h-4 text-primary" />
                             <span>{rate.duration_hours} {rate.duration_hours === 1 ? t('profileDialog.hour') : t('profileDialog.hours')}</span>
                             <span className="font-semibold text-primary">€{rate.price_euros}</span>
+                            <Badge variant="secondary">
+                              {rate.service_type === 'incall'
+                                ? t('profileDialog.incall')
+                                : t('profileDialog.outcall')}
+                            </Badge>
                           </Label>
                         </div>
                       ))}

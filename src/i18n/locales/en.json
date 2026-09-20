@@ -525,7 +525,9 @@
     "sending": "Sending...",
     "requestSent": "Request Sent",
     "selectRateError": "Select a rate",
-    "selectRateErrorDesc": "You must select a rate to send a premium request."
+    "selectRateErrorDesc": "You must select a rate to send a premium request.",
+    "incall": "Incall (at my place)",
+    "outcall": "Outcall (I travel)"
   },
   "reviewForm": {
     "leaveReviewFor": "Leave a review for",
@@ -661,7 +663,11 @@
     "howItWorks1": "The rates you set will be visible to users when they view your profile",
     "howItWorks2": "Men see your rates and pick one when sending a request (cost: 1 token)",
     "howItWorks3": "You can add multiple rates with different durations and prices",
-    "howItWorks4": "Rates can be deleted at any time"
+    "howItWorks4": "Rates can be deleted at any time",
+    "serviceType": "Service type",
+    "incall": "Incall (at my place)",
+    "outcall": "Outcall (I travel)",
+    "serviceTypeRequired": "Select incall or outcall"
   },
   "premiumRequestsPage": {
     "title": "Premium Requests",

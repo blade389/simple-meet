@@ -426,6 +426,7 @@ export type Database = {
           duration_hours: number
           id: string
           price_euros: number
+          service_type: string
           user_id: string
         }
         Insert: {
@@ -434,6 +435,7 @@ export type Database = {
           duration_hours: number
           id?: string
           price_euros: number
+          service_type?: string
           user_id: string
         }
         Update: {
@@ -442,6 +444,7 @@ export type Database = {
           duration_hours?: number
           id?: string
           price_euros?: number
+          service_type?: string
           user_id?: string
         }
         Relationships: []
