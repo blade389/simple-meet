@@ -478,7 +478,9 @@
     "positiveReviews": "pozytywnych recenzji",
     "negativeReviews": "negatywnych recenzji",
     "noReviews": "Brak recenzji",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "incall": "Incall (u mnie)",
+    "outcall": "Outcall (dojeżdżam)"
   },
   "reviewForm": {
     "leaveReviewFor": "Zostaw recenzję dla",
@@ -614,7 +616,11 @@
     "howItWorks1": "Stawki, które ustawisz, będą widoczne dla użytkowników, gdy przeglądają Twój profil",
     "howItWorks2": "Mężczyźni widzą Twoje stawki i wybierają jedną przy wysyłaniu prośby (koszt: 1 żeton)",
     "howItWorks3": "Możesz dodać wiele stawek o różnych czasach trwania i cenach",
-    "howItWorks4": "Stawki można usunąć w dowolnym momencie"
+    "howItWorks4": "Stawki można usunąć w dowolnym momencie",
+    "serviceType": "Rodzaj usługi",
+    "incall": "Incall (u mnie)",
+    "outcall": "Outcall (dojeżdżam)",
+    "serviceTypeRequired": "Wybierz incall lub outcall"
   },
   "premiumRequestsPage": {
     "title": "Prośby Premium",

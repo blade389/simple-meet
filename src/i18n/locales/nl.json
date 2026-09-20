@@ -478,7 +478,9 @@
     "positiveReviews": "positieve reviews",
     "negativeReviews": "negatieve reviews",
     "noReviews": "Nog geen reviews",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "incall": "Incall (bij mij)",
+    "outcall": "Outcall (ik kom langs)"
   },
   "reviewForm": {
     "leaveReviewFor": "Review achterlaten voor",
@@ -614,7 +616,11 @@
     "howItWorks1": "De tarieven die je instelt zijn zichtbaar voor gebruikers wanneer ze je profiel bekijken",
     "howItWorks2": "Mannen zien je tarieven en kiezen er één bij het versturen van het verzoek (kosten: 1 token)",
     "howItWorks3": "Je kunt meerdere tarieven toevoegen met verschillende duren en prijzen",
-    "howItWorks4": "Tarieven kunnen op elk moment worden verwijderd"
+    "howItWorks4": "Tarieven kunnen op elk moment worden verwijderd",
+    "serviceType": "Type service",
+    "incall": "Incall (bij mij)",
+    "outcall": "Outcall (ik kom langs)",
+    "serviceTypeRequired": "Kies incall of outcall"
   },
   "premiumRequestsPage": {
     "title": "Premium Verzoeken",

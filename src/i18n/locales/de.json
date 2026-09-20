@@ -478,7 +478,9 @@
     "positiveReviews": "positive Bewertungen",
     "negativeReviews": "negative Bewertungen",
     "noReviews": "Noch keine Bewertungen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "incall": "Incall (bei mir)",
+    "outcall": "Outcall (ich komme)"
   },
   "reviewForm": {
     "leaveReviewFor": "Bewertung abgeben für",
@@ -614,7 +616,11 @@
     "howItWorks1": "Die Tarife, die du festlegst, sind für Benutzer sichtbar, wenn sie dein Profil ansehen",
     "howItWorks2": "Männer sehen deine Tarife und wählen bei der Anfrage einen aus (Kosten: 1 Token)",
     "howItWorks3": "Du kannst mehrere Tarife mit verschiedenen Dauern und Preisen hinzufügen",
-    "howItWorks4": "Tarife können jederzeit gelöscht werden"
+    "howItWorks4": "Tarife können jederzeit gelöscht werden",
+    "serviceType": "Art des Service",
+    "incall": "Incall (bei mir)",
+    "outcall": "Outcall (ich komme)",
+    "serviceTypeRequired": "Incall oder Outcall wählen"
   },
   "premiumRequestsPage": {
     "title": "Premium-Anfragen",

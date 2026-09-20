@@ -478,7 +478,9 @@
     "positiveReviews": "avis positifs",
     "negativeReviews": "avis négatifs",
     "noReviews": "Pas encore d'avis",
-    "close": "Fermer"
+    "close": "Fermer",
+    "incall": "Incall (chez moi)",
+    "outcall": "Outcall (je me déplace)"
   },
   "reviewForm": {
     "leaveReviewFor": "Laisser un avis pour",
@@ -614,7 +616,11 @@
     "howItWorks1": "Les tarifs que vous définissez seront visibles par les utilisateurs lorsqu'ils consultent votre profil",
     "howItWorks2": "Les hommes voient vos tarifs et en choisissent un lors de la demande (coût : 1 jeton)",
     "howItWorks3": "Vous pouvez ajouter plusieurs tarifs avec différentes durées et prix",
-    "howItWorks4": "Les tarifs peuvent être supprimés à tout moment"
+    "howItWorks4": "Les tarifs peuvent être supprimés à tout moment",
+    "serviceType": "Type de service",
+    "incall": "Incall (chez moi)",
+    "outcall": "Outcall (je me déplace)",
+    "serviceTypeRequired": "Choisissez incall ou outcall"
   },
   "premiumRequestsPage": {
     "title": "Demandes Premium",
