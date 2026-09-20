@@ -22,6 +22,7 @@ interface PremiumRate {
   id: string;
   duration_hours: number;
   price_euros: number;
+  service_type?: string;
 }
 
 interface ProfileDetailsDialogProps {
