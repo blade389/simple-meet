@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Plus, Trash2, Euro, Clock, FileText } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 
 interface PremiumRate {
@@ -16,6 +18,7 @@ interface PremiumRate {
   duration_hours: number;
   price_euros: number;
   description?: string;
+  service_type?: string;
 }
 
 const PremiumRatesManagement = () => {
@@ -28,6 +31,7 @@ const PremiumRatesManagement = () => {
   const [newDuration, setNewDuration] = useState('');
   const [newPrice, setNewPrice] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [newServiceType, setNewServiceType] = useState<'incall' | 'outcall'>('outcall');
   const [addingRate, setAddingRate] = useState(false);
 
   useEffect(() => {
